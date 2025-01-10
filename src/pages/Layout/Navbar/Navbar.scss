@@ -1,0 +1,12 @@
+#Navbar-container{
+    margin-left: 40px;
+    margin-right: 40px;
+    height: 77px;
+    .click-icon{
+        margin-right: 14px;
+    }
+    @media (max-width : 992px) {
+        margin-left: 14px;
+        margin-right: 14px;
+    }
+}
