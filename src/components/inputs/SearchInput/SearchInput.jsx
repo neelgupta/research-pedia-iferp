@@ -70,9 +70,9 @@ const SearchInput = ({
         </div>
         {error && <div className="input-error">{error}</div>}
       </div>
-      <span className="h-18 w-18 d-flex">
+      {/* <span className="h-18 w-18 d-flex">
         <img src={icons.Searchicon} alt="search" className="fit-image" />
-      </span>
+      </span> */}
     </div>
   );
 };
