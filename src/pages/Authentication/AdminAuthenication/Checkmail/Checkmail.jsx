@@ -1,4 +1,4 @@
-import { icons } from "@/utils/constants";
+import { icons } from "@/utils/constants/icon";
 import "./Checkmail.scss"
 import { Button } from "@/components";
 import { useNavigate } from "react-router-dom";

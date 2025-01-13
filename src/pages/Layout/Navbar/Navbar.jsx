@@ -1,5 +1,5 @@
 import { SearchInput } from '@/components'
-import { icons } from '@/utils/constants'
+import { icons } from '@/utils/constants/icon'
 import React from 'react'
 import "./Navbar.scss"
 import { useDispatch, useSelector } from 'react-redux'

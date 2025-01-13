@@ -1,4 +1,4 @@
-import { icons } from "@/utils/constants";
+import { icons } from "@/utils/constants/icon";
 import { Label } from "components";
 import { trimLeftSpace } from "utils/helpers";
 import "./TextInput.scss";
@@ -24,6 +24,7 @@ const TextInput = ({
   isEdit,
   handelEdit,
   isShowPass,
+  
 }) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -67,6 +68,8 @@ const TextInput = ({
             pattern={numeric ? "[0-9]*" : undefined}
             maxLength={maxLength}
           />
+         
+         
           {isShowPass && type === "password" && (
             <div
               className="password-toggle-icon"

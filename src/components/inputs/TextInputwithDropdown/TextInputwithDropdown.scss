@@ -1,0 +1,31 @@
+#textInputwithDropdown-container{
+    .text-input-block {
+        position: relative;
+        display: flex; /* Ensure input and dropdown are in a row */
+        align-items: center;
+        gap: 10px; /* Adds spacing between input and dropdown */
+    border: 1px solid #E0E9F4;
+        input {
+          flex: 1; /* Allows input to take available space */
+          height: 52px;
+          padding: 10px;
+          font-size: 16px;
+          border : none;
+          border-radius: 6px;
+          background-color: var(--ffff);
+        }
+      
+        .dropdown-select {
+          height: 52px;
+          padding: 10px;
+          font-size: 16px;
+        //   border: 0.7px solid var(--dddd);
+        border : none;
+          border-radius: 6px;
+          background-color: var(--ffff);
+          cursor: pointer;
+        }
+      }
+}
+
+  

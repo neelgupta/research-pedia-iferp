@@ -15,7 +15,7 @@ const Layout = ({ children }) => {
 
            <div id="layout-container">
           <Sidebar show={sidebarOpen} setShow={setShow} />
-          <div className="right-body-content">.
+          <div className="right-body-content">
             <Navbar setShow={setShow} />
             <div className="body-block rearchPedia-scroll">{children}</div>
           </div>

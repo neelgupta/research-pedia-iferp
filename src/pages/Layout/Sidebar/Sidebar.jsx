@@ -1,4 +1,4 @@
-import { icons } from "@/utils/constants";
+import { icons } from "@/utils/constants/icon";
 import React, { useState, useEffect } from "react";
 import { Offcanvas } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom"; // Import useNavigate
@@ -16,12 +16,12 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
   const admin = [
     {
       title: "Manage Users",
-      url: "/admin/manageusers",
+      url: "/admin/manage-users",
       icon: icons.inactivegroup,
       activeIcons: icons.group,
       childoption: [
         { title: "List Users", url: "/admin/manage-users/list-user" },
-        { title: "User Reports", url: "/admin/manageusers/reports" },
+        { title: "User Reports", url: "/admin/manage-users/reports" },
       ],
     },
     {

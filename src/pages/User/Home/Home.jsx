@@ -1,7 +1,7 @@
 import React from 'react';
 import "./Home.scss";
 import { Button } from '@/components';
-import { icons } from '@/utils/constants';
+import { icons } from '@/utils/constants/icon';
 import { Row, Col, Container } from "react-bootstrap";
 
 const Home = () => {

@@ -1,5 +1,5 @@
 import BootrsapModal from "react-bootstrap/Modal";
-import { icons } from "utils/constants";
+import { icons } from "@/utils/constants/icon";
 import "./Modal.scss";
 
 const Modal = ({

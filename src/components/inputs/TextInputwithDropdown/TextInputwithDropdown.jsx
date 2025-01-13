@@ -1,9 +1,9 @@
-import { icons } from "@/utils/constants/icon";
+import { useState } from "react";
 import { Label } from "components";
 import { trimLeftSpace } from "utils/helpers";
-import "./SearchInput.scss";
+import "./TextInputwithDropdown.scss";
 
-const SearchInput = ({
+const TextInputwithDropdown = ({
   id,
   name,
   error,
@@ -20,10 +20,22 @@ const SearchInput = ({
   maxLength,
   className,
   startClass,
-  isEdit,
+  isShowPass,
+  dropdownOptions = [],
+  onDropdownChange,
+  isphone,
+  isname
 }) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const handleDropdownChange = (event) => {
+    setSelectedOption(event.target.value);
+    onDropdownChange && onDropdownChange(event.target.value);
+  };
+
   return (
-    <div id="searchinput-container">
+    <div id="textInputwithDropdown-container">
       {label && (
         <Label
           label={label}
@@ -34,20 +46,29 @@ const SearchInput = ({
       )}
       <div className="text-input-container">
         <div className="text-input-block">
+        <select
+            className="dropdown-select"
+            onChange={handleDropdownChange}
+            value={selectedOption}
+          >
+            <option value="" disabled ><span className="text-14-400 color-3333"> {isphone && "+ 91"} {isname && "Dr"} </span></option>
+            {dropdownOptions.map((option, index) => (
+              <option key={index} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
           <input
             id={id}
             name={name}
             className={className}
-            type={type || "text"}
+            type={isShowPass && showPassword ? "text" : type || "text"}
             value={value}
             onBlur={onBlur}
             autoComplete="new-password"
             onChange={(e) => {
               if (numeric) {
-                e.target.value = e.target.value.replace(
-                  /^(0|[^1-9][0-9]*)$/,
-                  ""
-                );
+                e.target.value = e.target.value.replace(/^(0|[^1-9][0-9]*)$/, "");
               }
               onChange({
                 target: {
@@ -62,19 +83,14 @@ const SearchInput = ({
             pattern={numeric ? "[0-9]*" : undefined}
             maxLength={maxLength}
           />
-          {isEdit && (
-            <div className="edit-icons">
-              <img src={icons?.editImg} alt="edit-icons" loading="lazy" />
-            </div>
-          )}
+
+          {/* Dropdown Menu */}
+       
         </div>
         {error && <div className="input-error">{error}</div>}
       </div>
-      {/* <span className="h-18 w-18 d-flex">
-        <img src={icons.Searchicon} alt="search" className="fit-image" />
-      </span> */}
     </div>
   );
 };
 
-export default SearchInput;
+export default TextInputwithDropdown;

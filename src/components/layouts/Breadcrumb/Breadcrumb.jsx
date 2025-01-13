@@ -1,5 +1,5 @@
 import React from "react";
-import { icons } from "@/utils/constants";
+import { icons } from "@/utils/constants/icon";
 import { useNavigate } from "react-router-dom";
 import "./Breadcrumb.scss";
 

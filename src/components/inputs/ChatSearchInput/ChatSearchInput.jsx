@@ -1,4 +1,4 @@
-import { icons } from "@/utils/constants";
+import { icons } from "@/utils/constants/icon";
 import Button from "../Button";
 import "./ChatSearchInput.scss";
 
