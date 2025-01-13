@@ -1,22 +1,36 @@
 import { useSelector } from "react-redux";
 import { Promptalert } from "./components";
-import { AppRoutes } from "./routes/AppRoute";
+
 import AuthRoute from "./routes/AuthRoute";
 import { getDataFromLocalStorage } from "./utils/helpers";
 
+import { AppRoutes } from "./routes/AppRoute";
+import { UserRoutes } from "./routes/UserRoute";
 
 const App = () => {
   const reduxData = useSelector((state) => state.global);
 
   const localData = getDataFromLocalStorage();
-  const isAuth = localData?.token ? true : false;
+ const isAuth = localData?.token ? true : false;
+ console.log(localData);
+//  const role = localData
+// const isAuth = true;
+  const role = localData.role;
 
   return (
     <div>
       <Promptalert />
-      {isAuth ?
-       <AppRoutes /> 
-       : <AuthRoute />}
+      {isAuth ? (
+        role === "admin" || role === "superAdmin" ? (
+          <AppRoutes />
+        ) : role === "user" ? (
+          <UserRoutes />
+        ) : (
+          <div>Unauthorized Role</div> 
+        )
+      ) : (
+        <AuthRoute />
+      )}
     </div>
   );
 };

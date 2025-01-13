@@ -29,14 +29,31 @@ import staffisactive from "assets/images/icons/staffisactive.png";
 import inactivegroup from "assets/images/icons/inactivegroup.png";
 import downarrow from "assets/images/icons/downarrow.png";
 import inactivedot from "assets/images/icons/inactivedot.png";
+
+import homesectionimg from "assets/images/homesectionimg.png";
+
+import profileimg from "assets/images/profile-img.png";
+import postimg from "assets/images/icons/post-img.png";
+import UserHome from "assets/images/icons/UserHome.png";
+import Userpdf from "assets/images/icons/Userpdf.png";
+import UserLibrary from "assets/images/icons/UserLibrary.png";
+import iferplogo from "assets/images/icons/iferp-logo.png";
+import Google from "assets/images/icons/Google.png"
+
 import sortingIcons from "assets/images/icons/sorting.png";
 import viewIcons from "assets/images/icons/view.png";
 import editIcons from "assets/images/icons/edit.png";
 import deleteIcons from "assets/images/icons/delete.png";
 import rightIcons from "assets/images/icons/right-arrow.png";
 import leftIcons from "assets/images/icons/left-arrow.png";
+
 export const icons = {
   // avatar,
+  Google,
+  UserHome,
+  Userpdf,
+  UserLibrary,
+  homesectionimg,
   inactivedot,
   downarrow,
   inactivegroup,
@@ -67,10 +84,16 @@ export const icons = {
   chaticon,
   tagClose,
   QRcode,
+
+  profileimg,
+  postimg,
+  iferplogo,
+
   sortingIcons,
   viewIcons,
   editIcons,
   deleteIcons,
   rightIcons,
   leftIcons,
+
 };

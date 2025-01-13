@@ -80,6 +80,13 @@ const CategoryTopics = () => {
     console.log("Values:", values);
   };
 
+
+  const textColorMapping = {
+    high: "red",
+    mediam: "orange",
+    low: "green",
+  };
+
   return (
     <div id="categorytopics-container">
       <div>
@@ -142,7 +149,7 @@ const CategoryTopics = () => {
             {" "}
             {/* Use Row with gap prop */}
             {savedValues.map((category, categoryIndex) => (
-              <Col key={categoryIndex} xl={4} md={6} sm={12}>
+              <Col key={categoryIndex} xl={4} md={6} sm={12} className="p-0">
                 <div className="border cetegory-card overflow-auto rearchPedia-scroll p-0 me-8 mt-8">
                   <div className="cate-title d-flex align-items-center">
                     <div
@@ -173,30 +180,52 @@ const CategoryTopics = () => {
                         </div>
                         <div className="d-flex align-items-center">
                           {/* Dropdown per tag */}
-                          <Dropdown
-                            onSelect={(value) =>
-                              handleSelectChange(categoryIndex, tagIndex, value)
-                            }
-                          >
-                            <Dropdown.Toggle
-                              variant="success"
-                              id="dropdown-basic"
-                            >
-                              {selectedDropdownValues[
-                                `${categoryIndex}-${tagIndex}`
-                              ] || "Select Option"}
-                            </Dropdown.Toggle>
 
-                            <Dropdown.Menu>
-                              <Dropdown.Item eventKey="high">
-                                high
-                              </Dropdown.Item>
-                              <Dropdown.Item eventKey="low">low</Dropdown.Item>
-                              <Dropdown.Item eventKey="mediam">
-                                mediam
-                              </Dropdown.Item>
-                            </Dropdown.Menu>
-                          </Dropdown>
+                          <Dropdown onSelect={(value) => handleSelectChange(categoryIndex, tagIndex, value)}>
+  <Dropdown.Toggle
+   variant="light"
+   id="dropdown-basic"
+   style={{
+     color: textColorMapping[selectedDropdownValues[`${categoryIndex}-${tagIndex}`]] || "black",
+     border: "1px solid #ccc",
+     width: "150px",
+   }}
+  >
+    {selectedDropdownValues[`${categoryIndex}-${tagIndex}`] || "Select"}
+  </Dropdown.Toggle>
+
+  <Dropdown.Menu>
+    <Dropdown.Item eventKey="high">High</Dropdown.Item>
+    <Dropdown.Item eventKey="mediam">Mediam</Dropdown.Item>
+    <Dropdown.Item eventKey="low">Low</Dropdown.Item>
+  </Dropdown.Menu>
+</Dropdown>
+
+//                           <Dropdown
+//                             onSelect={(value) =>
+//                               handleSelectChange(categoryIndex, tagIndex, value)
+//                             }
+//                           >
+//                             <Dropdown.Toggle
+//                               variant="success"
+//                               id="dropdown-basic"
+//                             >
+//                               {selectedDropdownValues[
+//                                 `${categoryIndex}-${tagIndex}`
+//                               ] || "Select Option"}
+//                             </Dropdown.Toggle>
+
+//                             <Dropdown.Menu>
+//                               <Dropdown.Item eventKey="high">
+//                                 high
+//                               </Dropdown.Item>
+//                               <Dropdown.Item eventKey="low">low</Dropdown.Item>
+//                               <Dropdown.Item eventKey="mediam">
+//                                 mediam
+//                               </Dropdown.Item>
+//                             </Dropdown.Menu>
+//                           </Dropdown>
+
                           {editMode === categoryIndex && (
                             <IoMdRemoveCircleOutline
                               style={{ cursor: "pointer", color: "red" }}

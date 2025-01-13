@@ -8,7 +8,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const reduxdata = useSelector((state) => state.global.sidebarOpen);
   return (
-    <div id="Navbar-container" className="position-static">
+    <div id="Navbar-container" className="">
   <div className="d-flex justify-content-between align-items-center mt-20">
     <div className="d-flex">
       <div className="click-icon d-flex align-items-center">

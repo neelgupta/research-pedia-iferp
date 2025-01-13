@@ -113,19 +113,36 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
             maxWidth: "280px",
           }}
         >
-          <Offcanvas.Body className="p-0 rearchPedia-scroll overflow-auto">
-            <div className="slide-container  ">
-              <div className="d-flex d-flex justify-content-between">
-                <img
-                  src={icons.loginicon}
-                  alt="icons"
-                  className="img-fluid mt-24 ms-24 mb-24"
-                />
-                <IoMdClose
-                  size={20}
-                  className=" mt-24 ms-24 mb-24 d-block d-lg-none"
-                  onClick={() => dispatch(toggleSidebar(!reduxdata))}
-                />
+
+     
+          <Offcanvas.Body className="p-0 rearchPedia-scroll">
+            <div className="slide-container  rearchPedia-scroll">
+              <div className='d-flex d-flex justify-content-between'>
+              <img
+                src={icons.loginicon}
+                alt="icons"
+                className="img-fluid mt-24 ms-24 mb-24"
+              />
+               <IoMdClose
+             
+              size={20}
+                className=" mt-24 ms-24 mb-24 d-block d-lg-none"
+              onClick={() => dispatch(toggleSidebar(!reduxdata))}
+              />
+
+//           <Offcanvas.Body className="p-0 rearchPedia-scroll overflow-auto">
+//             <div className="slide-container  ">
+//               <div className="d-flex d-flex justify-content-between">
+//                 <img
+//                   src={icons.loginicon}
+//                   alt="icons"
+//                   className="img-fluid mt-24 ms-24 mb-24"
+//                 />
+//                 <IoMdClose
+//                   size={20}
+//                   className=" mt-24 ms-24 mb-24 d-block d-lg-none"
+//                   onClick={() => dispatch(toggleSidebar(!reduxdata))}
+
               </div>
               <div className="profile-header d-flex justify-content-between align-items-center">
                 <div className="d-flex">
@@ -150,7 +167,7 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
                 </div>
               </div>
 
-              <div className="tabsidebar-conatiner">
+              <div className="tabsidebar-conatiner ">
                 {admin.map((item, index) => (
                   <div key={index}>
                     <div
