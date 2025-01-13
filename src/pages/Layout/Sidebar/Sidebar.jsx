@@ -16,7 +16,7 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
   const admin = [
     {
       title: "Manage Users",
-      url: "/admin/manageusers",
+      url: "/admin/manage-users",
       icon: icons.inactivegroup,
       activeIcons: icons.group,
       childoption: [

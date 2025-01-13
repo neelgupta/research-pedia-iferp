@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 const Layout = ({ children }) => {
   const [show, setShow] = useState(true);
   const sidebarOpen = useSelector((state) => state.global.sidebarOpen);
-  console.log(sidebarOpen);
   return (
     <>
       <div id="layout-container">
