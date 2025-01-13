@@ -130,18 +130,7 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
               onClick={() => dispatch(toggleSidebar(!reduxdata))}
               />
 
-//           <Offcanvas.Body className="p-0 rearchPedia-scroll overflow-auto">
-//             <div className="slide-container  ">
-//               <div className="d-flex d-flex justify-content-between">
-//                 <img
-//                   src={icons.loginicon}
-//                   alt="icons"
-//                   className="img-fluid mt-24 ms-24 mb-24"
-//                 />
-//                 <IoMdClose
-//                   size={20}
-//                   className=" mt-24 ms-24 mb-24 d-block d-lg-none"
-//                   onClick={() => dispatch(toggleSidebar(!reduxdata))}
+
 
               </div>
               <div className="profile-header d-flex justify-content-between align-items-center">
@@ -260,3 +249,15 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
 };
 
 export default Sidebar;
+//           <Offcanvas.Body className="p-0 rearchPedia-scroll overflow-auto">
+//             <div className="slide-container  ">
+//               <div className="d-flex d-flex justify-content-between">
+//                 <img
+//                   src={icons.loginicon}
+//                   alt="icons"
+//                   className="img-fluid mt-24 ms-24 mb-24"
+//                 />
+//                 <IoMdClose
+//                   size={20}
+//                   className=" mt-24 ms-24 mb-24 d-block d-lg-none"
+//                   onClick={() => dispatch(toggleSidebar(!reduxdata))}

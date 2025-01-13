@@ -201,30 +201,7 @@ const CategoryTopics = () => {
   </Dropdown.Menu>
 </Dropdown>
 
-//                           <Dropdown
-//                             onSelect={(value) =>
-//                               handleSelectChange(categoryIndex, tagIndex, value)
-//                             }
-//                           >
-//                             <Dropdown.Toggle
-//                               variant="success"
-//                               id="dropdown-basic"
-//                             >
-//                               {selectedDropdownValues[
-//                                 `${categoryIndex}-${tagIndex}`
-//                               ] || "Select Option"}
-//                             </Dropdown.Toggle>
 
-//                             <Dropdown.Menu>
-//                               <Dropdown.Item eventKey="high">
-//                                 high
-//                               </Dropdown.Item>
-//                               <Dropdown.Item eventKey="low">low</Dropdown.Item>
-//                               <Dropdown.Item eventKey="mediam">
-//                                 mediam
-//                               </Dropdown.Item>
-//                             </Dropdown.Menu>
-//                           </Dropdown>
 
                           {editMode === categoryIndex && (
                             <IoMdRemoveCircleOutline
@@ -249,3 +226,27 @@ const CategoryTopics = () => {
 };
 
 export default CategoryTopics;
+{/* <Dropdown */}
+//                             onSelect={(value) =>
+//                               handleSelectChange(categoryIndex, tagIndex, value)
+//                             }
+//                           >
+//                             <Dropdown.Toggle
+//                               variant="success"
+//                               id="dropdown-basic"
+//                             >
+//                               {selectedDropdownValues[
+//                                 `${categoryIndex}-${tagIndex}`
+//                               ] || "Select Option"}
+//                             </Dropdown.Toggle>
+
+//                             <Dropdown.Menu>
+//                               <Dropdown.Item eventKey="high">
+//                                 high
+//                               </Dropdown.Item>
+//                               <Dropdown.Item eventKey="low">low</Dropdown.Item>
+//                               <Dropdown.Item eventKey="mediam">
+//                                 mediam
+//                               </Dropdown.Item>
+//                             </Dropdown.Menu>
+//                           </Dropdown>
