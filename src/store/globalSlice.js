@@ -22,19 +22,18 @@ const globalSlice = createSlice({
       state.authData = null;
       state.errorData = null;
     },
-    toggleSidebar(state , action) {
+    toggleSidebar(state, action) {
       state.sidebarOpen = action.payload;
     },
   },
 });
 
-
 export const handleLogin = (payload) => async (dispatch) => {
   try {
     const res = await api.post("/admin/auth/login", payload, {});
-  
+
     if (res?.status === 200) {
-      console.log("dd",res)
+      console.log("dd", res);
       storeLocalStorageData({
         ...res?.data.response,
         token: res?.data?.response?.token,
@@ -56,8 +55,8 @@ export const handleLogin = (payload) => async (dispatch) => {
 export const forgotpasswordsendemail = (payload) => async (dispatch) => {
   try {
     const res = await api.post("/admin/auth/forgot-password", payload, {});
-  
-    console.log("res email : " , res)
+
+    console.log("res email : ", res);
     dispatch(showSuccess(res?.data?.message));
 
     return res;
@@ -68,22 +67,20 @@ export const forgotpasswordsendemail = (payload) => async (dispatch) => {
 
 export const updateforgotpassword = (payload) => async (dispatch) => {
   try {
-    const { token, ...data } = payload; 
-    
-    console.log("myplylode" , payload)
-    
-    const res = await api.post(`/admin/auth/reset-password/${token}`, data, {}); 
+    const { token, ...data } = payload;
+
+    console.log("myplylode", payload);
+
+    const res = await api.post(`/admin/auth/reset-password/${token}`, data, {});
 
     console.log("res password", res);
-    dispatch(showSuccess(res?.data?.message));  
+    dispatch(showSuccess(res?.data?.message));
 
     return res;
   } catch (error) {
-    return dispatch(handelCatch(error));  
+    return dispatch(handelCatch(error));
   }
 };
-
-
 
 export const handelResponse = (res) => async () => {
   let returnValue = null;
@@ -213,6 +210,7 @@ export const throwError = (message) => async (dispatch) => {
   );
 };
 
-export const { setAuthData, setErrorData, resetAllState ,toggleSidebar } = globalSlice.actions;
+export const { setAuthData, setErrorData, resetAllState, toggleSidebar } =
+  globalSlice.actions;
 
 export default globalSlice.reducer;

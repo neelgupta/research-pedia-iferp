@@ -70,9 +70,9 @@ const CategoryTopics = () => {
       [`${categoryIndex}-${tagIndex}`]: value,
     }));
 
-    console.log("categoryIndex" , categoryIndex)
-    console.log("tagIndex" , tagIndex)
-    console.log("value" , value)
+    console.log("categoryIndex", categoryIndex);
+    console.log("tagIndex", tagIndex);
+    console.log("value", value);
   };
 
   const handleSubmit = (values) => {
@@ -145,12 +145,17 @@ const CategoryTopics = () => {
         </div>
 
         <div className="category-table">
-          <Row> {/* Use Row with gap prop */}
+          <Row>
+            {" "}
+            {/* Use Row with gap prop */}
             {savedValues.map((category, categoryIndex) => (
               <Col key={categoryIndex} xl={4} md={6} sm={12} className="p-0">
                 <div className="border cetegory-card overflow-auto rearchPedia-scroll p-0 me-8 mt-8">
                   <div className="cate-title d-flex align-items-center">
-                    <div className="d-flex justify-content-between" style={{ width: "100%" }}>
+                    <div
+                      className="d-flex justify-content-between"
+                      style={{ width: "100%" }}
+                    >
                       <div>
                         <h1 className="mb-0">{category.categoryTitle}</h1>
                       </div>
@@ -175,6 +180,7 @@ const CategoryTopics = () => {
                         </div>
                         <div className="d-flex align-items-center">
                           {/* Dropdown per tag */}
+
                           <Dropdown onSelect={(value) => handleSelectChange(categoryIndex, tagIndex, value)}>
   <Dropdown.Toggle
    variant="light"
@@ -194,10 +200,38 @@ const CategoryTopics = () => {
     <Dropdown.Item eventKey="low">Low</Dropdown.Item>
   </Dropdown.Menu>
 </Dropdown>
+
+//                           <Dropdown
+//                             onSelect={(value) =>
+//                               handleSelectChange(categoryIndex, tagIndex, value)
+//                             }
+//                           >
+//                             <Dropdown.Toggle
+//                               variant="success"
+//                               id="dropdown-basic"
+//                             >
+//                               {selectedDropdownValues[
+//                                 `${categoryIndex}-${tagIndex}`
+//                               ] || "Select Option"}
+//                             </Dropdown.Toggle>
+
+//                             <Dropdown.Menu>
+//                               <Dropdown.Item eventKey="high">
+//                                 high
+//                               </Dropdown.Item>
+//                               <Dropdown.Item eventKey="low">low</Dropdown.Item>
+//                               <Dropdown.Item eventKey="mediam">
+//                                 mediam
+//                               </Dropdown.Item>
+//                             </Dropdown.Menu>
+//                           </Dropdown>
+
                           {editMode === categoryIndex && (
                             <IoMdRemoveCircleOutline
                               style={{ cursor: "pointer", color: "red" }}
-                              onClick={() => handleRemoveTag(categoryIndex, tagIndex)}
+                              onClick={() =>
+                                handleRemoveTag(categoryIndex, tagIndex)
+                              }
                             />
                           )}
                         </div>

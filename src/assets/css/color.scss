@@ -89,6 +89,7 @@
     --1ac4: #1a1a1ac4;
     --3896: #fe5c3896;
     --e8d2: #e8d29a;
+
 	--4310:#43a047;
     --f293:#F29339;
     --113D : #113DCD;
@@ -97,6 +98,17 @@
     --0303 : #030303;
     --6F90 :#6F90FF;
    --6E75 : #6E758B
+    --4310: #43a047;
+    --f293: #F29339;
+    --113D: #113DCD;
+    --EBEC: #EBECF0;
+    --1D26: #1D2630;
+    --e7ea: #E7EAEE;
+    --bec8: #BEC8D0;
+    --1319: #131920;
+    --2626: #262626;
+    --e7ec: #E7ECFA;
+
 }
 
 $colors: (
@@ -180,38 +192,52 @@ $colors: (
     "1ac4": var(--1ac4),
     "3896": var(--3896),
     "e8d2": var(--e8d2),
-	'4310':var(--4310),
+    '4310':var(--4310),
     'f293':var(--f293),
     '113D' : var(--113D),
     'EBEC' : var(--EBEC),
     '1D26' : var(--1D26),
+
     '0303' :var(--0303),
     '6F90' : var(--6F90),
-    '6E75' :var(--6E75)
+    '6E75' :var(--6E75),
+
+    'e7ea':var(--e7ea),
+    '1319':var(--1319),
+    '2626':var(--2626),
+    'e7ec':var(--e7ec)
+
 );
 
 @each $name, $color in $colors {
     .color-#{$name} {
         color: $color !important;
     }
+
     .bg-#{$name} {
         background-color: $color !important;
     }
+
     .b-#{$name} {
         border: $color 1px solid !important;
     }
+
     .bs-#{$name} {
         border-left: $color 1px solid !important;
     }
+
     .be-#{$name} {
         border-right: $color 1px solid !important;
     }
+
     .bt-#{$name} {
         border-top: $color 1px solid !important;
     }
+
     .bb-#{$name} {
         border-bottom: $color 1px solid !important;
     }
+
     .bb2-#{$name} {
         border-bottom: $color 2px solid !important;
     }

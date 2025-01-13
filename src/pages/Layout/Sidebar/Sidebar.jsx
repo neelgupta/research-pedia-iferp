@@ -1,10 +1,10 @@
-import { icons } from '@/utils/constants';
-import React, { useState, useEffect } from 'react';
-import { Offcanvas } from 'react-bootstrap';
-import { useLocation, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { icons } from "@/utils/constants";
+import React, { useState, useEffect } from "react";
+import { Offcanvas } from "react-bootstrap";
+import { useLocation, useNavigate } from "react-router-dom"; // Import useNavigate
 import "./Sidebar.scss";
-import { useDispatch, useSelector } from 'react-redux';
-import { toggleSidebar } from '@/store/globalSlice';
+import { useDispatch, useSelector } from "react-redux";
+import { toggleSidebar } from "@/store/globalSlice";
 import { IoMdClose } from "react-icons/io";
 const Sidebar = ({ isResponsive, show, setShow }) => {
   const [activeTab, setActiveTab] = useState(null);
@@ -20,7 +20,7 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
       icon: icons.inactivegroup,
       activeIcons: icons.group,
       childoption: [
-        { title: "List Users", url: "/admin/manageusers/list" },
+        { title: "List Users", url: "/admin/manage-users/list-user" },
         { title: "User Reports", url: "/admin/manageusers/reports" },
       ],
     },
@@ -80,26 +80,23 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
 
   const handleTabClick = (index) => {
     setActiveTab(activeTab === index ? null : index);
-    setActiveChild(null); 
+    setActiveChild(null);
   };
 
-  
   const handleChildClick = (url, index) => {
-    navigate(url); 
-    setActiveChild(index); 
+    navigate(url);
+    setActiveChild(index);
   };
 
-  
   useEffect(() => {
     const activeIndex = admin.findIndex((item) =>
       location.pathname.startsWith(item.url)
     );
     setActiveTab(activeIndex);
 
-    
     if (activeIndex !== -1 && admin[activeIndex].childoption) {
-      const activeChildIndex = admin[activeIndex].childoption.findIndex((child) =>
-        location.pathname.startsWith(child.url)
+      const activeChildIndex = admin[activeIndex].childoption.findIndex(
+        (child) => location.pathname.startsWith(child.url)
       );
       setActiveChild(activeChildIndex);
     }
@@ -116,7 +113,8 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
             maxWidth: "280px",
           }}
         >
-        
+
+     
           <Offcanvas.Body className="p-0 rearchPedia-scroll">
             <div className="slide-container  rearchPedia-scroll">
               <div className='d-flex d-flex justify-content-between'>
@@ -131,6 +129,20 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
                 className=" mt-24 ms-24 mb-24 d-block d-lg-none"
               onClick={() => dispatch(toggleSidebar(!reduxdata))}
               />
+
+//           <Offcanvas.Body className="p-0 rearchPedia-scroll overflow-auto">
+//             <div className="slide-container  ">
+//               <div className="d-flex d-flex justify-content-between">
+//                 <img
+//                   src={icons.loginicon}
+//                   alt="icons"
+//                   className="img-fluid mt-24 ms-24 mb-24"
+//                 />
+//                 <IoMdClose
+//                   size={20}
+//                   className=" mt-24 ms-24 mb-24 d-block d-lg-none"
+//                   onClick={() => dispatch(toggleSidebar(!reduxdata))}
+
               </div>
               <div className="profile-header d-flex justify-content-between align-items-center">
                 <div className="d-flex">
@@ -168,8 +180,11 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
                         <div className="d-flex align-items-center">
                           <div className="tab-icon">
                             <img
-                            
-                              src = { activeTab === index ?item.activeIcons : item.icon }
+                              src={
+                                activeTab === index
+                                  ? item.activeIcons
+                                  : item.icon
+                              }
                               alt="group"
                               className="h-22 w-22"
                             />
@@ -185,7 +200,11 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
                         {item.childoption && item.childoption.length > 0 && (
                           <div>
                             <img
-                              src={ activeTab === index  ? icons.downarrow :icons.rightarrow}
+                              src={
+                                activeTab === index
+                                  ? icons.downarrow
+                                  : icons.rightarrow
+                              }
                               alt="righticon"
                               className="img-fluid"
                             />
@@ -207,17 +226,22 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
                           >
                             <div className="chile-icon">
                               <img
-                                src={activeChild === childIndex ? icons.activetab :icons.inactivedot}
-                               
+                                src={
+                                  activeChild === childIndex
+                                    ? icons.activetab
+                                    : icons.inactivedot
+                                }
                                 alt="activetab"
                                 className="img-fluid h-22 w-22"
                               />
                             </div>
-                            <div className={`child-text ${
-                              activeChild === childIndex
-                                ? "activetabtext"
-                                : ""
-                            }`}>
+                            <div
+                              className={`child-text ${
+                                activeChild === childIndex
+                                  ? "activetabtext"
+                                  : ""
+                              }`}
+                            >
                               <h1 className="m-0">{child.title}</h1>
                             </div>
                           </div>

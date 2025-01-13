@@ -1,3 +1,4 @@
+import ListUser from "@/pages/Admin/ManageUsers/ListUser/ListUser";
 import CategoryTopic from "@/pages/Admin/SiteSettings/CategoryTopics";
 import HeaderFooterCode from "@/pages/Admin/SiteSettings/HeaderFooterCode";
 import Security from "@/pages/Admin/SiteSettings/Security/Security";
@@ -6,30 +7,30 @@ import Layout from "@/pages/Layout";
 import Home from "@/pages/User/Home/Home";
 import { Navigate, Route, Routes } from "react-router-dom";
 
-
 export const AppRoutes = () => {
-
-
 
   const adminRoutes = [
     {
       path: "/admin/setting/category-topic",
-      component: <CategoryTopic/>,
+      component: <CategoryTopic />,
     },
     {
       path: "/admin/setting/security",
-      component: <Security/>,
+      component: <Security />,
     },
     {
       path: "/admin/setting/smtp-replay",
-      component: <SmtpReplay/>,
+      component: <SmtpReplay />,
     },
     {
       path: "/admin/setting/headerfooter",
-      component: <HeaderFooterCode/>,
+      component: <HeaderFooterCode />,
+    },
+    {
+      path: "/admin/manage-users/list-user",
+      component: <ListUser />,
     },
   ];
-
 
   return (
     <Routes>
@@ -42,7 +43,10 @@ export const AppRoutes = () => {
           />
         );
       })}
-      <Route path="*" element={<Navigate to="/admin/setting/category-topic" />} />
+      <Route
+        path="*"
+        element={<Navigate to="/admin/setting/category-topic" />}
+      />
     </Routes>
   );
 };
