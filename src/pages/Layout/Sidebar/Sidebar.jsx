@@ -117,8 +117,8 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
           }}
         >
         
-          <Offcanvas.Body className="p-0 rearchPedia-scroll overflow-auto">
-            <div className="slide-container  ">
+          <Offcanvas.Body className="p-0 rearchPedia-scroll">
+            <div className="slide-container  rearchPedia-scroll">
               <div className='d-flex d-flex justify-content-between'>
               <img
                 src={icons.loginicon}
@@ -155,7 +155,7 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
                 </div>
               </div>
 
-              <div className="tabsidebar-conatiner">
+              <div className="tabsidebar-conatiner ">
                 {admin.map((item, index) => (
                   <div key={index}>
                     <div

@@ -28,9 +28,23 @@ import settingacive from "assets/images/icons/settingacive.png";
 import staffisactive from "assets/images/icons/staffisactive.png";
 import inactivegroup from "assets/images/icons/inactivegroup.png";
 import downarrow from "assets/images/icons/downarrow.png";
-import inactivedot from "assets/images/icons/inactivedot.png"
+import inactivedot from "assets/images/icons/inactivedot.png";
+import homesectionimg from "assets/images/homesectionimg.png";
+
+import profileimg from "assets/images/profile-img.png";
+import postimg from "assets/images/icons/post-img.png";
+import UserHome from "assets/images/icons/UserHome.png";
+import Userpdf from "assets/images/icons/Userpdf.png";
+import UserLibrary from "assets/images/icons/UserLibrary.png";
+import iferplogo from "assets/images/icons/iferp-logo.png";
+import Google from "assets/images/icons/Google.png"
 export const icons = {
   // avatar,
+  Google,
+  UserHome,
+  Userpdf,
+  UserLibrary,
+  homesectionimg,
   inactivedot,
   downarrow,
   inactivegroup,
@@ -60,5 +74,8 @@ export const icons = {
   notifcation,
   chaticon,
   tagClose,
-  QRcode
+  QRcode,
+  profileimg,
+  postimg,
+  iferplogo
 };

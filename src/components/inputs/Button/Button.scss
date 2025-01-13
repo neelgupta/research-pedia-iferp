@@ -34,12 +34,32 @@
     font-size: 14px;
     padding: 12px 24px;
   }
+  .user-signup{
+    background-color: var(--ffff);
+    border: 0.7px solid var(--113D);
+    color: var(--113D);
+    font-size: 16px;
+    padding: 15px 27px;
+  }
+  .user-login{
+    background-color: var(--113D);
+    border: 0.7px solid var(--113D);
+    color: var(--ffff);
+    font-size: 16px;
+    padding: 15px 36px;
+  }
   .BWP{
     background-color: var(--113D);
     border: 0.7px solid var(--113D);
     color: var(--fff);
     font-size: 14px;
     padding: 12px 24px;
+  }
+  .WBB{
+    background-color: var(--ffff);
+    border: 0.7px solid var(--0000);
+    color: var(--0000);
+    font-size: 18px;
   }
   .BB {
     background-color: var(--c1de);

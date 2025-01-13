@@ -3,10 +3,13 @@ import HeaderFooterCode from "@/pages/Admin/SiteSettings/HeaderFooterCode";
 import Security from "@/pages/Admin/SiteSettings/Security/Security";
 import SmtpReplay from "@/pages/Admin/SiteSettings/SmtpReplay";
 import Layout from "@/pages/Layout";
+import Home from "@/pages/User/Home/Home";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 
 export const AppRoutes = () => {
+
+
 
   const adminRoutes = [
     {

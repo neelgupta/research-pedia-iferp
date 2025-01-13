@@ -94,6 +94,9 @@
     --113D : #113DCD;
     --EBEC : #EBECF0;
     --1D26 : #1D2630;
+    --0303 : #030303;
+    --6F90 :#6F90FF;
+   --6E75 : #6E758B
 }
 
 $colors: (
@@ -181,7 +184,10 @@ $colors: (
     'f293':var(--f293),
     '113D' : var(--113D),
     'EBEC' : var(--EBEC),
-    '1D26' : var(--1D26)
+    '1D26' : var(--1D26),
+    '0303' :var(--0303),
+    '6F90' : var(--6F90),
+    '6E75' :var(--6E75)
 );
 
 @each $name, $color in $colors {
