@@ -1,51 +1,92 @@
-import { icons } from "@/utils/constants/icon";
-import "./UserSidebar.scss"
+import { icons } from "@/utils/constants";
+import "./UserSidebar.scss";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setIsRightSide,
+  setIsUserSide,
+  setRightSideObj,
+} from "@/store/globalSlice";
 
 const UserSidebar = () => {
-    return (
-        <div className="usersidebar-container d-flex flex-column align-items-center border rearchPedia-scroll">
-               <div className="d-flex flex-column align-items-center mb-24 mt-24">
-                <img src={icons.humbarger} alt="img" className="img-fluid mb-1" />
-               
-            </div>
-            <div className="d-flex flex-column align-items-center mb-3 mb-24 ">
-                <img src={icons.UserHome} alt="img" className="img-fluid mb-1" />
-                <p className="text-center mb-0">Home</p>
-            </div>
-            <div className="d-flex flex-column align-items-center mb-3 mb-24">
-                <img src={icons.Userpdf} alt="img" className="img-fluid mb-1" />
-                <p className="text-center mb-0">Home</p>
-            </div>
-            <div className="d-flex flex-column align-items-center mb-3 mb-24">
-                <img src={icons.UserLibrary} alt="img" className="img-fluid mb-1" />
-                <p className="text-center mb-0">Home</p>
-            </div>
-            <div className="d-flex flex-column align-items-center mb-3 mb-24">
-                <img src={icons.UserHome} alt="img" className="img-fluid mb-1" />
-                <p className="text-center mb-0">Home</p>
-            </div>
-            <div className="d-flex flex-column align-items-center mb-3 mb-24">
-                <img src={icons.Userpdf} alt="img" className="img-fluid mb-1" />
-                <p className="text-center mb-0">Home</p>
-            </div>
-            <div className="d-flex flex-column align-items-center mb-3 mb-24">
-                <img src={icons.UserLibrary} alt="img" className="img-fluid mb-1" />
-                <p className="text-center mb-0">Home</p>
-            </div>
-
-            <div className="d-flex flex-column align-items-center mb-3 mb-24 ">
-                <img src={icons.UserHome} alt="img" className="img-fluid mb-1" />
-                <p className="text-center mb-0">Home</p>
-            </div>
-            <div className="d-flex flex-column align-items-center mb-3 mb-24">
-                <img src={icons.Userpdf} alt="img" className="img-fluid mb-1" />
-                <p className="text-center mb-0">Home</p>
-            </div>
-       
-
-          
+  const reduxData = useSelector((state) => state.global);
+  const { isUserSide, isRightSide } = reduxData || {};
+  const dispatch = useDispatch();
+  return (
+    <div className="user-sidebar-container">
+      <div
+        className={`d-flex  align-items-center justify-content-center mb-24 pointer`}
+      >
+        <div
+          className={` ${isUserSide ? "h-48 w-48 d-flex  align-items-center justify-content-center" : "h-48 w-48 "}`}
+          onClick={() => {
+            if (isRightSide) {
+              dispatch(setIsRightSide(false));
+              dispatch(
+                setRightSideObj({
+                  title: "",
+                })
+              );
+            }
+            dispatch(setIsUserSide(!isUserSide));
+          }}
+        >
+          <img
+            src={isUserSide ? icons.humbarger : icons.roundMenuIcons}
+            alt="img"
+            className={`img-fluid ${isUserSide ? "h-24 w-24" : " "}`}
+          />
         </div>
-    );
+      </div>
+      <div className="d-flex flex-column align-items-center mb-3 mb-24 ">
+        <img
+          src={icons.UserHome}
+          alt="img"
+          className="img-fluid mb-1 h-18 w-18"
+        />
+        <p className="menu-item-name">Home</p>
+      </div>
+      <div className="d-flex flex-column align-items-center mb-3 mb-24 ">
+        <img
+          src={icons.bookIconsB}
+          alt="img"
+          className="img-fluid mb-1 h-18 w-18"
+        />
+        <p className="menu-item-name">Library</p>
+      </div>
+      <div className="d-flex flex-column align-items-center mb-3 mb-24 ">
+        <img
+          src={icons.chatIcons}
+          alt="img"
+          className="img-fluid mb-1 h-18 w-18"
+        />
+        <p className="menu-item-name">Chat With Doc</p>
+      </div>
+      <div className="d-flex flex-column align-items-center mb-3 mb-24 ">
+        <img
+          src={icons.reviewIcons}
+          alt="img"
+          className="img-fluid mb-1 h-18 w-18"
+        />
+        <p className="menu-item-name">Literature Review</p>
+      </div>
+      <div className="d-flex flex-column align-items-center mb-3 mb-24 ">
+        <img
+          src={icons.transactionIcons}
+          alt="img"
+          className="img-fluid mb-1 h-18 w-18"
+        />
+        <p className="menu-item-name">Translation</p>
+      </div>
+      <div className="d-flex flex-column align-items-center mb-3 mb-24 ">
+        <img
+          src={icons.primeAIcons}
+          alt="img"
+          className="img-fluid mb-1 h-18 w-18"
+        />
+        <p className="menu-item-name active-n">Premium</p>
+      </div>
+    </div>
+  );
 };
 
 export default UserSidebar;

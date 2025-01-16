@@ -5,7 +5,6 @@ import "./CategoryTopics.scss";
 import DropdownWithTags from "@/components/inputs/DropdownWithTags/DropdownWithTags";
 import { Button } from "@/components";
 import Breadcrumb from "@/components/layouts/Breadcrumb";
-import { icons } from "@/utils/constants/icon";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
 import { Row, Col, Dropdown } from "react-bootstrap"; // Import Row and Col from react-bootstrap
 
@@ -69,14 +68,9 @@ const CategoryTopics = () => {
       ...prevState,
       [`${categoryIndex}-${tagIndex}`]: value,
     }));
-
-
   };
 
-  const handleSubmit = (values) => {
-
-  };
-
+  const handleSubmit = (values) => {};
 
   const textColorMapping = {
     high: "red",
@@ -178,27 +172,40 @@ const CategoryTopics = () => {
                         <div className="d-flex align-items-center">
                           {/* Dropdown per tag */}
 
-                          <Dropdown onSelect={(value) => handleSelectChange(categoryIndex, tagIndex, value)}>
-  <Dropdown.Toggle
-   variant="light"
-   id="dropdown-basic"
-   style={{
-     color: textColorMapping[selectedDropdownValues[`${categoryIndex}-${tagIndex}`]] || "black",
-     border: "1px solid #ccc",
-     width: "150px",
-   }}
-  >
-    {selectedDropdownValues[`${categoryIndex}-${tagIndex}`] || "Select"}
-  </Dropdown.Toggle>
+                          <Dropdown
+                            onSelect={(value) =>
+                              handleSelectChange(categoryIndex, tagIndex, value)
+                            }
+                          >
+                            <Dropdown.Toggle
+                              variant="light"
+                              id="dropdown-basic"
+                              style={{
+                                color:
+                                  textColorMapping[
+                                    selectedDropdownValues[
+                                      `${categoryIndex}-${tagIndex}`
+                                    ]
+                                  ] || "black",
+                                border: "1px solid #ccc",
+                                width: "150px",
+                              }}
+                            >
+                              {selectedDropdownValues[
+                                `${categoryIndex}-${tagIndex}`
+                              ] || "Select"}
+                            </Dropdown.Toggle>
 
-  <Dropdown.Menu>
-    <Dropdown.Item eventKey="high">High</Dropdown.Item>
-    <Dropdown.Item eventKey="mediam">Mediam</Dropdown.Item>
-    <Dropdown.Item eventKey="low">Low</Dropdown.Item>
-  </Dropdown.Menu>
-</Dropdown>
-
-
+                            <Dropdown.Menu>
+                              <Dropdown.Item eventKey="high">
+                                High
+                              </Dropdown.Item>
+                              <Dropdown.Item eventKey="mediam">
+                                Mediam
+                              </Dropdown.Item>
+                              <Dropdown.Item eventKey="low">Low</Dropdown.Item>
+                            </Dropdown.Menu>
+                          </Dropdown>
 
                           {editMode === categoryIndex && (
                             <IoMdRemoveCircleOutline
@@ -223,7 +230,9 @@ const CategoryTopics = () => {
 };
 
 export default CategoryTopics;
-{/* <Dropdown */}
+{
+  /* <Dropdown */
+}
 //                             onSelect={(value) =>
 //                               handleSelectChange(categoryIndex, tagIndex, value)
 //                             }

@@ -6,6 +6,9 @@ const initialState = {
   authData: null,
   errorData: null,
   sidebarOpen: true,
+  isUserSide: false,
+  isRightSide: false,
+  rightSideObj: {},
 };
 
 const globalSlice = createSlice({
@@ -18,12 +21,25 @@ const globalSlice = createSlice({
     setErrorData(state, action) {
       state.errorData = action.payload;
     },
+    setIsUserSide(state, action) {
+      state.isUserSide = action.payload;
+    },
+    setIsRightSide(state, action) {
+      state.isRightSide = action.payload;
+    },
+    setRightSideObj(state, action) {
+      state.rightSideObj = action.payload;
+    },
+
+    toggleSidebar(state, action) {
+      state.sidebarOpen = action.payload;
+    },
     resetAllState(state) {
       state.authData = null;
       state.errorData = null;
-    },
-    toggleSidebar(state, action) {
-      state.sidebarOpen = action.payload;
+      state.isUserSide = false;
+      state.isRightSide = false;
+      state.rightSideObj = {};
     },
   },
 });
@@ -33,7 +49,6 @@ export const handleLogin = (payload) => async (dispatch) => {
     const res = await api.post("/admin/auth/login", payload, {});
 
     if (res?.status === 200) {
-      console.log("dd", res);
       storeLocalStorageData({
         ...res?.data.response,
         token: res?.data?.response?.token,
@@ -56,7 +71,6 @@ export const forgotpasswordsendemail = (payload) => async (dispatch) => {
   try {
     const res = await api.post("/admin/auth/forgot-password", payload, {});
 
-    console.log("res email : ", res);
     dispatch(showSuccess(res?.data?.message));
 
     return res;
@@ -69,11 +83,8 @@ export const updateforgotpassword = (payload) => async (dispatch) => {
   try {
     const { token, ...data } = payload;
 
-    console.log("myplylode", payload);
-
     const res = await api.post(`/admin/auth/reset-password/${token}`, data, {});
 
-    console.log("res password", res);
     dispatch(showSuccess(res?.data?.message));
 
     return res;
@@ -210,7 +221,14 @@ export const throwError = (message) => async (dispatch) => {
   );
 };
 
-export const { setAuthData, setErrorData, resetAllState, toggleSidebar } =
-  globalSlice.actions;
+export const {
+  setAuthData,
+  setErrorData,
+  resetAllState,
+  toggleSidebar,
+  setIsUserSide,
+  setIsRightSide,
+  setRightSideObj,
+} = globalSlice.actions;
 
 export default globalSlice.reducer;

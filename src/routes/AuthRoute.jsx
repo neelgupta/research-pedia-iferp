@@ -8,31 +8,28 @@ import UserLogin from "@/pages/Authentication/UserAuthentication/Login/Login";
 import UserResetPassword from "@/pages/Authentication/UserAuthentication/ResetPassword";
 import UserSignup from "@/pages/Authentication/UserAuthentication/Signup";
 
-import Home from "@/pages/User/Home";
 import { getDataFromLocalStorage } from "@/utils/helpers";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 const AuthRoute = () => {
- 
-
   return (
     <Routes>
-    
-        <>
-        <Route path="/login" element={<UserLogin/>}/>
-        <Route path="/email-verification" element={<EmailVerification/>}/>
-        <Route path="/reset-password" element={<UserResetPassword/>}/>
-        <Route path="/sign-up" element={<UserSignup/>}/>
-          <Route path="/admin/login" element={<Login />} />
-          <Route path="/admin/forgotpassword" element={<ForgotPassword />} />
-          <Route path="/admin/checkmail" element={<Checkmail />} />
-          <Route path="/admin/resetpassword/:token" element={<ResetPassword />} />
-          <Route path="/admin/authenticationcode" element={<AuthenticationCode />} />
-        
-          <Route path="*" element={<Navigate to={"/login"} />} />
+      <>
+        <Route path="/login" element={<UserLogin />} />
+        <Route path="/email-verification" element={<EmailVerification />} />
+        <Route path="/reset-password" element={<UserResetPassword />} />
+        <Route path="/sign-up" element={<UserSignup />} />
+        <Route path="/admin/login" element={<Login />} />
+        <Route path="/admin/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/admin/checkmail" element={<Checkmail />} />
+        <Route path="/admin/resetpassword/:token" element={<ResetPassword />} />
+        <Route
+          path="/admin/authenticationcode"
+          element={<AuthenticationCode />}
+        />
 
-        </>
-     
+        <Route path="*" element={<Navigate to={"/login"} />} />
+      </>
     </Routes>
   );
 };
