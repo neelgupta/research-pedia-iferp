@@ -14,7 +14,7 @@
         right: 0;
         width: 300px; /* Set the width of the image */
         height: 300px; /* Set the height of the image */
-        background-image: url('../../../assets/images/icons/login-bg1.png'); /* Set the image URL */
+        background-image: url('../../../../assets/images/icons/login-bg1.png'); /* Set the image URL */
         background-size: cover; /* Ensure the image covers the area */
         background-position: center; /* Center the image in the box */
         @media (max-width : 768px) {
@@ -29,7 +29,7 @@
       left: 0;
       width: 300px; /* Set the width of the image */
       height: 300px; /* Set the height of the image */
-      background-image: url('../../../assets/images/icons/login-bg2.png'); /* Set the image URL */
+      background-image: url('../../../../assets/images/icons/login-bg2.png'); 
       background-size: cover; /* Ensure the image covers the area */
       background-position: center; /* Center the image in the box */
       @media (max-width : 768px) {
@@ -40,9 +40,9 @@
     .login-card {
       width: 100%;
       max-width: 480px;
-      max-height: 465px;
+      max-height: 480px;
       border: 1px solid #E7EAEE;
-    padding: 40px;
+      padding: 40px 40px 20px 40px;
    .login-text{
     h1{
         font-family: Inter;
@@ -98,7 +98,7 @@ padding-bottom: 16px;
   
     @media (max-width: 480px) {
       .login-card {
-        padding: 15px;
+        padding: 15px 15px 0px 15px;
       }
     }
   }

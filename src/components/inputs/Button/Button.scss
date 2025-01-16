@@ -40,6 +40,9 @@
     color: var(--113D);
     font-size: 16px;
     padding: 15px 27px;
+    @media (max-width : 500px) {
+      padding: 8px 14px;
+    }
   }
   .user-login{
     background-color: var(--113D);
@@ -47,6 +50,9 @@
     color: var(--ffff);
     font-size: 16px;
     padding: 15px 36px;
+    @media (max-width : 500px) {
+      padding: 8px 14px;
+    }
   }
   .BWP{
     background-color: var(--113D);

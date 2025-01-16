@@ -28,6 +28,7 @@ const dispatch = useDispatch();
       }
       }
     setSubmitting(false);
+  
   };
   return (
     <div id="login-container">
@@ -95,7 +96,7 @@ const dispatch = useDispatch();
     <input type="checkbox" id="rememberMe" />
     <span className="ms-2">Remember me?</span>
   </div>
-  <div className="forgot-password mt-16" onClick={() => navigate("/admin/forgotpassword")}>
+  <div className="forgot-password mt-16" onClick={() => navigate("/admin/forgot-password")}>
     <span className="d-flex align-items-center">Forgot Password?</span>
   </div>
 </div>

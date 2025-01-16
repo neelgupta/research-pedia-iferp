@@ -50,7 +50,7 @@ const dispatch = useDispatch();
         enableReinitialize
         initialValues={initialValues}
          onSubmit={handleSubmit}
-         validationSchema={validationSchema}
+        validationSchema={validationSchema}
       >
         {(props) => {
           const {

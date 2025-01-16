@@ -13,17 +13,29 @@
           border : none;
           border-radius: 6px;
           background-color: var(--ffff);
+          outline: none;
         }
-      
+        input:focus,
+        input:active {
+          border: none;
+          outline: none;
+          box-shadow: none; /* Removes any shadow effect */
+        }
         .dropdown-select {
           height: 52px;
           padding: 10px;
           font-size: 16px;
-        //   border: 0.7px solid var(--dddd);
+          outline: none;
         border : none;
           border-radius: 6px;
           background-color: var(--ffff);
           cursor: pointer;
+        }
+        .dropdown-select:focus,
+        .dropdown-select:active {
+          border: none;
+          outline: none;
+          box-shadow: none; /* Removes any shadow effect */
         }
       }
 }

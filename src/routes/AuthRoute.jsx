@@ -19,15 +19,17 @@ const AuthRoute = () => {
     <Routes>
     
         <>
+        <Route path="/" element={<Home/>}/>
         <Route path="/login" element={<UserLogin/>}/>
         <Route path="/email-verification" element={<EmailVerification/>}/>
         <Route path="/reset-password" element={<UserResetPassword/>}/>
         <Route path="/sign-up" element={<UserSignup/>}/>
           <Route path="/admin/login" element={<Login />} />
-          <Route path="/admin/forgotpassword" element={<ForgotPassword />} />
-          <Route path="/admin/checkmail" element={<Checkmail />} />
-          <Route path="/admin/resetpassword/:token" element={<ResetPassword />} />
-          <Route path="/admin/authenticationcode" element={<AuthenticationCode />} />
+          <Route path="/admin/forgot-password" element={<ForgotPassword />} />
+          <Route path="/admin/check-mail" element={<Checkmail />} />
+          {/* <Route path="/admin/reset-password/:token" element={<ResetPassword />} /> */}
+          <Route path="/admin/reset-password" element={<ResetPassword />} />
+          <Route path="/admin/authentication-code" element={<AuthenticationCode />} />
         
           <Route path="*" element={<Navigate to={"/login"} />} />
 
