@@ -26,7 +26,6 @@ const Table = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const totalPages = Math.ceil(totalRows / rowsPerPage);
-
   const startIndex = (currentPage - 1) * rowsPerPage;
   const startRow = startIndex + 1;
   const endRow = Math.min(startIndex + rowsPerPage, totalRows);
@@ -81,18 +80,8 @@ const Table = ({
           <div className="d-flex justify-content-end gap-md-5 gap-2 flex-wrap">
             <div className="d-flex align-items-center gap-3">
               <div className="select" onClick={() => setIsOpen(!isOpen)}>
-                <div className="f-center gap-2">
-                  <div>{rowsPerPage}</div>
-                  <div className="pointer w-14">
-                    <img
-                      src={icons.down}
-                      alt=""
-                      className="fit-image"
-                      style={{
-                        transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-                      }}
-                    />
-                  </div>
+                <div className="fb-center gap-2">
+                  <div className="ms-5 mt-5">{rowsPerPage}</div>
                 </div>
                 {isOpen && (
                   <div className="options">
@@ -216,11 +205,11 @@ const Table = ({
           />
           <div className="d-flex gap-2">
             <span className="page-number active pointer">{currentPage}</span>
-            {/* {currentPage < totalPages && ( */}
-            <span className="page-number pointer" onClick={handleNextPageR}>
-              {currentPage + 1}
-            </span>
-            {/* )} */}
+            {currentPage < totalPages && (
+              <span className="page-number pointer" onClick={handleNextPageR}>
+                {currentPage + 1}
+              </span>
+            )}
           </div>
           <img
             src={icons?.rightIcons}

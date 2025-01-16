@@ -9,7 +9,6 @@ import UserNavbar from "./UserLayout/UserNavbar";
 const Layout = ({ children }) => {
   const [show, setShow] = useState(true);
   const sidebarOpen = useSelector((state) => state.global.sidebarOpen);
-
   return (
     <>
 

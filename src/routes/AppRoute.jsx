@@ -1,4 +1,5 @@
 import ListUser from "@/pages/Admin/ManageUsers/ListUser/ListUser";
+import UserDetails from "@/pages/Admin/ManageUsers/UserDetails";
 import CategoryTopic from "@/pages/Admin/SiteSettings/CategoryTopics";
 import HeaderFooterCode from "@/pages/Admin/SiteSettings/HeaderFooterCode";
 import Security from "@/pages/Admin/SiteSettings/Security/Security";
@@ -29,6 +30,14 @@ export const AppRoutes = () => {
     {
       path: "/admin/manage-users/list-user",
       component: <ListUser />,
+    },
+    {
+      path: "/admin/manage-users/list-user/user-details",
+      component: <UserDetails />,
+    },
+    {
+      path: "/admin/manage-users/list-user/user-details/:type",
+      component: <UserDetails />,
     },
   ];
 

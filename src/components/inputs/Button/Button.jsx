@@ -15,6 +15,7 @@ const Button = ({
   rightIconClass,
   textClass,
   type,
+  groupIcons,
 }) => {
   return (
     <div id="button-container">
@@ -41,6 +42,16 @@ const Button = ({
               {btnText}
             </span>
           )}
+          {groupIcons &&
+            groupIcons.map((ele, index) => (
+              <span key={index}>
+                <img
+                  src={ele?.icon}
+                  alt="group-icon"
+                  className={`fit-image group-icon-${index + 1}`}
+                />
+              </span>
+            ))}
           {rightIcon && (
             <span className="h-18 f-center">
               <img
