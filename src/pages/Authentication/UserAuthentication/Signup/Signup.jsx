@@ -37,17 +37,17 @@ const UserSignup = () => {
   return (
     <div id="usersignup-container">
       <div className="row">
-        <div className="col-6 d-none d-lg-block">
-          <LeftsideContainer />
+        <div className="col-6 d-none d-lg-block" >
+          <LeftsideContainer/>
         </div>
         <div className="col-lg-6 col-12">
-          <div className="d-flex justify-content-center align-items-center vh-100 me-20 ms-20">
+          <div className="d-flex justify-content-center align-items-center " style={{minHeight : "100vh"}}>
             <div className="usersignin-container">
-              <div className="form-header mb-32">
+              <div className="form-header mb-14">
                 <h1>Sign Up</h1>
                 <p className="mt-8">Stay updated on your professional world</p>
               </div>
-              <div className="form">
+              <div className="form ">
                 <Formik
                   enableReinitialize
                   initialValues={initialValues}
@@ -98,6 +98,7 @@ const UserSignup = () => {
                             id="name"
                             name="name"
                             label="Name"
+                            labelClass= "pb-8"
                             value={values.name}
                             onChange={(e) => setFieldValue("name", e.target.value)}
                             placeholder="Enter name"
@@ -132,7 +133,8 @@ const UserSignup = () => {
                             isphone
                             id="phone"
                             name="phone"
-                            label="Phone"
+                            label="Phone Number"
+                             labelClass= "pb-8"
                             value={values.phone}
                             onChange={(e) => setFieldValue("phone", e.target.value)}
                             placeholder="Enter phone number"

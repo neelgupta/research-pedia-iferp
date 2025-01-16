@@ -3,9 +3,10 @@ import "./Home.scss";
 import { Button } from '@/components';
 import { icons } from '@/utils/constants/icon';
 import { Row, Col, Container } from "react-bootstrap";
-
+import { FaChevronRight } from "react-icons/fa6";
+import { useNavigate } from 'react-router-dom';
 const Home = () => {
-
+   const navigate = useNavigate();
     const carddata = [
         {
             cardTitle: 'Engineering',
@@ -100,15 +101,55 @@ const Home = () => {
     ];
 
     const images = [
-        "https://via.placeholder.com/50", // Replace with actual image URLs
-        "https://via.placeholder.com/50",
-        "https://via.placeholder.com/50",
-        "https://via.placeholder.com/50",
+        {person : icons.person1},
+        {person : icons.person2},
+        {person : icons.person3},
+        {person : icons.person4},
+        {person : icons.person5},
+        {person : icons.person6},
+        {person : icons.person7}
       ];
       const extraCount = "+4k";
       
     return (
-        <div id='userhome-container'>
+        <div id='userhome-container' className='rearchPedia-scroll'>
+           
+            <Container>
+        <div id="UserNavbar-container" className="">
+          <div className="d-flex justify-content-between align-items-center mt-20">
+            <div className="d-flex">
+              <div className="click-icon d-flex align-items-center">
+                <img src={icons.loginicon} alt="clickicon" className="img-fluid" />
+              </div>
+
+            </div>
+            <div className="d-flex align-items-center gap-2">
+              <Button
+                btnText="Login"
+                btnStyle="user-login"
+                onClick={()=>{
+                    navigate("/login")
+                }}
+              />
+              <Button
+                btnText="Sign Up"
+                btnStyle="user-signup"
+                onClick={()=>{
+                    navigate("/sign-up")
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      </Container> 
+      <div className="head-line d-flex justify-content-center align-items-center text-center">
+    <span className="text-14-400 color-ffff">
+        You’re a Prime Member for 7-days! Enjoy FREE Audio papers & more. 
+        <span className="text-14-400 color-FFD1 ms-12">Request Unflagging <FaChevronRight/></span>
+    </span>
+</div>
+
+            <div className='userhome-section rearchPedia-scroll'>
             <div className="hero-section d-flex align-items-center">
                 <Container className=''>
                     <Row className="align-items-center">
@@ -117,10 +158,14 @@ const Home = () => {
                         </Col>
                         <Col lg={6} xs={12} className="order-lg-1 order-2 d-flex flex-column align-items-center align-items-lg-start text-center text-lg-start">
                             <div className='header-text pb-19  mt-20'>
-                                <h1 className='text-38-600 color-0303'>Search over 200+ million research papers</h1>
+                                <h1 className='text-38-600 color-0303'>Search over 200+ million <br/> research papers</h1>
                             </div>
                             <div className='w-100 d-flex justify-content-center justify-content-lg-start mb-10'>
-                                <Button btnText="Login" btnStyle="user-login" />
+                                <Button btnText="Login" btnStyle="user-login" 
+                                  onClick={()=>{
+                                    navigate("/login")
+                                }}
+                                />
                             </div>
                         </Col>
                     </Row>
@@ -129,12 +174,12 @@ const Home = () => {
 
             <div className='card-section'>
                 <Container>
-                    <div className='card-header d-flex justify-content-between mb-18'>
+                    <div className='card-header d-flex justify-content-between align-items-center mb-18'>
                         <div className='card-text'>
                         <span>Explore our top research interests</span>
                         </div>
                        <div className='card-link'>
-                        <span>Browse All Topics</span>
+                        <span>Browse All Topics <FaChevronRight/></span>
                         </div>
                     </div>
                     <Row className="align-items-center">
@@ -155,12 +200,10 @@ const Home = () => {
                                     <div className="image-carousel d-flex align-items-center">
       {images.map((img, index) => (
         <div key={index} className="carousel-image">
-          <img src={img} alt={`User ${index + 1}`} />
+          <img src={img.person} alt={`User ${index + 1}`} />
         </div>
       ))}
-      <div className="extra-count">
-        {extraCount}
-      </div>
+    
     </div>
                                     <div>
                                         {card.cardText.map((item, i) => (
@@ -179,11 +222,11 @@ const Home = () => {
                         ))}
                     </Row>
                     <div className='d-flex justify-content-center align-items-center mb-82 mt-18'>
-    <Button btnText="Login" btnStyle="user-login" />
+    <Button btnText="Show More" btnStyle="user-login" />
 </div>
                 </Container>
             </div>
-          
+            </div>
 
         </div>
     );

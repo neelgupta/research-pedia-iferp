@@ -8,18 +8,19 @@ const Breadcrumb = ({ list, className, isGreen }) => {
 
   return (
     <div id="breadcrumb-container" className="fa-center gap-1 un">
-      {list?.map((elm, index, val) => {
+      {list?.map((elm, index) => {
         const isLast = list.length - 1 === index;
-        const isState = elm?.val;
         return (
           <React.Fragment key={index}>
             <span
-              className={`text-14-400 pointer lat-row ${
+              className={`text-14-400 pointer ${
                 isLast ? "#5B6B79" : "#131920"
-              } ${className} ${isGreen && isLast ? "#5B6B79" : "#131920"}`}
+              } ${className} ${
+                isGreen && isLast ? "#5B6B79" : "#131920"
+              }`}
               onClick={() => {
                 if (!isLast && elm.link) {
-                  navigate(elm.link, { state: isState ? isState : {} });
+                  navigate(elm.link);
                 }
               }}
             >

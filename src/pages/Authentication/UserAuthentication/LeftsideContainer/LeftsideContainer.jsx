@@ -31,8 +31,9 @@ const LeftsideContainer = () => {
 
 
   return (
-    <div>
-        <div className="right-side d-flex flex-column justify-content-between">
+
+        <div className="right-side d-flex flex-column justify-content-between border">
+          
                             <div className="img-logo">
                                 <img src={icons.iferplogo} alt="iferplogo" className="img-fluid" />
                             </div>
@@ -54,7 +55,7 @@ const LeftsideContainer = () => {
 
                                     </div>
                                 </div> */}
-               <div className="header-card">
+           
             <Swiper
                 modules={[Navigation, Pagination, Autoplay]}
                  spaceBetween={20}
@@ -66,6 +67,7 @@ const LeftsideContainer = () => {
             >
                 {cards.map((card, index) => (
                     <SwiperSlide key={index}>
+                            <div className="header-card">
                         <div className="card">
                             <div className="img-conatin">
                                 <img
@@ -80,13 +82,14 @@ const LeftsideContainer = () => {
                                 <p>{card.designation}</p>
                             </div>
                         </div>
+                        </div>
                     </SwiperSlide>
                 ))}
             </Swiper>
         </div>
+      
                             </div>
-                        </div>
-    </div>
+                       
   )
 }
 

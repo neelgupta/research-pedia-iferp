@@ -46,7 +46,13 @@ import editIcons from "assets/images/icons/edit.png";
 import deleteIcons from "assets/images/icons/delete.png";
 import rightIcons from "assets/images/icons/right-arrow.png";
 import leftIcons from "assets/images/icons/left-arrow.png";
-
+import person1 from "assets/images/icons/person1.png";
+import person2 from "assets/images/icons/person2.png";
+import person3 from "assets/images/icons/person3.png";
+import person4 from "assets/images/icons/person4.png";
+import person5 from "assets/images/icons/person5.png";
+import person6 from "assets/images/icons/person6.png";
+import person7 from "assets/images/icons/person7.png"
 export const icons = {
   // avatar,
   Google,
@@ -95,5 +101,14 @@ export const icons = {
   deleteIcons,
   rightIcons,
   leftIcons,
+
+
+  person1,
+  person2,
+  person3,
+  person4,
+  person5,
+  person6,
+  person7
 
 };

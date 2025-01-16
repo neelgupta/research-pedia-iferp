@@ -10,7 +10,7 @@ const EmailVerification = () => {
       const navigate = useNavigate();
     const initialValues = {
         email: "",
-        otp: "", // Store OTP as a single string
+        otp: "", 
     };
 
     // Validation schema using Yup
@@ -57,7 +57,7 @@ const EmailVerification = () => {
                     <LeftsideContainer />
                 </div>
                 <div className="col-lg-6 col-12">
-                    <div className="d-flex justify-content-center align-items-center vh-100 me-10">
+                    <div className="d-flex justify-content-center align-items-center " style={{minHeight : "100vh"}}>
                         <div className="usersignin-container">
                             <div className="form-header mb-32">
                                 <h1>Email Verification</h1>
