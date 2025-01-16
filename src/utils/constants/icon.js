@@ -1,7 +1,3 @@
-
-export * from "./icon"
-export * from "./DialCode"
-
 // import avatar from "assets/images/avatar.png";
 import loginicon from "assets/images/icons/login-img.png";
 import showpassword from "assets/images/icons/passwordshow.png";
@@ -50,40 +46,7 @@ import editIcons from "assets/images/icons/edit.png";
 import deleteIcons from "assets/images/icons/delete.png";
 import rightIcons from "assets/images/icons/right-arrow.png";
 import leftIcons from "assets/images/icons/left-arrow.png";
-import avatarOneIcons from "assets/images/icons/avatar-1.png";
-import avatarTwoIcons from "assets/images/icons/avatar-2.png";
-import avatarThreeIcons from "assets/images/icons/avatar-3.png";
-import avatarFourIcons from "assets/images/icons/avatar-4.png";
-import avatarFiveIcons from "assets/images/icons/avatar-5.png";
-import avatarSixIcons from "assets/images/icons/avatar-6.png";
-import avatarSevenIcons from "assets/images/icons/avatar-7.png";
-import avatarEightIcons from "assets/images/icons/avatar-8.png";
-import avatarNineIcons from "assets/images/icons/avatar-9.png";
-import avatarTenIcons from "assets/images/icons/avatar-10.png";
-import primeIcons from "assets/images/icons/prime.png";
-import emailIcons from "assets/images/icons/email.png";
-import phoneIcons from "assets/images/icons/phone.png";
-import locationIcons from "assets/images/icons/location.png";
-import linkIcons from "assets/images/icons/link.png";
-import activeIcons from "assets/images/icons/active.png";
-import rightBArrowIcons from "assets/images/icons/right-blue-arrow.png";
-import userIcons from "assets/images/icons/user-1.png";
-import noteIcons from "assets/images/icons/note.png";
-import lightIcons from "assets/images/icons/light.png";
-import actionIcons from "assets/images/icons/action.png";
-import docsIcons from "assets/images/icons/docs.png";
-import calenderIcons from "assets/images/icons/calender.png";
-import dotIcons from "assets/images/icons/dot.png";
-import eyeIcons from "assets/images/icons/eye.png";
-import bookIcons from "assets/images/icons/book.png";
-import messageIcons from "assets/images/icons/message.png";
-import upThumIcons from "assets/images/icons/upThum.png";
-import downThumIcons from "assets/images/icons/downThum.png";
-import videoIcons from "assets/images/icons/video.png";
-import saveIcons from "assets/images/icons/save.png";
-import userTwoIcons from "assets/images/icons/user-2.png";
-import reloadIcons from "assets/images/icons/reload.png";
-import videoWIcons from "assets/images/icons/video-w.png";
+
 export const icons = {
   // avatar,
   Google,
@@ -132,40 +95,5 @@ export const icons = {
   deleteIcons,
   rightIcons,
   leftIcons,
-  avatarTenIcons,
-  avatarNineIcons,
-  avatarEightIcons,
-  avatarSevenIcons,
-  avatarSixIcons,
-  avatarFiveIcons,
-  avatarFourIcons,
-  avatarThreeIcons,
-  avatarTwoIcons,
-  avatarOneIcons,
-  rightBArrowIcons,
-  activeIcons,
-  linkIcons,
-  locationIcons,
-  phoneIcons,
-  phoneIcons,
-  emailIcons,
-  primeIcons,
-  userIcons,
-  noteIcons,
-  lightIcons,
-  actionIcons,
-  saveIcons,
-  videoIcons,
-  downThumIcons,
-  upThumIcons,
-  messageIcons,
-  bookIcons,
-  eyeIcons,
-  dotIcons,
-  calenderIcons,
-  docsIcons,
-  userTwoIcons,
-  reloadIcons,
-  videoWIcons,
-};
 
+};

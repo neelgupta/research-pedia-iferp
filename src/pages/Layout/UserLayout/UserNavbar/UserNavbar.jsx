@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import "./UserNavbar.scss"
-import { icons } from '@/utils/constants'
+import { icons } from '@/utils/constants/icon'
 import { Button, SearchInput } from '@/components'
 import { Container } from 'react-bootstrap'
 const UserNavbar = () => {

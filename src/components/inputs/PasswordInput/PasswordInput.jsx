@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./PasswordInput.scss";
 import Label from "../Label";
-import { icons } from "../../../utils/constants";
+import { icons } from "../../../utils/constants/icon";
 import { trimLeftSpace } from "@/utils/helpers";
 
 const PasswordInput = ({

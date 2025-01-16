@@ -1,5 +1,5 @@
 import { Button, TextInput } from "@/components";
-import { icons } from "@/utils/constants";
+import { icons } from "@/utils/constants/icon";
 import { Formik } from "formik";
 import "./AuthenticationCode.scss"
 import * as Yup from "yup";
@@ -14,7 +14,7 @@ const AuthenticationCode =() =>{
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
-      console.log("values" , values)
+     
   };
     return(
         <>

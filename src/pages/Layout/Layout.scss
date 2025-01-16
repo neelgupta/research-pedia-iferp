@@ -9,11 +9,20 @@
 
     .body-block {
 
-      height: calc(100vh - 152px);
-      overflow-y: auto;
+     
+       height: calc(100vh - 97px);
+       overflow-y: auto;
+       
+      padding-left: 40px;
+      padding-right: 40px;
 
-      margin-left: 40px;
-      margin-right: 40px;
+
+//       height: calc(100vh - 152px);
+//       overflow-y: auto;
+
+//       margin-left: 40px;
+//       margin-right: 40px;
+
 
 
       @media (max-width : 992px) {

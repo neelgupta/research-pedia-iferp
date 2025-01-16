@@ -1,4 +1,4 @@
-import { icons } from "@/utils/constants";
+import { icons } from "@/utils/constants/icon";
 import "./ResetPassword.scss"
 import { Formik } from "formik";
 import { Button, PasswordInput } from "@/components";
@@ -11,7 +11,7 @@ const ResetPassword =() =>{
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { token } = useParams();
-console.log("token" ,token)
+
     const initialValues = {
       
        password: "",
@@ -32,7 +32,7 @@ console.log("token" ,token)
 
       const handleSubmit = async (values, { setSubmitting }) => {
         const res = await dispatch(updateforgotpassword({ ...values, token }));
-        console.log("res",res)
+     
         if (res.status === 200) {
           navigate("/admin/login")
         }

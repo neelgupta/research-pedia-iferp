@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import "./Security.scss";
 import Breadcrumb from '@/components/layouts/Breadcrumb';
 import { Button, TextInput } from '@/components';
-import { icons } from '@/utils/constants';
+import { icons } from '@/utils/constants/icon';
 import ReactQR from 'react-qr-code'; // Import the react-qr-code component
 
 const Security = () => {
@@ -10,7 +10,7 @@ const Security = () => {
   const [qrText, setQrText] = useState('hello'); // State to store the text for the QR code
 
   const openQrcode = () => {
-    console.log("hello");
+
     setOpenQr(true);
   };
 

@@ -11,12 +11,13 @@ const App = () => {
   const reduxData = useSelector((state) => state.global);
 
   const localData = getDataFromLocalStorage();
- const isAuth = localData?.token ? true : false;
- console.log(localData);
-//  const role = localData
-// const isAuth = true;
-  const role = localData.role;
+  
+//  const isAuth = localData?.token ? true : false;
 
+//  const role = localData?.role
+
+const isAuth = false;
+const role = "user"
   return (
     <div>
       <Promptalert />

@@ -1,6 +1,6 @@
 import Button from "@/components/inputs/Button";
 import SearchInput from "@/components/inputs/SearchInput";
-import { icons } from "@/utils/constants";
+import { icons } from "@/utils/constants/icon";
 import { trimLeftSpace } from "@/utils/helpers";
 import { debounce } from "lodash";
 import { useState } from "react";

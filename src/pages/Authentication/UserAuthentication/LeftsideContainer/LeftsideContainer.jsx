@@ -5,7 +5,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "./LeftsideContainer.scss"
-import { icons } from '@/utils/constants';
+import { icons } from '@/utils/constants/icon';
 const LeftsideContainer = () => {
 
     const cards = [

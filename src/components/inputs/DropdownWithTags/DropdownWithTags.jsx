@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import "./DropdownWithTags.scss";
-import { icons } from "@/utils/constants";
+import { icons } from "@/utils/constants/icon";
 import { ErrorMessage } from "formik";
 
 const DropdownWithTags = ({ options, name, value, onSelectionChange }) => {

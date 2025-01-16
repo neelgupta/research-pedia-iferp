@@ -2,6 +2,9 @@ import Breadcrumb from "@/components/layouts/Breadcrumb";
 import "./ListUser.scss";
 import Table from "@/components/layouts/Table";
 import { useState } from "react";
+
+import { icons } from "@/utils/constants/icon";
+
 import { icons } from "@/utils/constants";
 import { useNavigate } from "react-router-dom";
 

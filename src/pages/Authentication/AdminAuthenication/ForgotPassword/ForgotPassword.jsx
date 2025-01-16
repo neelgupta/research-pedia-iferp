@@ -1,5 +1,5 @@
 import { Button, TextInput } from "@/components";
-import { icons } from "@/utils/constants";
+import { icons } from "@/utils/constants/icon";
 import { Formik } from "formik";
 import "./ForgotPassword.scss"
 import * as Yup from "yup";
@@ -23,7 +23,7 @@ const dispatch = useDispatch();
   
     const handleSubmit = async (values, { setSubmitting }) => {
  const res = await dispatch(forgotpasswordsendemail(values));
-    console.log("res",res)
+  
 
       
 

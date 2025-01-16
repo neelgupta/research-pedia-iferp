@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import Button from "../Button";
 import "./MessageSendInput.scss";
-import { icons } from "@/utils/constants";
+import { icons } from "@/utils/constants/icon";
 
 const MessageSendInput = ({
   placeholder,

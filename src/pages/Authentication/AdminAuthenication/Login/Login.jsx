@@ -1,7 +1,7 @@
 import { Button, PasswordInput, TextInput } from "@/components";
 import "./Login.scss";
 import { Formik } from "formik";
-import { icons } from "@/utils/constants";
+import { icons } from "@/utils/constants/icon";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -21,7 +21,7 @@ const dispatch = useDispatch();
 
   const handleSubmit = async (values, { setSubmitting }) => {
     const res = await dispatch(handleLogin(values));
-    console.log("res",res)
+  
       if (res.status === 200) {
         if(res.data?.response?.role == "admin" ){
         navigate("/admin/setting/category-topic")

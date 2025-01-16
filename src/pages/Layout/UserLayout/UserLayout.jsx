@@ -11,7 +11,7 @@ const UserLayout = ({children}) => {
       <div className="position-absolute top-0 start-0">
       <UserSidebar className="left-sidebar rearchPedia-scroll " /> 
       </div>     
-      <div className="body-block rearchPedia-scroll">{children}</div> 
+      {/* <div className="body-block rearchPedia-scroll">{children}</div>  */}
      
    <div className="position-absolute top-0 end-0">
       <UserSidebar className="right-sidebar" /> 

@@ -5,7 +5,7 @@ import "./CategoryTopics.scss";
 import DropdownWithTags from "@/components/inputs/DropdownWithTags/DropdownWithTags";
 import { Button } from "@/components";
 import Breadcrumb from "@/components/layouts/Breadcrumb";
-import { icons } from "@/utils/constants";
+import { icons } from "@/utils/constants/icon";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
 import { Row, Col, Dropdown } from "react-bootstrap"; // Import Row and Col from react-bootstrap
 
@@ -70,14 +70,11 @@ const CategoryTopics = () => {
       [`${categoryIndex}-${tagIndex}`]: value,
     }));
 
-    console.log("categoryIndex", categoryIndex);
-    console.log("tagIndex", tagIndex);
-    console.log("value", value);
+
   };
 
   const handleSubmit = (values) => {
-    console.log("Form Submitted");
-    console.log("Values:", values);
+
   };
 
 
