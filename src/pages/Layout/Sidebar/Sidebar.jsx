@@ -30,8 +30,8 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
       icon: icons.staff,
       activeIcons: icons.staffisactive,
       childoption: [
-        { title: "Staff Users", url: "/admin/staff/users" },
-        { title: "Staff Reports", url: "/admin/staff/reports" },
+        { title: "Administrator User",  url: "/admin/staff/administrator-user" },
+        { title: "Administrator Roles", url: "/admin/staff/administrator-roles" },
       ],
     },
     {
@@ -102,6 +102,22 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
     }
   }, [location.pathname]);
 
+
+  // useEffect(() => {
+  //   const activeIndex = admin.findIndex((item) =>
+  //     location.pathname.startsWith(item.url)
+  //   );
+  //   setActiveTab(activeIndex);
+  
+  //   if (activeIndex !== -1 && admin[activeIndex].childoption) {
+  //     const activeChildIndex = admin[activeIndex].childoption.findIndex((child) =>
+  //       child?.url?.some((url) => location.pathname.startsWith(url))
+  //     );
+  //     setActiveChild(activeChildIndex);
+  //   }
+  // }, [location.pathname]);
+  
+
   return (
     <>
       {show && (
@@ -159,8 +175,8 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
                       }`}
                       onClick={() => handleTabClick(index)}
                     >
-                      <div className="d-flex justify-content-between align-items-center">
-                        <div className="d-flex align-items-center">
+                      <div className="d-flex justify-content-between align-items-center" style={{cursor : "pointer"}}>
+                        <div className="d-flex align-items-center" >
                           <div className="tab-icon">
                             <img
                               src={
@@ -198,7 +214,7 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
 
                     {/* Conditionally render child-tabs */}
                     {activeTab === index && item.childoption && (
-                      <div className="child-tab">
+                      <div className="child-tab"  style={{cursor : "pointer"}}>
                         {item.childoption.map((child, childIndex) => (
                           <div
                             key={childIndex}

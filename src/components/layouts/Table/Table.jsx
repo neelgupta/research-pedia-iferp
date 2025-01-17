@@ -23,6 +23,11 @@ const Table = ({
   handleSorting,
   searchVal,
   handleSearch,
+  tableheader,
+  isSearch,
+  ispaginationcontrols,
+  istableaction,
+  ispagination
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const totalPages = Math.ceil(totalRows / rowsPerPage);
@@ -72,12 +77,15 @@ const Table = ({
 
   return (
     <div id="table-container">
-      <div className="top-title">
-        <p>List Users </p>
-      </div>
-      <div className="table-search">
+      {/* <div className="top-title">
+        <p>{tableheader}</p>
+      </div> */}
+      
+      {
+        istableaction &&   <div className="table-search">
         {/* {totalPages > 1 && ( */}
-        <div className="pagination-controls">
+        {
+          ispaginationcontrols &&  <div className="pagination-controls">
           <div className="d-flex justify-content-end gap-md-5 gap-2 flex-wrap">
             <div className="d-flex align-items-center gap-3">
               <div className="select" onClick={() => setIsOpen(!isOpen)}>
@@ -112,8 +120,11 @@ const Table = ({
             </div>
           </div>
         </div>
+        }
+       
         {/* )} */}
-        <div>
+        {
+          isSearch &&   <div>
           <SearchInput
             value={searchVal}
             className="mw-250"
@@ -121,7 +132,11 @@ const Table = ({
             onChange={handleSearch}
           />
         </div>
+        }
+      
       </div>
+      }
+    
       <div className="table-body brave-scroll">
         <div className="header-row" style={{ minWidth: min || "500px" }}>
           {header?.map((elm, index) => {
@@ -198,39 +213,41 @@ const Table = ({
         </div>
       </div>
 
-      {/* {totalPages > 1 && ( */}
-      <div className="pagination">
-        <span className="d-flex align-items-center page-c  text-14-400 color-1319">
-          Showing
-          <span className="row-count ps-5 pe-5">
-            {startRow} to {endRow}
-          </span>{" "}
-          of <span className="row-count ps-5 pe-5">{totalRows}</span> entries
-        </span>
-        <div className="d-flex align-items-center gap-3">
-          <img
-            src={icons?.leftIcons}
-            onClick={handlePrevPage}
-            disabled={currentPage === 1}
-            className="pagoicon pointer"
-          />
-          <div className="d-flex gap-2">
-            <span className="page-number active pointer">{currentPage}</span>
-            {/* {currentPage < totalPages && ( */}
-            <span className="page-number pointer" onClick={handleNextPageR}>
-              {currentPage + 1}
-            </span>
-            {/* )} */}
-          </div>
-          <img
-            src={icons?.rightIcons}
-            onClick={handleNextPage}
-            disabled={currentPage === totalPages}
-            className="pagoicon pointer"
-          />
-        </div>
-      </div>
-      {/* )} */}
+{
+   ispagination && 
+   <div className="pagination">
+   <span className="d-flex align-items-center page-c  text-14-400 color-1319">
+     Showing
+     <span className="row-count ps-5 pe-5">
+       {startRow} to {endRow}
+     </span>{" "}
+     of <span className="row-count ps-5 pe-5">{totalRows}</span> entries
+   </span>
+   <div className="d-flex align-items-center gap-3">
+     <img
+       src={icons?.leftIcons}
+       onClick={handlePrevPage}
+       disabled={currentPage === 1}
+       className="pagoicon pointer"
+     />
+     <div className="d-flex gap-2">
+       <span className="page-number active pointer">{currentPage}</span>
+       {/* {currentPage < totalPages && ( */}
+       <span className="page-number pointer" onClick={handleNextPageR}>
+         {currentPage + 1}
+       </span>
+       {/* )} */}
+     </div>
+     <img
+       src={icons?.rightIcons}
+       onClick={handleNextPage}
+       disabled={currentPage === totalPages}
+       className="pagoicon pointer"
+     />
+   </div>
+ </div>
+}
+   
     </div>
   );
 };

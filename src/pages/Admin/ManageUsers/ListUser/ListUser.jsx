@@ -4,6 +4,7 @@ import Table from "@/components/layouts/Table";
 import { useState } from "react";
 import { icons } from "@/utils/constants";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components";
 
 const ListUser = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -312,7 +313,15 @@ const ListUser = () => {
         />
 
         <h1 className="topic-text">List Users </h1>
+    
 
+        <div className='maintable-container'>
+   <div className="table-header d-flex d-flex justify-content-between align-items-center">
+          <div>
+            <h1 className='text-16-600 color-1D26'>List User</h1>
+          </div>
+
+      </div>
         <Table
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}
@@ -322,7 +331,14 @@ const ListUser = () => {
           row={rowData}
           totalRows={allStudentList?.data?.length}
           min="1000px"
+          isSearch
+          ispaginationcontrols
+          istableaction
+          ispagination
+
         />
+        </div>
+
       </div>
     </div>
   );

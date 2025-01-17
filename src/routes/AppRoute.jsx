@@ -4,6 +4,10 @@ import CategoryTopic from "@/pages/Admin/SiteSettings/CategoryTopics";
 import HeaderFooterCode from "@/pages/Admin/SiteSettings/HeaderFooterCode";
 import Security from "@/pages/Admin/SiteSettings/Security/Security";
 import SmtpReplay from "@/pages/Admin/SiteSettings/SmtpReplay";
+import AddAdministratorRoles from "@/pages/Admin/StaffManagement/AdministratorRoles/AddAdministratorRoles";
+import AdministratorRolesTable from "@/pages/Admin/StaffManagement/AdministratorRoles/AdministratorRolesTable";
+import AddAdministratorUser from "@/pages/Admin/StaffManagement/AdministratorUser/AddAdministratorUser";
+import AdministratorUser from "@/pages/Admin/StaffManagement/AdministratorUser/AdministratorTable";
 import Layout from "@/pages/Layout";
 import Home from "@/pages/User/Home/Home";
 import { Navigate, Route, Routes } from "react-router-dom";
@@ -37,6 +41,22 @@ export const AppRoutes = () => {
     {
       path: "/admin/manage-users/list-user/user-details/:type",
       component: <UserDetails />,
+    },
+    {
+      path: "/admin/staff/administrator-user",
+      component: <AdministratorUser />,
+    },
+    {
+      path: "/admin/staff/addadministrator-user",
+      component: <AddAdministratorUser />,
+    },
+    {
+      path: "/admin/staff/administrator-roles",
+      component: <AdministratorRolesTable />,
+    },
+    {
+      path: "/admin/staff/addadministrator-roles",
+      component: <AddAdministratorRoles />,
     },
   ];
 
