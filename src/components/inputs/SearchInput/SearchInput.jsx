@@ -1,7 +1,7 @@
-import { icons } from "@/utils/constants/icon";
 import { Label } from "components";
 import { trimLeftSpace } from "utils/helpers";
 import "./SearchInput.scss";
+import { icons } from "@/utils/constants";
 
 const SearchInput = ({
   id,
@@ -70,9 +70,13 @@ const SearchInput = ({
         </div>
         {error && <div className="input-error">{error}</div>}
       </div>
-      {/* <span className="h-18 w-18 d-flex">
-        <img src={icons.Searchicon} alt="search" className="fit-image" />
-      </span> */}
+      <span className="h-22 w-22 d-flex">
+        <img
+          src={icons.Searchicon}
+          alt="search"
+          className="object-fit-contain"
+        />
+      </span>
     </div>
   );
 };

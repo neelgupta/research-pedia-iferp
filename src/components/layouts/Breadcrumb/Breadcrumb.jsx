@@ -1,7 +1,7 @@
 import React from "react";
-import { icons } from "@/utils/constants/icon";
 import { useNavigate } from "react-router-dom";
 import "./Breadcrumb.scss";
+import { icons } from "@/utils/constants";
 
 const Breadcrumb = ({ list, className, isGreen }) => {
   const navigate = useNavigate();

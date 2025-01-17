@@ -2,7 +2,9 @@ import Breadcrumb from "@/components/layouts/Breadcrumb";
 import "./ListUser.scss";
 import Table from "@/components/layouts/Table";
 import { useState } from "react";
-import { icons } from "@/utils/constants/icon";
+
+import { useNavigate } from "react-router-dom";
+import { icons } from "@/utils/constants";
 
 const ListUser = () => {
   const [allStudentList, setAllStudentList] = useState({

@@ -1,6 +1,5 @@
 import Button from "@/components/inputs/Button";
 import SearchInput from "@/components/inputs/SearchInput";
-import { icons } from "@/utils/constants/icon";
 import { trimLeftSpace } from "@/utils/helpers";
 import { debounce } from "lodash";
 import { useState } from "react";
@@ -8,6 +7,7 @@ import { Col, Row } from "react-bootstrap";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import Roundedloader from "../Roundedloader";
 import "./Table.scss";
+import { icons } from "@/utils/constants";
 
 const Table = ({
   header,

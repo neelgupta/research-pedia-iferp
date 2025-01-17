@@ -1,0 +1,47 @@
+.right-sidebar-container {
+    padding: 24px 16px;
+    width: 80px;
+    background-color: var(--eaf1);
+    min-height: calc(100vh - 166.55px);
+
+
+    .menu-item-name {
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 14.52px;
+        color: var(--3333);
+        margin-top: 4px;
+        text-align: center;
+
+    }
+
+    .right-sidebar-active-icon {
+        content: '';
+        position: absolute;
+        width: 3px;
+        height: 38px;
+        border-radius: 12px 0px 0px 12px;
+        background-color: var(--113D);
+        top: 0px;
+        right: -13px;
+
+    }
+
+    .d-a {
+        position: relative;
+
+
+    }
+
+    .menu-item-name-active {
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 14.52px;
+        margin-top: 4px;
+        text-align: center;
+        color: var(--113D);
+
+
+
+    }
+}

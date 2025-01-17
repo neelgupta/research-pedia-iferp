@@ -1,22 +1,18 @@
-
 import UserLayout from "@/pages/Layout/UserLayout";
 import Home from "@/pages/User/Home";
 import Premium from "@/pages/User/Premium/Premium";
+import ProfessionalMemberProfile from "@/pages/User/ProfessionalMemberProfile";
 import { Navigate, Route, Routes } from "react-router-dom";
 
-
 export const UserRoutes = () => {
-
-  const role = 'admin';
+  const role = "admin";
 
   const userRoutes = [
     {
       path: "/",
-      component: <Premium/>,
+      component: <ProfessionalMemberProfile />,
     },
-  
   ];
-
 
   return (
     <Routes>

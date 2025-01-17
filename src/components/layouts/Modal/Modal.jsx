@@ -1,6 +1,6 @@
 import BootrsapModal from "react-bootstrap/Modal";
-import { icons } from "@/utils/constants/icon";
 import "./Modal.scss";
+import { icons } from "@/utils/constants";
 
 const Modal = ({
   children,
@@ -13,7 +13,7 @@ const Modal = ({
   hideCloseButton,
   isCloseOutside,
   textClass,
-  isClose = true
+  isClose = true,
 }) => {
   return (
     <BootrsapModal
@@ -31,8 +31,7 @@ const Modal = ({
           maxWidth: width ? width : "",
         }}
       >
-
-        { isClose && !hideCloseButton && (
+        {isClose && !hideCloseButton && (
           <>
             {largeClose ? (
               <div className="modal-close-button pointer" onClick={onHide}>
