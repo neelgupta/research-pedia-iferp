@@ -2,11 +2,13 @@ import Breadcrumb from "@/components/layouts/Breadcrumb";
 import "./ListUser.scss";
 import Table from "@/components/layouts/Table";
 import { useState } from "react";
-
-import { useNavigate } from "react-router-dom";
 import { icons } from "@/utils/constants";
+import { useNavigate } from "react-router-dom";
 
 const ListUser = () => {
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [currentPage, setCurrentPage] = useState(1);
+  const navigate = useNavigate();
   const [allStudentList, setAllStudentList] = useState({
     total: 0,
     offset: 0,
@@ -16,10 +18,9 @@ const ListUser = () => {
     sortKey: "",
     data: [
       {
-        profile: "John Doe",
-        account: "johndoe@example.com",
-        email: "johndoe@example.com",
-        age: 25,
+        profile_img: icons?.avatarOneIcons,
+        account: "Dr.Airi Satou",
+        email: "Info@123.com",
         paymentStatus: "Paid",
         activity: "Active",
         joinUs: "Professional",
@@ -87,6 +88,8 @@ const ListUser = () => {
         credit: "4000/8000",
         number: "+91 9876543210",
         date: "12/09/2023",
+
+
       },
       {
         profile_img: icons?.avatarSevenIcons,
@@ -178,31 +181,97 @@ const ListUser = () => {
 
   const rowData = [];
   allStudentList?.data?.forEach((elem, index) => {
-    const { profile, joinUs, plan, credit, number, date } = elem;
+    const { profile, joinUs, plan, credit, number, date, account, email } =
+      elem;
     let obj = [
       {
-        value: `${profile}`,
-        className: "wp-40 justify-content-start",
+        value: (
+          <div
+            className="d-flex align-items-center gap-3 pointer"
+            onClick={() =>
+              navigate("/admin/manage-users/list-user/user-details")
+            }
+          >
+            <div className="h-40 w-40 rounded-circle">
+              <img
+                src={elem.profile_img}
+                alt="profile-img"
+                loading="lazy"
+                className="pointer rounded-circle"
+              />
+            </div>
+            <div>
+              <h6 className="mb-2 text-14-600">{account}</h6>
+              <p className="mb-0 text-12-400">{email}</p>
+            </div>
+          </div>
+        ),
+        className: "wp-40 justify-content-start pointer",
       },
       {
-        value: joinUs,
-        className: "wp-20 justify-content-start flex-wrap",
+        value: (
+          <p
+            className="mb-0"
+            onClick={() =>
+              navigate("/admin/manage-users/list-user/user-details")
+            }
+          >
+            {joinUs}
+          </p>
+        ),
+        className: "wp-20 justify-content-start flex-wrap pointer",
       },
       {
-        value: plan,
-        className: "wp-20 justify-content-start flex-wrap",
+        value: (
+          <p
+            className="mb-0"
+            onClick={() =>
+              navigate("/admin/manage-users/list-user/user-details")
+            }
+          >
+            {plan}
+          </p>
+        ),
+        className: "wp-20 justify-content-start flex-wrap pointer",
       },
       {
-        value: credit,
-        className: "wp-20 justify-content-start flex-wrap",
+        value: (
+          <p
+            className="mb-0"
+            onClick={() =>
+              navigate("/admin/manage-users/list-user/user-details")
+            }
+          >
+            {plan}
+          </p>
+        ),
+        className: "wp-20 justify-content-start flex-wrap pointer",
       },
       {
-        value: number,
-        className: "wp-30 justify-content-start flex-wrap",
+        value: (
+          <p
+            className="mb-0"
+            onClick={() =>
+              navigate("/admin/manage-users/list-user/user-details")
+            }
+          >
+            {number}
+          </p>
+        ),
+        className: "wp-30 justify-content-start flex-wrap pointer",
       },
       {
-        value: date,
-        className: "wp-30 justify-content-start flex-wrap",
+        value: (
+          <p
+            className="mb-0"
+            onClick={() =>
+              navigate("/admin/manage-users/list-user/user-details")
+            }
+          >
+            {date}
+          </p>
+        ),
+        className: "wp-30 justify-content-start flex-wrap pointer",
       },
       {
         value: (
@@ -245,10 +314,13 @@ const ListUser = () => {
         <h1 className="topic-text">List Users </h1>
 
         <Table
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+          rowsPerPage={rowsPerPage}
+          setRowsPerPage={setRowsPerPage}
           header={header}
           row={rowData}
-          totalRows={10}
-          currentPage={1}
+          totalRows={allStudentList?.data?.length}
           min="1000px"
         />
       </div>
