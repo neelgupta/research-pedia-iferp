@@ -32,7 +32,7 @@ const TextArea = ({
           <textarea
             value={value}
             className="text-area brave-scroll"
-            rows={rows || "1"}
+            rows={rows || "3"}
             placeholder={placeholder}
             onChange={(e) => {
               onChange({

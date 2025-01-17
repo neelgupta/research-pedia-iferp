@@ -7,7 +7,6 @@ import { icons } from "@/utils/constants";
 const RightCanvas = () => {
   const reduxData = useSelector((state) => state.global);
   const { rightSideObj, isRightSide } = reduxData || {};
-  console.log("rightSideObj");
 
   const dispatch = useDispatch();
   return (

@@ -116,6 +116,11 @@ import supportIcons from "assets/images/icons/support.png";
 import paintIcons from "assets/images/icons/paint.png";
 import docsBIcons from "assets/images/icons/docs-b.png";
 import completeIcons from "assets/images/icons/complete.png";
+import calenderBIcons from "assets/images/icons/calender.png";
+import uploadIcons from "assets/images/icons/upload.png";
+import upIcons from "assets/images/icons/up.png";
+import trueIcons from "assets/images/icons/true.png";
+import likeIcons from "assets/images/icons/like.png";
 
 export const icons = {
   // avatar,
@@ -241,4 +246,9 @@ export const icons = {
   docsBIcons,
   paintIcons,
   completeIcons,
+  calenderBIcons,
+  uploadIcons,
+  upIcons,
+  trueIcons,
+  likeIcons,
 };

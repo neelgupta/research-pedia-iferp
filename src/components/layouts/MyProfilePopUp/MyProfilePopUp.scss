@@ -22,15 +22,33 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        flex-wrap: wrap;
         gap: 16px;
 
         .details-block {
             display: flex;
             align-items: center;
+            flex-wrap: wrap;
+
             gap: 10px;
 
             .number-block {
                 border: 1px solid var(--3333);
+                height: 27px;
+                width: 27px;
+                border-radius: 50%;
+                font-size: 16px;
+                font-weight: 500;
+                color: var(--3333);
+                text-align: center;
+                vertical-align: middle;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .number-block-a {
+                border: 1px solid var(--113D);
                 height: 27px;
                 width: 27px;
                 border-radius: 50%;
@@ -51,7 +69,9 @@
         }
 
         .border-saprator {
-            width: 15%;
+            max-width: 171px;
+            min-width: 70px;
+            width: 100%;
             height: 0px;
             border: 1px dashed var(--3324);
         }
@@ -59,5 +79,17 @@
         .active-border {
             border-color: var(--cd80);
         }
+    }
+
+    @media (max-width:992px) {
+
+        .details-list {
+
+            justify-content: center;
+
+
+
+        }
+
     }
 }

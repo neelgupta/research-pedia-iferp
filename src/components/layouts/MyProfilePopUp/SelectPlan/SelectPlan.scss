@@ -1,0 +1,156 @@
+.select-plan-container {
+    .select-plan-text {
+        font-size: 22px;
+        margin-top: 34px;
+        font-weight: 600;
+        line-height: 28.6px;
+        color: var(--0303);
+        text-align: center;
+
+    }
+
+    .select-pra {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 25.6px;
+        color: var(--3333);
+        text-align: center;
+        margin-bottom: 11px;
+
+
+    }
+
+    .join-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 6px;
+        background-color: var(--d7a6);
+        max-width: 226px;
+        margin: auto;
+        border-radius: 100px;
+    }
+
+    .plan-box {
+        margin-top: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .plan-card {
+        height: 100%;
+        min-width: 275px;
+        min-height: 294px;
+        border-radius: 12px;
+        background-color: var(--fff);
+        border: 1px solid var(--dada);
+        padding: 12px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .popular {
+        min-width: 275px;
+        min-height: 294px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+        border-radius: 12px;
+        background-color: var(--eaf1);
+        padding: 12px;
+    }
+
+    .main-card {}
+
+    .plan-name {
+        font-size: 26px;
+        font-weight: 600;
+        line-height: 33.8px;
+
+
+    }
+
+    .n-a {
+        color: var(--113D);
+    }
+
+    .n-i-a {
+        color: var(--0303);
+    }
+
+    .description {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 22.4px;
+        margin-bottom: 18px;
+
+
+    }
+
+    .current-price {
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 26px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 0;
+
+        .price-t {
+            font-size: 28px;
+            font-weight: 600;
+            line-height: 36.4px;
+        }
+
+
+    }
+
+    .price-inner {
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 26px;
+        text-decoration: line-through;
+    }
+
+    .popular-text {
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 19.2px;
+        text-align: center;
+        color: var(--113D);
+
+    }
+
+    .popular-box {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+    }
+
+    .popular-box-inner {
+        display: flex;
+        align-items: center;
+        background-color: var(--113d);
+        padding: 10px 12px;
+        border-radius: 100px;
+        max-width: 120px;
+        gap: 6px;
+    }
+
+    .researchers-text {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 22.4px;
+        color: var(--1d48);
+
+
+    }
+}

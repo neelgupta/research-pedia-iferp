@@ -1,43 +1,71 @@
-#textInputwithDropdown-container{
-    .text-input-block {
-        position: relative;
-        display: flex; /* Ensure input and dropdown are in a row */
-        align-items: center;
-        gap: 10px; /* Adds spacing between input and dropdown */
-    border: 1px solid #E0E9F4;
-        input {
-          flex: 1; /* Allows input to take available space */
-          height: 52px;
-          padding: 10px;
-          font-size: 16px;
-          border : none;
-          border-radius: 6px;
-          background-color: var(--ffff);
-          outline: none;
-        }
-        input:focus,
-        input:active {
-          border: none;
-          outline: none;
-          box-shadow: none; /* Removes any shadow effect */
-        }
-        .dropdown-select {
-          height: 52px;
-          padding: 10px;
-          font-size: 16px;
-          outline: none;
-        border : none;
-          border-radius: 6px;
-          background-color: var(--ffff);
-          cursor: pointer;
-        }
-        .dropdown-select:focus,
-        .dropdown-select:active {
-          border: none;
-          outline: none;
-          box-shadow: none; /* Removes any shadow effect */
-        }
-      }
-}
+#textInputwithDropdown-container {
 
-  
+  .text-input-block {
+    position: relative;
+    display: flex;
+    /* Ensure input and dropdown are in a row */
+    align-items: center;
+    // gap: 10px;
+    /* Adds spacing between input and dropdown */
+    border: 1px solid #E0E9F4;
+    border-radius: 6px;
+
+    input {
+      flex: 1;
+      /* Allows input to take available space */
+      height: 44px;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-bottom: 1px solid #E0E9F4 !important;
+
+      border-radius: 0 6px 6px 0;
+      background-color: var(--ffff);
+      outline: none;
+
+      &:disabled {
+        cursor: not-allowed !important;
+        border: 1px solid var(--e0e9);
+        background-color: var(--e0e9);
+
+      }
+    }
+
+    input:focus,
+    input:active {
+      border: none;
+      outline: none;
+      box-shadow: none;
+      /* Removes any shadow effect */
+    }
+
+    .dropdown-select {
+      height: 45px;
+      padding: 10px;
+      font-size: 16px;
+      outline: none;
+      border: none;
+      border-radius: 6px 0 0 6px;
+      background-color: var(--ffff);
+      cursor: pointer;
+
+    }
+
+    .dropdown-select:disabled {
+      cursor: not-allowed !important;
+      border: 1px solid var(--e0e9);
+      background-color: var(--e0e9);
+
+    }
+
+    .dropdown-select:focus,
+    .dropdown-select:active {
+      border: none;
+      outline: none;
+      box-shadow: none;
+      /* Removes any shadow effect */
+    }
+
+
+  }
+}
