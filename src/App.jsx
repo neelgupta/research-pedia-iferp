@@ -14,10 +14,10 @@ const App = () => {
 
   //  const isAuth = localData?.token ? true : false;
 
-  //  const role = localData?.role
 
-  const isAuth = true;
-  const role = "user";
+const isAuth = true;
+const role = "admin"
+
   return (
     <div>
       <Promptalert />
