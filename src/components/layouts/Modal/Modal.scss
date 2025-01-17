@@ -1,7 +1,8 @@
 #modal-container {
   position: relative;
-  border-radius: 6px;
-  padding: 19px;
+  border-radius: 12px;
+  padding: 24px 28px;
+
   .modal-close-button {
     position: absolute;
     right: 18px;
@@ -10,10 +11,12 @@
     color: #a9a9a9;
   }
 }
+
 .modal-content {
-  border-radius: 20px;
+  border-radius: 12px;
   width: fit-content;
 }
+
 .modal-block-custom {
   padding-right: unset !important;
 }

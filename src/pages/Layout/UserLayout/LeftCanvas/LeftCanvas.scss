@@ -1,10 +1,12 @@
 .left-canvas-container {
     width: 280px;
     padding: 24px;
-    flex-grow: 1;
     overflow-y: auto;
     background-color: var(--f6f8);
     min-height: calc(100vh - 166.55px);
+    height: 100%;
+    flex-grow: 1;
+
 
     .top-box {
         display: flex;
@@ -70,7 +72,10 @@
 
 .offcanvas-body {
     padding: 0px !important;
-    background-color: var(--f6f8);
+    background-color: var(--f6f8) !important;
     overflow: hidden;
+    min-height: calc(100vh - 166.55px) !important;
+    flex-grow: 1 !important;
+    height: 100% !important;
 
 }

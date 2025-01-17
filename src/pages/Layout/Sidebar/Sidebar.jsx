@@ -43,7 +43,7 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
         { title: "Category & Topics", url: "/admin/setting/category-topic" },
         { title: "Security", url: "/admin/setting/security" },
         { title: "SMTP Relay", url: "/admin/setting/smtp-replay" },
-        { title: "Header/Footer Code", url: "/admin/setting/headerfooter" },
+        { title: "Header/Footer Code", url: "/admin/setting/header-footer" },
       ],
     },
     {

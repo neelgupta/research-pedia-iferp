@@ -97,12 +97,14 @@
     --1D26: #1D2630;
     --0303: #030303;
     --6F90: #6F90FF;
-    --6E75: #6E758B --e7ea: #E7EAEE;
+    --6E75: #6E758B;
+    --e7ea: #E7EAEE;
     --bec8: #BEC8D0;
     --1319: #131920;
     --2626: #262626;
     --e7ec: #E7ECFA;
-    --FFD1: #FFD130 --5b6b: #5B6B79;
+    --FFD1: #FFD130;
+    --5b6b: #5B6B79;
     --2125: #212529BF;
     --cd0f: #113DCD0F;
     --075e: #075E45;
@@ -114,6 +116,10 @@
     --eaf1: #EAF1FB;
     --f6f8: #F6F8FC;
     --0c0c: #0C0C0C;
+    --9cb0: #9CB0C9;
+    --3324: #33333324;
+    --cd80: #113DCD80;
+    --e0e9: #E0E9F480;
 }
 
 $colors: (
@@ -223,7 +229,10 @@ $colors: (
     'e0e9':var(--e0e9),
     'eaf1':var(--eaf1),
     'f6f8':var(--f6f8),
-    '0c0c':var(--0c0c)
+    '0c0c':var(--0c0c),
+    '9cb0':var(--9cb0),
+    '3324':var(--3324),
+    'cd80':var(--cd80),
 );
 
 @each $name, $color in $colors {
