@@ -95,7 +95,7 @@ const Login = () => {
                   </div>
                   <div
                     className="forgot-password mt-16"
-                    onClick={() => navigate("/admin/forgotpassword")}
+                    onClick={() => navigate("/admin/forgot-password")}
                   >
                     <span className="d-flex align-items-center">
                       Forgot Password?

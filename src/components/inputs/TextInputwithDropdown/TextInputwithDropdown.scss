@@ -1,14 +1,16 @@
 #textInputwithDropdown-container{
     .text-input-block {
         position: relative;
-        display: flex; /* Ensure input and dropdown are in a row */
+        display: flex; 
         align-items: center;
-        gap: 10px; /* Adds spacing between input and dropdown */
+         gap: 10px;
+        
     border: 1px solid #E0E9F4;
+
         input {
           flex: 1; /* Allows input to take available space */
           height: 52px;
-          padding: 10px;
+        
           font-size: 16px;
           border : none;
           border-radius: 6px;
@@ -23,7 +25,7 @@
         }
         .dropdown-select {
           height: 52px;
-          padding: 10px;
+           padding: 10px;
           font-size: 16px;
           outline: none;
         border : none;

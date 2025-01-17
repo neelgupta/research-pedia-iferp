@@ -1,4 +1,5 @@
 import ListUser from "@/pages/Admin/ManageUsers/ListUser/ListUser";
+import UserDetails from "@/pages/Admin/ManageUsers/UserDetails";
 import CategoryTopic from "@/pages/Admin/SiteSettings/CategoryTopics";
 import HeaderFooterCode from "@/pages/Admin/SiteSettings/HeaderFooterCode";
 import Security from "@/pages/Admin/SiteSettings/Security/Security";
@@ -22,7 +23,7 @@ export const AppRoutes = () => {
       component: <SmtpReplay />,
     },
     {
-      path: "/admin/setting/headerfooter",
+      path: "/admin/setting/header-footer",
       component: <HeaderFooterCode />,
     },
     {

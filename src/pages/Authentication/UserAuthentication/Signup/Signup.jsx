@@ -38,7 +38,7 @@ const UserSignup = () => {
   return (
     <div id="usersignup-container">
       <div className="row">
-        <div className="col-6 d-none d-lg-block" >
+        <div className="col-6 d-none d-lg-block" style={{minHeight : "100vh"}}>
           <LeftsideContainer/>
         </div>
         <div className="col-lg-6 col-12">

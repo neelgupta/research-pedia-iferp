@@ -80,7 +80,7 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
 
   const handleTabClick = (index) => {
     setActiveTab(activeTab === index ? null : index);
-    setActiveChild(null);
+   
   };
 
   const handleChildClick = (url, index) => {
