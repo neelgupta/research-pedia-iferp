@@ -1,4 +1,3 @@
-import { icons } from "@/utils/constants/icon";
 import React, { useState, useEffect } from "react";
 import { Offcanvas } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom"; // Import useNavigate
@@ -6,6 +5,7 @@ import "./Sidebar.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "@/store/globalSlice";
 import { IoMdClose } from "react-icons/io";
+import { icons } from "@/utils/constants";
 const Sidebar = ({ isResponsive, show, setShow }) => {
   const [activeTab, setActiveTab] = useState(null);
   const [activeChild, setActiveChild] = useState(null); // Track active child
@@ -43,7 +43,7 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
         { title: "Category & Topics", url: "/admin/setting/category-topic" },
         { title: "Security", url: "/admin/setting/security" },
         { title: "SMTP Relay", url: "/admin/setting/smtp-replay" },
-        { title: "Header/Footer Code", url: "/admin/setting/headerfooter" },
+        { title: "Header/Footer Code", url: "/admin/setting/header-footer" },
       ],
     },
     {
@@ -113,25 +113,19 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
             maxWidth: "280px",
           }}
         >
-
-     
           <Offcanvas.Body className="p-0 rearchPedia-scroll">
             <div className="slide-container  rearchPedia-scroll">
-              <div className='d-flex d-flex justify-content-between'>
-              <img
-                src={icons.loginicon}
-                alt="icons"
-                className="img-fluid mt-24 ms-24 mb-24"
-              />
-               <IoMdClose
-             
-              size={20}
-                className=" mt-24 ms-24 mb-24 d-block d-lg-none"
-              onClick={() => dispatch(toggleSidebar(!reduxdata))}
-              />
-
-
-
+              <div className="d-flex d-flex justify-content-between">
+                <img
+                  src={icons.loginicon}
+                  alt="icons"
+                  className="img-fluid mt-24 ms-24 mb-24"
+                />
+                <IoMdClose
+                  size={20}
+                  className=" mt-24 ms-24 mb-24 d-block d-lg-none"
+                  onClick={() => dispatch(toggleSidebar(!reduxdata))}
+                />
               </div>
               <div className="profile-header d-flex justify-content-between align-items-center">
                 <div className="d-flex">

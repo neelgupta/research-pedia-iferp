@@ -11,13 +11,13 @@ const App = () => {
   const reduxData = useSelector((state) => state.global);
 
   const localData = getDataFromLocalStorage();
-  
-//  const isAuth = localData?.token ? true : false;
 
-//  const role = localData?.role
+  //  const isAuth = localData?.token ? true : false;
+
 
 const isAuth = true;
 const role = "admin"
+
   return (
     <div>
       <Promptalert />
@@ -27,7 +27,7 @@ const role = "admin"
         ) : role === "user" ? (
           <UserRoutes />
         ) : (
-          <div>Unauthorized Role</div> 
+          <div>Unauthorized Role</div>
         )
       ) : (
         <AuthRoute />

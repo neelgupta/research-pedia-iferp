@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import "./UserNavbar.scss"
-import { icons } from '@/utils/constants/icon'
-import { Button, SearchInput } from '@/components'
-import { Container } from 'react-bootstrap'
+import React, { useEffect, useState } from "react";
+import "./UserNavbar.scss";
+import { Button, SearchInput } from "@/components";
+import { Container } from "react-bootstrap";
+import { icons } from "@/utils/constants";
 const UserNavbar = () => {
-
   const token = true;
   const [time, setTime] = useState({
     hours: 2,
@@ -38,113 +37,123 @@ const UserNavbar = () => {
   const { hours, minutes, seconds } = time;
   return (
     <>
-      {/*     
-      <Container>
-        <div id="UserNavbar-container" className="">
-          <div className="d-flex justify-content-between align-items-center mt-20">
-            <div className="d-flex">
-              <div className="click-icon d-flex align-items-center">
-                <img src={icons.loginicon} alt="clickicon" className="img-fluid" />
+      <div id="user-navbar">
+        <div className="top-nav">
+          <span className="premium-text">
+            You’re a Premium Member for 7-days!
+          </span>{" "}
+          <span className="premium-text-free">
+            Enjoy FREE Translation, AI Features, Audio papers & more.
+          </span>
+          <span className="see-text me-4">See Benefits</span>{" "}
+          <img
+            src={icons?.rightYellowIcons}
+            className="h-10 w-8 object-fit-contain"
+          />
+        </div>
+        <div className="nav-box">
+          <div className="d-flex left-nav">
+            <div className="logo-w-h">
+              <img
+                src={icons.loginicon}
+                alt="logo-icons"
+                loading="lazy"
+                className=""
+              />
+            </div>
+            <div className="search-box">
+              <SearchInput placeholder="Search over 200+ million research papers" />
+            </div>
+            <div className="post-b-a">
+              <div className="profile-inner-box">
+                <div className="profile-img">
+                  <img src={icons.profileimg} alt="Profile" />
+                  <div className="prime-i">
+                    <img src={icons.primeIIcons} alt="prime-icon" />
+                  </div>
+                </div>
+                <div className="ms-3">
+                  <h5 className="user-name">Mary Jane</h5>
+                  <p className="user-id">ID - 18346441</p>
+                  <p className="user-plan">Plan - Professional Premium</p>
+                </div>
+                <div className="ms-auto dropdown-icon pointer">
+                  <img
+                    src={icons.downBlackIcons}
+                    alt="Profile"
+                    className="h-5 w-10 object-fit-contain"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="d-flex align-items-center right-nav">
+            <div className="post-b">
+              <div className="post-box">
+                <img src={icons.postimg} alt="post-img" loading="lazy" />
               </div>
 
+              <div className="countdown">
+                <h4 className="countdown-header">
+                  Upgrade & get 6 months free!
+                </h4>
+                <div className="time d-flex gap-2">
+                  {["hours", "minutes", "seconds"].map((unit, index) => {
+                    const formattedTime = formatTime(time[unit]);
+                    return (
+                      <div className="time-box" key={index}>
+                        <div className="d-flex gap-1">
+                          <div className="first-latter d-flex justify-content-center align-items-center">
+                            <h1 className="count-text">{formattedTime[0]}</h1>
+                          </div>
+                          <div className="sec-latter d-flex justify-content-center align-items-center">
+                            <h1 className="count-text">{formattedTime[1]}</h1>
+                          </div>
+                          {unit !== "seconds" && (
+                            <div className="colon d-flex justify-content-center align-items-center">
+                              <h1 className="count-text">:</h1>
+                            </div>
+                          )}
+                        </div>
+                        <div className="time-text">
+                          <h1>
+                            {unit.charAt(0).toUpperCase() + unit.slice(1)}
+                          </h1>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
-            <div className="d-flex align-items-center gap-2">
-              <Button
-                btnText="Login"
-                btnStyle="user-login"
-              />
-              <Button
-                btnText="Sign Up"
-                btnStyle="user-signup"
-              />
+            <div className="profile-card">
+              <div className="profile-inner-box">
+                <div className="profile-img">
+                  <img src={icons.profileimg} alt="Profile" />
+                  <div className="prime-i">
+                    <img src={icons.primeIIcons} alt="prime-icon" />
+                  </div>
+                </div>
+                <div className="ms-3">
+                  <h5 className="user-name">Mary Jane</h5>
+                  <p className="user-id">ID - 18346441</p>
+                  <p className="user-plan">Plan - Professional Premium</p>
+                </div>
+                <div className="ms-auto dropdown-icon pointer">
+                  <img
+                    src={icons.downBlackIcons}
+                    alt="Profile"
+                    className="h-5 w-10 object-fit-contain"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </Container> */}
-
-      <div id='user-navbar'>
-      
-          <div className='d-flex justify-content-between align-items-center'>
-            <div className='d-flex gap-5 '>
-              <div className='img'>
-                <img src={icons.loginicon} alt='img' className='img-fluid' />
-              </div>
-              <div className='search-tex'>
-                <SearchInput
-                  placeholder="Search over 200+ million research papers"
-                />
-              </div>
-            </div>
-
-            <div className='d-flex align-items-center gap-4'>
-              <div>
-                <img src={icons.postimg} alt='postimg' className='img-fluid'/>
-              </div>
-          
-              <div className="countdown">
-      <h4 className="countdown-header">Upgrade & get 6 months free!</h4>
-      <div className="time d-flex gap-2">
-        {["hours", "minutes", "seconds"].map((unit, index) => {
-          const formattedTime = formatTime(time[unit]);
-          return (
-            <div className="time-box" key={index}>
-              <div className="d-flex gap-1">
-                <div className="first-latter d-flex justify-content-center align-items-center">
-                  <h1>{formattedTime[0]}</h1>
-                </div>
-                <div className="sec-latter d-flex justify-content-center align-items-center">
-                  <h1>{formattedTime[1]}</h1>
-                </div>
-                {unit !== "seconds" && (
-                  <div className="colon d-flex justify-content-center align-items-center">
-                    <h1>:</h1>
-                  </div>
-                )}
-              </div>
-              <div className="time-text">
-                <h1>{unit.charAt(0).toUpperCase() + unit.slice(1)}</h1>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-              <div className="profile-card d-flex align-items-center p-3 gap-4 ">
-                <div className='d-flex align-items-center'>
-                <div>
-                  <img
-                    src={icons.profileimg}
-                    alt="Profile"
-                    className="profile-image h-full"
-                  />
-                </div>
-                <div>
-                  <div className="profile-text ms-3">
-                    <h5 className="mb-1 d-flex align-items-center">
-                      Mary Jane
-                    </h5>
-                    <p className="mb-0 text-muted">ID - 18346441</p>
-                    <p className="mb-0 text-muted">Plan - Professional Premium</p>
-                  </div>
-                </div>
-                </div>
-                <div>
-
-                <div className="ms-auto dropdown-icon">
-                  <img
-                    src={icons.downarrow}
-                    alt="Profile"
-                    className=""
-                  />
-                </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        
       </div>
     </>
-  )
-}
+  );
+};
 
-export default UserNavbar
+export default UserNavbar;

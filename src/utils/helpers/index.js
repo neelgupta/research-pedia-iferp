@@ -102,27 +102,27 @@ export const getInitialsVal = (name) => {
 export const getYearByCount = (startYear, endYear) => {
   let returnValue = [];
   while (startYear <= endYear) {
-      returnValue.push(`${startYear++}`);
+    returnValue.push(`${startYear++}`);
   }
   return returnValue;
 };
-export const calculateAge = (dateOfBirth)=> {
+export const calculateAge = (dateOfBirth) => {
   const birthDate = new Date(dateOfBirth);
   const today = new Date();
 
   let age = today.getFullYear() - birthDate.getFullYear();
 
   const isBirthdayPassed =
-      today.getMonth() > birthDate.getMonth() || 
-      (today.getMonth() === birthDate.getMonth() && today.getDate() >= birthDate.getDate());
+    today.getMonth() > birthDate.getMonth() ||
+    (today.getMonth() === birthDate.getMonth() &&
+      today.getDate() >= birthDate.getDate());
 
   if (!isBirthdayPassed) {
-      age--;
+    age--;
   }
 
   return age;
-}
-
+};
 
 export const handleExport = (headers, rowdata, fileName) => {
   // Convert data to CSV format
@@ -147,42 +147,42 @@ export const handleExport = (headers, rowdata, fileName) => {
   URL.revokeObjectURL(url);
 };
 
-
 export const generateRandomPassword = (length = 9) => {
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
   let password = "";
   for (let i = 0; i < length; i++) {
-    password += characters.charAt(Math.floor(Math.random() * characters.length));
+    password += characters.charAt(
+      Math.floor(Math.random() * characters.length)
+    );
   }
   return password;
 };
 // Helper function to lighten hex color
-export const lightenHexColor =(hex, percent) => {
+export const lightenHexColor = (hex, percent) => {
   // Remove the hash (#) if it exists
-  hex = hex.replace(/^#/, '');
-  
+  hex = hex.replace(/^#/, "");
+
   // Convert hex to RGB
   let r = parseInt(hex.substring(0, 2), 16);
   let g = parseInt(hex.substring(2, 4), 16);
   let b = parseInt(hex.substring(4, 6), 16);
-  
+
   // Lighten the color by the specified percentage
   r = Math.min(255, r + (255 - r) * percent);
   g = Math.min(255, g + (255 - g) * percent);
   b = Math.min(255, b + (255 - b) * percent);
-  
+
   // Convert back to hex
-  r = Math.round(r).toString(16).padStart(2, '0');
-  g = Math.round(g).toString(16).padStart(2, '0');
-  b = Math.round(b).toString(16).padStart(2, '0');
-  
+  r = Math.round(r).toString(16).padStart(2, "0");
+  g = Math.round(g).toString(16).padStart(2, "0");
+  b = Math.round(b).toString(16).padStart(2, "0");
+
   return `#${r}${g}${b}`;
-}
+};
 
 export const generateRandomColor = () => {
   const randomColor = Math.floor(Math.random() * 16777215).toString(16);
 
-  return "#" + randomColor.padStart(6, '0');
-}
-
+  return "#" + randomColor.padStart(6, "0");
+};

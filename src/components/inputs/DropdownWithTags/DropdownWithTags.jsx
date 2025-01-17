@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import "./DropdownWithTags.scss";
-import { icons } from "@/utils/constants/icon";
 import { ErrorMessage } from "formik";
+import { icons } from "@/utils/constants";
 
 const DropdownWithTags = ({ options, name, value, onSelectionChange }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -54,7 +54,12 @@ const DropdownWithTags = ({ options, name, value, onSelectionChange }) => {
         value={options.find((option) => option.value === selectedCategory)}
         className="text-start"
       />
-       <ErrorMessage name={`${name}.category`} component="div" className="error-text" style={{color : "red"}}/>
+      <ErrorMessage
+        name={`${name}.category`}
+        component="div"
+        className="error-text"
+        style={{ color: "red" }}
+      />
       <div className="tag">
         <p className="tag-text text-start mt-16 mb-8">Research Topic</p>
         <div className="selected-tag border p-10 text-start">
@@ -78,7 +83,12 @@ const DropdownWithTags = ({ options, name, value, onSelectionChange }) => {
             className="tag-input"
           />
         </div>
-        <ErrorMessage name={`${name}.topics`} component="div" className="error-text" style={{color : "red"}} />
+        <ErrorMessage
+          name={`${name}.topics`}
+          component="div"
+          className="error-text"
+          style={{ color: "red" }}
+        />
       </div>
     </div>
   );

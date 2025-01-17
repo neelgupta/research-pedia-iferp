@@ -29,16 +29,14 @@ import staffisactive from "assets/images/icons/staffisactive.png";
 import inactivegroup from "assets/images/icons/inactivegroup.png";
 import downarrow from "assets/images/icons/downarrow.png";
 import inactivedot from "assets/images/icons/inactivedot.png";
-
 import homesectionimg from "assets/images/homesectionimg.png";
-
 import profileimg from "assets/images/profile-img.png";
 import postimg from "assets/images/icons/post-img.png";
 import UserHome from "assets/images/icons/UserHome.png";
 import Userpdf from "assets/images/icons/Userpdf.png";
 import UserLibrary from "assets/images/icons/UserLibrary.png";
 import iferplogo from "assets/images/icons/iferp-logo.png";
-import Google from "assets/images/icons/Google.png"
+import Google from "assets/images/icons/Google.png";
 
 import sortingIcons from "assets/images/icons/sorting.png";
 import viewIcons from "assets/images/icons/view.png";
@@ -52,7 +50,73 @@ import person3 from "assets/images/icons/person3.png";
 import person4 from "assets/images/icons/person4.png";
 import person5 from "assets/images/icons/person5.png";
 import person6 from "assets/images/icons/person6.png";
-import person7 from "assets/images/icons/person7.png"
+import person7 from "assets/images/icons/person7.png";
+import avatarOneIcons from "assets/images/icons/avatar-1.png";
+import avatarTwoIcons from "assets/images/icons/avatar-2.png";
+import avatarThreeIcons from "assets/images/icons/avatar-3.png";
+import avatarFourIcons from "assets/images/icons/avatar-4.png";
+import avatarFiveIcons from "assets/images/icons/avatar-5.png";
+import avatarSixIcons from "assets/images/icons/avatar-6.png";
+import avatarSevenIcons from "assets/images/icons/avatar-7.png";
+import avatarEightIcons from "assets/images/icons/avatar-8.png";
+import avatarNineIcons from "assets/images/icons/avatar-9.png";
+import avatarTenIcons from "assets/images/icons/avatar-10.png";
+import primeIcons from "assets/images/icons/prime.png";
+import emailIcons from "assets/images/icons/email.png";
+import phoneIcons from "assets/images/icons/phone.png";
+import locationIcons from "assets/images/icons/location.png";
+import linkIcons from "assets/images/icons/link.png";
+import activeIcons from "assets/images/icons/active.png";
+import rightBArrowIcons from "assets/images/icons/right-blue-arrow.png";
+import userIcons from "assets/images/icons/user-1.png";
+import noteIcons from "assets/images/icons/note.png";
+import lightIcons from "assets/images/icons/light.png";
+import actionIcons from "assets/images/icons/action.png";
+import docsIcons from "assets/images/icons/docs.png";
+import calenderIcons from "assets/images/icons/calender.png";
+import dotIcons from "assets/images/icons/dot.png";
+import eyeIcons from "assets/images/icons/eye.png";
+import bookIcons from "assets/images/icons/book.png";
+import messageIcons from "assets/images/icons/message.png";
+import upThumIcons from "assets/images/icons/upThum.png";
+import downThumIcons from "assets/images/icons/downThum.png";
+import videoIcons from "assets/images/icons/video.png";
+import saveIcons from "assets/images/icons/save.png";
+import userTwoIcons from "assets/images/icons/user-2.png";
+import reloadIcons from "assets/images/icons/reload.png";
+import videoWIcons from "assets/images/icons/video-w.png";
+import rightYellowIcons from "assets/images/icons/right-yellow-arrow.png";
+import primeIIcons from "assets/images/icons/prime-i.png";
+import downBlackIcons from "assets/images/icons/down-black-arrow.png";
+import roundMenuIcons from "assets/images/icons/round-menu.png";
+import activeHomeIcons from "assets/images/icons/active-home.png";
+import bookIconsB from "assets/images/icons/book-1.png";
+import activeBookIconsB from "assets/images/icons/active-book-1.png";
+import chatIcons from "assets/images/icons/chat.png";
+import activeChatIcons from "assets/images/icons/active-chat.png";
+import reviewIcons from "assets/images/icons/review.png";
+import activeReviewIcons from "assets/images/icons/active-review.png";
+import transactionIcons from "assets/images/icons/transaction.png";
+import activeTransactionIcons from "assets/images/icons/active-transaction.png";
+import primeBIcons from "assets/images/icons/prime-b.png";
+import primeAIcons from "assets/images/icons/prime-a.png";
+import userBIcons from "assets/images/icons/user-b.png";
+import messageBIcons from "assets/images/icons/message-b.png";
+import notificationBIcons from "assets/images/icons/notification-b.png";
+import saveBIcons from "assets/images/icons/save-b.png";
+import noteBIcons from "assets/images/icons/note-b.png";
+import pulseIcons from "assets/images/icons/pulse.png";
+import activeUserIcons from "assets/images/icons/active-user.png";
+import activeMessageIcons from "assets/images/icons/active-message.png";
+import activeNotificationIcons from "assets/images/icons/active-notification.png";
+import activeSaveIcons from "assets/images/icons/active-save.png";
+import activeNoteIcons from "assets/images/icons/active-note.png";
+import closeIcons from "assets/images/icons/close.png";
+import supportIcons from "assets/images/icons/support.png";
+import paintIcons from "assets/images/icons/paint.png";
+import docsBIcons from "assets/images/icons/docs-b.png";
+import completeIcons from "assets/images/icons/complete.png";
+
 export const icons = {
   // avatar,
   Google,
@@ -102,13 +166,79 @@ export const icons = {
   rightIcons,
   leftIcons,
 
-
   person1,
   person2,
   person3,
   person4,
   person5,
   person6,
-  person7
+  person7,
 
+  avatarTenIcons,
+  avatarNineIcons,
+  avatarEightIcons,
+  avatarSevenIcons,
+  avatarSixIcons,
+  avatarFiveIcons,
+  avatarFourIcons,
+  avatarThreeIcons,
+  avatarTwoIcons,
+  avatarOneIcons,
+  rightBArrowIcons,
+  activeIcons,
+  linkIcons,
+  locationIcons,
+  phoneIcons,
+  phoneIcons,
+  emailIcons,
+  primeIcons,
+  userIcons,
+  noteIcons,
+  lightIcons,
+  actionIcons,
+  saveIcons,
+  videoIcons,
+  downThumIcons,
+  upThumIcons,
+  messageIcons,
+  bookIcons,
+  eyeIcons,
+  dotIcons,
+  calenderIcons,
+  docsIcons,
+  userTwoIcons,
+  reloadIcons,
+  videoWIcons,
+  rightYellowIcons,
+  primeIIcons,
+  downBlackIcons,
+  roundMenuIcons,
+  activeTransactionIcons,
+  transactionIcons,
+  activeReviewIcons,
+  reviewIcons,
+  reviewIcons,
+  activeChatIcons,
+  chatIcons,
+  activeBookIconsB,
+  bookIconsB,
+  activeHomeIcons,
+  primeAIcons,
+  primeBIcons,
+  noteBIcons,
+  saveBIcons,
+  notificationBIcons,
+  messageBIcons,
+  userBIcons,
+  pulseIcons,
+  activeUserIcons,
+  activeNoteIcons,
+  activeSaveIcons,
+  activeNotificationIcons,
+  activeMessageIcons,
+  closeIcons,
+  supportIcons,
+  docsBIcons,
+  paintIcons,
+  completeIcons,
 };

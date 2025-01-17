@@ -2,16 +2,19 @@ import LeftsideContainer from "../LeftsideContainer";
 import { Field, Formik } from "formik";
 import { Button, Dropdown, PasswordInput, TextInput } from "@/components";
 import "./Signup.scss";
-import { icons } from "@/utils/constants/icon";
 import PhoneInput from "react-phone-input-2";
 import TextInputwithDropdown from "@/components/inputs/TextInputwithDropdown/TextInputwithDropdown";
-import { dialCode } from "@/utils/constants";
-import * as Yup from "yup";  // Import Yup for validation
+import { dialCode, icons } from "@/utils/constants";
+import * as Yup from "yup"; // Import Yup for validation
 
 // Define the validation schema
 const validationSchema = Yup.object({
-  email: Yup.string().email("Invalid email format").required("Email is required"),
-  password: Yup.string().min(8, "Password must be at least 8 characters").required("Password is required"),
+  email: Yup.string()
+    .email("Invalid email format")
+    .required("Email is required"),
+  password: Yup.string()
+    .min(8, "Password must be at least 8 characters")
+    .required("Password is required"),
   name: Yup.string().required("Name is required"),
   phone: Yup.string().required("Phone number is required"),
   joinus: Yup.string().required("Please select a membership type"),
@@ -28,8 +31,6 @@ const UserSignup = () => {
 
   const handleSubmit = (values) => {
     // Log the values to the console
-    console.log("Form Values:", values);
-
     // Perform your submit logic here, such as sending the data to the server
     // For example: axios.post("/signup", values);
   };
@@ -51,7 +52,7 @@ const UserSignup = () => {
                 <Formik
                   enableReinitialize
                   initialValues={initialValues}
-                  validationSchema={validationSchema}  // Add validation schema
+                  validationSchema={validationSchema} // Add validation schema
                   onSubmit={handleSubmit}
                 >
                   {(props) => {
@@ -81,11 +82,42 @@ const UserSignup = () => {
                             placeholder="Select"
                             name="joinus"
                             value={values.joinus}
-                            onChange={(e) => setFieldValue("joinus", e.target.value)}
+                            onChange={(e) =>
+                              setFieldValue("joinus", e.target.value)
+                            }
                             options={[
-                              { id: "Professional Member", label: <div><p>Professional Member</p><span>Academicians, Researchers, Corporate Individuals</span></div> },
-                              { id: "Student Member", label: <div><p>Student Member</p><span>UG, PG Students</span></div> },
-                              { id: "Institutional Member", label: <div><p>Institutional Member</p><span>Universities / Colleges / Institutions</span></div> },
+                              {
+                                id: "Professional Member",
+                                label: (
+                                  <div>
+                                    <p>Professional Member</p>
+                                    <span>
+                                      Academicians, Researchers, Corporate
+                                      Individuals
+                                    </span>
+                                  </div>
+                                ),
+                              },
+                              {
+                                id: "Student Member",
+                                label: (
+                                  <div>
+                                    <p>Student Member</p>
+                                    <span>UG, PG Students</span>
+                                  </div>
+                                ),
+                              },
+                              {
+                                id: "Institutional Member",
+                                label: (
+                                  <div>
+                                    <p>Institutional Member</p>
+                                    <span>
+                                      Universities / Colleges / Institutions
+                                    </span>
+                                  </div>
+                                ),
+                              },
                             ]}
                             error={touched.joinus && errors.joinus}
                             labelClass="pb-9"
@@ -100,7 +132,9 @@ const UserSignup = () => {
                             label="Name"
                             labelClass= "pb-8"
                             value={values.name}
-                            onChange={(e) => setFieldValue("name", e.target.value)}
+                            onChange={(e) =>
+                              setFieldValue("name", e.target.value)
+                            }
                             placeholder="Enter name"
                             dropdownOptions={[
                               { value: "Dr.", label: "Dr." },
@@ -109,7 +143,9 @@ const UserSignup = () => {
                               { value: "Mrs.", label: "Mrs." },
                               { value: "Ms.", label: "Ms." },
                             ]}
-                            onDropdownChange={(selected) => console.log("Selected:", selected)}
+                            onDropdownChange={(selected) =>
+                              console.log("Selected:", selected)
+                            }
                             error={touched.name && errors.name}
                           />
                         </div>
@@ -136,13 +172,17 @@ const UserSignup = () => {
                             label="Phone Number"
                              labelClass= "pb-8"
                             value={values.phone}
-                            onChange={(e) => setFieldValue("phone", e.target.value)}
+                            onChange={(e) =>
+                              setFieldValue("phone", e.target.value)
+                            }
                             placeholder="Enter phone number"
                             dropdownOptions={dialCode.map((item) => ({
                               value: item.dial_code,
                               label: `${item.flag} ${item.dial_code}`,
                             }))}
-                            onDropdownChange={(selected) => console.log("Selected:", selected)}
+                            onDropdownChange={(selected) =>
+                              console.log("Selected:", selected)
+                            }
                             error={touched.phone && errors.phone}
                           />
                         </div>
@@ -161,18 +201,29 @@ const UserSignup = () => {
                         </div>
 
                         <div className="remember d-flex align-items-start me-4">
-                          <input type="checkbox" id="rememberMe" className="mt-9" />
+                          <input
+                            type="checkbox"
+                            id="rememberMe"
+                            className="mt-9"
+                          />
                           <span className="ms-8">
-                            I have read and agree to <span className="color-113D"> privacy policy </span> and{" "}
+                            I have read and agree to{" "}
+                            <span className="color-113D"> privacy policy </span>{" "}
+                            and{" "}
                             <span className="color-113D"> terms of use. </span>
                           </span>
                         </div>
 
                         <div className="remember d-flex align-items-start me-4 mt-9">
-                          <input type="checkbox" id="rememberMe" className="mt-9" />
+                          <input
+                            type="checkbox"
+                            id="rememberMe"
+                            className="mt-9"
+                          />
                           <span className="ms-8">
-                            I would like to receive special offers, promotions, and insightful content from IFERP
-                            which would help with my publication
+                            I would like to receive special offers, promotions,
+                            and insightful content from IFERP which would help
+                            with my publication
                           </span>
                         </div>
 
@@ -187,7 +238,8 @@ const UserSignup = () => {
 
                         <div className="mt-18">
                           <p className="text-center mt-8 text-16-400 color-3333">
-                            Already on IFERP? <span className="color-113D">Login</span>
+                            Already on IFERP?{" "}
+                            <span className="color-113D">Login</span>
                           </p>
                         </div>
 

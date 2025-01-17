@@ -12,22 +12,17 @@ const Layout = ({ children }) => {
 
   return (
     <>
-
-           <div id="layout-container">
-          <Sidebar show={sidebarOpen} setShow={setShow} />
-          <div className="right-body-content">
-            <Navbar setShow={setShow} />
-            <div className="body-block rearchPedia-scroll">{children}</div>
-          </div>
+      <div id="layout-container">
+        <Sidebar show={sidebarOpen} setShow={setShow} />
+        <div className="right-body-content">
+          <Navbar setShow={setShow} />
+          <div className="body-block rearchPedia-scroll">{children}</div>
         </div>
-    
-
-
+      </div>
     </>
-  )
-}
+  );
+};
 export default Layout;
-
 
 //   return (
 //     <>
@@ -41,4 +36,3 @@ export default Layout;
 //     </>
 //   );
 // };
-

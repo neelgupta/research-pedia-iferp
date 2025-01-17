@@ -1,2 +1,2 @@
-export * from "./icon"
-export * from "./DialCode"
+export * from "./icon";
+export * from "./DialCode";

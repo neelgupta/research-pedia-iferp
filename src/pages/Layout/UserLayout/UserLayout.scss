@@ -1,45 +1,37 @@
 #userlayout-container {
-  height: 100vh;
-  overflow-y: hidden;
+  min-height: 100vh;
+  overflow-y: auto;
+
+
 
   .right-body-content {
     display: flex;
     flex-grow: 1;
     width: 100%;
-   
     flex-direction: column;
+
     .body-block {
       flex-grow: 1;
-      height: calc(100vh - 111px); 
+      min-height: calc(100vh - 166.55px);
       overflow-y: auto;
-      margin-left: 80px;
-      margin-right: 80px;
-      border: 1px solid red;
     }
 
     .left-sidebar,
     .right-sidebar {
-      width: 80px; 
-      flex-shrink: 0; 
+      width: 80px;
+      flex-shrink: 0;
     }
 
-   
+    .left-sidebar-w {
+      width: 360px;
+    }
+
+    .right-sidebar-w {
+      width: 360px;
+
+    }
+
   }
 
-  @media (max-width: 660px) {
-    .right-body-content {
-      flex-direction: column;
-    }
 
-    .left-sidebar,
-    .right-sidebar {
-    
-      height: unset;
-    }
-
-    .body-block {
-      height: unset; 
-       overflow: unset;
-    }
-  }
 }

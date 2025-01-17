@@ -1,5 +1,5 @@
 import React from "react";
-import { icons } from "@/utils/constants/icon";
+import { icons } from "@/utils/constants";
 import { useNavigate } from "react-router-dom";
 import "./Breadcrumb.scss";
 
@@ -8,19 +8,18 @@ const Breadcrumb = ({ list, className, isGreen }) => {
 
   return (
     <div id="breadcrumb-container" className="fa-center gap-1 un">
-      {list?.map((elm, index) => {
+      {list?.map((elm, index, val) => {
         const isLast = list.length - 1 === index;
+        const isState = elm?.val;
         return (
           <React.Fragment key={index}>
             <span
-              className={`text-14-400 pointer ${
+              className={`text-14-400 pointer lat-row ${
                 isLast ? "#5B6B79" : "#131920"
-              } ${className} ${
-                isGreen && isLast ? "#5B6B79" : "#131920"
-              }`}
+              } ${className} ${isGreen && isLast ? "#5B6B79" : "#131920"}`}
               onClick={() => {
                 if (!isLast && elm.link) {
-                  navigate(elm.link);
+                  navigate(elm.link, { state: isState ? isState : {} });
                 }
               }}
             >

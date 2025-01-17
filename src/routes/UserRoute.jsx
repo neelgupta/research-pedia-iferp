@@ -1,22 +1,42 @@
-
 import UserLayout from "@/pages/Layout/UserLayout";
 import Home from "@/pages/User/Home";
 import Premium from "@/pages/User/Premium/Premium";
+import ProfessionalMemberProfile from "@/pages/User/ProfessionalMemberProfile";
 import { Navigate, Route, Routes } from "react-router-dom";
 
-
 export const UserRoutes = () => {
+  const role = "professional";
+  // const role = "professional" || "student" || "  institutional";
 
-  const role = 'admin';
+  // const userRoutes = [
+  //   {
+  //     path: "/",
+  //     component: <ProfessionalMemberProfile />,
+  //   },
+  // ];
 
-  const userRoutes = [
-    {
-      path: "/",
-      component: <Premium/>,
-    },
-  
-  ];
+  const roleBasedRoutes = {
+    professional: [
+      {
+        path: "/",
+        component: <ProfessionalMemberProfile />,
+      },
+    ],
+    // student: [
+    //   {
+    //     path: "/",
+    //     component: <StudentProfile />,
+    //   },
+    // ],
+    // institutional: [
+    //   {
+    //     path: "/",
+    //     component: <InstitutionalDashboard />,
+    //   },
+    // ],
+  };
 
+  const userRoutes = roleBasedRoutes[role] || [];
 
   return (
     <Routes>

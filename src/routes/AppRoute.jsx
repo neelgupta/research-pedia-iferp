@@ -8,7 +8,6 @@ import Home from "@/pages/User/Home/Home";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 export const AppRoutes = () => {
-
   const adminRoutes = [
     {
       path: "/admin/setting/category-topic",
@@ -29,6 +28,14 @@ export const AppRoutes = () => {
     {
       path: "/admin/manage-users/list-user",
       component: <ListUser />,
+    },
+    {
+      path: "/admin/manage-users/list-user/user-details",
+      component: <UserDetails />,
+    },
+    {
+      path: "/admin/manage-users/list-user/user-details/:type",
+      component: <UserDetails />,
     },
   ];
 
