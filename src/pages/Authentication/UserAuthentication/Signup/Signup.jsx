@@ -38,11 +38,14 @@ const UserSignup = () => {
   return (
     <div id="usersignup-container">
       <div className="row">
-        <div className="col-6 d-none d-lg-block" >
-          <LeftsideContainer/>
+        <div className="col-6 d-none d-lg-block">
+          <LeftsideContainer />
         </div>
         <div className="col-lg-6 col-12">
-          <div className="d-flex justify-content-center align-items-center " style={{minHeight : "100vh"}}>
+          <div
+            className="d-flex justify-content-center align-items-center "
+            style={{ minHeight: "100vh" }}
+          >
             <div className="usersignin-container">
               <div className="form-header mb-14">
                 <h1>Sign Up</h1>
@@ -130,7 +133,7 @@ const UserSignup = () => {
                             id="name"
                             name="name"
                             label="Name"
-                            labelClass= "pb-8"
+                            labelClass="pb-8"
                             value={values.name}
                             onChange={(e) =>
                               setFieldValue("name", e.target.value)
@@ -144,7 +147,7 @@ const UserSignup = () => {
                               { value: "Ms.", label: "Ms." },
                             ]}
                             onDropdownChange={(selected) =>
-                              console.log("Selected:", selected)
+                              console.log("selected", selected)
                             }
                             error={touched.name && errors.name}
                           />
@@ -170,7 +173,7 @@ const UserSignup = () => {
                             id="phone"
                             name="phone"
                             label="Phone Number"
-                             labelClass= "pb-8"
+                            labelClass="pb-8"
                             value={values.phone}
                             onChange={(e) =>
                               setFieldValue("phone", e.target.value)

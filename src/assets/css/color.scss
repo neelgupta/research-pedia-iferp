@@ -119,7 +119,11 @@
     --9cb0: #9CB0C9;
     --3324: #33333324;
     --cd80: #113DCD80;
-    --e0e9: #E0E9F480;
+    --e0e90: #E0E9F480;
+    --c92e: #9CB0C92E;
+    --1d48: #1D4837;
+    --d7a6: #9AD7A6;
+    --dada: #DADAEC
 }
 
 $colors: (
@@ -233,6 +237,9 @@ $colors: (
     '9cb0':var(--9cb0),
     '3324':var(--3324),
     'cd80':var(--cd80),
+    'c92e':var(--c92e),
+    '1d48':var(--1d48),
+    'd7a6':var(--d7a6)
 );
 
 @each $name, $color in $colors {

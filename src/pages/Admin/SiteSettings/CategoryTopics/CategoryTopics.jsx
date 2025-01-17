@@ -69,16 +69,9 @@ const CategoryTopics = () => {
       ...prevState,
       [`${categoryIndex}-${tagIndex}`]: value,
     }));
-
-    console.log("categoryIndex", categoryIndex);
-    console.log("tagIndex", tagIndex);
-    console.log("value", value);
   };
 
-  const handleSubmit = (values) => {
-    console.log("Form Submitted");
-    console.log("Values:", values);
-  };
+  const handleSubmit = (values) => {};
 
   return (
     <div id="categorytopics-container">

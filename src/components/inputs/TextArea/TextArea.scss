@@ -11,23 +11,30 @@
       white-space: nowrap;
       text-overflow: ellipsis;
       background-color: var(--ffff);
-      border: 0.7px solid var(--dddd);
-      font-family: "GilroyRegular", sans-serif;
+      border: 1px solid var(--e0e9);
       white-space: normal;
       overflow-wrap: break-word;
-      word-wrap: break-word; /* For older browsers */
+      word-wrap: break-word;
+      /* For older browsers */
       resize: vertical;
+
       &:disabled {
-        background-color: var(--ffff);
+        background-color: var(--e0e9);
         opacity: 0.5;
       }
+
       &:focus {
         outline: none;
-        border: 1px solid var(--9533);
+        border: 1px solid var(--e0e9);
       }
     }
+
     ::placeholder {
-      color: var(--9580);
+      color: var(--9cb0);
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 16.94px;
+      letter-spacing: 0.02em;
     }
   }
 }

@@ -3,15 +3,18 @@ import Modal from "../Modal";
 import "./MyProfilePopUp.scss";
 import { icons } from "@/utils/constants";
 import PersonalDetailsPopUp from "./PersonalDetailsPopUp/PersonalDetailsPopUp";
+import EducationDetailsPopUp from "./EducationDetailsPopUp";
+import SelectPlan from "./SelectPlan";
+import { Formik } from "formik";
 
 const MyProfilePopUp = ({ onHide, title }) => {
   const [type, setType] = useState("");
-  const [valCount, setValCount] = useState(1);
+  const [valCount, setValCount] = useState(0);
 
   const subTitle = {
-    "personal-details": "Crafting Your Unique Identity",
-    "education-details": "Shaping Your Academic Journey",
-    "membership-details": "Choose Your Path to Success",
+    0: "Crafting Your Unique Identity",
+    1: "Choose Your Path to Success",
+    2: "Choose Your Path to Success",
   };
 
   const arrayOption = [
@@ -36,41 +39,53 @@ const MyProfilePopUp = ({ onHide, title }) => {
   ];
 
   useEffect(() => {
-    if (valCount === "2") {
+    if (valCount === 2) {
       setType("membership-details");
-    } else if (valCount === "0") {
+    } else if (valCount === 0) {
       setType("personal-details");
-    } else if (valCount === "1") {
+    } else if (valCount === 1) {
       setType("education-details");
     } else {
       setType("personal-details");
     }
-  }, [type]);
+  }, [valCount]);
 
+  const initialValues = {};
+  const handelSave = () => {};
   return (
     <Modal onHide={onHide} size="xl" isClose={false}>
       <div className="profile-modal-container">
         <p className="title-text">{`My Profile - ${title} Member`}</p>
 
-        <div className="sub-title">{subTitle[type]}</div>
+        <div className="sub-title">{subTitle[valCount]}</div>
 
         <div className="details-list mb-34">
           {arrayOption.map((elem, index) => {
+            const isComplete = valCount >= elem.id;
+            const isActive = valCount === elem.id - 1;
             return (
               <React.Fragment key={index}>
                 <div className="details-block">
-                  {elem.isActive ? (
+                  {valCount > elem.id - 1 ? (
                     <img
                       src={icons.completeIcons}
-                      alt="active"
+                      alt="complete"
                       className="active-selection"
                     />
                   ) : (
-                    <div className="number-block">{elem.id}</div>
+                    <div
+                      className={` ${
+                        valCount === elem.id - 1
+                          ? "color-113D number-block-a"
+                          : "color-black-3333 number-block"
+                      }`}
+                    >
+                      {elem.id}
+                    </div>
                   )}
                   <div
                     className={`text-16-400 ${
-                      elem.isActive ? "color-113D" : "color-black-3333"
+                      isActive || isComplete ? "color-113D" : "color-black-3333"
                     }`}
                   >
                     {elem.title}
@@ -79,7 +94,7 @@ const MyProfilePopUp = ({ onHide, title }) => {
                 {arrayOption.length - 1 !== index && (
                   <div
                     className={`border-saprator ${
-                      elem.isActive ? "active-border" : ""
+                      valCount > 0 ? "active-border" : ""
                     }`}
                   />
                 )}
@@ -87,8 +102,56 @@ const MyProfilePopUp = ({ onHide, title }) => {
             );
           })}
         </div>
-
-        {valCount === 1 && <PersonalDetailsPopUp />}
+        <Formik
+          enableReinitialize
+          initialValues={initialValues}
+          // validationSchema={validationSchema}
+          onSubmit={handelSave}
+        >
+          {(props) => {
+            const {
+              values,
+              errors,
+              handleChange,
+              setFieldValue,
+              handleSubmit,
+            } = props;
+            return (
+              <from>
+                {valCount === 0 && (
+                  <PersonalDetailsPopUp
+                    setValCount={setValCount}
+                    values={values}
+                    errors={errors}
+                    handleChange={handleChange}
+                    handleSubmit={handleSubmit}
+                    setFieldValue={setFieldValue}
+                  />
+                )}
+                {valCount === 1 && (
+                  <EducationDetailsPopUp
+                    setValCount={setValCount}
+                    values={values}
+                    errors={errors}
+                    handleChange={handleChange}
+                    handleSubmit={handleSubmit}
+                    setFieldValue={setFieldValue}
+                  />
+                )}
+                {valCount === 2 && (
+                  <SelectPlan
+                    setValCount={setValCount}
+                    values={values}
+                    errors={errors}
+                    handleChange={handleChange}
+                    handleSubmit={handleSubmit}
+                    setFieldValue={setFieldValue}
+                  />
+                )}
+              </from>
+            );
+          }}
+        </Formik>
       </div>
     </Modal>
   );
