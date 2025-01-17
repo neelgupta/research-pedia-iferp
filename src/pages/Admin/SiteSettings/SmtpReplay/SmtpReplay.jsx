@@ -26,7 +26,7 @@ const SmtpReplay = () => {
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
-    
+    console.log("Submitted Values:", values);
     setSubmitting(false);
   };
 
@@ -69,7 +69,7 @@ const SmtpReplay = () => {
                     isSubmitting,
                     setFieldValue
                   } = props;
-             
+                console.log(values)
                   return (
                     <form
                       onSubmit={handleSubmit}

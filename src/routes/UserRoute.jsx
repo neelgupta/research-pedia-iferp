@@ -5,14 +5,38 @@ import ProfessionalMemberProfile from "@/pages/User/ProfessionalMemberProfile";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 export const UserRoutes = () => {
-  const role = "admin";
+  const role = "professional";
+  // const role = "professional" || "student" || "  institutional";
 
-  const userRoutes = [
-    {
-      path: "/",
-      component: <ProfessionalMemberProfile />,
-    },
-  ];
+  // const userRoutes = [
+  //   {
+  //     path: "/",
+  //     component: <ProfessionalMemberProfile />,
+  //   },
+  // ];
+
+  const roleBasedRoutes = {
+    professional: [
+      {
+        path: "/",
+        component: <ProfessionalMemberProfile />,
+      },
+    ],
+    // student: [
+    //   {
+    //     path: "/",
+    //     component: <StudentProfile />,
+    //   },
+    // ],
+    // institutional: [
+    //   {
+    //     path: "/",
+    //     component: <InstitutionalDashboard />,
+    //   },
+    // ],
+  };
+
+  const userRoutes = roleBasedRoutes[role] || [];
 
   return (
     <Routes>

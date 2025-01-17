@@ -115,6 +115,7 @@ import closeIcons from "assets/images/icons/close.png";
 import supportIcons from "assets/images/icons/support.png";
 import paintIcons from "assets/images/icons/paint.png";
 import docsBIcons from "assets/images/icons/docs-b.png";
+import completeIcons from "assets/images/icons/complete.png";
 
 export const icons = {
   // avatar,
@@ -239,4 +240,5 @@ export const icons = {
   supportIcons,
   docsBIcons,
   paintIcons,
+  completeIcons,
 };
