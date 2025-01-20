@@ -17,7 +17,7 @@
       padding: 10px;
       font-size: 16px;
       border: none;
-      border-bottom: 1px solid #E0E9F4 !important;
+      border-bottom: none;
 
       border-radius: 0 6px 6px 0;
       background-color: var(--ffff);
@@ -28,6 +28,14 @@
         border: 1px solid var(--e0e9);
         background-color: var(--e0e9);
 
+      }
+
+      &::placeholder {
+        color: var(--9cb0);
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 16.94px;
+        letter-spacing: 0.02em;
       }
     }
 

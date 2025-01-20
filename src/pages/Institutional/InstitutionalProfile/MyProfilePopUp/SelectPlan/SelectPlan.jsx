@@ -7,9 +7,8 @@ import Button from "@/components/inputs/Button";
 import { useNavigate } from "react-router-dom";
 
 const SelectPlan = ({ setValCount }) => {
-  const navigate = useNavigate();
-
   const [isSelect, setIsSelect] = useState();
+  const navigate = useNavigate();
   const planDetails = [
     {
       id: 1,
@@ -80,8 +79,18 @@ const SelectPlan = ({ setValCount }) => {
                   className={`current-price ${isSelect === ele?.id ? "n-a" : "n-i-a"}`}
                 >
                   {" "}
-                  <p className="price-inner me-5"> {ele.currentPrice}</p>{" "}
-                  <p className="price-t">{ele.price}</p>/month
+                  <p
+                    className={`price-inner me-5 ${isSelect === ele?.id ? "n-a-in" : "n-i-a-in"}`}
+                  >
+                    {" "}
+                    {ele.currentPrice}
+                  </p>{" "}
+                  <p className="price-t">{ele.price}</p>{" "}
+                  <span
+                    className={`m-text ${isSelect === ele?.id ? "n-a" : "n-i-a"}`}
+                  >
+                    /month
+                  </span>
                 </p>
                 <div className="f-center mt-18">
                   <CheckBox

@@ -57,8 +57,8 @@ const Button = ({
                   type
                     ? type
                     : ["PD", "RD"].includes(btnStyle ? btnStyle : "PD")
-                    ? "L"
-                    : "R"
+                      ? "L"
+                      : "R"
                 }
               />
             </span>

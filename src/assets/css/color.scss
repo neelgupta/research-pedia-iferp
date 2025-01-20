@@ -123,9 +123,13 @@
     --c92e: #9CB0C92E;
     --1d48: #1D4837;
     --d7a6: #9AD7A6;
-    --dada: #DADAEC
-    --e0e9: #E0E9F480;
-   
+    --dada: #DADAEC;
+    --99a4: #99A4C5;
+    --1132: #113DCDB2;
+    --cd99: #113DCD99;
+    --e1e1: #E1E1F399;
+    --E6ec: #E6ECF5;
+    --2837: #2837650F;
 }
 
 $colors: (
@@ -241,7 +245,13 @@ $colors: (
     'cd80':var(--cd80),
     'c92e':var(--c92e),
     '1d48':var(--1d48),
-    'd7a6':var(--d7a6)
+    'd7a6':var(--d7a6),
+    '99a4':var(--99a4),
+    '1132':var(--1132),
+    'cd99':var(--cd99),
+    'e1e1':var(--e1e1),
+    'E6ec':var(--E6ec),
+    '2837':var(--2837)
 );
 
 @each $name, $color in $colors {
