@@ -7,6 +7,7 @@ import EmailVerification from "@/pages/Authentication/UserAuthentication/EmailVe
 import UserLogin from "@/pages/Authentication/UserAuthentication/Login/Login";
 import UserResetPassword from "@/pages/Authentication/UserAuthentication/ResetPassword";
 import UserSignup from "@/pages/Authentication/UserAuthentication/Signup";
+import Home from "@/pages/User/Home";
 
 import { getDataFromLocalStorage } from "@/utils/helpers";
 import { Navigate, Route, Routes } from "react-router-dom";
@@ -32,7 +33,7 @@ const AuthRoute = () => {
 
         <Route path="*" element={<Navigate to={"/login"} />} />
 
-        <Route path="*" element={<Navigate to={"/login"} />} />
+       
       </>
     </Routes>
   );

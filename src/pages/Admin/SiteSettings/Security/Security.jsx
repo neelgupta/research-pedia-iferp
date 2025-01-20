@@ -1,56 +1,66 @@
-import React, { useState } from "react";
+
+import React, { useState } from 'react';
 import "./Security.scss";
-import Breadcrumb from "@/components/layouts/Breadcrumb";
-import { Button } from "@/components";
-import { icons } from "@/utils/constants";
+import Breadcrumb from '@/components/layouts/Breadcrumb';
+import { Button, TextInput } from '@/components';
+import { icons } from '@/utils/constants/icon';
+import ReactQR from 'react-qr-code'; // Import the react-qr-code component
+
 const Security = () => {
-  const [openQr, setopenQr] = useState(false);
+  const [openQr, setOpenQr] = useState(false);
+  const [qrText, setQrText] = useState('hello'); // State to store the text for the QR code
+
   const openQrcode = () => {
-    setopenQr(true);
+
+    setOpenQr(true);
+  };
+
+  const handleQrTextChange = (e) => {
+    setQrText(e.target.value); // Update QR text when the input changes
   };
 
   return (
     <div>
       <div id="Security-container">
         <div>
-          <div className="mb-14">
+          <div className='mb-14'>
             <Breadcrumb
-              list={[
-                { title: "Site Settings" },
-                { title: "Category & Topics" },
-              ]}
+              list={[{ title: "Site Settings" }, { title: "Category & Topics" }]}
               className="text-16-400"
               isGreen
             />
           </div>
-          <div className="categorytopics-title">
+          <div className='categorytopics-title'>
             <h1>Security</h1>
           </div>
-          <div className="add-rearches">
-            <div className="rearch-form border">
-              <div className="rearch-title">
+          <div className='add-rearches'>
+            <div className='rearch-form border'>
+              <div className='rearch-title'>
                 <h1>Add Research Category & Topics</h1>
               </div>
-              <div className="text-add">
+              <div className='text-add'>
                 <h1>Google Authenticator</h1>
               </div>
               {openQr ? (
                 <>
-                  <img
-                    src={icons.QRcode}
-                    alt="QRcode"
-                    className="img-fluid ps-26"
-                  />
-                  {/* <div className=''>
-                    <Button 
-                        btnText="VUVSFHVXCACXZCXDFS" btnStyle="GGB"
+                  <div className='qr-code-container'>
+                  
+                    {qrText && <ReactQR value={qrText}  className='ps-26'/>}
+                  </div>
+                  <div className='ps-26'>
+                    <TextInput
+                      id="qrcodetext"
+                      name="qrcodetext"
+                      placeholder="QR Code Text"
+                      type="text"
+                      value={qrText}
+                      onChange={handleQrTextChange} 
+                      className='w-200 bg-EBEC ps-26'
                     />
-                </div> */}
-                  <div className="Qr-genrate d-flex mt-16 ms-26 mb-26">
+                  </div>
+                  <div className='Qr-genrate d-flex mt-16 ms-26 mb-26'>
                     <Button btnText="Continue" className="BWP" />
-                    <span className="ps-12 d-flex align-items-center">
-                      Generate Code
-                    </span>
+                    <span className='ps-12 d-flex align-items-center'>Generate Code</span>
                   </div>
                 </>
               ) : (

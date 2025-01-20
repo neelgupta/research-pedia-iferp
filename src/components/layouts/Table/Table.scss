@@ -1,10 +1,10 @@
 #table-container {
-  margin-top: 24px;
+  // margin-top: 24px;
   user-select: none;
-  border-radius: 12px;
+  // border-radius: 12px;
 
-  border: 1px solid var(--e7ea);
-
+  // border: 1px solid var(--e7ea);
+  // background-color: #ffffff;
   .top-title {
     padding: 26px;
     border-bottom: 1px solid var(--e7ea);
@@ -105,7 +105,8 @@
     display: flex;
     border-bottom: 1px solid var(--e7ea);
     border-top: 1px solid var(--e7ea);
-
+    background-color:  #FBFCFC !important;
+    
     .header-cell {
       padding: 12px 14px 12px 0px;
       font-size: 16px;

@@ -109,6 +109,10 @@
 
                         }
                     }
+
+                    .dropdown-toggle::after{
+                       align-items: end;
+                    }
                 }
             }
         }

@@ -29,7 +29,7 @@ const UserLogin = () => {
         <>
             <div id="usersignin-container">
                 <div className="row">
-                    <div className="col-6  d-none d-lg-block ">
+                    <div className="col-6  d-none d-lg-block">
                        
                         <LeftsideContainer/>
                     </div>
