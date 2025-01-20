@@ -1,23 +1,21 @@
-import { Button, Modal } from "@/components";
-import "./ProfessionalMemberProfile.scss";
-import PersonalDetails from "@/components/layouts/PersonalDetails";
-import EducationDetails from "@/components/layouts/EducationDetails";
 import { useState } from "react";
+import "./StudentProfile.scss";
+import PersonalDetails from "@/components/layouts/PersonalDetails";
 import MyProfilePopUp from "@/components/layouts/MyProfilePopUp";
+import EducationDetails from "@/components/layouts/EducationDetails";
 
-const ProfessionalMemberProfile = () => {
+const StudentProfile = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const handleClick = () => {
     setIsOpenModal(true);
   };
-
   return (
-    <div className="professional-profile-container">
+    <div className="student-profile-container">
       <PersonalDetails onClick={handleClick} />
       <EducationDetails onClick={handleClick} />
       {isOpenModal && (
         <MyProfilePopUp
-          title="Professional"
+          title="Student"
           onHide={() => {
             setIsOpenModal(false);
           }}
@@ -27,4 +25,4 @@ const ProfessionalMemberProfile = () => {
   );
 };
 
-export default ProfessionalMemberProfile;
+export default StudentProfile;

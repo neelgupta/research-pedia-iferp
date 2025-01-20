@@ -1,11 +1,11 @@
 import Button from "@/components/inputs/Button";
 import "./EducationDetails.scss";
-const EducationDetails = () => {
+const EducationDetails = ({ onClick }) => {
   return (
     <div className="education-container">
       <div className="education-top-box">
         <h2 className="education-text">Education Details</h2>
-        <Button btnText="Edit" className="h-43 w-82" />
+        <Button btnText="Edit" className="h-43 w-82" onClick={onClick} />
       </div>
       <div className="education-box-main">
         <div className="row row-gap">

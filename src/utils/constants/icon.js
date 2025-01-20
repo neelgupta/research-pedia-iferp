@@ -121,6 +121,14 @@ import uploadIcons from "assets/images/icons/upload.png";
 import upIcons from "assets/images/icons/up.png";
 import trueIcons from "assets/images/icons/true.png";
 import likeIcons from "assets/images/icons/like.png";
+import rectangleIcons from "assets/images/icons/rectangle.png";
+import rightArrowIcons from "assets/images/icons/blue-right-arrow.png";
+import leftArrowIcons from "assets/images/icons/black-left-arrow.png";
+import pulseBIcons from "assets/images/icons/pluse-blue.png";
+import trueWIcons from "assets/images/icons/true-w.png";
+import profileIcons from "assets/images/icons/profile.png";
+import lockIcons from "assets/images/icons/lock.png";
+import userAIcons from "assets/images/icons/image.png";
 
 export const icons = {
   // avatar,
@@ -251,4 +259,12 @@ export const icons = {
   upIcons,
   trueIcons,
   likeIcons,
+  rectangleIcons,
+  rightArrowIcons,
+  leftArrowIcons,
+  pulseBIcons,
+  trueWIcons,
+  profileIcons,
+  lockIcons,
+  userAIcons,
 };

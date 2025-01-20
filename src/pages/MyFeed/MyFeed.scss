@@ -1,0 +1,146 @@
+.my-feed-container {
+
+    height: 100vh;
+
+    .center-content {
+        padding-top: 48px;
+        overflow-y: auto;
+        height: calc(100% - 150px);
+
+    }
+
+    .welcome-text {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 21.78px;
+        color: var(--0303);
+        text-align: center;
+        margin-bottom: 12px;
+        padding: 0 12px;
+
+    }
+
+    .prom-text {
+        font-size: 22px;
+        font-weight: 600;
+        line-height: 26.63px;
+        color: var(--113D);
+        text-align: center;
+        margin-bottom: 26px;
+        padding: 0 12px;
+    }
+
+    .feed-text {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 19.36px;
+        text-align: center;
+        color: var(--3333);
+        padding: 0 12px;
+
+
+    }
+
+    .card-box {
+        max-width: 1017px;
+        margin: auto;
+        padding: 32px;
+    }
+
+    .card-details {
+        min-height: 236px;
+        padding: 24px 24px 34px 24px;
+        border-radius: 12px;
+        border: 1px solid var(--cd99);
+        box-shadow: 0px 2px 24px 0px #00000014;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+
+    }
+
+    .default-card {
+        min-height: 236px;
+        padding: 24px 24px 34px 24px;
+        border-radius: 12px;
+        border: 1px solid var(--e1e1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+    }
+
+    .image-div {
+        width: 118px;
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+
+        img {
+            width: 82px;
+            height: 82px;
+            border-radius: 50%;
+            object-fit: contain;
+        }
+    }
+
+    .feed-name-text {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 19.36px;
+        text-align: center;
+        color: var(--3333);
+
+
+    }
+
+    .b-text {
+        color: var(--113D);
+
+    }
+
+    .step-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 48px;
+        gap: 4px;
+        cursor: pointer;
+
+        img {
+            margin-top: 3px;
+            width: 14px;
+            height: 14px;
+            object-fit: contain;
+        }
+    }
+
+    @media (max-width:576px) {
+        .card-box {
+            padding: 12px;
+        }
+
+        .center-content {
+            height: calc(100% - 212px);
+
+        }
+
+        .welcome-text {
+            font-size: 16px;
+
+        }
+
+        .prom-text {
+            font-size: 18px;
+            margin-bottom: 18px;
+        }
+
+        .feed-text {
+            font-size: 14px;
+
+        }
+
+
+    }
+}

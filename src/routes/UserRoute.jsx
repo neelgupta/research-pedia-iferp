@@ -1,11 +1,16 @@
+import CreateFeed from "@/pages/CreateFeed";
+import FeedDetails from "@/pages/FeedDetails";
+import InstitutionalProfile from "@/pages/Institutional/InstitutionalProfile";
 import UserLayout from "@/pages/Layout/UserLayout";
+import MyFeed from "@/pages/MyFeed";
+import StudentProfile from "@/pages/Student/StudentProfile";
 import Home from "@/pages/User/Home";
 import Premium from "@/pages/User/Premium/Premium";
 import ProfessionalMemberProfile from "@/pages/User/ProfessionalMemberProfile";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 export const UserRoutes = () => {
-  const role = "professional";
+  const role = "institutional";
   // const role = "professional" || "student" || "  institutional";
 
   // const userRoutes = [
@@ -22,18 +27,22 @@ export const UserRoutes = () => {
         component: <ProfessionalMemberProfile />,
       },
     ],
-    // student: [
-    //   {
-    //     path: "/",
-    //     component: <StudentProfile />,
-    //   },
-    // ],
-    // institutional: [
-    //   {
-    //     path: "/",
-    //     component: <InstitutionalDashboard />,
-    //   },
-    // ],
+    student: [
+      {
+        path: "/",
+        component: <StudentProfile />,
+      },
+    ],
+    institutional: [
+      {
+        path: "/",
+        component: <InstitutionalProfile />,
+      },
+      {
+        path: "/feed-details",
+        component: <FeedDetails />,
+      },
+    ],
   };
 
   const userRoutes = roleBasedRoutes[role] || [];
@@ -50,6 +59,8 @@ export const UserRoutes = () => {
         );
       })}
       <Route path="*" element={<Navigate to="/" />} />
+      <Route path="/my-feed" element={<MyFeed />} />
+      <Route path="/create-feed" element={<CreateFeed />} />
     </Routes>
   );
 };
