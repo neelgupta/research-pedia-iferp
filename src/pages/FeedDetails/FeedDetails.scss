@@ -94,6 +94,7 @@
         padding: 24px;
         border: 1px solid var(--e0e9);
         border-radius: 8px;
+        background-color: var(--ffff);
 
     }
 
@@ -106,6 +107,8 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
     }
 
     .post-published {
@@ -161,4 +164,96 @@
         color: var(--5b6b);
 
     }
+
+    .d-p {
+        position: relative;
+
+        .dropdown-menus {
+            position: absolute;
+            top: 110%;
+            left: 0;
+            background-color: var(--ffff);
+            border-radius: 8px;
+            padding: 12px;
+            box-shadow: 0px 4px 28px -2px #1B212C0F;
+            z-index: 99999;
+            width: 280px;
+            display: block;
+            border: 1px solid var(--e0e9);
+        }
+    }
+
+    .d-text {
+        padding: 12px 0;
+        cursor: pointer;
+    }
+
+    .repost-text {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 19.36px;
+        color: var(--113D);
+        margin-bottom: 4px;
+
+    }
+
+    .repost-pra {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 16.94px;
+        color: var(--3333);
+        margin-bottom: 0;
+    }
+
+    .post-d-box {
+        background-color: var(--f4f6);
+        padding: 6px;
+        border-radius: 12px;
+    }
+
+    @media (max-width:576px) {
+
+        .details-text {
+            font-size: 16px;
+
+        }
+
+        .switch-text {
+            font-size: 14px;
+
+        }
+
+
+        & {
+            padding: 12px;
+        }
+
+        .feed-published-box {
+            padding: 12px;
+
+
+        }
+
+        .post-title {
+            margin-top: 6px;
+            font-size: 16px;
+
+        }
+
+        .post-pra {
+            margin-top: 6px;
+            font-size: 14px;
+            font-weight: 400;
+
+        }
+
+        .docs-box {
+            margin-top: 16px;
+        }
+
+        .docs-title {
+            font-size: 12px;
+        }
+    }
+
 }

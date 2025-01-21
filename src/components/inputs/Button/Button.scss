@@ -18,7 +18,8 @@
     text-wrap: nowrap;
 
     &:disabled {
-      opacity: 0.5;
+      opacity: 0.7;
+      cursor: not-allowed;
     }
   }
 
@@ -27,12 +28,19 @@
     color: var(--9cb0);
   }
 
-  .LBB {
-    background-color: var(--fff);
+  .LBA {
+    background-color: var(--ffff);
     color: var(--113D);
     border: 1px solid var(--113D);
 
   }
+
+  .BA {
+    background-color: var(--113D);
+    color: var(--ffff);
+  }
+
+
 
   .BTA {
     background-color: var(--f4f6);
@@ -46,6 +54,12 @@
 
   }
 
+  .BBA {
+    background-color: var(--ffff);
+    border: 1px solid var(--3333);
+    color: var(--3333);
+  }
+
 
 
   .btn-f-s {
@@ -56,12 +70,14 @@
     letter-spacing: 0.02em;
     text-align: left;
   }
-  .LBB{
+
+  .LBB {
     background-color: var(--113d);
     border: 0.7px solid var(--113d);
-    color:var(--113D);
+    color: var(--113D);
   }
-  .GGB{
+
+  .GGB {
     background-color: var(--EBEC);
     border: 0.7px solid var(--EBEC);
     color: var(--1D26);

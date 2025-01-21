@@ -130,6 +130,13 @@
     --e1e1: #E1E1F399;
     --E6ec: #E6ECF5;
     --2837: #2837650F;
+    --f9f8: #F9F8F8;
+    --cd1f: #113DCD1F;
+    --33cc: #333333CC;
+    --ff66: #FFFFFF66;
+    --f0ad: #F0AD27;
+
+
 }
 
 $colors: (
@@ -251,7 +258,12 @@ $colors: (
     'cd99':var(--cd99),
     'e1e1':var(--e1e1),
     'E6ec':var(--E6ec),
-    '2837':var(--2837)
+    '2837':var(--2837),
+    'f9f8':var(--f9f8),
+    'cd1f':var(--cd1f),
+    '33cc':var(--33cc),
+    'ff66':var(--ff66),
+    'f0ad':var(--f0ad)
 );
 
 @each $name, $color in $colors {

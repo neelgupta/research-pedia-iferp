@@ -49,6 +49,18 @@
         /* Firefox */
       }
 
+      .black-b {
+        border: 1px solid var(--3333);
+
+        &::placeholder {
+          color: var(--3333);
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 16.94px;
+          letter-spacing: 0.02em;
+        }
+      }
+
 
 
     }

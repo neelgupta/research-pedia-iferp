@@ -1,5 +1,6 @@
 import CreateFeed from "@/pages/CreateFeed";
 import FeedDetails from "@/pages/FeedDetails";
+import FeedDetailsAuthor from "@/pages/FeedDetailsAuthor";
 import InstitutionalProfile from "@/pages/Institutional/InstitutionalProfile";
 import UserLayout from "@/pages/Layout/UserLayout";
 import MyFeed from "@/pages/MyFeed";
@@ -41,6 +42,10 @@ export const UserRoutes = () => {
       {
         path: "/feed-details",
         component: <FeedDetails />,
+      },
+      {
+        path: "/feed-details-author",
+        component: <FeedDetailsAuthor />,
       },
     ],
   };

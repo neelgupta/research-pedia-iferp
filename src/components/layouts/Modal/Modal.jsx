@@ -35,11 +35,11 @@ const Modal = ({
           <>
             {largeClose ? (
               <div className="modal-close-button pointer" onClick={onHide}>
-                <img src={icons.squareClose} className="h-45" alt="close" />
+                <img src={icons.closeIcons} className="h-45" alt="close" />
               </div>
             ) : (
               <div className="modal-close-button pointer" onClick={onHide}>
-                <img src={icons.eventClose} className="h-26" alt="close" />
+                <img src={icons.closeIcons} className="h-24 w-24" alt="close" />
               </div>
             )}
           </>

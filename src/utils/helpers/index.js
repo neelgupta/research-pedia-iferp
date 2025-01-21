@@ -1,3 +1,4 @@
+import { showSuccess, throwError } from "@/store/globalSlice";
 import CryptoJS from "crypto-js";
 const ENCRYPTION_KEY = CryptoJS.enc.Utf8.parse(
   import.meta.env.VITE_ENCRYPTION_KEY
@@ -185,4 +186,9 @@ export const generateRandomColor = () => {
   const randomColor = Math.floor(Math.random() * 16777215).toString(16);
 
   return "#" + randomColor.padStart(6, "0");
+};
+export const handleCopy = async (val) => {
+  try {
+    await navigator.clipboard.writeText(val);
+  } catch (err) {}
 };

@@ -66,7 +66,7 @@ const EducationDetailsPopUp = ({ setValCount }) => {
             />
             <Button
               btnText="Skip"
-              btnStyle="LBB"
+              btnStyle="LBA"
               className="h-49 w-114"
               onClick={() => {
                 setValCount(2);

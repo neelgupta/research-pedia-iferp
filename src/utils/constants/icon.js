@@ -129,6 +129,35 @@ import trueWIcons from "assets/images/icons/true-w.png";
 import profileIcons from "assets/images/icons/profile.png";
 import lockIcons from "assets/images/icons/lock.png";
 import userAIcons from "assets/images/icons/image.png";
+import userABIcons from "assets/images/icons/image-1.png";
+import copyIcons from "assets/images/icons/copy.png";
+import docsAIcons from "assets/images/icons/docs-1.png";
+import calenderAIcons from "assets/images/icons/calender-1.png";
+import eyesBIcons from "assets/images/icons/eyes-b.png";
+import rightLIcons from "assets/images/icons/right-s.png";
+import translateIcons from "assets/images/icons/translate.png";
+import playIcons from "assets/images/icons/play.png";
+import uploadBIcons from "assets/images/icons/uploadB.png";
+import driveIcons from "assets/images/icons/drive.png";
+import shareIcons from "assets/images/icons/share.png";
+import reportIcons from "assets/images/icons/reportB.png";
+import askIcons from "assets/images/icons/ask.png";
+import activeStarIcons from "assets/images/icons/active-star.png";
+import lightCIcons from "assets/images/icons/light-c.png";
+import docSearchIcons from "assets/images/icons/docs-search.png";
+import rightSAIcons from "assets/images/icons/right-s-a.png";
+import docsBlueIcons from "assets/images/icons/docs-blue.png";
+import downloadImgIcons from "assets/images/icons/download-img.png";
+import aboutImgIcons from "assets/images/icons/about-img.png";
+import pulseWIcons from "assets/images/icons/white-pulse.png";
+import chatBIcons from "assets/images/icons/chat-b.png";
+import userRoundIcons from "assets/images/icons/user-round.png";
+import WTIcons from "assets/images/icons/w-t.png";
+import WPIcons from "assets/images/icons/w-p.png";
+import WCIcons from "assets/images/icons/w-c.png";
+import WRIcons from "assets/images/icons/w-r.png";
+import WMIcons from "assets/images/icons/w-m.png";
+import noMessagesIcons from "assets/images/icons/NoMessages.png";
 
 export const icons = {
   // avatar,
@@ -267,4 +296,33 @@ export const icons = {
   profileIcons,
   lockIcons,
   userAIcons,
+  userABIcons,
+  copyIcons,
+  docsAIcons,
+  calenderAIcons,
+  eyesBIcons,
+  rightLIcons,
+  translateIcons,
+  reportIcons,
+  shareIcons,
+  driveIcons,
+  uploadBIcons,
+  playIcons,
+  askIcons,
+  lightCIcons,
+  activeStarIcons,
+  docSearchIcons,
+  rightSAIcons,
+  docsBlueIcons,
+  downloadImgIcons,
+  aboutImgIcons,
+  pulseWIcons,
+  chatBIcons,
+  userRoundIcons,
+  WPIcons,
+  WCIcons,
+  WRIcons,
+  WMIcons,
+  WTIcons,
+  noMessagesIcons,
 };

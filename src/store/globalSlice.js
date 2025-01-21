@@ -9,6 +9,7 @@ const initialState = {
   isUserSide: false,
   isRightSide: false,
   rightSideObj: {},
+  isTopics: false,
 };
 
 const globalSlice = createSlice({
@@ -29,6 +30,9 @@ const globalSlice = createSlice({
     },
     setRightSideObj(state, action) {
       state.rightSideObj = action.payload;
+    },
+    setIsTopics(state, action) {
+      state.isTopics = action.payload;
     },
 
     toggleSidebar(state, action) {
@@ -229,6 +233,7 @@ export const {
   setIsUserSide,
   setIsRightSide,
   setRightSideObj,
+  setIsTopics,
 } = globalSlice.actions;
 
 export default globalSlice.reducer;
