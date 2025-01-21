@@ -6,10 +6,75 @@ import PersonalDetailsPopUp from "./PersonalDetailsPopUp/PersonalDetailsPopUp";
 import EducationDetailsPopUp from "./EducationDetailsPopUp";
 import SelectPlan from "./SelectPlan";
 import { Formik } from "formik";
+import { useDispatch } from "react-redux";
+import {
+  getDepartment,
+  getInstitution,
+  getUniverisity,
+} from "@/store/userSlice/userDetailSlice";
 
-const MyProfilePopUp = ({ onHide, title }) => {
+const MyProfilePopUp = ({ onHide, title, isUserData ,fetchData}) => {
+  const dispatch = useDispatch();
   const [type, setType] = useState("");
   const [valCount, setValCount] = useState(0);
+  const [isDepartment, setIsDepartment] = useState([]);
+  const [isUniversity, setIsUniversity] = useState([]);
+  const [isInstitute, setIsInstitute] = useState([]);
+
+  const initialValues = {
+    name: "",
+    email: "",
+    // country: "",
+    country: {
+      id: "",
+      countryName: "",
+    },
+    dateOfbirth: "",
+    gender: "",
+    memberShipid: "",
+    phoneNumber: "",
+    profilePicture: "",
+    state: {
+      id: "",
+      stateName: "",
+    },
+    educationDetails: {
+      doctorateOrPhdDetails: {
+        course: "",
+        department: "",
+        institution: "",
+        university: "",
+        yearOfCompletion: "",
+      },
+      masterDegreeOrPgDetails: {
+        course: "",
+        department: "",
+        institution: "",
+        university: "",
+        yearOfCompletion: "",
+      },
+    },
+    personalDetails: {
+      bacheloerDegreeOrUgDetails: {
+        course: "",
+        department: "",
+        institution: "",
+        university: "",
+        yearOfCompletion: "",
+      },
+      currentProffessionDetails: {
+        department: "",
+        insOrOrganizationName: "",
+      },
+      city: "",
+    },
+    researchDetails: {
+      researchIntrest: {
+        areaOfIntrest: "",
+        comments: "",
+      },
+    },
+  };
 
   const subTitle = {
     0: "Crafting Your Unique Identity",
@@ -50,8 +115,50 @@ const MyProfilePopUp = ({ onHide, title }) => {
     }
   }, [valCount]);
 
-  const initialValues = {};
-  const handelSave = () => {};
+  const fetchDepartment = async () => {
+    const result = await dispatch(getDepartment());
+    setIsDepartment(result.data.response);
+  };
+
+  const fetchUniversity = async () => {
+    const result = await dispatch(getUniverisity());
+    setIsUniversity(result?.data?.response);
+  };
+
+  const fetchInstitution = async () => {
+    const result = await dispatch(getInstitution());
+    setIsInstitute(result.data.response);
+  };
+
+  const institutetOptions = isInstitute.map((institute) => ({
+    id: institute._id,
+    label: institute.name,
+    value: institute.name,
+  }));
+
+  const departmentOptions = isDepartment.map((department) => ({
+    id: department._id,
+    label: department.categoryName,
+    value: department.categoryName,
+  }));
+
+  const UniverisityOptions = isUniversity.map((university) => ({
+    id: university.id,
+    label: university.name,
+    value: university.name,
+  }));
+
+  useEffect(() => {
+    fetchDepartment();
+    fetchUniversity();
+    fetchInstitution();
+  }, []);
+
+  const handleSubmit = (values) => {
+    console.log(values, "EDIT USER PROFFESIONAL DATA");
+  };
+
+  console.log(isUserData, "isUserData");
   return (
     <Modal onHide={onHide} size="xl" isClose={false}>
       <div className="profile-modal-container">
@@ -104,9 +211,9 @@ const MyProfilePopUp = ({ onHide, title }) => {
         </div>
         <Formik
           enableReinitialize
-          initialValues={initialValues}
+          initialValues={isUserData ? isUserData : initialValues}
           // validationSchema={validationSchema}
-          onSubmit={handelSave}
+          onSubmit={handleSubmit}
         >
           {(props) => {
             const {
@@ -115,6 +222,7 @@ const MyProfilePopUp = ({ onHide, title }) => {
               handleChange,
               setFieldValue,
               handleSubmit,
+              setValues,
             } = props;
             return (
               <from>
@@ -126,6 +234,11 @@ const MyProfilePopUp = ({ onHide, title }) => {
                     handleChange={handleChange}
                     handleSubmit={handleSubmit}
                     setFieldValue={setFieldValue}
+                    setValues={setValues}
+                    departmentOptions={departmentOptions}
+                    UniverisityOptions={UniverisityOptions}
+                    institutetOptions={institutetOptions}
+                    fetchData={fetchData}
                   />
                 )}
                 {valCount === 1 && (
@@ -136,6 +249,10 @@ const MyProfilePopUp = ({ onHide, title }) => {
                     handleChange={handleChange}
                     handleSubmit={handleSubmit}
                     setFieldValue={setFieldValue}
+                    departmentOptions={departmentOptions}
+                    UniverisityOptions={UniverisityOptions}
+                    institutetOptions={institutetOptions}
+                    fetchData={fetchData}
                   />
                 )}
                 {valCount === 2 && (

@@ -12,10 +12,9 @@ const App = () => {
 
   const localData = getDataFromLocalStorage();
 
-  //  const isAuth = localData?.token ? true : false;
+  const isAuth = localData.token ? true :false;
 
-  const isAuth = true;
-  const role = "admin";
+  const role = localData ? localData.role : "user";
 
   return (
     <div>
@@ -23,7 +22,7 @@ const App = () => {
       {isAuth ? (
         role === "admin" || role === "superAdmin" ? (
           <AppRoutes />
-        ) : role === "user" ? (
+        ) : role === role ? (
           <UserRoutes />
         ) : (
           <div>Unauthorized Role</div>

@@ -27,7 +27,7 @@ const TextArea = ({
       {label && (
         <Label label={label} required={required} labelClass={labelClass} />
       )}
-      <div className="text-area-container">
+      <div className={`text-area-container ${className}`}>
         <div className="text-area-block">
           <textarea
             value={value}

@@ -312,7 +312,7 @@ const ListUser = () => {
           isGreen
         />
 
-        <h1 className="topic-text">List Users </h1>
+        <h1 className="topic-text">List Users</h1>
     
 
         <div className='maintable-container'>

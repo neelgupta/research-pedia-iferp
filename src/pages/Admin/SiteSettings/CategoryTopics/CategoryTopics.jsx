@@ -1,88 +1,198 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "./CategoryTopics.scss";
 import DropdownWithTags from "@/components/inputs/DropdownWithTags/DropdownWithTags";
-import { Button } from "@/components";
+import { Button, Dropdown } from "@/components";
 import Breadcrumb from "@/components/layouts/Breadcrumb";
 import { icons } from "@/utils/constants/icon";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
-import { Row, Col, Dropdown } from "react-bootstrap"; // Import Row and Col from react-bootstrap
+import { Row, Col } from "react-bootstrap"; // Import Row and Col from react-bootstrap
+import Table from "@/components/layouts/Table";
+// import { useDispatch } from "react-redux";
+import {
+  handleGetTopics,
+  updateTopicsPriority,
+} from "@/store/adminSlice/categoryAndTopics";
+import { useDispatch } from "react-redux";
 
 const CategoryTopics = () => {
-  const [editMode, setEditMode] = useState(null);
-  const [openDropdowns, setOpenDropdowns] = useState({}); // Object to track open state per tag
-  const [savedValues, setSavedValues] = useState([
-    {
-      categoryTitle: "Engineering",
-      categoryTag: [
-        "Science & Technology",
-        "Education & Management",
-        "Arts & Science",
-      ],
-    },
-    {
-      categoryTitle: "Engineering",
-      categoryTag: [
-        "Science & Technology",
-        "Education & Management",
-        "Arts & Science",
-        "Science & Technology",
-        "Education & Management",
-        "Arts & Science",
-        "Science & Technology",
-        "Education & Management",
-        "Arts & Science",
-      ],
-    },
-    {
-      categoryTitle: "Engineering",
-      categoryTag: [
-        "Science & Technology",
-        "Education & Management",
-        "Arts & Science",
-      ],
-    },
-  ]);
+  // const [editMode, setEditMode] = useState(null);
+  // const [openDropdowns, setOpenDropdowns] = useState({}); // Object to track open state per tag
+  // const [savedValues, setSavedValues] = useState([
+  //   {
+  //     categoryTitle: "Engineering",
+  //     categoryTag: [
+  //       "Science & Technology",
+  //       "Education & Management",
+  //       "Arts & Science",
+  //     ],
+  //   },
+  //   {
+  //     categoryTitle: "Engineering",
+  //     categoryTag: [
+  //       "Science & Technology",
+  //       "Education & Management",
+  //       "Arts & Science",
+  //       "Science & Technology",
+  //       "Education & Management",
+  //       "Arts & Science",
+  //       "Science & Technology",
+  //       "Education & Management",
+  //       "Arts & Science",
+  //     ],
+  //   },
+  //   {
+  //     categoryTitle: "Engineering",
+  //     categoryTag: [
+  //       "Science & Technology",
+  //       "Education & Management",
+  //       "Arts & Science",
+  //     ],
+  //   },
+  // ]);
 
-  const [selectedDropdownValues, setSelectedDropdownValues] = useState({});
+  // const [selectedDropdownValues, setSelectedDropdownValues] = useState({});
 
-  const options = [
-    { value: "Engineering", label: "Engineering" },
-    { value: "Science & Technology", label: "Science & Technology" },
-    { value: "Economics", label: "Economics" },
-  ];
+  // const options = [
+  //   { value: "Engineering", label: "Engineering" },
+  //   { value: "Science & Technology", label: "Science & Technology" },
+  //   { value: "Economics", label: "Economics" },
+  // ];
 
-  const handleEditClick = (index) => {
-    setEditMode(editMode === index ? null : index);
-  };
+  // const handleEditClick = (index) => {
+  //   setEditMode(editMode === index ? null : index);
+  // };
 
-  const handleRemoveTag = (categoryIndex, tagIndex) => {
-    const updatedCategories = [...savedValues];
-    updatedCategories[categoryIndex].categoryTag.splice(tagIndex, 1);
-    setSavedValues(updatedCategories);
-  };
+  // const handleRemoveTag = (categoryIndex, tagIndex) => {
+  //   const updatedCategories = [...savedValues];
+  //   updatedCategories[categoryIndex].categoryTag.splice(tagIndex, 1);
+  //   setSavedValues(updatedCategories);
+  // };
 
   // Handle selection change for each tag
-  const handleSelectChange = (categoryIndex, tagIndex, value) => {
-    setSelectedDropdownValues((prevState) => ({
-      ...prevState,
-      [`${categoryIndex}-${tagIndex}`]: value,
-    }));
+  // const handleSelectChange = (categoryIndex, tagIndex, value) => {
+  //   setSelectedDropdownValues((prevState) => ({
+  //     ...prevState,
+  //     [`${categoryIndex}-${tagIndex}`]: value,
+  //   }));
+  // };
 
+  // const handleSubmit = (values) => {};
 
+  // const textColorMapping = {
+  //   high: "red",
+  //   mediam: "orange",
+  //   low: "green",
+  // };
+
+  const dispatch = useDispatch();
+  const [rowsPerPage, setRowsPerPage] = useState(20);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
+  const [isTopicList, setIsTopicList] = useState([]);
+
+  const priorityOption = [
+    { value: "high", label: "High" },
+    { value: "medium", label: "Medium" },
+    { value: "low", label: "Low" },
+  ];
+
+  const fetchTopics = async () => {
+    const result = await dispatch(handleGetTopics(currentPage, rowsPerPage));
+
+    if (result?.status === 200) {
+      setIsTopicList(result?.data?.response?.topics);
+      setTotalCount(result?.data?.response?.pagination?.totalCount);
+    }
   };
 
-  const handleSubmit = (values) => {
+  const handlePriorityChange = async (selectedOption, id) => {
+    const updateData = {
+      priority: selectedOption,
+    };
+    const result = await dispatch(updateTopicsPriority(id, updateData));
 
+    if (result.status === 200) {
+      fetchTopics();
+    }
   };
 
+  useEffect(() => {
+    fetchTopics();
+  }, [currentPage, rowsPerPage]);
 
-  const textColorMapping = {
-    high: "red",
-    mediam: "orange",
-    low: "green",
-  };
+  const header = [
+    {
+      title: "Sr. No",
+      className: "wp-10 justify-content-between",
+    },
+    {
+      title: "Topics",
+      className: "wp-40 justify-content-between",
+    },
+    {
+      title: "Category",
+      className: "wp-40 justify-content-between",
+    },
+    {
+      title: "Priority",
+      className: "wp-20 justify-content-between",
+    },
+  ];
+
+  const rowData = [];
+  isTopicList?.forEach((elem, index) => {
+    const { topics, priority, _id } = elem;
+    let obj = [
+      {
+        value: currentPage * 10 + index + 1 - 10,
+        className: "wp-10 justify-content-start pointer",
+      },
+      {
+        value: (
+          <p
+            className="mb-0"
+            onClick={() =>
+              navigate("/admin/manage-users/list-user/user-details")
+            }
+          >
+            {topics}
+          </p>
+        ),
+        className: "wp-40 justify-content-start flex-wrap pointer",
+      },
+      {
+        value: (
+          <p
+            className="mb-0"
+            onClick={() =>
+              navigate("/admin/manage-users/list-user/user-details")
+            }
+          >
+            Category
+          </p>
+        ),
+        className: "wp-40 justify-content-start flex-wrap pointer",
+      },
+      {
+        value: (
+          <div className="wp-100 pe-10 pe-50">
+            <Dropdown
+              id="priority"
+              optionLabel="label"
+              optionKey="value"
+              value={priority}
+              options={priorityOption}
+              onChange={(e) => handlePriorityChange(e.target.data.value, _id)}
+            />
+          </div>
+        ),
+        className: "wp-20 justify-content-start flex-wrap pointer",
+      },
+    ];
+    rowData.push({ data: obj });
+  });
 
   return (
     <div id="categorytopics-container">
@@ -94,10 +204,29 @@ const CategoryTopics = () => {
             isGreen
           />
         </div>
+
         <div className="categorytopics-title">
           <h1>Category & Topics</h1>
         </div>
-        <div className="add-rearches">
+
+        <div className="maintable-container my-20">
+          <Table
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            rowsPerPage={rowsPerPage}
+            setRowsPerPage={setRowsPerPage}
+            header={header}
+            row={rowData}
+            totalRows={totalCount}
+            min="1000px"
+            isSearch
+            ispaginationcontrols
+            ispagination
+            istableaction
+          />
+        </div>
+
+        {/* <div className="add-rearches">
           <div className="rearch-form border">
             <div className="rearch-title">
               <h1>Add Research Category & Topics</h1>
@@ -139,12 +268,11 @@ const CategoryTopics = () => {
               )}
             </Formik>
           </div>
-        </div>
+        </div> */}
 
-        <div className="category-table">
+        {/* <div className="category-table">
           <Row>
             {" "}
-            {/* Use Row with gap prop */}
             {savedValues.map((category, categoryIndex) => (
               <Col key={categoryIndex} xl={4} md={6} sm={12} className="p-0">
                 <div className="border cetegory-card overflow-auto rearchPedia-scroll p-0 me-8 mt-8">
@@ -176,29 +304,40 @@ const CategoryTopics = () => {
                           <p className="mb-0">{item}</p>
                         </div>
                         <div className="d-flex align-items-center">
-                          {/* Dropdown per tag */}
+                          <Dropdown
+                            onSelect={(value) =>
+                              handleSelectChange(categoryIndex, tagIndex, value)
+                            }
+                          >
+                            <Dropdown.Toggle
+                              variant="light"
+                              id="dropdown-basic"
+                              style={{
+                                color:
+                                  textColorMapping[
+                                    selectedDropdownValues[
+                                      `${categoryIndex}-${tagIndex}`
+                                    ]
+                                  ] || "black",
+                                border: "1px solid #ccc",
+                                width: "150px",
+                              }}
+                            >
+                              {selectedDropdownValues[
+                                `${categoryIndex}-${tagIndex}`
+                              ] || "Select"}
+                            </Dropdown.Toggle>
 
-                          <Dropdown onSelect={(value) => handleSelectChange(categoryIndex, tagIndex, value)}>
-  <Dropdown.Toggle
-   variant="light"
-   id="dropdown-basic"
-   style={{
-     color: textColorMapping[selectedDropdownValues[`${categoryIndex}-${tagIndex}`]] || "black",
-     border: "1px solid #ccc",
-     width: "150px",
-   }}
-  >
-    {selectedDropdownValues[`${categoryIndex}-${tagIndex}`] || "Select"}
-  </Dropdown.Toggle>
-
-  <Dropdown.Menu>
-    <Dropdown.Item eventKey="high">High</Dropdown.Item>
-    <Dropdown.Item eventKey="mediam">Mediam</Dropdown.Item>
-    <Dropdown.Item eventKey="low">Low</Dropdown.Item>
-  </Dropdown.Menu>
-</Dropdown>
-
-
+                            <Dropdown.Menu>
+                              <Dropdown.Item eventKey="high">
+                                High
+                              </Dropdown.Item>
+                              <Dropdown.Item eventKey="mediam">
+                                Mediam
+                              </Dropdown.Item>
+                              <Dropdown.Item eventKey="low">Low</Dropdown.Item>
+                            </Dropdown.Menu>
+                          </Dropdown>
 
                           {editMode === categoryIndex && (
                             <IoMdRemoveCircleOutline
@@ -216,7 +355,7 @@ const CategoryTopics = () => {
               </Col>
             ))}
           </Row>
-        </div>
+        </div> */}
       </div>
     </div>
   );

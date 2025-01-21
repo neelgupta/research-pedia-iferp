@@ -10,7 +10,7 @@ const FileUpload = ({
   error,
   onChange,
   id,
-  fileText,
+  fileText, 
   fileType,
   disabled,
   label,
@@ -19,6 +19,7 @@ const FileUpload = ({
   acceptType,
   placeholder,
   text,
+  value
 }) => {
   const dispatch = useDispatch();
   const [fileName, setFileName] = useState("");
@@ -114,7 +115,7 @@ const FileUpload = ({
           >
             <div className="choose_file">
               <span className="btn-block">
-                <img src={icons.uploadIcons} alt="upload" />
+                <img src={icons.uploadIcons}  alt="upload" />
               </span>
             </div>
           </span>

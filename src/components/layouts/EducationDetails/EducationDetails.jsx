@@ -1,6 +1,21 @@
 import Button from "@/components/inputs/Button";
 import "./EducationDetails.scss";
-const EducationDetails = ({ onClick }) => {
+const EducationDetails = ({ onClick, educationDetails, researchDetails }) => {
+  console.log(researchDetails, "researchDetails");
+
+  const { course, department, institution, university, yearOfCompletion } =
+    educationDetails?.masterDegreeOrPgDetails || {};
+
+  const {
+    course: dpCourse,
+    department: dpDepartment,
+    institution: dpInstitute,
+    university: dpUniversity,
+    yearOfCompletion: dpyearOfCompletion,
+  } = educationDetails?.doctorateOrPhdDetails || {};
+
+  const { areaOfIntrest, comments } = researchDetails?.researchIntrest || {};
+
   return (
     <div className="education-container">
       <div className="education-top-box">
@@ -15,35 +30,31 @@ const EducationDetails = ({ onClick }) => {
           <div className="col-lg-6">
             <div className="details-box">
               <p className="education-label">Course</p>
-              <h5 className="education-name">BSc</h5>
+              <h5 className="education-name">{course || "-"}</h5>
             </div>
           </div>
           <div className="col-lg-6">
             <div className="details-box">
               <p className="education-label">Department</p>
-              <h5 className="education-name">Accountancy</h5>
+              <h5 className="education-name">{department || "-"}</h5>
             </div>
           </div>
           <div className="col-lg-6">
             <div className="details-box">
               <p className="education-label">University </p>
-              <h5 className="education-name">
-                University of Petroleum and Energy Studies
-              </h5>
+              <h5 className="education-name">{university || "-"}</h5>
             </div>
           </div>
           <div className="col-lg-6">
             <div className="details-box">
               <p className="education-label">Institution </p>
-              <h5 className="education-name">
-                Parvathaneni Brahmayya Siddhartha college of Arts & Science
-              </h5>
+              <h5 className="education-name">{institution || "-"}</h5>
             </div>
           </div>
           <div className="col-lg-6">
             <div className="details-box">
               <p className="education-label">Year of completion</p>
-              <h5 className="education-name">2024-10-29</h5>
+              <h5 className="education-name">{yearOfCompletion || "-"}</h5>
             </div>
           </div>
           <div className="col-12">
@@ -52,37 +63,33 @@ const EducationDetails = ({ onClick }) => {
           <div className="col-lg-6">
             <div className="details-box">
               <p className="education-label">Institution </p>
-              <h5 className="education-name">
-                Parvathaneni Brahmayya Siddhartha college of Arts & Science
-              </h5>
+              <h5 className="education-name">{dpInstitute || "-"}</h5>
             </div>
           </div>
           <div className="col-lg-6">
             <div className="details-box">
               <p className="education-label">Department</p>
-              <h5 className="education-name">Accountancy</h5>
+              <h5 className="education-name">{dpDepartment || "-"}</h5>
             </div>
           </div>
 
           <div className="col-lg-6">
             <div className="details-box">
               <p className="education-label">Year of completion</p>
-              <h5 className="education-name">2024-10-29</h5>
+              <h5 className="education-name">{dpyearOfCompletion || "-"}</h5>
             </div>
           </div>
           <div className="col-lg-6">
             <div className="details-box">
               <p className="education-label">University </p>
-              <h5 className="education-name">
-                University of Petroleum and Energy Studies
-              </h5>
+              <h5 className="education-name">{dpUniversity || "-"}</h5>
             </div>
           </div>
 
           <div className="col-lg-6">
             <div className="details-box">
               <p className="education-label">Course</p>
-              <h5 className="education-name">BSc</h5>
+              <h5 className="education-name">{dpCourse || "-"}</h5>
             </div>
           </div>
 
@@ -93,20 +100,13 @@ const EducationDetails = ({ onClick }) => {
           <div className="col-lg-6">
             <div className="details-box">
               <p className="education-label">Area of interest</p>
-              <h5 className="education-name">Economic Growth</h5>
+              <h5 className="education-name">{areaOfIntrest || "-"}</h5>
             </div>
           </div>
           <div className="col-12">
             <div className="details-box">
               <p className="education-label">Comment</p>
-              <h5 className="education-name">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged.
-              </h5>
+              <h5 className="education-name">{comments || "-"}</h5>
             </div>
           </div>
         </div>

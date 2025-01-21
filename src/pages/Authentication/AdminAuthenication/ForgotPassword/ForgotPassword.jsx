@@ -21,6 +21,9 @@ const ForgotPassword = () => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     const res = await dispatch(forgotpasswordsendemail(values));
+    if (res.status === 200) {
+      navigate("/admin/check-mail");
+    }
   };
 
   return (

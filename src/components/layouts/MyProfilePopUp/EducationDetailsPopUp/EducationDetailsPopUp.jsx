@@ -4,55 +4,225 @@ import DatePicker from "@/components/inputs/DataPicker";
 import TextInput from "@/components/inputs/TextInput";
 import TextArea from "@/components/inputs/TextArea";
 import Button from "@/components/inputs/Button";
+import {
+  getCourse,
+  updateProfessionalMemberDetails,
+} from "@/store/userSlice/userDetailSlice";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { getDataFromLocalStorage } from "@/utils/helpers";
 
-const EducationDetailsPopUp = ({ setValCount }) => {
+const EducationDetailsPopUp = ({
+  setValCount,
+  values,
+  handleChange,
+  departmentOptions,
+  UniverisityOptions,
+  institutetOptions,
+  fetchData
+}) => {
+  const dispatch = useDispatch();
+  const localData = getDataFromLocalStorage();
+
+  const [pgCourse, setPgcourse] = useState([]);
+  const [phdCourse, setPhdCourse] = useState([]);
+
+  const fetchPgCourse = async () => {
+    const result = await dispatch(getCourse("pg"));
+    setPgcourse(result.data.response);
+  };
+  const fetchPhdCourse = async () => {
+    const result = await dispatch(getCourse("phd"));
+    setPhdCourse(result.data.response);
+  };
+
+  const pgCourseOptions = pgCourse.map((pgCourse) => ({
+    id: pgCourse.id,
+    label: pgCourse.name,
+    value: pgCourse.name,
+  }));
+
+  const phdCourseOptions = phdCourse.map((phdCourse) => ({
+    id: phdCourse.id,
+    label: phdCourse.name,
+    value: phdCourse.name,
+  }));
+
+  const handleNext = async () => {
+    console.log(values, "VALUES Step 2");
+    delete values.role;
+    const result = await dispatch(
+      updateProfessionalMemberDetails(localData.roleId, values)
+    );
+    console.log(result,"Step 2 REsult")
+
+    if(result.status === 200)
+    setValCount(2);
+    fetchData()
+  };
+
+  useEffect(() => {
+    fetchPgCourse();
+    fetchPhdCourse();
+  }, []);
+
   return (
     <div className="education-details-container">
       <div className="row row-gap-3">
         <div className="col-12">
-          <h6 className="degree-details">Bachelor Degree/UG Details</h6>
+          <h6 className="degree-details">Master Degree/PG Details</h6>
         </div>
         <div className="col-md-6">
-          <Dropdown placeholder="Course" />
+          <Dropdown
+            placeholder="Course"
+            id="educationDetails.masterDegreeOrPgDetails.course"
+            value={values.educationDetails.masterDegreeOrPgDetails.course}
+            optionLabel="label"
+            optionKey="value"
+            onChange={(e) => {
+              handleChange(e);
+            }}
+            options={pgCourseOptions}
+          />
         </div>
         <div className="col-md-6">
-          <Dropdown placeholder="Department" />
+          <Dropdown
+            placeholder="Department"
+            id="educationDetails.masterDegreeOrPgDetails.department"
+            value={values.educationDetails.masterDegreeOrPgDetails.department}
+            optionLabel="label"
+            optionKey="value"
+            onChange={(e) => {
+              handleChange(e);
+            }}
+            options={departmentOptions}
+          />
         </div>
         <div className="col-md-6">
-          <Dropdown placeholder="University" />
+          <Dropdown
+            placeholder="University"
+            id="educationDetails.masterDegreeOrPgDetails.university"
+            value={values.educationDetails.masterDegreeOrPgDetails.university}
+            optionLabel="label"
+            optionKey="value"
+            onChange={(e) => {
+              handleChange(e);
+            }}
+            options={UniverisityOptions}
+          />
         </div>
         <div className="col-md-6">
-          <Dropdown placeholder="Institution" />
+          <Dropdown
+            placeholder="Institution"
+            id="educationDetails.masterDegreeOrPgDetails.institution"
+            value={values.educationDetails.masterDegreeOrPgDetails.institution}
+            optionLabel="label"
+            optionKey="value"
+            onChange={(e) => {
+              handleChange(e);
+            }}
+            options={institutetOptions}
+          />
         </div>
         <div className="col-md-6">
-          <DatePicker className="h-45" icon placeholder="Year of completion" />
+          <DatePicker
+            id="educationDetails.masterDegreeOrPgDetails.yearOfCompletion"
+            value={
+              values.educationDetails.masterDegreeOrPgDetails.yearOfCompletion
+            }
+            className="h-45"
+            icon
+            placeholder="Year of completion"
+            onChange={handleChange}
+          />
         </div>
         <div className="col-12">
           <h6 className="degree-details">Doctorate/Ph.D Programme Details</h6>
         </div>
         <div className="col-md-6">
-          <Dropdown placeholder="Course" />
+          <Dropdown
+            placeholder="Course"
+            id="educationDetails.doctorateOrPhdDetails.course"
+            value={values.educationDetails.doctorateOrPhdDetails.course}
+            optionLabel="label"
+            optionKey="value"
+            onChange={(e) => {
+              handleChange(e);
+            }}
+            options={phdCourseOptions}
+          />
         </div>
         <div className="col-md-6">
-          <Dropdown placeholder="Department" />
+          <Dropdown
+            placeholder="Department"
+            id="educationDetails.doctorateOrPhdDetails.department"
+            value={values.educationDetails.doctorateOrPhdDetails.department}
+            optionLabel="label"
+            optionKey="value"
+            onChange={(e) => {
+              handleChange(e);
+            }}
+            options={departmentOptions}
+          />
         </div>
         <div className="col-md-6">
-          <Dropdown placeholder="University" />
+          <Dropdown
+            placeholder="University"
+            id="educationDetails.doctorateOrPhdDetails.university"
+            value={values.educationDetails.doctorateOrPhdDetails.university}
+            optionLabel="label"
+            optionKey="value"
+            onChange={(e) => {
+              handleChange(e);
+            }}
+            options={UniverisityOptions}
+          />
         </div>
         <div className="col-md-6">
-          <Dropdown placeholder="Institution" />
+          <Dropdown
+            placeholder="Institution"
+            id="educationDetails.doctorateOrPhdDetails.institution"
+            value={values.educationDetails.doctorateOrPhdDetails.institution}
+            optionLabel="label"
+            optionKey="value"
+            onChange={(e) => {
+              handleChange(e);
+            }}
+            options={institutetOptions}
+          />
         </div>
         <div className="col-md-6">
-          <DatePicker className="h-45" icon placeholder="Year of completion" />
+          <DatePicker
+            className="h-45"
+            icon
+            placeholder="Year of completion"
+            id="educationDetails.doctorateOrPhdDetails.yearOfCompletion"
+            value={
+              values.educationDetails.doctorateOrPhdDetails.yearOfCompletion
+            }
+            onChange={handleChange}
+          />
         </div>
         <div className="col-12">
           <h6 className="degree-details">Research Interests</h6>
         </div>
         <div className="col-12">
-          <TextInput className="h-45" placeholder="Area of interest" />
+          <TextInput
+            id="researchDetails.researchIntrest.areaOfIntrest"
+            onChange={handleChange}
+            value={values.researchDetails.researchIntrest.areaOfIntrest}
+            className="h-45"
+            placeholder="Area of interest"
+          />
         </div>
         <div className="col-12">
-          <TextArea className="h-45" placeholder="Comments if any" />
+          <TextArea
+            id="researchDetails.researchIntrest.comments"
+            onChange={handleChange}
+            value={values.researchDetails.researchIntrest.comments}
+            className="h-45"
+            placeholder="Comments if any"
+          />
         </div>
         <div className="col-12">
           <div className="d-flex justify-content-end mt-10 gap-3">
@@ -75,9 +245,7 @@ const EducationDetailsPopUp = ({ setValCount }) => {
             <Button
               btnText="Continue"
               className="h-49 w-114"
-              onClick={() => {
-                setValCount(2);
-              }}
+              onClick={handleNext}
             />
           </div>
         </div>

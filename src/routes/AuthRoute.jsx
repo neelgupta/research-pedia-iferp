@@ -24,8 +24,8 @@ const AuthRoute = () => {
         <Route path="/admin/login" element={<Login />} />
         <Route path="/admin/forgot-password" element={<ForgotPassword />} />
         <Route path="/admin/check-mail" element={<Checkmail />} />
-        {/* <Route path="/admin/reset-password/:token" element={<ResetPassword />} /> */}
-        <Route path="/admin/reset-password" element={<ResetPassword />} />
+        <Route path="/admin/resetpassword/:token" element={<ResetPassword />} />
+        {/* <Route path="/admin/reset-password" element={<ResetPassword />} /> */}
         <Route
           path="/admin/authentication-code"
           element={<AuthenticationCode />}

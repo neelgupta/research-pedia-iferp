@@ -3,6 +3,7 @@ import { api } from "services/api";
 import { encrypt, storeLocalStorageData } from "utils/helpers";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 const initialState = {
+  loading: false,
   authData: null,
   errorData: null,
   sidebarOpen: true,
@@ -16,6 +17,12 @@ const globalSlice = createSlice({
   name: "global",
   initialState,
   reducers: {
+    setLoading(state) {
+      state.loading = true;
+    },
+    clearLoading(state) {
+      state.loading = false;
+    },
     setAuthData(state, action) {
       state.authData = action.payload;
     },
@@ -86,11 +93,8 @@ export const forgotpasswordsendemail = (payload) => async (dispatch) => {
 export const updateforgotpassword = (payload) => async (dispatch) => {
   try {
     const { token, ...data } = payload;
-
     const res = await api.post(`/admin/auth/reset-password/${token}`, data, {});
-
     dispatch(showSuccess(res?.data?.message));
-
     return res;
   } catch (error) {
     return dispatch(handelCatch(error));
@@ -226,6 +230,8 @@ export const throwError = (message) => async (dispatch) => {
 };
 
 export const {
+  setLoading,
+  clearLoading,
   setAuthData,
   setErrorData,
   resetAllState,

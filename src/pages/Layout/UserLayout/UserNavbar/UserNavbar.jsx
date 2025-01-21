@@ -3,9 +3,12 @@ import "./UserNavbar.scss";
 import { Button, SearchInput } from "@/components";
 import { Container } from "react-bootstrap";
 import { icons } from "@/utils/constants";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getDataFromLocalStorage } from "@/utils/helpers";
 const UserNavbar = () => {
   const token = true;
+  const navigate = useNavigate();
+
   const location = useLocation();
   const isMyFeed =
     location?.pathname === "/my-feed" || location?.pathname === "/create-feed";
@@ -57,6 +60,12 @@ const UserNavbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const handleLogOut = () => {
+  localStorage.removeItem("authData");  
+  window.location.reload();
+  };
+  
   return (
     <>
       <div id="user-navbar">
@@ -321,7 +330,9 @@ const UserNavbar = () => {
                         setDropdownOpen(false);
                       }}
                     >
-                      <div className="w-188 text-l">Log Out</div>
+                      <div className="w-188 text-l" onClick={handleLogOut}>
+                        Log Out
+                      </div>
                     </div>
                   </div>
                 )}

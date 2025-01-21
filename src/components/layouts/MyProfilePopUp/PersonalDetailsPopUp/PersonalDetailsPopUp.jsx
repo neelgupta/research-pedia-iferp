@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./PersonalDetailsPopUp.scss";
 import TextInput from "@/components/inputs/TextInput";
 import DatePicker from "@/components/inputs/DataPicker";
@@ -7,6 +7,16 @@ import { dialCode } from "@/utils/constants";
 import Dropdown from "@/components/inputs/Dropdown";
 import FileUpload from "@/components/inputs/FileUpload";
 import Button from "@/components/inputs/Button";
+import { useDispatch } from "react-redux";
+import {
+  getCity,
+  getCountry,
+  getCourse,
+  getState,
+  updateProfessionalMemberDetails
+} from "@/store/userSlice/userDetailSlice";
+import { getDataFromLocalStorage } from "@/utils/helpers";
+
 
 const PersonalDetailsPopUp = ({
   setValCount,
@@ -14,60 +24,294 @@ const PersonalDetailsPopUp = ({
   handleSubmit,
   handleChange,
   errors,
+  setValues,
   values,
+  departmentOptions,
+  UniverisityOptions,
+  institutetOptions,
 }) => {
+  const dispatch = useDispatch();
+  const [isCountry, setIsCountry] = useState([]);
+  const [isCountryId, setIdCountryId] = useState(values?.country?.id || "");
+  const [isStateId, setIsStateId] = useState(values?.state?.id || "");
+  const [isState, setIsState] = useState([]);
+  const [isCity, setIsCity] = useState([]);
+  const [ugCourse, setUgcourse] = useState([]);
+
+  const [fileData, setFileData] = useState({
+    fileName: "",
+    fileValue: "",
+  });
+
+  const localData = getDataFromLocalStorage();
+
+  const handleFileChange = (e) => {
+    const { fileName, value } = e.target;
+    setFileData({ fileName, fileValue: value });
+  };
+
+  const fetchCountry = async () => {
+    const result = await dispatch(getCountry());
+    setIsCountry(result.data.response);
+  };
+
+  const fetchState = async () => {
+    if (isCountryId !== undefined) {
+      const result = await dispatch(getState(isCountryId));
+      setIsState(result.data.response);
+    }
+  };
+
+  const fetchCity = async () => {
+    if (isStateId !== undefined) {
+      const result = await dispatch(getCity(isStateId));
+      setIsCity(result.data.response);
+    }
+  };
+
+  const fetchUgCourse = async () => {
+    const result = await dispatch(getCourse("ug"));
+    setUgcourse(result.data.response);
+  };
+
+  const ugCourseOptions = ugCourse.map((ugCourse) => ({
+    id: ugCourse.id,
+    label: ugCourse.name,
+    value: ugCourse.name,
+  }));
+
+  const CountryData = isCountry.map((country) => ({
+    id: country.id,
+    label: country?.country,
+    value: country?.country,
+  }));
+
+  const StateData = isState.map((state) => ({
+    id: state.id,
+    label: state.state,
+    value: state.state,
+  }));
+
+  const CityData = isCity.map((city) => ({
+    id: city.id,
+    label: city.city,
+    value: city.city,
+  }));
+
+  const handleNext = async () => {
+    values.country = {
+      id: isCountryId,
+      countryName: isCountry.find((country) => country.id === isCountryId)
+        ?.country,
+    };
+
+    values.state = {
+      id: isStateId,
+      stateName: isState.find((state) => state.id === isStateId)?.state,
+    };
+    delete values.role;
+    const result = await dispatch(
+      updateProfessionalMemberDetails(localData.roleId, values)
+    );
+    if (result.status === 200) {
+      setValCount(1);
+      fetchData();
+    }
+  };
+
+  useEffect(() => {
+    fetchCountry();
+    fetchState();
+    fetchCity();
+    fetchUgCourse();
+  }, [isCountryId, isStateId]);
+
   return (
     <div className="personal-details-container">
       <div className="row row-gap-3">
         <div className="col-md-6">
-          <TextInput className="h-45" placeholder="Enter your Name" disabled />
+          <TextInput
+            className="h-45"
+            placeholder="Enter your Name"
+            value={values.name}
+            disabled
+          />
         </div>
         <div className="col-md-6">
-          <TextInput className="h-45" placeholder="Enter your Email" disabled />
+          <TextInput
+            className="h-45"
+            placeholder="Enter your Email"
+            value={values.email}
+            disabled
+          />
         </div>
         <div className="col-md-6">
           <TextInputwithDropdown
-            placeholder="9876543210"
+            placeholder="Phone Number"
+            value={values.phoneNumber}
             dropdownOptions={dialCode}
             className="h-45"
             disabled
           />
         </div>
         <div className="col-md-6">
-          <DatePicker className="h-45" icon placeholder="Date of birth" />
+          <DatePicker
+            id="dateOfbirth"
+            name="dateOfbirth"
+            value={values.dateOfbirth}
+            selected={null}
+            onChange={handleChange}
+            className="h-45"
+            icon
+            placeholder="Date of birth"
+          />
         </div>
         <div className="col-md-6">
-          <Dropdown placeholder="Genders" />
+          <Dropdown
+            id="gender"
+            placeholder="Genders"
+            optionLabel="label"
+            optionKey="value"
+            options={[
+              { label: "Male", value: "male" },
+              { label: "Female", value: "female" },
+              { label: "Other", value: "other" },
+            ]}
+            onChange={handleChange}
+            value={values.gender}
+          />
         </div>
         <div className="col-md-6">
-          <Dropdown placeholder="Country" />
+          <Dropdown
+            id="country.countryName"
+            optionLabel="label"
+            optionKey="value"
+            placeholder="Country"
+            options={CountryData}
+            onChange={(e) => {
+              handleChange(e), setIdCountryId(e.target.data.id);
+            }}
+            value={values?.country?.countryName}
+          />
         </div>
         <div className="col-md-6">
-          <Dropdown placeholder="State" />
+          <Dropdown
+            id="state.stateName"
+            optionLabel="label"
+            optionKey="value"
+            placeholder="State"
+            options={StateData}
+            onChange={(e) => {
+              handleChange(e), setIsStateId(e.target.data.id);
+            }}
+            value={values.state.stateName}
+          />
         </div>
         <div className="col-md-6">
-          <Dropdown placeholder="City" />
+          <Dropdown
+            id="personalDetails.city"
+            optionLabel="label"
+            optionKey="value"
+            placeholder="City"
+            options={CityData}
+            onChange={(e) => {
+              handleChange(e);
+            }}
+            value={values.personalDetails.city}
+          />
         </div>
         <div className="col-12">
-          <FileUpload placeholder="City" />
+          {/* <FileUpload
+            id="profilePicture"
+            placeholder="File Upload"
+            onChange={handleChange}
+          /> */}
+          <FileUpload
+            onChange={handleFileChange}
+            id="profile-image"
+            fileText={fileData.fileName}
+            fileType="image"
+            acceptType={["png", "jpg", "jpeg"]}
+            label="Upload Profile Image"
+            isRequired={true}
+            placeholder="Choose a file"
+          />
+          {fileData.fileValue && (
+            <div className="preview">
+              <h4>Preview</h4>
+              <img
+                src={fileData.fileValue}
+                alt="Profile Preview"
+                style={{ width: "150px", height: "150px", objectFit: "cover" }}
+              />
+            </div>
+          )}
         </div>
         <div className="col-12">
           <h6 className="degree-details">Bachelor Degree/UG Details</h6>
         </div>
         <div className="col-md-6">
-          <Dropdown placeholder="Course" />
+          <Dropdown
+            id="personalDetails.bacheloerDegreeOrUgDetails.course"
+            value={values.personalDetails.bacheloerDegreeOrUgDetails.course}
+            optionLabel="label"
+            optionKey="value"
+            placeholder="Course"
+            onChange={(e) => {
+              handleChange(e);
+            }}
+            options={ugCourseOptions}
+          />
         </div>
         <div className="col-md-6">
-          <Dropdown placeholder="Department" />
+          <Dropdown
+            placeholder="Department"
+            id="personalDetails.bacheloerDegreeOrUgDetails.department"
+            value={values.personalDetails.bacheloerDegreeOrUgDetails.department}
+            optionLabel="label"
+            optionKey="value"
+            onChange={(e) => {
+              handleChange(e);
+            }}
+            options={departmentOptions || []}
+          />
         </div>
         <div className="col-md-6">
-          <Dropdown placeholder="University" />
+          <Dropdown
+            id="personalDetails.bacheloerDegreeOrUgDetails.university"
+            optionLabel="label"
+            optionKey="value"
+            options={UniverisityOptions || []}
+            placeholder="University"
+            onChange={handleChange}
+            value={values.personalDetails.bacheloerDegreeOrUgDetails.university}
+          />
         </div>
         <div className="col-md-6">
-          <Dropdown placeholder="Institution" />
+          <Dropdown
+            id="personalDetails.bacheloerDegreeOrUgDetails.institution"
+            value={
+              values.personalDetails.bacheloerDegreeOrUgDetails.institution
+            }
+            placeholder="Institution"
+            options={institutetOptions || []}
+            onChange={handleChange}
+            optionLabel="label"
+            optionKey="value"
+          />
         </div>
         <div className="col-md-6">
-          <DatePicker className="h-45" icon placeholder="Year of completion" />
+          <DatePicker
+            className="h-45"
+            icon
+            placeholder="Year of completion"
+            id="personalDetails.bacheloerDegreeOrUgDetails.yearOfCompletion"
+            value={
+              values.personalDetails.bacheloerDegreeOrUgDetails.yearOfCompletion
+            }
+            selected={null}
+            onChange={handleChange}
+          />
         </div>
         <div className="col-12">
           <h6 className="degree-details">
@@ -79,19 +323,29 @@ const PersonalDetailsPopUp = ({
           <TextInput
             className="h-45"
             placeholder="Institution/Organization name"
+            id="personalDetails.currentProffessionDetails.insOrOrganizationName"
+            value={
+              values.personalDetails.currentProffessionDetails
+                .insOrOrganizationName
+            }
+            onChange={handleChange}
           />
         </div>
         <div className="col-md-6">
-          <TextInput className="h-45" placeholder="Department" />
+          <TextInput
+            id="personalDetails.currentProffessionDetails.department"
+            value={values.personalDetails.currentProffessionDetails.department}
+            className="h-45"
+            placeholder="Department"
+            onChange={handleChange}
+          />
         </div>
         <div className="col-12">
           <div className="d-flex justify-content-end mt-10">
             <Button
               btnText="Continue"
               className="h-49 w-114"
-              onClick={() => {
-                setValCount(1);
-              }}
+              onClick={handleNext}
             />
           </div>
         </div>
