@@ -121,7 +121,8 @@ import uploadIcons from "assets/images/icons/upload.png";
 import upIcons from "assets/images/icons/up.png";
 import trueIcons from "assets/images/icons/true.png";
 import likeIcons from "assets/images/icons/like.png";
-
+import hate from "assets/images/icons/hate.png";
+import calander from "assets/images/icons/calander.png";
 export const icons = {
   // avatar,
   Google,
@@ -251,4 +252,7 @@ export const icons = {
   upIcons,
   trueIcons,
   likeIcons,
+
+  hate,
+  calander
 };

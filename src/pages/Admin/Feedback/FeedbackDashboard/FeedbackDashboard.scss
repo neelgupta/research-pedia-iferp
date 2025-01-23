@@ -1,0 +1,36 @@
+#feedbackdashboard-container {
+    padding-bottom: 40px;
+
+    .topic-text {
+        font-size: 30px;
+        margin-top: 14px;
+        font-weight: 700;
+        line-height: 36.31px;
+        color: var(--1D26);
+
+
+    }
+    .graph-container{
+        .card-conatiner{
+            background-color: var(--ffff);
+            padding: 20px 15px;
+            border-radius: 12px;
+            flex-grow: 1;
+            height: 100%;
+        }
+        .bar-container{
+            background-color: var(--ffff);
+        }
+    }
+    .maintable-container{
+        background-color: #ffffff;
+        border-radius: 12px;
+margin-top: 25px;
+  border: 1px solid var(--e7ea);
+//   padding: 26px;
+.table-header{
+    padding: 26px;
+    border-bottom: 1px solid var(--e7ea);
+}
+    }
+}
