@@ -24,7 +24,7 @@ const TextInputwithDropdown = ({
   dropdownOptions = [],
   onDropdownChange,
   isphone,
-  isname,
+  isname
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
@@ -46,21 +46,15 @@ const TextInputwithDropdown = ({
       )}
       <div className="text-input-container">
         <div className="text-input-block">
-          <select
+        <select
             className="dropdown-select"
             onChange={handleDropdownChange}
-            value={selectedOption || "+91"}
-            disabled={disabled}
+            value={selectedOption}
           >
-            <option value="" disabled o>
-              <span className="text-14-400 color-3333">
-                {" "}
-                {isphone && "+ 91"} {isname && "Dr"}{" "}
-              </span>
-            </option>
+            <option value="" disabled ><span className="text-14-400 color-3333"> {isphone && "+ 91"} {isname && "Dr"} </span></option>
             {dropdownOptions.map((option, index) => (
-              <option key={index} value={option.dial_code}>
-                {option.dial_code}
+              <option key={index} value={option.value}>
+                {option.label}
               </option>
             ))}
           </select>
@@ -74,10 +68,7 @@ const TextInputwithDropdown = ({
             autoComplete="new-password"
             onChange={(e) => {
               if (numeric) {
-                e.target.value = e.target.value.replace(
-                  /^(0|[^1-9][0-9]*)$/,
-                  ""
-                );
+                e.target.value = e.target.value.replace(/^(0|[^1-9][0-9]*)$/, "");
               }
               onChange({
                 target: {
@@ -94,6 +85,7 @@ const TextInputwithDropdown = ({
           />
 
           {/* Dropdown Menu */}
+       
         </div>
         {error && <div className="input-error">{error}</div>}
       </div>

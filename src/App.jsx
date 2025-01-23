@@ -15,7 +15,7 @@ const App = () => {
   //  const isAuth = localData?.token ? true : false;
 
   const isAuth = true;
-  const role = "user";
+  const role = "admin";
 
   return (
     <div>

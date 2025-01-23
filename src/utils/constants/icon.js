@@ -159,6 +159,8 @@ import WRIcons from "assets/images/icons/w-r.png";
 import WMIcons from "assets/images/icons/w-m.png";
 import noMessagesIcons from "assets/images/icons/NoMessages.png";
 
+import hate from "assets/images/icons/hate.png";
+import calander from "assets/images/icons/calander.png";
 export const icons = {
   // avatar,
   Google,
@@ -325,4 +327,7 @@ export const icons = {
   WMIcons,
   WTIcons,
   noMessagesIcons,
+
+  hate,
+  calander
 };
