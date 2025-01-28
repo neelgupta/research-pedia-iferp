@@ -1,5 +1,6 @@
 import Button from "@/components/inputs/Button";
 import "./EducationDetails.scss";
+import moment from "moment";
 const EducationDetails = ({ onClick, educationDetails, researchDetails }) => {
   console.log(researchDetails, "researchDetails");
 
@@ -54,7 +55,9 @@ const EducationDetails = ({ onClick, educationDetails, researchDetails }) => {
           <div className="col-lg-6">
             <div className="details-box">
               <p className="education-label">Year of completion</p>
-              <h5 className="education-name">{yearOfCompletion || "-"}</h5>
+              <h5 className="education-name">
+                {moment(yearOfCompletion).format("YYYY") || "-"}
+              </h5>
             </div>
           </div>
           <div className="col-12">
@@ -76,7 +79,9 @@ const EducationDetails = ({ onClick, educationDetails, researchDetails }) => {
           <div className="col-lg-6">
             <div className="details-box">
               <p className="education-label">Year of completion</p>
-              <h5 className="education-name">{dpyearOfCompletion || "-"}</h5>
+              <h5 className="education-name">
+                {moment(dpyearOfCompletion).format("YYYY") || "-"}
+              </h5>
             </div>
           </div>
           <div className="col-lg-6">

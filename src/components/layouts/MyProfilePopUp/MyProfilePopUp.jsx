@@ -12,6 +12,7 @@ import {
   getInstitution,
   getUniverisity,
 } from "@/store/userSlice/userDetailSlice";
+import { getDataFromLocalStorage } from "@/utils/helpers";
 
 const MyProfilePopUp = ({ onHide, title, isUserData ,fetchData}) => {
   const dispatch = useDispatch();
@@ -20,11 +21,14 @@ const MyProfilePopUp = ({ onHide, title, isUserData ,fetchData}) => {
   const [isDepartment, setIsDepartment] = useState([]);
   const [isUniversity, setIsUniversity] = useState([]);
   const [isInstitute, setIsInstitute] = useState([]);
+  const localData = getDataFromLocalStorage();
+
+  const isStudent =  localData.role === "student"
+
 
   const initialValues = {
     name: "",
     email: "",
-    // country: "",
     country: {
       id: "",
       countryName: "",
@@ -158,7 +162,6 @@ const MyProfilePopUp = ({ onHide, title, isUserData ,fetchData}) => {
     console.log(values, "EDIT USER PROFFESIONAL DATA");
   };
 
-  console.log(isUserData, "isUserData");
   return (
     <Modal onHide={onHide} size="xl" isClose={false}>
       <div className="profile-modal-container">
@@ -253,6 +256,7 @@ const MyProfilePopUp = ({ onHide, title, isUserData ,fetchData}) => {
                     UniverisityOptions={UniverisityOptions}
                     institutetOptions={institutetOptions}
                     fetchData={fetchData}
+                    isStudent={isStudent}
                   />
                 )}
                 {valCount === 2 && (

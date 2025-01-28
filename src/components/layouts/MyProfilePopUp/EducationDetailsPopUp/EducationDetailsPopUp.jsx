@@ -7,6 +7,7 @@ import Button from "@/components/inputs/Button";
 import {
   getCourse,
   updateProfessionalMemberDetails,
+  updateStudentMemberDetails,
 } from "@/store/userSlice/userDetailSlice";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -19,7 +20,8 @@ const EducationDetailsPopUp = ({
   departmentOptions,
   UniverisityOptions,
   institutetOptions,
-  fetchData
+  fetchData,
+  isStudent,
 }) => {
   const dispatch = useDispatch();
   const localData = getDataFromLocalStorage();
@@ -47,18 +49,19 @@ const EducationDetailsPopUp = ({
     label: phdCourse.name,
     value: phdCourse.name,
   }));
-
   const handleNext = async () => {
-    console.log(values, "VALUES Step 2");
     delete values.role;
-    const result = await dispatch(
-      updateProfessionalMemberDetails(localData.roleId, values)
-    );
-    console.log(result,"Step 2 REsult")
 
-    if(result.status === 200)
-    setValCount(2);
-    fetchData()
+    const updateAction = isStudent
+      ? updateStudentMemberDetails(localData.roleId, values)
+      : updateProfessionalMemberDetails(localData.roleId, values);
+
+    const result = await dispatch(updateAction);
+
+    if (result.status === 200) {
+      setValCount(2);
+      fetchData();
+    }
   };
 
   useEffect(() => {

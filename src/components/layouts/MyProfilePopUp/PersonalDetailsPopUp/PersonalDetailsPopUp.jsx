@@ -13,10 +13,9 @@ import {
   getCountry,
   getCourse,
   getState,
-  updateProfessionalMemberDetails
+  updateProfessionalMemberDetails,
 } from "@/store/userSlice/userDetailSlice";
 import { getDataFromLocalStorage } from "@/utils/helpers";
-
 
 const PersonalDetailsPopUp = ({
   setValCount,
@@ -38,17 +37,7 @@ const PersonalDetailsPopUp = ({
   const [isCity, setIsCity] = useState([]);
   const [ugCourse, setUgcourse] = useState([]);
 
-  const [fileData, setFileData] = useState({
-    fileName: "",
-    fileValue: "",
-  });
 
-  const localData = getDataFromLocalStorage();
-
-  const handleFileChange = (e) => {
-    const { fileName, value } = e.target;
-    setFileData({ fileName, fileValue: value });
-  };
 
   const fetchCountry = async () => {
     const result = await dispatch(getCountry());
@@ -101,22 +90,25 @@ const PersonalDetailsPopUp = ({
   const handleNext = async () => {
     values.country = {
       id: isCountryId,
-      countryName: isCountry.find((country) => country.id === isCountryId)
-        ?.country,
+      countryName:
+        isCountry.find((country) => country.id === isCountryId)?.country ||
+        values.country?.countryName,
     };
 
     values.state = {
       id: isStateId,
-      stateName: isState.find((state) => state.id === isStateId)?.state,
+      stateName:
+        isState.find((state) => state.id === isStateId)?.state ||
+        values?.state?.stateName,
     };
-    delete values.role;
-    const result = await dispatch(
-      updateProfessionalMemberDetails(localData.roleId, values)
-    );
-    if (result.status === 200) {
-      setValCount(1);
-      fetchData();
-    }
+    
+    // const result = await dispatch(
+    //   updateProfessionalMemberDetails(localData.roleId, values)
+    // );
+    // if (result.status === 200) {
+    //   fetchData();
+    // }
+    setValCount(1);
   };
 
   useEffect(() => {
@@ -151,6 +143,7 @@ const PersonalDetailsPopUp = ({
             value={values.phoneNumber}
             dropdownOptions={dialCode}
             className="h-45"
+            id="phoneNumber"
             disabled
           />
         </div>
@@ -204,7 +197,7 @@ const PersonalDetailsPopUp = ({
             onChange={(e) => {
               handleChange(e), setIsStateId(e.target.data.id);
             }}
-            value={values.state.stateName}
+            value={values?.state?.stateName}
           />
         </div>
         <div className="col-md-6">
@@ -221,28 +214,27 @@ const PersonalDetailsPopUp = ({
           />
         </div>
         <div className="col-12">
-          {/* <FileUpload
-            id="profilePicture"
-            placeholder="File Upload"
-            onChange={handleChange}
-          /> */}
           <FileUpload
-            onChange={handleFileChange}
+            onChange={(file) => setFieldValue(`profilePicture`, file)}
             id="profile-image"
-            fileText={fileData.fileName}
             fileType="image"
             acceptType={["png", "jpg", "jpeg"]}
             label="Upload Profile Image"
             isRequired={true}
             placeholder="Choose a file"
+            value={values.profilePicture}
           />
-          {fileData.fileValue && (
-            <div className="preview">
-              <h4>Preview</h4>
+          {values.profilePicture && (
+            <div className="preview my-14">
+              <h6>Preview</h6>
               <img
-                src={fileData.fileValue}
+                src={values.profilePicture}
                 alt="Profile Preview"
-                style={{ width: "150px", height: "150px", objectFit: "cover" }}
+                style={{
+                  width: "150px",
+                  height: "150px",
+                  objectFit: "cover",
+                }}
               />
             </div>
           )}

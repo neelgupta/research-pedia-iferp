@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { getDataFromLocalStorage } from "utils/helpers";
 import "./FileUpload.scss";
 import { throwError } from "@/store/globalSlice";
+import { handleUploadImage } from "@/store/commonSlice/imageUploderSlice";
 
 const FileUpload = ({
   error,
@@ -23,7 +24,7 @@ const FileUpload = ({
 }) => {
   const dispatch = useDispatch();
   const [fileName, setFileName] = useState("");
-
+  
   const getBase64 = (file, res) => {
     let reader = new FileReader();
     reader.readAsDataURL(file);
@@ -32,50 +33,61 @@ const FileUpload = ({
     };
     reader.onerror = function (error) {};
   };
-  const handelOnChange = (e) => {
+
+  const handelOnChange = async(e) => {
     const file = e.target.files[0];
 
     if (file) {
-      let fileName = file["name"];
-      let fileType = file["type"]?.split("/")?.pop();
-      let isVideo = ["mp4"].includes(fileType);
-      let maxVideoSize =
-        getDataFromLocalStorage("user_type") === "0" ? 100000000 : 30000000;
-      let maxFileSize = 10000000;
-      let isInvalidaFileSize = isVideo
-        ? file?.size > maxVideoSize
-        : file?.size > maxFileSize;
-      if (acceptType) {
-        if (!acceptType.includes(fileType)) {
-          dispatch(
-            throwError({
-              message: "Invalid file selected",
-            })
-          );
-          onChange({
-            target: { id: id, value: "", fileName: "" },
-          });
-          return;
-        }
+      const formData = new FormData();
+      formData.append("image", file);
+      const uploadFile = await dispatch(handleUploadImage(formData));
+      const imageUrl = uploadFile?.data?.response?.imageUrl;
+      if (imageUrl) {
+        onChange(imageUrl);
       }
-      if (isInvalidaFileSize) {
-        dispatch(
-          throwError({
-            message: "File size is too large.",
-          })
-        );
-        onChange({
-          target: { id: id, value: "", fileName: "" },
-        });
-        return;
-      }
-      getBase64(file, (result) => {
-        setFileName(fileName);
-        onChange({
-          target: { id: id, value: result, fileName: fileName, file: file },
-        });
-      });
+      setIsUploading(false);
     }
+    // if (file) {
+    //   let fileName = file["name"];
+    //   let fileType = file["type"]?.split("/")?.pop();
+    //   let isVideo = ["mp4"].includes(fileType);
+    //   let maxVideoSize =
+    //     getDataFromLocalStorage("user_type") === "0" ? 100000000 : 30000000;
+    //   let maxFileSize = 10000000;
+    //   let isInvalidaFileSize = isVideo
+    //     ? file?.size > maxVideoSize
+    //     : file?.size > maxFileSize;
+    //   if (acceptType) {
+    //     if (!acceptType.includes(fileType)) {
+    //       dispatch(
+    //         throwError({
+    //           message: "Invalid file selected",
+    //         })
+    //       );
+    //       onChange({
+    //         target: { id: id, value: "", fileName: "" },
+    //       });
+    //       return;
+    //     }
+    //   }
+    //   if (isInvalidaFileSize) {
+    //     dispatch(
+    //       throwError({
+    //         message: "File size is too large.",
+    //       })
+    //     );
+    //     onChange({
+    //       target: { id: id, value: "", fileName: "" },
+    //     });
+    //     return;
+    //   }
+    //   getBase64(file, (result) => {
+    //     setFileName(fileName);
+    //     onChange({
+    //       target: { id: id, value: result, fileName: fileName, file: file },
+    //     });
+    //   });
+    // }
   };
   useEffect(() => {
     setFileName(fileText);

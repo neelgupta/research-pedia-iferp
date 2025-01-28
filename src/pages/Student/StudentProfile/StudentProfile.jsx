@@ -16,7 +16,6 @@ const StudentProfile = () => {
   const localData = getDataFromLocalStorage();
   const dispatch = useDispatch();
 
-  console.log(localData)
   const role = localData.role;
 
   const fetchUserDetails = async () => {
@@ -28,6 +27,7 @@ const StudentProfile = () => {
   useEffect(() => {
     fetchUserDetails();
   }, []);
+
   return (
     <div className="student-profile-container">
       <PersonalDetails
@@ -42,6 +42,7 @@ const StudentProfile = () => {
       />
       {isOpenModal && (
         <MyProfilePopUp
+          isUserData={isUserData}
           title="Student"
           onHide={() => {
             setIsOpenModal(false);

@@ -6,17 +6,10 @@ import {
   showSuccess,
 } from "../globalSlice";
 
-
-
-export const handleForgetPassword =
-(payload) => async (dispatch) => {
+export const handleForgetPassword = (payload) => async (dispatch) => {
   dispatch(setLoading());
   try {
-    const res = await api.post(
-      `/user/auth/forgot-password`,
-      payload,
-      {}
-    );
+    const res = await api.post(`/user/auth/forgot-password`, payload, {});
     if (res?.status === 200) {
       dispatch(showSuccess(res?.data?.message));
     }
@@ -28,15 +21,10 @@ export const handleForgetPassword =
   }
 };
 
-export const handleVerifyCode =
-(payload) => async (dispatch) => {
+export const handleVerifyCode = (payload) => async (dispatch) => {
   dispatch(setLoading());
   try {
-    const res = await api.post(
-      `/user/auth/verify-code`,
-      payload,
-      {}
-    );
+    const res = await api.post(`/user/auth/verify-code`, payload, {});
     if (res?.status === 200) {
       dispatch(showSuccess(res?.data?.message));
     }
@@ -48,15 +36,10 @@ export const handleVerifyCode =
   }
 };
 
-export const handleResetPassword =
-(payload) => async (dispatch) => {
+export const handleResetPassword = (payload) => async (dispatch) => {
   dispatch(setLoading());
   try {
-    const res = await api.post(
-      `/user/auth/reset-password`,
-      payload,
-      {}
-    );
+    const res = await api.post(`/user/auth/reset-password`, payload, {});
     if (res?.status === 200) {
       dispatch(showSuccess(res?.data?.message));
     }
@@ -113,13 +96,11 @@ export const getCountry = () => async (dispatch) => {
   dispatch(setLoading());
   try {
     const res = await api.get(`/user/userProfile/getCountry`, {});
-    if (res?.status === 201) {
-      dispatch(showSuccess(res?.data?.message));
-    }
+
     dispatch(clearLoading());
     return res;
   } catch (error) {
-    dispatch(handelCatch(error));
+    // dispatch(handelCatch(error));
     dispatch(clearLoading());
   }
 };
@@ -127,11 +108,14 @@ export const getCountry = () => async (dispatch) => {
 export const getState = (id) => async (dispatch) => {
   dispatch(setLoading());
   try {
-    const res = await api.get(`/user/userProfile/getState?country_id=${id}`, {});
+    const res = await api.get(
+      `/user/userProfile/getState?country_id=${id}`,
+      {}
+    );
     dispatch(clearLoading());
     return res;
   } catch (error) {
-    dispatch(handelCatch(error));
+    // dispatch(handelCatch(error));
     dispatch(clearLoading());
   }
 };
@@ -143,7 +127,7 @@ export const getCity = (id) => async (dispatch) => {
     dispatch(clearLoading());
     return res;
   } catch (error) {
-    dispatch(handelCatch(error));
+    // dispatch(handelCatch(error));
     dispatch(clearLoading());
   }
 };
@@ -179,22 +163,21 @@ export const getProfessionalMemberDetails = (id) => async (dispatch) => {
 };
 
 export const getStudentMemberDetails = (id) => async (dispatch) => {
-    dispatch(setLoading());
-    try {
-      const res = await api.get(
-        `/user/userProfile/studentMemberProfile?id=${id}`,
-        {}
-      );
-      dispatch(clearLoading());
-      return res;
-    } catch (error) {
-      dispatch(handelCatch(error));
-      dispatch(clearLoading());
-    }
-  };
+  dispatch(setLoading());
+  try {
+    const res = await api.get(
+      `/user/userProfile/studentMemberProfile?id=${id}`,
+      {}
+    );
+    dispatch(clearLoading());
+    return res;
+  } catch (error) {
+    dispatch(handelCatch(error));
+    dispatch(clearLoading());
+  }
+};
 
-
-  export const getInstitutionalMemberDetails =
+export const getInstitutionalMemberDetails =
   (id, payload) => async (dispatch) => {
     dispatch(setLoading());
     try {
@@ -213,8 +196,6 @@ export const getStudentMemberDetails = (id) => async (dispatch) => {
       dispatch(clearLoading());
     }
   };
-
-  
 
 export const updateProfessionalMemberDetails =
   (id, payload) => async (dispatch) => {
@@ -236,5 +217,21 @@ export const updateProfessionalMemberDetails =
     }
   };
 
-
-
+export const updateStudentMemberDetails = (id, payload) => async (dispatch) => {
+  dispatch(setLoading());
+  try {
+    const res = await api.put(
+      `/user/userProfile/studentMemberProfile?id=${id}`,
+      payload,
+      {}
+    );
+    if (res?.status === 200) {
+      dispatch(showSuccess(res?.data?.message));
+    }
+    dispatch(clearLoading());
+    return res;
+  } catch (error) {
+    dispatch(handelCatch(error));
+    dispatch(clearLoading());
+  }
+};
