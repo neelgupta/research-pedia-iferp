@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Label } from "components";
 import { trimLeftSpace } from "utils/helpers";
 import "./TextInputwithDropdown.scss";
@@ -29,6 +29,11 @@ const TextInputwithDropdown = ({
   const [showPassword, setShowPassword] = useState(false);
   const [selectedOption, setSelectedOption] = useState("+91");
 
+  useEffect(() => {
+    setSelectedOption("+91");
+  }, []);
+
+  console.log(selectedOption, "Selected Options");
   const handleDropdownChange = (event) => {
     setSelectedOption(event.target.value);
     onDropdownChange && onDropdownChange(event.target.value);
@@ -52,14 +57,14 @@ const TextInputwithDropdown = ({
             value={selectedOption}
           >
             <option value="" disabled>
-              {/* <span className="text-14-400 color-3333">
+              <span className="text-14-400 color-3333">
                 {" "}
                 {isphone && "+ 91"} {isname && "Dr"}{" "}
-              </span> */}
+              </span>
             </option>
             {dropdownOptions.map((option, index) => (
               <option key={index} value={option.value}>
-                {option.label}
+                {option.dial_code}
               </option>
             ))}
           </select>
