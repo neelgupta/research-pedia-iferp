@@ -27,7 +27,7 @@ const Table = ({
   isSearch,
   ispaginationcontrols,
   istableaction,
-  ispagination
+  ispagination,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const totalPages = Math.ceil(totalRows / rowsPerPage);
@@ -80,63 +80,66 @@ const Table = ({
       {/* <div className="top-title">
         <p>{tableheader}</p>
       </div> */}
-      
-      {
-        istableaction &&   <div className="table-search">
-        {/* {totalPages > 1 && ( */}
-        {
-          ispaginationcontrols &&  <div className="pagination-controls">
-          <div className="d-flex justify-content-end gap-md-5 gap-2 flex-wrap">
-            <div className="d-flex align-items-center gap-3">
-              <div className="select" onClick={() => setIsOpen(!isOpen)}>
-                <div className="f-center gap-2">
-                  <div>{rowsPerPage}</div>
-                  <div className="pointer w-14">
-                    <img
-                      src={icons.down}
-                      alt=""
-                      className="fit-image"
-                      style={{
-                        transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-                      }}
-                    />
-                  </div>
-                </div>
-                {isOpen && (
-                  <div className="options">
-                    {rowOptions.map((option) => (
-                      <div
-                        key={option}
-                        className="option"
-                        onClick={() => handleOptionClick(option)}
-                      >
-                        {option}
+
+      {istableaction && (
+        <div className="table-search">
+          {/* {totalPages > 1 && ( */}
+          {ispaginationcontrols && (
+            <div className="pagination-controls">
+              <div className="d-flex justify-content-end gap-md-5 gap-2 flex-wrap">
+                <div className="d-flex align-items-center gap-3">
+                  <div className="select" onClick={() => setIsOpen(!isOpen)}>
+                    <div className="f-center gap-2">
+                      <div>{rowsPerPage}</div>
+                      <div className="pointer w-14">
+                        <img
+                          src={icons.down}
+                          alt=""
+                          className="fit-image"
+                          style={{
+                            transform: isOpen
+                              ? "rotate(180deg)"
+                              : "rotate(0deg)",
+                          }}
+                        />
                       </div>
-                    ))}
+                    </div>
+                    {isOpen && (
+                      <div className="options">
+                        {rowOptions.map((option) => (
+                          <div
+                            key={option}
+                            className="option"
+                            onClick={() => handleOptionClick(option)}
+                          >
+                            {option}
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                )}
+                  <span className="text-14-400 color-1319">
+                    entries per page
+                  </span>
+                </div>
               </div>
-              <span className="text-14-400 color-1319">entries per page</span>
             </div>
-          </div>
+          )}
+
+          {/* )} */}
+          {isSearch && (
+            <div>
+              <SearchInput
+                value={searchVal}
+                className="mw-250"
+                placeholder={searchPlaceholder || "Search..."}
+                onChange={handleSearch}
+              />
+            </div>
+          )}
         </div>
-        }
-       
-        {/* )} */}
-        {
-          isSearch &&   <div>
-          <SearchInput
-            value={searchVal}
-            className="mw-250"
-            placeholder={searchPlaceholder || "Search..."}
-            onChange={handleSearch}
-          />
-        </div>
-        }
-      
-      </div>
-      }
-    
+      )}
+
       <div className="table-body brave-scroll">
         <div className="header-row" style={{ minWidth: min || "500px" }}>
           {header?.map((elm, index) => {
@@ -213,41 +216,40 @@ const Table = ({
         </div>
       </div>
 
-{
-   ispagination && 
-   <div className="pagination">
-   <span className="d-flex align-items-center page-c  text-14-400 color-1319">
-     Showing
-     <span className="row-count ps-5 pe-5">
-       {startRow} to {endRow}
-     </span>{" "}
-     of <span className="row-count ps-5 pe-5">{totalRows}</span> entries
-   </span>
-   <div className="d-flex align-items-center gap-3">
-     <img
-       src={icons?.leftIcons}
-       onClick={handlePrevPage}
-       disabled={currentPage === 1}
-       className="pagoicon pointer"
-     />
-     <div className="d-flex gap-2">
-       <span className="page-number active pointer">{currentPage}</span>
-       {/* {currentPage < totalPages && ( */}
-       <span className="page-number pointer" onClick={handleNextPageR}>
-         {currentPage + 1}
-       </span>
-       {/* )} */}
-     </div>
-     <img
-       src={icons?.rightIcons}
-       onClick={handleNextPage}
-       disabled={currentPage === totalPages}
-       className="pagoicon pointer"
-     />
-   </div>
- </div>
-}
-   
+      {ispagination && (
+        <div className="pagination">
+          <span className="d-flex align-items-center page-c  text-14-400 color-1319">
+            Showing
+            <span className="row-count ps-5 pe-5">
+              {startRow} to {endRow}
+            </span>{" "}
+            of <span className="row-count ps-5 pe-5">{totalRows}</span> entries
+          </span>
+          <div className="d-flex align-items-center gap-3">
+            <img
+              src={icons?.leftIcons}
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+              className="pagoicon pointer"
+            />
+            <div className="d-flex gap-2">
+              <span className="page-number active pointer">{currentPage}</span>
+              <span className="page-number pointer" onClick={handleNextPageR}>
+                {currentPage !== totalPages && currentPage + 1}
+              </span>
+            </div>
+
+            {currentPage !== totalPages && (
+              <img
+                src={icons?.rightIcons}
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+                className="pagoicon pointer"
+              />
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

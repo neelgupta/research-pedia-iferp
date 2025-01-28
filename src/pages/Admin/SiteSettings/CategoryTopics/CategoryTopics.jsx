@@ -143,10 +143,12 @@ const CategoryTopics = () => {
 
   const rowData = [];
   isTopicList?.forEach((elem, index) => {
-    const { topics, priority, _id } = elem;
+
+    const { topics, priority, category, _id } = elem;
+
     let obj = [
       {
-        value: currentPage * 10 + index + 1 - 10,
+        value: currentPage * rowsPerPage + index + 1 - rowsPerPage,
         className: "wp-10 justify-content-start pointer",
       },
       {
@@ -170,7 +172,7 @@ const CategoryTopics = () => {
               navigate("/admin/manage-users/list-user/user-details")
             }
           >
-            Category
+            {category !== null ? category : "-"}
           </p>
         ),
         className: "wp-40 justify-content-start flex-wrap pointer",
