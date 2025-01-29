@@ -181,14 +181,11 @@ export const getInstitutionalMemberDetails =
   (id, payload) => async (dispatch) => {
     dispatch(setLoading());
     try {
-      const res = await api.put(
+      const res = await api.get(
         `/user/userProfile/institutionalMemberProfile?id=${id}`,
         payload,
         {}
       );
-      if (res?.status === 200) {
-        dispatch(showSuccess(res?.data?.message));
-      }
       dispatch(clearLoading());
       return res;
     } catch (error) {
@@ -228,6 +225,38 @@ export const updateStudentMemberDetails = (id, payload) => async (dispatch) => {
     if (res?.status === 200) {
       dispatch(showSuccess(res?.data?.message));
     }
+    dispatch(clearLoading());
+    return res;
+  } catch (error) {
+    dispatch(handelCatch(error));
+    dispatch(clearLoading());
+  }
+};
+
+export const updateInstitutionalMemberDetails =
+  (id, payload) => async (dispatch) => {
+    dispatch(setLoading());
+    try {
+      const res = await api.put(
+        `/user/userProfile/institutionalMemberProfile?id=${id}`,
+        payload,
+        {}
+      );
+      if (res?.status === 200) {
+        dispatch(showSuccess(res?.data?.message));
+      }
+      dispatch(clearLoading());
+      return res;
+    } catch (error) {
+      dispatch(handelCatch(error));
+      dispatch(clearLoading());
+    }
+  };
+
+export const getDepartmentOfOrganization = () => async (dispatch) => {
+  dispatch(setLoading());
+  try {
+    const res = await api.get("/user/category", {});
     dispatch(clearLoading());
     return res;
   } catch (error) {

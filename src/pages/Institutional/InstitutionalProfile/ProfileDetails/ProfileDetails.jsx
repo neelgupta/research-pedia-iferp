@@ -2,14 +2,19 @@ import { Button } from "@/components";
 import "./ProfileDetails.scss";
 
 const ProfileDetails = ({ onClick, isUserData }) => {
-  const { name, email, phoneNumber, alternatePhoneNumber } = isUserData || {};
+  const {
+    name,
+    email,
+    phoneNumber,
+    alternatePhoneNumber,
+    country,
+    state,
+    city,
+  } = isUserData || {};
   const {
     instituion,
     institutionEmail,
     institutionContactNumber,
-    country,
-    state,
-    city,
     noOfPremiumStudent,
     noOfPremiumProfessional,
     strengthOfpremiumUGStudents,
@@ -18,6 +23,7 @@ const ProfileDetails = ({ onClick, isUserData }) => {
     strengthOfinstitute,
     departmentOfOrganization,
   } = isUserData?.institutionDetails || {};
+
   return (
     <div className="profile-details-container">
       <div className="professional-top-box">
@@ -76,13 +82,13 @@ const ProfileDetails = ({ onClick, isUserData }) => {
           <div className="col-lg-6">
             <div className="details-box">
               <p className="details-label">Country</p>
-              <h5 className="details-name">{country || "-"}</h5>
+              <h5 className="details-name">{country?.countryName || "-"}</h5>
             </div>
           </div>
           <div className="col-lg-6">
             <div className="details-box">
               <p className="details-label">State/Province</p>
-              <h5 className="details-name">{state || "-"}</h5>
+              <h5 className="details-name">{state?.stateName || "-"}</h5>
             </div>
           </div>
           <div className="col-lg-6">

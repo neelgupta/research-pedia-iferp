@@ -6,25 +6,72 @@ import TextArea from "@/components/inputs/TextArea";
 import Button from "@/components/inputs/Button";
 import TextInputwithDropdown from "@/components/inputs/TextInputwithDropdown/TextInputwithDropdown";
 import { dialCode } from "@/utils/constants";
+import { getDataFromLocalStorage } from "@/utils/helpers";
+import { useDispatch } from "react-redux";
+import { updateInstitutionalMemberDetails } from "@/store/userSlice/userDetailSlice";
 
-const EducationDetailsPopUp = ({ setValCount }) => {
+const EducationDetailsPopUp = ({
+  setValCount,
+  setFieldValue,
+  handleSubmit,
+  handleChange,
+  errors,
+  values,
+  fetchUserDetails,
+}) => {
+  const dispatch = useDispatch();
+  const localData = getDataFromLocalStorage();
+  const userId = localData.roleId;
+
+  const handleNext = async () => {
+    delete values.role;
+    const result = await dispatch(
+      updateInstitutionalMemberDetails(userId, values)
+    );
+    if (result.status === 200) {
+      fetchUserDetails();
+      setValCount(2);
+    }
+  };
+
   return (
     <div className="education-details-container">
       <div className="row row-gap-3">
         <div className="col-12">
-          <TextInput className="h-45" placeholder="Name" />
+          <TextInput
+            className="h-45"
+            placeholder="Name"
+            onChange={handleChange}
+            value={values.name}
+            id="name"
+          />
         </div>
         <div className="col-md-6">
-          <TextInput className="h-45" placeholder="Email" />
+          <TextInput
+            className="h-45"
+            placeholder="Email"
+            onChange={handleChange}
+            value={values.email}
+            id="email"
+          />
         </div>
         <div className="col-md-6">
-          <TextInput className="h-45" placeholder="Alternate email id" />
+          <TextInput
+            className="h-45"
+            placeholder="Alternate email id"
+            onChange={handleChange}
+            value={values.alternateEmail}
+            id="alternateEmail"
+          />
         </div>
         <div className="col-md-6">
           <TextInputwithDropdown
             className="h-45"
             placeholder="Phone Number"
             dropdownOptions={dialCode}
+            onChange={handleChange}
+            value={values.phoneNumber}
+            id="phoneNumber"
           />
         </div>
         <div className="col-md-6">
@@ -32,6 +79,9 @@ const EducationDetailsPopUp = ({ setValCount }) => {
             className="h-45"
             placeholder="Alternate contact number"
             dropdownOptions={dialCode}
+            onChange={handleChange}
+            value={values.alternatePhoneNumber}
+            id="alternatePhoneNumber"
           />
         </div>
         <div className="col-12">
@@ -47,9 +97,10 @@ const EducationDetailsPopUp = ({ setValCount }) => {
             <Button
               btnText="Continue"
               className="h-49 w-114"
-              onClick={() => {
-                setValCount(2);
-              }}
+              onClick={handleNext}
+              // onClick={() => {
+              //   setValCount(2);
+              // }}
             />
           </div>
         </div>

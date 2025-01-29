@@ -37,8 +37,6 @@ const PersonalDetailsPopUp = ({
   const [isCity, setIsCity] = useState([]);
   const [ugCourse, setUgcourse] = useState([]);
 
-
-
   const fetchCountry = async () => {
     const result = await dispatch(getCountry());
     setIsCountry(result.data.response);
@@ -102,12 +100,7 @@ const PersonalDetailsPopUp = ({
         values?.state?.stateName,
     };
     
-    // const result = await dispatch(
-    //   updateProfessionalMemberDetails(localData.roleId, values)
-    // );
-    // if (result.status === 200) {
-    //   fetchData();
-    // }
+
     setValCount(1);
   };
 

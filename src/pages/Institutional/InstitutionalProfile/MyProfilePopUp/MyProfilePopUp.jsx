@@ -7,7 +7,7 @@ import SelectPlan from "./SelectPlan";
 import { Formik } from "formik";
 import { Modal } from "@/components";
 
-const MyProfilePopUp = ({ onHide, title }) => {
+const MyProfilePopUp = ({ onHide, title, isUserData,fetchUserDetails }) => {
   const [type, setType] = useState("");
   const [valCount, setValCount] = useState(0);
 
@@ -50,7 +50,38 @@ const MyProfilePopUp = ({ onHide, title }) => {
     }
   }, [valCount]);
 
-  const initialValues = {};
+  const initialValues = {
+    name: "",
+    email: "",
+    alternateEmail: "",
+    phoneNumber: "",
+    alternatePhoneNumber: "",
+    dateOfbirth: "",
+    gender: "",
+    country: {
+      id: "",
+      countryName: "",
+    },
+    state: {
+      id: "",
+      stateName: "",
+    },
+    city: "",
+    profilePicture: "",
+    institutionDetails: {
+      instituion: "",
+      institutionEmail: "",
+      institutionContactNumber: "",
+      noOfPremiumStudent: "",
+      noOfPremiumProfessional: "",
+      strengthOfpremiumUGStudents: "",
+      strengthOfpremiumPGStudents: "",
+      strengthOfpremiumResearchScholar: "",
+      strengthOfinstitute: "",
+      departmentOfOrganization: "",
+    },
+  };
+  
   const handelSave = () => {};
   return (
     <Modal onHide={onHide} size="xl" isClose={false}>
@@ -104,7 +135,7 @@ const MyProfilePopUp = ({ onHide, title }) => {
         </div>
         <Formik
           enableReinitialize
-          initialValues={initialValues}
+          initialValues={isUserData || initialValues}
           // validationSchema={validationSchema}
           onSubmit={handelSave}
         >
@@ -136,6 +167,7 @@ const MyProfilePopUp = ({ onHide, title }) => {
                     handleChange={handleChange}
                     handleSubmit={handleSubmit}
                     setFieldValue={setFieldValue}
+                    fetchUserDetails={fetchUserDetails}
                   />
                 )}
                 {valCount === 2 && (

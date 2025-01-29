@@ -11,10 +11,11 @@ const InstitutionalProfile = () => {
   const handleClick = () => {
     setIsOpenModal(true);
   };
-
   const [isUserData, setIsUserData] = useState({});
   const localData = getDataFromLocalStorage();
+
   const dispatch = useDispatch();
+
   const fetchUserDetails = async () => {
     const result = await dispatch(
       getInstitutionalMemberDetails(localData.roleId)
@@ -22,10 +23,10 @@ const InstitutionalProfile = () => {
     setIsUserData(result?.data?.response);
   };
 
-  console.log(isUserData, "isUserData");
   useEffect(() => {
     fetchUserDetails();
   }, []);
+
   return (
     <div className="institutional-profile-container">
       <ProfileDetails onClick={handleClick} isUserData={isUserData} />
@@ -36,6 +37,8 @@ const InstitutionalProfile = () => {
           onHide={() => {
             setIsOpenModal(false);
           }}
+          isUserData={isUserData}
+          fetchUserDetails={fetchUserDetails}
         />
       )}
     </div>
