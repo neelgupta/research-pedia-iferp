@@ -1,3 +1,5 @@
+
+import { icons } from "@/utils/constants/icon";
 import React, { useState, useEffect } from "react";
 import { Offcanvas } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom"; // Import useNavigate
@@ -5,7 +7,6 @@ import "./Sidebar.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "@/store/globalSlice";
 import { IoMdClose } from "react-icons/io";
-import { icons } from "@/utils/constants";
 const Sidebar = ({ isResponsive, show, setShow }) => {
   const [activeTab, setActiveTab] = useState(null);
   const [activeChild, setActiveChild] = useState(null); // Track active child
@@ -30,7 +31,7 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
       icon: icons.staff,
       activeIcons: icons.staffisactive,
       childoption: [
-        { title: "Administrator User",  url: "/admin/staff/administrator-user" },
+        { title: "Administrator User", url: "/admin/staff/administrator-user" },
         { title: "Administrator Roles", url: "/admin/staff/administrator-roles" },
       ],
     },
@@ -43,7 +44,7 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
         { title: "Category & Topics", url: "/admin/setting/category-topic" },
         { title: "Security", url: "/admin/setting/security" },
         { title: "SMTP Relay", url: "/admin/setting/smtp-replay" },
-        { title: "Header/Footer Code", url: "/admin/setting/header-footer" },
+        { title: "Header/Footer Code", url: "/admin/setting/headerfooter" },
       ],
     },
     {
@@ -79,10 +80,16 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
   ];
 
   const handleTabClick = (index) => {
-    setActiveTab(activeTab === index ? null : index);
-   
+    
+    if (admin[index].childoption && admin[index].childoption.length > 0) {
+     
+      setActiveTab(activeTab === index ? null : index);
+      setActiveChild(null);
+    } else {
+      
+      navigate(admin[index].url);
+    }
   };
-
   const handleChildClick = (url, index) => {
     navigate(url);
     setActiveChild(index);
@@ -102,22 +109,6 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
     }
   }, [location.pathname]);
 
-
-  // useEffect(() => {
-  //   const activeIndex = admin.findIndex((item) =>
-  //     location.pathname.startsWith(item.url)
-  //   );
-  //   setActiveTab(activeIndex);
-  
-  //   if (activeIndex !== -1 && admin[activeIndex].childoption) {
-  //     const activeChildIndex = admin[activeIndex].childoption.findIndex((child) =>
-  //       child?.url?.some((url) => location.pathname.startsWith(url))
-  //     );
-  //     setActiveChild(activeChildIndex);
-  //   }
-  // }, [location.pathname]);
-  
-
   return (
     <>
       {show && (
@@ -129,19 +120,25 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
             maxWidth: "280px",
           }}
         >
+
+     
           <Offcanvas.Body className="p-0 rearchPedia-scroll">
             <div className="slide-container  rearchPedia-scroll">
-              <div className="d-flex d-flex justify-content-between">
-                <img
-                  src={icons.loginicon}
-                  alt="icons"
-                  className="img-fluid mt-24 ms-24 mb-24"
-                />
-                <IoMdClose
-                  size={20}
-                  className=" mt-24 ms-24 mb-24 d-block d-lg-none"
-                  onClick={() => dispatch(toggleSidebar(!reduxdata))}
-                />
+              <div className='d-flex d-flex justify-content-between'>
+              <img
+                src={icons.loginicon}
+                alt="icons"
+                className="img-fluid mt-24 ms-24 mb-24"
+              />
+               <IoMdClose
+             
+              size={20}
+                className=" mt-24 ms-24 mb-24 d-block d-lg-none"
+              onClick={() => dispatch(toggleSidebar(!reduxdata))}
+              />
+
+
+
               </div>
               <div className="profile-header d-flex justify-content-between align-items-center">
                 <div className="d-flex">
@@ -175,8 +172,8 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
                       }`}
                       onClick={() => handleTabClick(index)}
                     >
-                      <div className="d-flex justify-content-between align-items-center" style={{cursor : "pointer"}}>
-                        <div className="d-flex align-items-center" >
+                      <div className="d-flex justify-content-between align-items-center">
+                        <div className="d-flex align-items-center">
                           <div className="tab-icon">
                             <img
                               src={
@@ -214,7 +211,7 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
 
                     {/* Conditionally render child-tabs */}
                     {activeTab === index && item.childoption && (
-                      <div className="child-tab"  style={{cursor : "pointer"}}>
+                      <div className="child-tab">
                         {item.childoption.map((child, childIndex) => (
                           <div
                             key={childIndex}
@@ -259,15 +256,3 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
 };
 
 export default Sidebar;
-//           <Offcanvas.Body className="p-0 rearchPedia-scroll overflow-auto">
-//             <div className="slide-container  ">
-//               <div className="d-flex d-flex justify-content-between">
-//                 <img
-//                   src={icons.loginicon}
-//                   alt="icons"
-//                   className="img-fluid mt-24 ms-24 mb-24"
-//                 />
-//                 <IoMdClose
-//                   size={20}
-//                   className=" mt-24 ms-24 mb-24 d-block d-lg-none"
-//                   onClick={() => dispatch(toggleSidebar(!reduxdata))}

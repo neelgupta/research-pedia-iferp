@@ -161,6 +161,11 @@ import noMessagesIcons from "assets/images/icons/NoMessages.png";
 
 import hate from "assets/images/icons/hate.png";
 import calander from "assets/images/icons/calander.png";
+import mail from "assets/images/icons/mail.png";
+import phoneicon from "assets/images/icons/phoneicon.png";
+import locationicon from "assets/images/icons/locationicon.png";
+import linkicon from "assets/images/icons/linkicon.png";
+import Npscardimg from "assets/images/icons/Npscardimg.png"
 export const icons = {
   // avatar,
   Google,
@@ -329,5 +334,11 @@ export const icons = {
   noMessagesIcons,
 
   hate,
-  calander
+  calander,
+
+  mail,
+  phoneicon,
+  locationicon,
+  linkicon,
+  Npscardimg
 };

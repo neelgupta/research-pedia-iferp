@@ -1,0 +1,65 @@
+#feedbackuser-container {
+
+    padding-bottom: 40px;
+
+    .topic-text {
+        font-size: 30px;
+        margin-top: 14px;
+        font-weight: 700;
+        line-height: 36.31px;
+        color: var(--1D26);
+
+
+    }
+
+    .user-details{
+        background-color: var(--ffff);
+        border: 1px solid #E7EAEE;
+        border-radius: 12px;
+        .left-userdetails{
+            padding: 26px 26px 26px 26px;
+        }
+        .right-userdetails{
+
+        }
+    }
+
+    .user-card{
+        margin-top: 24px;
+        .left-card{
+            background-color: var(--ffff);
+            
+            border-bottom: 1px solid var(--e7ea);
+            border-radius: 12px;
+            .card-header{
+                padding: 26px;
+                border-bottom: 1px solid #E7EAEE
+            }
+            .card-title{
+                margin: 26px;
+            }
+        }
+        .right-card{
+            background-color: var(--ffff);
+            
+            border-bottom: 1px solid var(--e7ea);
+            
+            .card-header{
+                padding: 26px;
+                border-bottom: 1px solid #E7EAEE
+            }
+            .card-title{
+                margin: 26px;
+            }
+        }
+    }
+
+    .survey-card{
+        .card-header{
+            .card-title{
+                
+            }
+        }
+    }
+  
+}

@@ -13,12 +13,6 @@ import { useSelector } from 'react-redux';
 import DaterangePicker from '@/components/inputs/DaterangePicker';
 
 ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale, LinearScale, BarElement);
-// Register Chart.js components
-
-
-
-// Data configuration
-
 
 const FeedbackDashboard = () => {
      const [rowsPerPage, setRowsPerPage] = useState(5);
