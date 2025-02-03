@@ -37,7 +37,6 @@ export const getRecommendedPapers = (query) => async (dispatch) => {
   dispatch(setLoading());
   try {
     const res = await api.get(`/user/recommendedPapers?${query}`, {});
-
     dispatch(clearLoading());
     return res;
   } catch (error) {
