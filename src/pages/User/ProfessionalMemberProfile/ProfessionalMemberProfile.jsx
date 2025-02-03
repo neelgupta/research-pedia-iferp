@@ -23,14 +23,18 @@ const ProfessionalMemberProfile = () => {
     setIsOpenModal(true);
   };
 
-  const role = localData.role
-  
+  const role = localData.role;
+
   const fetchUserDetails = async () => {
     const result = await dispatch(
       getProfessionalMemberDetails(localData.roleId)
     );
     setIsUserData(result?.data?.response);
+    setIsPersonalDetailsExist(
+      result?.data?.response?.isPersonalDetailsExistfalse
+    );
   };
+
 
   useEffect(() => {
     fetchUserDetails();

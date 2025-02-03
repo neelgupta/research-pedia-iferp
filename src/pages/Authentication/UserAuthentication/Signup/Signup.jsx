@@ -113,6 +113,7 @@ const UserSignup = () => {
                           }
                         }}
                       >
+                        {console.log(errors,"errors")}
                         {/* Membership Type Dropdown */}
                         <div className="">
                           <Dropdown

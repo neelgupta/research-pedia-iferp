@@ -66,7 +66,6 @@ const CategoryTopics = () => {
   useEffect(() => {
     fetchTopics(debouncedSearchTerm);
   }, [currentPage, rowsPerPage, debouncedSearchTerm]);
-
   const header = [
     {
       title: "Sr. No",

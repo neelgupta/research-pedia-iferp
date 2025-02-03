@@ -33,7 +33,6 @@ const TextInputwithDropdown = ({
     setSelectedOption("+91");
   }, []);
 
-  console.log(selectedOption, "Selected Options");
   const handleDropdownChange = (event) => {
     setSelectedOption(event.target.value);
     onDropdownChange && onDropdownChange(event.target.value);
