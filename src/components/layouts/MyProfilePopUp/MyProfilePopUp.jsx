@@ -14,7 +14,7 @@ import {
 } from "@/store/userSlice/userDetailSlice";
 import { getDataFromLocalStorage } from "@/utils/helpers";
 
-const MyProfilePopUp = ({ onHide, title, isUserData ,fetchData}) => {
+const MyProfilePopUp = ({ onHide, title, isUserData, fetchData }) => {
   const dispatch = useDispatch();
   const [type, setType] = useState("");
   const [valCount, setValCount] = useState(0);
@@ -23,8 +23,7 @@ const MyProfilePopUp = ({ onHide, title, isUserData ,fetchData}) => {
   const [isInstitute, setIsInstitute] = useState([]);
   const localData = getDataFromLocalStorage();
 
-  const isStudent =  localData.role === "student"
-
+  const isStudent = localData.role === "student";
 
   const initialValues = {
     name: "",
@@ -159,7 +158,7 @@ const MyProfilePopUp = ({ onHide, title, isUserData ,fetchData}) => {
   }, []);
 
   const handleSubmit = (values) => {
-    console.log(values, "EDIT USER PROFFESIONAL DATA");
+    // console.log(values, "EDIT USER PROFFESIONAL DATA");
   };
 
   return (

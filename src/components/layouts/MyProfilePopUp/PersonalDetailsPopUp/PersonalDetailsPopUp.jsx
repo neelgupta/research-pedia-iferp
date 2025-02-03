@@ -203,7 +203,7 @@ const PersonalDetailsPopUp = ({
             onChange={(e) => {
               handleChange(e);
             }}
-            value={values.personalDetails.city}
+            value={values?.personalDetails?.city}
           />
         </div>
         <div className="col-12">
@@ -238,7 +238,7 @@ const PersonalDetailsPopUp = ({
         <div className="col-md-6">
           <Dropdown
             id="personalDetails.bacheloerDegreeOrUgDetails.course"
-            value={values.personalDetails.bacheloerDegreeOrUgDetails.course}
+            value={values?.personalDetails?.bacheloerDegreeOrUgDetails.course}
             optionLabel="label"
             optionKey="value"
             placeholder="Course"
@@ -252,7 +252,7 @@ const PersonalDetailsPopUp = ({
           <Dropdown
             placeholder="Department"
             id="personalDetails.bacheloerDegreeOrUgDetails.department"
-            value={values.personalDetails.bacheloerDegreeOrUgDetails.department}
+            value={values?.personalDetails?.bacheloerDegreeOrUgDetails.department}
             optionLabel="label"
             optionKey="value"
             onChange={(e) => {
@@ -269,14 +269,14 @@ const PersonalDetailsPopUp = ({
             options={UniverisityOptions || []}
             placeholder="University"
             onChange={handleChange}
-            value={values.personalDetails.bacheloerDegreeOrUgDetails.university}
+            value={values?.personalDetails?.bacheloerDegreeOrUgDetails.university}
           />
         </div>
         <div className="col-md-6">
           <Dropdown
             id="personalDetails.bacheloerDegreeOrUgDetails.institution"
             value={
-              values.personalDetails.bacheloerDegreeOrUgDetails.institution
+              values?.personalDetails?.bacheloerDegreeOrUgDetails.institution
             }
             placeholder="Institution"
             options={institutetOptions || []}
@@ -292,7 +292,7 @@ const PersonalDetailsPopUp = ({
             placeholder="Year of completion"
             id="personalDetails.bacheloerDegreeOrUgDetails.yearOfCompletion"
             value={
-              values.personalDetails.bacheloerDegreeOrUgDetails.yearOfCompletion
+              values?.personalDetails?.bacheloerDegreeOrUgDetails.yearOfCompletion
             }
             selected={null}
             onChange={handleChange}
@@ -310,7 +310,7 @@ const PersonalDetailsPopUp = ({
             placeholder="Institution/Organization name"
             id="personalDetails.currentProffessionDetails.insOrOrganizationName"
             value={
-              values.personalDetails.currentProffessionDetails
+              values?.personalDetails?.currentProffessionDetails
                 .insOrOrganizationName
             }
             onChange={handleChange}
@@ -319,7 +319,7 @@ const PersonalDetailsPopUp = ({
         <div className="col-md-6">
           <TextInput
             id="personalDetails.currentProffessionDetails.department"
-            value={values.personalDetails.currentProffessionDetails.department}
+            value={values?.personalDetails?.currentProffessionDetails.department}
             className="h-45"
             placeholder="Department"
             onChange={handleChange}

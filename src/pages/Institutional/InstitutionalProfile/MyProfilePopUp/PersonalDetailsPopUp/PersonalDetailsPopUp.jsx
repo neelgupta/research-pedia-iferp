@@ -50,7 +50,15 @@ const PersonalDetailsPopUp = ({
 
   const fetchDepartmentOfOrganization = async () => {
     const result = await dispatch(getDepartmentOfOrganization());
-    setDepartmentOfOrganization(result?.data?.response);
+
+    const data = result?.data?.response;
+
+    const filteredTopics = data?.filter(
+      (cat, index, self) =>
+        cat.categoryName !== null &&
+        self.findIndex((t) => t.categoryName === cat.categoryName) === index
+    );
+    setDepartmentOfOrganization(filteredTopics);
   };
 
   const CountryData = isCountry?.map((country) => ({

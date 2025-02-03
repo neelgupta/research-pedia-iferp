@@ -9,8 +9,14 @@ import { useDispatch } from "react-redux";
 import { getProfessionalMemberDetails } from "@/store/userSlice/userDetailSlice";
 
 const ProfessionalMemberProfile = () => {
-  const [isOpenModal, setIsOpenModal] = useState(false);
   const [isUserData, setIsUserData] = useState({});
+
+  const [isPersonalDetailsExist, setIsPersonalDetailsExist] = useState(false);
+
+  const [isOpenModal, setIsOpenModal] = useState(
+    !isPersonalDetailsExist ? true : false
+  );
+
   const localData = getDataFromLocalStorage();
   const dispatch = useDispatch();
 
@@ -18,14 +24,18 @@ const ProfessionalMemberProfile = () => {
     setIsOpenModal(true);
   };
 
-  const role = localData.role
-  
+  const role = localData.role;
+
   const fetchUserDetails = async () => {
     const result = await dispatch(
       getProfessionalMemberDetails(localData.roleId)
     );
     setIsUserData(result?.data?.response);
+    setIsPersonalDetailsExist(
+      result?.data?.response?.isPersonalDetailsExistfalse
+    );
   };
+
 
   useEffect(() => {
     fetchUserDetails();
@@ -33,7 +43,11 @@ const ProfessionalMemberProfile = () => {
 
   return (
     <div className="professional-profile-container">
-      <PersonalDetails onClick={handleClick} role={role} isUserData={isUserData} />
+      <PersonalDetails
+        onClick={handleClick}
+        role={role}
+        isUserData={isUserData}
+      />
       <EducationDetails
         onClick={handleClick}
         educationDetails={isUserData?.educationDetails}
@@ -46,7 +60,7 @@ const ProfessionalMemberProfile = () => {
           onHide={() => {
             setIsOpenModal(false);
           }}
-          fetchData = {fetchUserDetails}
+          fetchData={fetchUserDetails}
         />
       )}
     </div>

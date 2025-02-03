@@ -12,9 +12,8 @@ import { getDataFromLocalStorage } from "@/utils/helpers";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 export const UserRoutes = () => {
-
-  const roleData =  getDataFromLocalStorage()
-  const role = roleData ? roleData.role :  "institutional";
+  const roleData = getDataFromLocalStorage();
+  const role = roleData ? roleData.role : "institutional";
   // const role = "professional" || "student" || "  institutional";
 
   // const userRoutes = [
@@ -23,8 +22,6 @@ export const UserRoutes = () => {
   //     component: <ProfessionalMemberProfile />,
   //   },
   // ];
-console.log(role,"ROLE")
-
 
   const roleBasedRoutes = {
     professional: [
@@ -32,11 +29,27 @@ console.log(role,"ROLE")
         path: "/",
         component: <ProfessionalMemberProfile />,
       },
+      {
+        path: "/feed-details",
+        component: <FeedDetails />,
+      },
+      {
+        path: "/feed-details-author",
+        component: <FeedDetailsAuthor />,
+      },
     ],
     student: [
       {
         path: "/",
         component: <StudentProfile />,
+      },
+      {
+        path: "/feed-details",
+        component: <FeedDetails />,
+      },
+      {
+        path: "/feed-details-author",
+        component: <FeedDetailsAuthor />,
       },
     ],
     institutional: [

@@ -15,7 +15,6 @@ import {
 } from "@/store/userSlice/authSlice";
 import { storeLocalStorageData } from "@/utils/helpers";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
-
 const UserLogin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -43,14 +42,18 @@ const UserLogin = () => {
   const handleGoogleLoginSuccess = async (response) => {
     console.log("Google Login Success", response);
     const { credential } = response;
+    try {
+      const result = await dispatch(handleGoogleLogin());
 
-    // Send the Google login token to your backend for validation and handling
-    const result = await dispatch(handleGoogleLogin({ token: credential }));
-    if (result?.status === 200) {
-      storeLocalStorageData({
-        ...result?.data.response,
-        token: result.data.response.token,
-      });
+      console.log(result, "RESULT");
+      if (result?.status === 200) {
+        storeLocalStorageData({
+          ...result?.data.response,
+          token: result.data.response.token,
+        });
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
     }
   };
 
@@ -179,6 +182,7 @@ const UserLogin = () => {
                                 theme="outline"
                                 shape="circle"
                                 text="continue_with"
+                                cookiePolicy={"single_host_origin"}
                               />
                             </div>
                           </GoogleOAuthProvider>

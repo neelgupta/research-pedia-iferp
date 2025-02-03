@@ -6,7 +6,7 @@ import {
   showSuccess,
 } from "../globalSlice";
 
-export const handleGoogleLogin = () => async (dispatch) => {
+export const handleGoogleLogin = (payload) => async (dispatch) => {
   dispatch(setLoading());
   try {
     const res = await api.get(`/user/auth/google`, {});
@@ -34,6 +34,23 @@ export const handleUserLogin =
     if (res?.status === 200) {
       dispatch(showSuccess(res?.data?.message));
     }
+    dispatch(clearLoading());
+    return res;
+  } catch (error) {
+    dispatch(handelCatch(error));
+    dispatch(clearLoading());
+  }
+};
+
+export const handleUserSignUp =
+(payload) => async (dispatch) => {
+  dispatch(setLoading());
+  try {
+    const res = await api.post(
+      `/user/auth/signUp`,
+      payload,
+      {}
+    );
     dispatch(clearLoading());
     return res;
   } catch (error) {

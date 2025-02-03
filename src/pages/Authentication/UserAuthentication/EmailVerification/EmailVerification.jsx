@@ -36,7 +36,6 @@ const EmailVerification = () => {
     if (!isEmail) {
       const email = values.email;
       const result = await dispatch(handleForgetPassword({ email }));
-      console.log(result, "FORGET PASSS");
       if (result?.status === 200) {
         setIsEmail(true);
       }
@@ -109,7 +108,6 @@ const EmailVerification = () => {
 
                     return (
                       <>
-                        {console.log(errors, "ERRORS")}
                         <form
                           onSubmit={handleSubmit}
                           onKeyDown={(e) => {

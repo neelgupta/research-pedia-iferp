@@ -40,7 +40,6 @@ const SmtpReplay = () => {
   };
 
 
-  console.log(isSmtpDetails,"isSmtpDetails")
 
   const dispatch = useDispatch();
 
@@ -48,7 +47,6 @@ const SmtpReplay = () => {
     try {
       // Dispatch the correct action, not the function itself
       const result = await dispatch(handleTestSmtpAction(values));
-      console.log(result, "TEST SMTP VALUES");
       if (result?.status === 200) {
         setIsSmtp(false);
       }
@@ -58,9 +56,7 @@ const SmtpReplay = () => {
   };
 
   const handleSubmit = async (values) => {
-    const result = await dispatch(handleCreateSmtpDetails(values));
-
-    console.log(result, "RESULT");
+    await dispatch(handleCreateSmtpDetails(values));
   };
 
   useEffect(() => {

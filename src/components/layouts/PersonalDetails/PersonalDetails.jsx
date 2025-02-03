@@ -12,7 +12,6 @@ const PersonalDetails = ({ onClick, isUserData, role }) => {
     country,
     state,
   } = isUserData || {};
-  console.log(role, "ROLE");
   const { city } = isUserData?.personalDetails || {};
 
   const { course, department, institution, university, yearOfCompletion } =

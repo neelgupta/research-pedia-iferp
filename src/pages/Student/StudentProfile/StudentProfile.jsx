@@ -8,12 +8,17 @@ import { useDispatch } from "react-redux";
 import { getStudentMemberDetails } from "@/store/userSlice/userDetailSlice";
 
 const StudentProfile = () => {
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const localData = getDataFromLocalStorage();
+  const isPersonalDetailsExist = localData?.isPersonalDetailsExist;
+
+  console.log(localData)
+  const [isOpenModal, setIsOpenModal] = useState(isPersonalDetailsExist === false ? true: false);
+
   const handleClick = () => {
     setIsOpenModal(true);
   };
+
   const [isUserData, setIsUserData] = useState({});
-  const localData = getDataFromLocalStorage();
   const dispatch = useDispatch();
 
   const role = localData.role;
@@ -21,9 +26,16 @@ const StudentProfile = () => {
   const fetchUserDetails = async () => {
     const result = await dispatch(getStudentMemberDetails(localData.roleId));
     setIsUserData(result?.data?.response);
+
   };
 
-  console.log(isUserData, "isUserData");
+
+  const onHide = () => {
+    if (isPersonalDetailsExist === true) {
+      setIsOpenModal(false);
+    }
+  };
+
   useEffect(() => {
     fetchUserDetails();
   }, []);
@@ -44,9 +56,11 @@ const StudentProfile = () => {
         <MyProfilePopUp
           isUserData={isUserData}
           title="Student"
-          onHide={() => {
-            setIsOpenModal(false);
-          }}
+          // onHide={() => {
+          //   setIsOpenModal(false);
+          // }}
+          onHide={onHide}
+          fetchData={fetchUserDetails}
         />
       )}
     </div>

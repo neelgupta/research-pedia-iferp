@@ -23,10 +23,8 @@ const UserResetPassword = () => {
       .required("Password confirmation is required")
       .oneOf([Yup.ref("password"), null], "Passwords must match"),
   });
-  console.log(location.state.email, "EMAIl");
 
   const handleSubmit = async (values) => {
-    console.log(values,"VALS")
     const resetPassword = {
       email: location.state.email,
       password: values.password,

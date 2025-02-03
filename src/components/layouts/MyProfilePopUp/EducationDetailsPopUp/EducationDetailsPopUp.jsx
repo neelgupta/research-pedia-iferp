@@ -49,6 +49,7 @@ const EducationDetailsPopUp = ({
     label: phdCourse.name,
     value: phdCourse.name,
   }));
+
   const handleNext = async () => {
     delete values.role;
 
@@ -61,6 +62,7 @@ const EducationDetailsPopUp = ({
     if (result.status === 200) {
       setValCount(2);
       fetchData();
+      getDataFromLocalStorage()
     }
   };
 
@@ -241,9 +243,7 @@ const EducationDetailsPopUp = ({
               btnText="Skip"
               btnStyle="LBA"
               className="h-49 w-114"
-              onClick={() => {
-                setValCount(2);
-              }}
+              onClick={handleNext}
             />
             <Button
               btnText="Continue"

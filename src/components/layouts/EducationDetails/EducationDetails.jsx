@@ -2,7 +2,6 @@ import Button from "@/components/inputs/Button";
 import "./EducationDetails.scss";
 import moment from "moment";
 const EducationDetails = ({ onClick, educationDetails, researchDetails }) => {
-  console.log(researchDetails, "researchDetails");
 
   const { course, department, institution, university, yearOfCompletion } =
     educationDetails?.masterDegreeOrPgDetails || {};

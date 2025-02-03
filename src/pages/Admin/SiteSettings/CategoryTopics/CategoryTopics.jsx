@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "./CategoryTopics.scss";
@@ -15,6 +15,7 @@ import {
   updateTopicsPriority,
 } from "@/store/adminSlice/categoryAndTopics";
 import { useDispatch } from "react-redux";
+import { debounce } from "lodash";
 
 const CategoryTopics = () => {
   // const [editMode, setEditMode] = useState(null);
@@ -91,6 +92,7 @@ const CategoryTopics = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [isTopicList, setIsTopicList] = useState([]);
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
 
   const priorityOption = [
     { value: "high", label: "High" },
@@ -98,11 +100,13 @@ const CategoryTopics = () => {
     { value: "low", label: "Low" },
   ];
 
-  const fetchTopics = async () => {
-    const result = await dispatch(handleGetTopics(currentPage, rowsPerPage));
-
+  const fetchTopics = async (debouncedSearchTerm = "") => {
+    const result = await dispatch(
+      handleGetTopics(currentPage, rowsPerPage, debouncedSearchTerm)
+    );
     if (result?.status === 200) {
-      setIsTopicList(result?.data?.response?.topics);
+      const data = result?.data?.response?.topics;
+      setIsTopicList(data);
       setTotalCount(result?.data?.response?.pagination?.totalCount);
     }
   };
@@ -118,9 +122,21 @@ const CategoryTopics = () => {
     }
   };
 
+  const debouncedApiCall = useCallback(
+    debounce((query) => {
+      setDebouncedSearchTerm(query);
+    }, 800),
+    []
+  );
+
+  const handleSearch = (e) => {
+    // setSearchQuery(e.target.value);
+    debouncedApiCall(e.target.value);
+  };
+
   useEffect(() => {
-    fetchTopics();
-  }, [currentPage, rowsPerPage]);
+    fetchTopics(debouncedSearchTerm);
+  }, [currentPage, rowsPerPage,debouncedSearchTerm]);
 
   const header = [
     {
@@ -143,7 +159,6 @@ const CategoryTopics = () => {
 
   const rowData = [];
   isTopicList?.forEach((elem, index) => {
-
     const { topics, priority, category, _id } = elem;
 
     let obj = [
@@ -172,7 +187,7 @@ const CategoryTopics = () => {
               navigate("/admin/manage-users/list-user/user-details")
             }
           >
-            {category !== null ? category : "-"}
+            {category !== null && category !== undefined ? category : "Null"}
           </p>
         ),
         className: "wp-40 justify-content-start flex-wrap pointer",
@@ -221,6 +236,8 @@ const CategoryTopics = () => {
             row={rowData}
             totalRows={totalCount}
             min="1000px"
+            handleSearch={handleSearch}
+            // searchVal={searchVal}
             isSearch
             ispaginationcontrols
             ispagination

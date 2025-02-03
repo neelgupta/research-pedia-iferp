@@ -7,20 +7,76 @@ import { useEffect } from "react";
 import SimilarPeople from "./SimilarPeople";
 import RePostPopUp from "./RepostPopUp";
 import { useNavigate } from "react-router-dom";
+import { getDataFromLocalStorage } from "@/utils/helpers";
+import { useDispatch } from "react-redux";
+import {
+  getProjectByTopics,
+  getRecommendedPapers,
+} from "@/store/userSlice/projectSlice";
+import moment from "moment";
 
 const FeedDetails = () => {
   const dropdownRef = useRef(null);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(6);
   const [isRePost, setIsRePost] = useState(false);
+  const [topicList, setIsTopicList] = useState([]);
+  const [pagination, setPagination] = useState({});
+
+  const [openDropdown, setOpenDropdown] = useState(null);
+
+  const handleDropdownToggle = (index) => {
+    setOpenDropdown(openDropdown === index ? null : index);
+  };
+
+  const rowsPerPage = 4;
+  const currentYear = new Date().getFullYear();
+
+  const [recommendedPapers, setRecommendedPapers] = useState([]);
+
+  const localData = getDataFromLocalStorage();
+  const { name } = localData;
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const fetchprojectTopics = async () => {
+    const myTopics = await dispatch(getProjectByTopics());
+
+    if (myTopics?.status === 200) {
+      const topicListData = myTopics.data.response;
+      const data = topicListData?.map((item) => item.Topic.topics);
+      setIsTopicList(data);
+    }
+  };
+
+  const fetchRecommendedReaserchPapers = async () => {
+    const neQuery = ["Computer"];
+    console.log(topicList, "Topic List");
+    const query = `topics=${neQuery}&limit=${rowsPerPage}&page=${currentPage}`;
+    if (topicList.length > 0) {
+      const result = await dispatch(getRecommendedPapers(query));
+      console.log(result?.data?.response, "Result");
+
+      if (result?.status === 200) {
+        setRecommendedPapers(result?.data?.response?.papers);
+        setPagination(result?.data?.response?.pagination);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchRecommendedReaserchPapers();
+  }, [topicList, currentPage]);
+
+  useEffect(() => {
+    fetchprojectTopics();
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setDropdownOpen(false);
+        setOpenDropdown(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -31,14 +87,14 @@ const FeedDetails = () => {
   }, []);
 
   const handlePageChange = (page) => {
-    if (page >= 1 && page <= totalPages) {
+    if (page >= 1 && page <= pagination?.totalPages) {
       setCurrentPage(page);
     }
   };
 
   const renderPageNumbers = () => {
     const pages = [];
-    for (let i = 1; i <= totalPages; i++) {
+    for (let i = 1; i <= pagination?.totalPages; i++) {
       pages.push(
         <Button
           key={i}
@@ -51,6 +107,13 @@ const FeedDetails = () => {
     }
     return pages;
   };
+
+  const handleReadPaper = (paperId) => {
+    console.log(paperId, "PAPER ID");
+    navigate("/feed-details-author", { state: paperId });
+  };
+
+  console.log(recommendedPapers, "recommendedPapers");
 
   return (
     <div className="feed-details-container">
@@ -67,7 +130,7 @@ const FeedDetails = () => {
       </div>
       <div className="user-box">
         <div>
-          <h3 className="user-name">Hi Mary Jane!</h3>
+          <h3 className="user-name">Hi {name}!</h3>
           <p className="user-pra">
             We’ve put together a selection of recommended papers that align with
             your interests.
@@ -97,491 +160,217 @@ const FeedDetails = () => {
       </div>
       <div className="recommended-text">Recommended for you</div>
 
-      <div
-        className="feed-published-box card-d mt-18 pointer"
-        onClick={() => {
-          navigate("/feed-details-author");
-        }}
-      >
-        <div className="fb-center">
-          <div className="post-published">
-            <img
-              src={icons?.lightIcons}
-              alt="light-icon"
-              loading="lazy"
-              className="h-12 w-12 object-fit-contain"
-            />
-            <p className="text-b">Just Published</p>
-          </div>
-          <div>
-            <img src={icons?.actionIcons} alt="action-icons" loading="lazy" />
-          </div>
-        </div>
-        <h4 className="post-title">
-          Reviewing the effectiveness of artificial intelligence techniques
-          against cyber security risks
-        </h4>
-        <p className="post-pra">
-          The rapid increase in malicious cyber-criminal activities has made the
-          field of cybersecurity a crucial research discipline. Over the areas,
-          the advancement in information technology has...
-        </p>
-        <div className=" docs-box ">
-          <img src={icons?.docsIcons} alt="docs-icons" loading="lazy" />
-          <p className="docs-title">
-            Global International Journal of Innovative Research
-          </p>
-        </div>
-        <div className="post-details flex-wrap mt-8 gap-2">
-          <div className="fa-center gap-1">
-            <img
-              src={icons?.userTwoIcons}
-              alt="docs-icons"
-              loading="lazy"
-              className="h-20 w-20 rounded-circle"
-            />
-            <p className="docs-title">Herry Nugraha + 4</p>
-          </div>
-          <div className="fa-center  gap-md-2 gap-2">
-            <div className="fa-center gap-1">
-              <img
-                src={icons?.calenderIcons}
-                alt="docs-icons"
-                loading="lazy"
-                className="h-16 w-16  object-fit-contain"
-              />
-              <p className="docs-title">Jul 16, 2024</p>
-            </div>
-            <img
-              src={icons?.dotIcons}
-              alt="docs-icons"
-              loading="lazy"
-              className="h-5 w-5"
-            />
-            <div className="fa-center gap-1">
-              <img
-                src={icons?.eyeIcons}
-                alt="docs-icons"
-                loading="lazy"
-                className="h-16 w-16  object-fit-contain"
-              />
-              <p className="docs-title">31 Views</p>
-            </div>
-          </div>
-        </div>
-        <div className="fb-center mt-24 gap-3">
-          <Button
-            btnText="Read Paper"
-            btnStyle="LBA"
-            className="h-43 ps-18 pe-18"
-            leftIcon={icons.bookIcons}
-            leftIconClass="h-16 w-16"
-          />
-          <div className="fa-center gap-3">
-            <div className="d-p">
-              <Button
-                btnText="Reposted"
-                btnStyle="BTA"
-                className="h-43 ps-18 pe-18"
-                leftIcon={icons.reloadIcons}
-                leftIconClass="h-16 w-16"
-                onClick={() => {
-                  setDropdownOpen(true);
-                }}
-              />
-              {dropdownOpen && (
-                <div className="dropdown-menus" ref={dropdownRef}>
-                  <div
-                    className="d-text"
-                    onClick={() => {
-                      setDropdownOpen(false);
-                    }}
-                  >
-                    <h5 className="repost-text">Repost with your thoughts</h5>
-                    <p className="repost-pra">
-                      Share this post and your thoughts about it
-                    </p>
+      {recommendedPapers.length > 0 &&
+        recommendedPapers.map((papers, index) => {
+          return (
+            <div
+              className="feed-published-box card-d mt-18 pointer"
+              key={index}
+            >
+              {currentYear === papers.year && (
+                <div className="fb-center">
+                  <div className="post-published">
+                    <img
+                      src={icons?.lightIcons}
+                      alt="light-icon"
+                      loading="lazy"
+                      className="h-12 w-12 object-fit-contain"
+                    />
+                    <p className="text-b">Just Published</p>
                   </div>
-
-                  <div
-                    className="d-text mt-4"
-                    onClick={() => {
-                      setDropdownOpen(false);
-                    }}
-                  >
-                    <h5 className="repost-text">Repost</h5>
-                    <p className="repost-pra">
-                      Instantly share this post with others
-                    </p>
+                  <div>
+                    <img
+                      src={icons?.actionIcons}
+                      alt="action-icons"
+                      loading="lazy"
+                    />
                   </div>
-                  {/* <div
-                    className="d-text"
-                    onClick={() => {
-                      setDropdownOpen(false);
-                    }}
-                  >
-                    <h5 className="repost-text">Delete Repost</h5>
-                  </div> */}
                 </div>
               )}
-            </div>
-            <Button
-              btnText="Ask Paper"
-              btnStyle="BTB"
-              className="h-43 ps-18 pe-18"
-              leftIcon={icons.messageIcons}
-              leftIconClass="h-16 w-16"
-            />
-            <Button
-              btnText="Relevant"
-              btnStyle="BTA"
-              className="h-43 ps-18 pe-18"
-              groupIcons={[
-                {
-                  icon: icons.upThumIcons,
-                },
-                {
-                  icon: icons.downThumIcons,
-                },
-              ]}
-              leftIconClass="h-16 w-16"
-            />
-            <Button
-              btnText="Listen"
-              btnStyle="BTA"
-              className="h-43 ps-18 pe-18"
-              leftIcon={icons.videoIcons}
-              leftIconClass="h-16 w-16"
-            />
 
-            <Button
-              btnStyle="BTA"
-              className="h-43 ps-18 pe-18"
-              leftIcon={icons.saveIcons}
-              leftIconClass="h-16 w-16"
-            />
-          </div>
-        </div>
-      </div>
-      <div className="feed-published-box card-d mt-18">
-        <div className="d-flex justify-content-between">
-          <h4 className="post-title">
-            Reviewing the effectiveness of artificial intelligence techniques
-            against cyber security risks
-          </h4>
-          <div className="h-24 w-24">
-            <img src={icons?.actionIcons} alt="action-icons" loading="lazy" />
-          </div>
-        </div>
-        <p className="post-pra">
-          The rapid increase in malicious cyber-criminal activities has made the
-          field of cybersecurity a crucial research discipline. Over the areas,
-          the advancement in information technology has...
-        </p>
-        <div className=" docs-box ">
-          <img src={icons?.docsIcons} alt="docs-icons" loading="lazy" />
-          <p className="docs-title">
-            Global International Journal of Innovative Research
-          </p>
-        </div>
-        <div className="post-details flex-wrap mt-8 gap-2">
-          <div className="fa-center gap-1">
-            <img
-              src={icons?.userTwoIcons}
-              alt="docs-icons"
-              loading="lazy"
-              className="h-20 w-20 rounded-circle"
-            />
-            <p className="docs-title">Herry Nugraha + 4</p>
-          </div>
-          <div className="fa-center  gap-md-2 gap-2">
-            <div className="fa-center gap-1">
-              <img
-                src={icons?.calenderIcons}
-                alt="docs-icons"
-                loading="lazy"
-                className="h-16 w-16  object-fit-contain"
-              />
-              <p className="docs-title">Jul 16, 2024</p>
-            </div>
-            <img
-              src={icons?.dotIcons}
-              alt="docs-icons"
-              loading="lazy"
-              className="h-5 w-5"
-            />
-            <div className="fa-center gap-1">
-              <img
-                src={icons?.eyeIcons}
-                alt="docs-icons"
-                loading="lazy"
-                className="h-16 w-16  object-fit-contain"
-              />
-              <p className="docs-title">31 Views</p>
-            </div>
-          </div>
-        </div>
-        <div className="fb-center mt-24 gap-3">
-          <Button
-            btnText="Read Paper"
-            btnStyle="LBA"
-            className="h-43 ps-18 pe-18"
-            leftIcon={icons.bookIcons}
-            leftIconClass="h-16 w-16"
-          />
-          <div className="fa-center gap-3">
-            <Button
-              btnText="Repost"
-              btnStyle="BTA"
-              className="h-43 ps-18 pe-18"
-              leftIcon={icons.reloadIcons}
-              leftIconClass="h-16 w-16"
-              onClick={() => {
-                setIsRePost(true);
-              }}
-            />
-            <Button
-              btnText="Ask Paper"
-              btnStyle="BTB"
-              className="h-43 ps-18 pe-18"
-              leftIcon={icons.messageIcons}
-              leftIconClass="h-16 w-16"
-            />
-            <Button
-              btnText="Relevant"
-              btnStyle="BTA"
-              className="h-43 ps-18 pe-18"
-              groupIcons={[
-                {
-                  icon: icons.upThumIcons,
-                },
-                {
-                  icon: icons.downThumIcons,
-                },
-              ]}
-              leftIconClass="h-16 w-16"
-            />
-            <Button
-              btnText="Listen"
-              btnStyle="BTA"
-              className="h-43 ps-18 pe-18"
-              leftIcon={icons.videoIcons}
-              leftIconClass="h-16 w-16"
-            />
+              <h4 className="post-title">
+                {papers.title || papers?.paper_title || "null"}
+              </h4>
+              <p className="post-pra">
+                {(papers.abstract && papers.abstract) ||
+                  (papers.paper_abstract && papers.paper_abstract) ||
+                  "null"}
+              </p>
 
-            <Button
-              btnStyle="BTA"
-              className="h-43 ps-18 pe-18"
-              leftIcon={icons.saveIcons}
-              leftIconClass="h-16 w-16"
-            />
-          </div>
-        </div>
-        <div className="user-follow-box">
-          <div className="d-flex align-items-center gap-2">
-            <img
-              src={icons?.userAIcons}
-              alt="user-icons"
-              loading="lazy"
-              className="h-42 w-42 rounded-circle"
-            />
-            <p className="docs-title">Follow Herry Nugraha</p>
-          </div>
-          <div>
-            <Button
-              btnText="Follow"
-              btnStyle="BTB"
-              className="h-27 text-12-600 pt-6 pb-6 ps-10 pe-10 br-4"
-            />
-          </div>
-        </div>
-      </div>
+              {papers?.url && (
+                <div className=" docs-box">
+                  <img src={icons?.docsIcons} alt="docs-icons" loading="lazy" />
+                  <p className="docs-title">
+                    <a
+                      href={papers?.url}
+                      className="docs-title hover-link"
+                      target="_blank"
+                    >
+                      {papers?.url || "-"}
+                      {/* Global International Journal of Innovative Research */}
+                    </a>
+                  </p>
+                </div>
+              )}
+
+              <div className="post-details flex-wrap mt-8 gap-2">
+                <div className="fa-center gap-1">
+                  <img
+                    src={icons?.userTwoIcons}
+                    alt="docs-icons"
+                    loading="lazy"
+                    className="h-20 w-20 rounded-circle"
+                  />
+                  <p className="docs-title">
+                    {papers?.authors && papers.authors.length > 0 ? (
+                      <>
+                        {papers.authors[0].name}
+                        {papers.authors.length > 1 &&
+                          ` +${papers.authors.length - 1}`}
+                      </>
+                    ) : papers?.author_name ? (
+                      papers.author_name
+                    ) : (
+                      "No Authors"
+                    )}
+                  </p>
+                </div>
+                <div className="fa-center  gap-md-2 gap-2">
+                  <div className="fa-center gap-1">
+                    <img
+                      src={icons?.calenderIcons}
+                      alt="docs-icons"
+                      loading="lazy"
+                      className="h-16 w-16  object-fit-contain"
+                    />
+                    <p className="docs-title">
+                      {papers.abstract_id
+                        ? moment(papers.created_at).format("MMM DD,YYYY")
+                        : papers.year}
+                    </p>
+                  </div>
+                  <img
+                    src={icons?.dotIcons}
+                    alt="docs-icons"
+                    loading="lazy"
+                    className="h-5 w-5"
+                  />
+                  <div className="fa-center gap-1">
+                    <img
+                      src={icons?.eyeIcons}
+                      alt="docs-icons"
+                      loading="lazy"
+                      className="h-16 w-16  object-fit-contain"
+                    />
+                    <p className="docs-title">31 Views</p>
+                  </div>
+                </div>
+              </div>
+              <div className="fb-center mt-24 gap-3">
+                <Button
+                  btnText="Read Paper"
+                  btnStyle="LBA"
+                  className="h-43 ps-18 pe-18"
+                  leftIcon={icons.bookIcons}
+                  leftIconClass="h-16 w-16"
+                  onClick={() => {
+                    handleReadPaper({
+                      paperId: papers.paperId,
+                      abstractId: papers.abstract_id || papers.abstractId
+                    });
+                  }}
+                />
+                <div className="fa-center gap-3">
+                  <div className="d-p">
+                    <Button
+                      btnText="Reposted"
+                      btnStyle="BTA"
+                      className="h-43 ps-18 pe-18"
+                      leftIcon={icons.reloadIcons}
+                      leftIconClass="h-16 w-16"
+                      onClick={() => handleDropdownToggle(index)}
+                    />
+                    {openDropdown === index && (
+                      <div className="dropdown-menus" ref={dropdownRef}>
+                        <div
+                          className="d-text"
+                          onClick={() => {
+                            setOpenDropdown(null);
+                          }}
+                        >
+                          <h5 className="repost-text">
+                            Repost with your thoughts
+                          </h5>
+                          <p className="repost-pra">
+                            Share this post and your thoughts about it
+                          </p>
+                        </div>
+
+                        <div
+                          className="d-text mt-4"
+                          onClick={() => {
+                            setOpenDropdown(false);
+                          }}
+                        >
+                          <h5 className="repost-text">Repost</h5>
+                          <p className="repost-pra">
+                            Instantly share this post with others
+                          </p>
+                        </div>
+                        {/* <div
+                        className="d-text"
+                        onClick={() => {
+                          setDropdownOpen(false);
+                        }}
+                      >
+                        <h5 className="repost-text">Delete Repost</h5>
+                      </div> */}
+                      </div>
+                    )}
+                  </div>
+                  <Button
+                    btnText="Ask Paper"
+                    btnStyle="BTB"
+                    className="h-43 ps-18 pe-18"
+                    leftIcon={icons.messageIcons}
+                    leftIconClass="h-16 w-16"
+                  />
+                  <Button
+                    btnText="Relevant"
+                    btnStyle="BTA"
+                    className="h-43 ps-18 pe-18"
+                    groupIcons={[
+                      {
+                        icon: icons.upThumIcons,
+                      },
+                      {
+                        icon: icons.downThumIcons,
+                      },
+                    ]}
+                    leftIconClass="h-16 w-16"
+                  />
+                  <Button
+                    btnText="Listen"
+                    btnStyle="BTA"
+                    className="h-43 ps-18 pe-18"
+                    leftIcon={icons.videoIcons}
+                    leftIconClass="h-16 w-16"
+                  />
+
+                  <Button
+                    btnStyle="BTA"
+                    className="h-43 ps-18 pe-18"
+                    leftIcon={icons.saveIcons}
+                    leftIconClass="h-16 w-16"
+                  />
+                </div>
+              </div>
+            </div>
+          );
+        })}
+
       <div className="mt-18">
         <SimilarPeople />
-      </div>
-      <div className="post-d-box mt-18">
-        <div className="post-details flex-wrap mt-8 gap-2 ms-8 me-8 pb-6">
-          <div className="fa-center gap-1">
-            <img
-              src={icons?.userTwoIcons}
-              alt="docs-icons"
-              loading="lazy"
-              className="h-20 w-20 rounded-circle"
-            />
-            <p className="docs-title">Herry Nugraha + 4</p>
-          </div>
-          <div className="fa-center  gap-md-2 gap-2">
-            <div className="fa-center gap-1">
-              <img
-                src={icons?.calenderIcons}
-                alt="docs-icons"
-                loading="lazy"
-                className="h-16 w-16  object-fit-contain"
-              />
-              <p className="docs-title">Jul 16, 2024</p>
-            </div>
-            <img
-              src={icons?.dotIcons}
-              alt="docs-icons"
-              loading="lazy"
-              className="h-5 w-5"
-            />
-            <div className="fa-center gap-1">
-              <img
-                src={icons?.eyeIcons}
-                alt="docs-icons"
-                loading="lazy"
-                className="h-16 w-16  object-fit-contain"
-              />
-              <p className="docs-title">31 Views</p>
-            </div>
-          </div>
-        </div>
-        <p className="post-pra ms-8 me-8">
-          The rapid increase in malicious cyber-criminal activities has made the
-          field of cybersecurity a crucial research discipline. Over the areas,
-          the advancement in information technology has...
-        </p>
-
-        <div className="feed-published-box card-d mt-18">
-          <div className="fb-center">
-            <div className="post-published">
-              <img
-                src={icons?.lightIcons}
-                alt="light-icon"
-                loading="lazy"
-                className="h-12 w-12 object-fit-contain"
-              />
-              <p className="text-b">Just Published</p>
-            </div>
-            <div>
-              <img src={icons?.actionIcons} alt="action-icons" loading="lazy" />
-            </div>
-          </div>
-          <h4 className="post-title">
-            Reviewing the effectiveness of artificial intelligence techniques
-            against cyber security risks
-          </h4>
-          <p className="post-pra">
-            The rapid increase in malicious cyber-criminal activities has made
-            the field of cybersecurity a crucial research discipline. Over the
-            areas, the advancement in information technology has...
-          </p>
-          <div className=" docs-box ">
-            <img src={icons?.docsIcons} alt="docs-icons" loading="lazy" />
-            <p className="docs-title">
-              Global International Journal of Innovative Research
-            </p>
-          </div>
-          <div className="post-details flex-wrap mt-8 gap-2">
-            <div className="fa-center gap-1">
-              <img
-                src={icons?.userTwoIcons}
-                alt="docs-icons"
-                loading="lazy"
-                className="h-20 w-20 rounded-circle"
-              />
-              <p className="docs-title">Herry Nugraha + 4</p>
-            </div>
-            <div className="fa-center  gap-md-2 gap-2">
-              <div className="fa-center gap-1">
-                <img
-                  src={icons?.calenderIcons}
-                  alt="docs-icons"
-                  loading="lazy"
-                  className="h-16 w-16  object-fit-contain"
-                />
-                <p className="docs-title">Jul 16, 2024</p>
-              </div>
-              <img
-                src={icons?.dotIcons}
-                alt="docs-icons"
-                loading="lazy"
-                className="h-5 w-5"
-              />
-              <div className="fa-center gap-1">
-                <img
-                  src={icons?.eyeIcons}
-                  alt="docs-icons"
-                  loading="lazy"
-                  className="h-16 w-16  object-fit-contain"
-                />
-                <p className="docs-title">31 Views</p>
-              </div>
-            </div>
-          </div>
-          <div className="fb-center mt-24 gap-3">
-            <Button
-              btnText="Read Paper"
-              btnStyle="LBA"
-              className="h-43 ps-18 pe-18"
-              leftIcon={icons.bookIcons}
-              leftIconClass="h-16 w-16"
-            />
-            <div className="fa-center gap-3">
-              <Button
-                btnText="Read Paper"
-                btnStyle="BTA"
-                className="h-43 ps-18 pe-18"
-                leftIcon={icons.reloadIcons}
-                leftIconClass="h-16 w-16"
-              />
-              <Button
-                btnText="Ask Paper"
-                btnStyle="BTB"
-                className="h-43 ps-18 pe-18"
-                leftIcon={icons.messageIcons}
-                leftIconClass="h-16 w-16"
-              />
-              <Button
-                btnText="Relevant"
-                btnStyle="BTA"
-                className="h-43 ps-18 pe-18"
-                groupIcons={[
-                  {
-                    icon: icons.upThumIcons,
-                  },
-                  {
-                    icon: icons.downThumIcons,
-                  },
-                ]}
-                leftIconClass="h-16 w-16"
-              />
-              <Button
-                btnText="Listen"
-                btnStyle="BTA"
-                className="h-43 ps-18 pe-18"
-                leftIcon={icons.videoIcons}
-                leftIconClass="h-16 w-16"
-              />
-
-              <Button
-                btnStyle="BTA"
-                className="h-43 ps-18 pe-18"
-                leftIcon={icons.saveIcons}
-                leftIconClass="h-16 w-16"
-              />
-            </div>
-          </div>
-          <div className="user-follow-box">
-            <div className="d-flex align-items-center gap-2">
-              <img
-                src={icons?.userAIcons}
-                alt="user-icons"
-                loading="lazy"
-                className="h-42 w-42 rounded-circle"
-              />
-              <p className="docs-title">Follow Herry Nugraha</p>
-            </div>
-            <div>
-              <Button
-                btnText="Follow"
-                btnStyle="BTB"
-                className="h-27 text-12-600 pt-6 pb-6 ps-10 pe-10 br-4"
-              />
-            </div>
-          </div>
-        </div>
       </div>
 
       <div className="Pagination mt-36">
@@ -606,14 +395,14 @@ const FeedDetails = () => {
             btnStyle="BTB"
             className="h-36 text-12-600 color-3333"
             onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
+            disabled={currentPage === pagination?.totalPages}
           />
           <Button
             btnText="Last"
             btnStyle="BTB"
             className="h-36 text-12-600 color-3333"
             onClick={() => handlePageChange(totalPages)}
-            disabled={currentPage === totalPages}
+            disabled={currentPage === pagination?.totalPages}
           />
         </div>
       </div>

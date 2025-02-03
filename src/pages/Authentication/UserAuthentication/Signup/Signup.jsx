@@ -8,6 +8,8 @@ import TextInputwithDropdown from "@/components/inputs/TextInputwithDropdown/Tex
 import { dialCode, icons } from "@/utils/constants";
 import * as Yup from "yup"; // Import Yup for validation
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { handleUserSignUp } from "@/store/userSlice/authSlice";
 
 // Define the validation schema
 const validationSchema = Yup.object({
@@ -18,14 +20,15 @@ const validationSchema = Yup.object({
     .min(8, "Password must be at least 8 characters")
     .required("Password is required"),
   name: Yup.string().required("Name is required"),
-  phone: Yup.string().required("Phone number is required"),
-  joinus: Yup.string().required("Please select a membership type"),
+  phoneNumber: Yup.string().required("Phone number is required"),
+  role: Yup.string().required("Please select a membership type"),
 });
 
 const UserSignup = () => {
   const [isPrivacyChecked, setIsPrivacyChecked] = useState(false);
   const [isOffersChecked, setIsOffersChecked] = useState(false);
-const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const navigate = useNavigate();
   const handlePrivacyChange = (e) => {
     setIsPrivacyChecked(e.target.checked);
   };
@@ -35,32 +38,34 @@ const navigate = useNavigate();
   };
 
   const isFormValid = isPrivacyChecked && isOffersChecked;
-const [namedropdown , setnamedropdown] = useState('Dr.')
-const [phonedropdown , setphonedropdown] = useState('+91')
+  const [namedropdown, setnamedropdown] = useState("Dr.");
+  const [phonedropdown, setphonedropdown] = useState("+91");
+  
   const initialValues = {
     email: "",
     password: "",
-    joinus: "",
-    phone: "",
+    role: "",
+    phoneNumber: "",
     name: "",
   };
 
-  const handleSubmit = (values) => {
+  const handleSubmit = async(values) => {
+    const Name = namedropdown + values.name;
+    const Phone = values.phoneNumber;
 
-    const Name = namedropdown + values.name; 
-    const Phone = phonedropdown + " " + values.phone; 
-  console.log("name" ,Name )
-  console.log("phone" , Phone)
-   
-    const finalvalue = { 
-      ...values,  
-      name: Name, 
-      phone: Phone,    
+    const finalvalue = {
+      ...values,
+      name: Name,
+      phoneNumber: Phone,
+      role: values.role,
     };
-  
 
-    console.log("101",finalvalue);
-    navigate("/login")
+    const result = await dispatch(handleUserSignUp(finalvalue))
+
+    console.log(result)
+    if(result?.status === 200){
+      navigate("/login")
+    }
   };
 
   return (
@@ -106,20 +111,21 @@ const [phonedropdown , setphonedropdown] = useState('+91')
                           }
                         }}
                       >
+                        {console.log(errors,"errors")}
                         {/* Membership Type Dropdown */}
                         <div className="">
                           <Dropdown
-                            id="joinus"
+                            id="role"
                             label="Join As"
                             placeholder="Select"
-                            name="joinus"
-                            value={values.joinus}
+                            name="role"
+                            value={values.role}
                             onChange={(e) =>
-                              setFieldValue("joinus", e.target.value)
+                              setFieldValue("role", e.target.value)
                             }
                             options={[
                               {
-                                id: "Professional Member",
+                                id: "professional",
                                 label: (
                                   <div>
                                     <p>Professional Member</p>
@@ -131,7 +137,7 @@ const [phonedropdown , setphonedropdown] = useState('+91')
                                 ),
                               },
                               {
-                                id: "Student Member",
+                                id: "student",
                                 label: (
                                   <div>
                                     <p>Student Member</p>
@@ -140,7 +146,7 @@ const [phonedropdown , setphonedropdown] = useState('+91')
                                 ),
                               },
                               {
-                                id: "Institutional Member",
+                                id: "institutional",
                                 label: (
                                   <div>
                                     <p>Institutional Member</p>
@@ -151,7 +157,7 @@ const [phonedropdown , setphonedropdown] = useState('+91')
                                 ),
                               },
                             ]}
-                            error={touched.joinus && errors.joinus}
+                            error={touched.role && errors.role}
                             labelClass="pb-9"
                           />
                         </div>
@@ -165,7 +171,9 @@ const [phonedropdown , setphonedropdown] = useState('+91')
                             label="Name"
                             labelClass="pb-8"
                             value={values.name}
-                            onChange={(e) => setFieldValue("name", e.target.value)}
+                            onChange={(e) =>
+                              setFieldValue("name", e.target.value)
+                            }
                             placeholder="Enter name"
                             dropdownOptions={[
                               { value: "Dr.", label: "Dr." },
@@ -175,7 +183,6 @@ const [phonedropdown , setphonedropdown] = useState('+91')
                               { value: "Ms.", label: "Ms." },
                             ]}
                             onDropdownChange={(selected) =>
-                          
                               setnamedropdown(selected)
                             }
                             error={touched.name && errors.name}
@@ -201,13 +208,13 @@ const [phonedropdown , setphonedropdown] = useState('+91')
                         <div className="mt-16">
                           <TextInputwithDropdown
                             isphone
-                            id="phone"
-                            name="phone"
+                            id="phoneNumber"
+                            name="phoneNumber"
                             label="Phone Number"
                             labelClass="pb-8"
-                            value={values.phone}
+                            value={values.phoneNumber}
                             onChange={(e) =>
-                              setFieldValue("phone", e.target.value)
+                              setFieldValue("phoneNumber", e.target.value)
                             }
                             placeholder="Enter phone number"
                             dropdownOptions={dialCode.map((item) => ({
@@ -215,10 +222,9 @@ const [phonedropdown , setphonedropdown] = useState('+91')
                               label: `${item.flag} ${item.dial_code}`,
                             }))}
                             onDropdownChange={(selected) =>
-                            
                               setphonedropdown(selected)
                             }
-                            error={touched.phone && errors.phone}
+                            error={touched.phoneNumber && errors.phoneNumber}
                           />
                         </div>
 
@@ -282,7 +288,13 @@ const [phonedropdown , setphonedropdown] = useState('+91')
                         <div className="mt-18">
                           <p className="text-center mt-8 text-16-400 color-3333">
                             Already on IFERP?{" "}
-                            <span className="color-113D" style={{cursor : "pointer"}} onClick={()=> navigate("/login")}>Login</span>
+                            <span
+                              className="color-113D"
+                              style={{ cursor: "pointer" }}
+                              onClick={() => navigate("/login")}
+                            >
+                              Login
+                            </span>
                           </p>
                         </div>
 
