@@ -166,8 +166,17 @@ import phoneicon from "assets/images/icons/phoneicon.png";
 import locationicon from "assets/images/icons/locationicon.png";
 import linkicon from "assets/images/icons/linkicon.png";
 import Npscardimg from "assets/images/icons/Npscardimg.png"
+import img from "assets/images/img.png"
+
+import Sad from "assets/images/icons/Sad.png";
+import Indifferent from "assets/images/icons/Indifferent.png";
+import Happy from "assets/images/icons/Happy.png";
+import Love from "assets/images/icons/Love.png";
+import uploadimg from "assets/images/icons/uploadimg.png"
+
 export const icons = {
   // avatar,
+  img,
   Google,
   UserHome,
   Userpdf,
@@ -340,5 +349,10 @@ export const icons = {
   phoneicon,
   locationicon,
   linkicon,
-  Npscardimg
+  Npscardimg,
+  Sad,
+  Indifferent,
+  Happy,
+  Love,
+  uploadimg
 };

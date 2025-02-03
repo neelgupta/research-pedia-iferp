@@ -8,6 +8,7 @@ import { GrNext, GrPrevious } from "react-icons/gr";
 import Roundedloader from "../Roundedloader";
 import "./Table.scss";
 import { icons } from "@/utils/constants";
+import DaterangePicker from "@/components/inputs/DaterangePicker";
 
 const Table = ({
   header,
@@ -27,7 +28,9 @@ const Table = ({
   isSearch,
   ispaginationcontrols,
   istableaction,
-  ispagination
+  ispagination,
+  isdaterangerpicker,
+  handletableDateSelect
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const totalPages = Math.ceil(totalRows / rowsPerPage);
@@ -122,7 +125,13 @@ const Table = ({
         </div>
         }
        
-        {/* )} */}
+       <div className="d-flex gap-5">
+      {
+         isdaterangerpicker &&
+         <div>
+         <DaterangePicker onDateSelect={handletableDateSelect}/>
+       </div>
+      }
         {
           isSearch &&   <div>
           <SearchInput
@@ -133,7 +142,7 @@ const Table = ({
           />
         </div>
         }
-      
+      </div>
       </div>
       }
     

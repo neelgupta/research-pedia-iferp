@@ -20,7 +20,11 @@
             padding: 26px 26px 26px 26px;
         }
         .right-userdetails{
-
+            .details{
+                @media (max-width: 1025px) {
+                        padding-left: 26px;
+                      }
+            }
         }
     }
 
@@ -54,12 +58,30 @@
         }
     }
 
-    .survey-card{
-        .card-header{
-            .card-title{
-                
+    .surveydetails{
+        .survey-title{
+            margin-top: 48px;
+        }
+        .surveydetails-question{
+            .survey-card{
+                background-color: var(--ffff);
+                border: 1px solid #E7EAEE;
+                border-radius: 12px;
+                .card-header{
+                    padding: 26px 26px 26px 26px;
+                    border-bottom: 1px solid #E7EAEE;
+                   
+                }
+                .card-title{
+                       .card-question{
+                        margin: 26px 26px 0px 26px;
+                        border-bottom: 1px solid #E7EAEE;
+                       }
+                }
             }
         }
     }
+   
   
 }
+

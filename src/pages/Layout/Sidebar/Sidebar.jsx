@@ -58,12 +58,24 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
       url: "/admin/ads",
       icon: icons.Ads,
       activeIcons: icons.Ads,
+      childoption: [
+        { title: "Header Banner", url: "/admin/ads/hader-banner" },
+        { title: "Footer Banner", url: "/admin/ads/footer-banner" },
+        { title: "Modal Popup", url: "/admin/ads/modal-popup" },
+        { title: "On Scroll Display", url: "/admin/ads/onscroll-display" },
+        { title: "Full Screen", url: "/admin/ads/full-display" },
+      ],
     },
     {
       title: "Premium Plan",
       url: "/admin/plan",
       icon: icons.plan,
       activeIcons: icons.plainactive,
+      childoption: [
+        { title: "Plans", url: "/admin/plan" },
+        { title: "User Plans", url: "/admin/plan/user-plan" },
+      
+      ],
     },
     {
       title: "API Keys",

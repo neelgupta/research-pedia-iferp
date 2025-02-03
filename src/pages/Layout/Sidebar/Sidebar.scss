@@ -1,10 +1,11 @@
+
 .slide-container{
    height: 100vh;
     width: 280px;
      background-color: #F8F9FA;
     padding: 12px;
-     border-right: 1px solid #BEC8D0;
-
+     border-right: 1px dashed #BEC8D0;
+    
      flex-grow: 1;
      overflow-y: auto;
     .profile-header{

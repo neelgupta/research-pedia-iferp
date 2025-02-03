@@ -33,6 +33,59 @@ const FeedbackDashboard = () => {
             csat: "Hate",
             nps: "Passive",
             date: "12/09/2023",
+            csatColor :"#B3334C",
+            npsColor:"#FF9E00"
+
+          },
+          {
+            profile_img: icons?.avatarOneIcons,
+            hate : icons?.Sad,
+            name: "Dr.Airi Satou",
+            csat: "Sad",
+            nps: "Promoter",
+            date: "12/09/2023",
+            csatColor :"#E94463",
+             npsColor:"#3D8A56"
+          },
+          {
+            profile_img: icons?.avatarOneIcons,
+            hate : icons?.Indifferent,
+            name: "Dr.Airi Satou",
+            csat: "Indifferent",
+            nps: "Detractor",
+            date: "12/09/2023",
+            csatColor :"#FF9E00",
+             npsColor:"#B3334C"
+          },
+          {
+            profile_img: icons?.avatarOneIcons,
+            hate : icons?.Happy,
+            name: "Dr.Airi Satou",
+            csat: "Happy",
+            nps: "Detractor",
+            date: "12/09/2023",
+            csatColor : "#56B573",
+             npsColor:"#B3334C"
+          },
+          {
+            profile_img: icons?.avatarOneIcons,
+            hate : icons?.Love,
+            name: "Dr.Airi Satou",
+            csat: "Love",
+            nps: "Passive",
+            date: "12/09/2023",
+            csatColor : "#3D8A56",
+             npsColor:"#FF9E00"
+          },
+          {
+            profile_img: icons?.avatarOneIcons,
+            hate : icons?.hate,
+            name: "Dr.Airi Satou",
+            csat: "Hate",
+            nps: "Promoter",
+            date: "12/09/2023",
+            csatColor :"#B3334C",
+             npsColor:"#3D8A56"
           },
           {
             profile_img: icons?.avatarOneIcons,
@@ -41,46 +94,8 @@ const FeedbackDashboard = () => {
             csat: "Hate",
             nps: "Passive",
             date: "12/09/2023",
-          },
-          {
-            profile_img: icons?.avatarOneIcons,
-            hate : icons?.hate,
-            name: "Dr.Airi Satou",
-            csat: "Hate",
-            nps: "Passive",
-            date: "12/09/2023",
-          },
-          {
-            profile_img: icons?.avatarOneIcons,
-            hate : icons?.hate,
-            name: "Dr.Airi Satou",
-            csat: "Hate",
-            nps: "Passive",
-            date: "12/09/2023",
-          },
-          {
-            profile_img: icons?.avatarOneIcons,
-            hate : icons?.hate,
-            name: "Dr.Airi Satou",
-            csat: "Hate",
-            nps: "Passive",
-            date: "12/09/2023",
-          },
-          {
-            profile_img: icons?.avatarOneIcons,
-            hate : icons?.hate,
-            name: "Dr.Airi Satou",
-            csat: "Hate",
-            nps: "Passive",
-            date: "12/09/2023",
-          },
-          {
-            profile_img: icons?.avatarOneIcons,
-            hate : icons?.hate,
-            name: "Dr.Airi Satou",
-            csat: "Hate",
-            nps: "Passive",
-            date: "12/09/2023",
+            csatColor :"#B3334C",
+             npsColor:"#FF9E00"
           },
         ],
       });
@@ -114,7 +129,7 @@ const FeedbackDashboard = () => {
     
       const rowData = [];
       allStudentList?.data?.forEach((elem, index) => {
-        const { name, csat, nps, date} =
+        const { name, csat, nps, date ,csatColor,npsColor} =
           elem;
         let obj = [
           {
@@ -158,7 +173,7 @@ const FeedbackDashboard = () => {
                   />
                 </div>
                 <div>
-                 <p>{csat}</p>
+                <p className="" style={{ color: csatColor }}>{csat}</p>
                  
                 </div>
               </div>
@@ -172,6 +187,7 @@ const FeedbackDashboard = () => {
                 onClick={() =>
                   navigate("/admin/manage-users/list-user/user-details")
                 }
+                style={{ color: npsColor }}
               >
                 {nps}
               </p>
@@ -200,6 +216,9 @@ const FeedbackDashboard = () => {
                   alt="view-icons"
                   loading="lazy"
                   className="pointer"
+                  onClick={() =>
+                    navigate("/admin/feedback/user-details")
+                  }
                 />
               </div>
             ),
@@ -352,6 +371,28 @@ const FeedbackDashboard = () => {
         onClick: (event, elements) => handleBarClick(elements), 
       };
     
+      const chrtdata = [
+        {
+          title : "Hate",
+          per : "10%"
+        },
+        {
+          title : "Happy",
+          per : "20%"
+        },
+        {
+          title : "Indifferent",
+          per : "30%"
+        },
+        {
+          title : "Sad",
+          per : "10%"
+        },
+        {
+          title : "Love",
+          per : "10%"
+        }
+      ]
       const cardContainerClass =
         windowWidth >= 992 && windowWidth <= 1300 && reduxdata
           ? "col-6"
@@ -372,7 +413,9 @@ const FeedbackDashboard = () => {
           const handleDateSelect = (range) => {
             console.log("Selected Range:", range);
           };
-        
+          const handletableDateSelect = (range) => {
+            console.log("Selected Range picker:", range);
+          };
 
   return (
     <div id="feedbackdashboard-container">
@@ -403,8 +446,8 @@ const FeedbackDashboard = () => {
     </div>
   </div>
 
-  {/* Doughnut Chart */}
-  <div className="doughnut-container d-flex justify-content-center mt-16 mb-16">
+
+  <div className="doughnut-container d-flex justify-content-center mt-16 mb-16" >
     <Doughnut
       data={doughnutData}
       options={doughnutOptions}
@@ -414,15 +457,15 @@ const FeedbackDashboard = () => {
   </div>
 
   <div className="row">
-    {[...Array(5)].map((_, index) => (
+    {chrtdata.map((items, index) => (
       <div className="col-6" key={index}>
         <div className="d-flex justify-content-between align-items-center gap-3 mb-12">
-          <div className="d-flex align-items-center">
+          <div className="d-flex align-items-center gap-2">
             <img src={icons.hate} alt="hate" className="w-27 h-24" />
-            <p className="text-14-400 color-5b6b">Hate</p>
+            <p className="text-14-400 color-5b6b">{items.title}</p>
           </div>
           <div>
-            <p className="text-14-400 color-1D26">10%</p>
+            <p className="text-14-400 color-1D26">{items.per}</p>
           </div>
         </div>
       </div>
@@ -433,7 +476,7 @@ const FeedbackDashboard = () => {
               </div>
             </div>
             <div className={graphContainerClass}>
-              <div className="bar-container p-10 mt-15">
+              <div className="bar-container p-10 mt-15" style={{borderRadius :"12px"}}>
               
               <div className="d-flex  justify-content-between mt-12 align-items-center ">
                     <div>
@@ -503,7 +546,8 @@ const FeedbackDashboard = () => {
         ispaginationcontrols
         istableaction
         ispagination
-
+        handletableDateSelect={handletableDateSelect}
+        isdaterangerpicker
       />
       </div>
 

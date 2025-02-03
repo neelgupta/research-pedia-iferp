@@ -23,13 +23,24 @@ const Navbar = () => {
             <SearchInput placeholder="Ctrl + K" />
           </div>
         </div>
-        <div className="d-flex align-items-center gap-2">
+        <div className="d-flex align-items-center gap-3">
           <div>
-            <img src={icons.chaticon} alt="img" className="img-fluid" />
+            <img src={icons.chaticon} alt="img" className="img-fluid w-40 h-40" />
           </div>
-          <div>
-            <img src={icons.notifcation} alt="img" className="img-fluid" />
-          </div>
+          <div className="position-relative d-inline-block " style={{marginLeft : "-10px"}}>
+      <img
+        src={icons.notifcation}
+        alt="Notification"
+        className="img-fluid w-30 h-30"
+    
+      />
+      <span
+        className="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-success"
+        style={{ fontSize: "12px" }}
+      >
+        3
+      </span>
+    </div>
           <div>
             <img src={icons.avatar} alt="img" className="img-fluid w-40 h-40" />
           </div>

@@ -1,0 +1,48 @@
+#addplans-conatiner{
+    .categorytopics-title{
+        h1{
+            font-family: Inter;
+            font-size: 30px;
+            font-weight: 700;
+            line-height: 36.31px;
+            text-align: left;
+            text-underline-position: from-font;
+            text-decoration-skip-ink: none;
+            color : "#1D2630"
+        }
+      
+    }
+    .add-rearches{
+        margin-top: 24px;
+        .rearch-form{
+            height: "350px";
+            background-color: #ffffff;
+            border-radius: 12px;
+            .rearch-title{
+                border-bottom: 1px solid #E7EAEE;
+                h1{
+                    font-family: Inter;
+font-size: 16px;
+font-weight: 600;
+line-height: 19.36px;
+text-align: left;
+text-underline-position: from-font;
+text-decoration-skip-ink: none;
+color : "#1D2630";
+padding: 25px 0px 25px 26px;
+                }
+            }
+          
+        .rmtpreplay-form{
+            margin-left: 26px;
+            margin-right: 26px;
+        }
+            .dropdown-container{
+                padding: 0px 26px 25px 26px;
+            }
+            .save-button{
+                margin: 16px 26px;
+            }
+        }
+    }
+}

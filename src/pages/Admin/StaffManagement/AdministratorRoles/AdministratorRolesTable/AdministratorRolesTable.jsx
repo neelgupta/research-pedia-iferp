@@ -179,7 +179,7 @@ const AdministratorRolesTable = () => {
             <h1 className='text-16-600 color-1D26'>Administrator Roles</h1>
           </div>
           <div className='d-flex flex-wrap mt-5 gap-3'>
-          <Button btnStyle="LBB" btnText="Add New Department" className="ps-24 pe-24 pt-12 pb-12" onClick={()=>navigate("/admin/staff/addadministrator-roles")}/>
+          <Button btnStyle="LBB" btnText="Duplicate Department" className="ps-24 pe-24 pt-12 pb-12" />
             <Button btnText="Add New Department" className="ps-24 pe-24 pt-12 pb-12" onClick={()=>navigate("/admin/staff/addadministrator-roles")}/>
            
           </div>
