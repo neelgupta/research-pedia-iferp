@@ -7,9 +7,10 @@ import { Button, TextInput } from "@/components";
 import SecondDetails from "./SecondDetails";
 import PackageDetails from "./PackageDetails";
 import { useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getRecommendedPapersById } from "@/store/userSlice/projectSlice";
 import moment from "moment";
+import { getAuthorsPapers } from "@/store/userSlice/userDetailSlice";
 
 const FeedDetailsAuthor = () => {
   const [showActive, setShowActive] = useState("Summary");
@@ -18,6 +19,7 @@ const FeedDetailsAuthor = () => {
   const [showAuthors, setShowAuthors] = useState(false);
   const [showCitation, setShowCitation] = useState(false);
 
+  console.log("101" , paperDetails)
   const location = useLocation();
   const dispatch = useDispatch();
   const topics = location?.state?.topics;
@@ -27,11 +29,13 @@ const FeedDetailsAuthor = () => {
     const id = location?.state;
     const paperId = id.paperId;
     const abstractId = id.abstractId;
+  
+
 
     const result = await dispatch(
       getRecommendedPapersById(paperId, abstractId)
     );
-    setPaperDetails(result?.data?.response?.researchPapersWithSummary[0]);
+     setPaperDetails(result?.data?.response?.researchPapersWithSummary[0]);
 
     // setPaperDetails({
     //   paperId: "a815c07c04c3f4448b61a3de3bbc31e182416f6a",
@@ -400,6 +404,76 @@ const FeedDetailsAuthor = () => {
     //     "Interfacial transport and mixing are important processes in fluids, plasmas, and materials, impacting societal challenges like alternative energy sources and water purification. This special feature issue in PNAS explores recent advancements in understanding these dynamics through theoretical analysis, simulations, experiments, and technology developments across various scientific disciplines. The collection of papers highlights the state of the art in interfaces and nonequilibrium transport, suggesting future research directions in the field.",
     // });
   };
+  
+  const [authdata ,setauthdata] = useState({
+    "status": 200,
+    "data": "PjEWfh2LHaz/8dE0NOFFn4uJ2nX2bOy6u+TT8c7FrT7gJZjhI6RHB7aXaptLm8cDGaM1tTK/lp1LnBaUli6dVnmgURbsGXXaUzhsbRQ5p+vV4+wqUeY3bDmeAAijXNZNFAhyVMixLW4UaBIVsKXgTnAIaUnvhFeCtfbn98eL9bKCMy4XS+1X/wmXvLI8pp7kU31pvzhM/omO9eXN14/GF1fFf+bEm0I7YHsZHq3VtCm0ThQ6kIGhXdof1xZgAMk0hmELBg2OXZbLxY7m2Sdu7FO+XkwWa96zv9zNEYcGhJFwNWaUFB0M6+17FoI6qCCBDvPosid3UDpNhferVbLZwatNjPd4oT8MBKoY+0Lz7ejrpBREihlRA8vesJn8jGOtfrUJ/BzTxvMR9YYf+QxJUAn9HMKEYGlqkS6XAKJjHmBm3zlXDdwf5EYoK0BY+8egdrXUiVqUn3qCd8DGwQsNagu2gl4rzTLFRN5I+DVwf9q1LyssiEPCJ8Rmorjm6TWB0TEzgJ2+7N6nwnChRxFHA04w4CD2lB7JQuT6RMVdKDjLJcdKFzW9X10rDrFj8VvHZuJSLkiStI795Wr4GnMtNuBi9WxSxdnlQCnRxYTygshoklCuZtdlwJ2k5Etnp6vCscP7P3iW/EFGJadthcn0gpWF73ilAlRSi8arFApZg7sprxXlCu2L+q/9XyOZJT7WRDJx/eJ6NpuHtXSS5uT1U+6HmgdJ0SlXiQ0ANO0xl+cpDJ3KEvg8GSQvoQWqocxLm1E9bsS62pvsLbYdJ/V3m+aVp8gWUhCDjFHb40PQh8RfNCKre7UxhEA3yecD3YEqp/DUP5/Cz2lAiOc0XKiOD4Zl1lw0s7hU94v1vUUlkpRQKje03unaIlCjaZokDplIhshvnwH1rRB8ABBFvZRrDLAOl2d83ptmA6Gm+ou2/yoGnJK4xXDYAcIrMm5NxrqjqH7ukFxszF9JlvEFAFA15NeEoxNGlkBIxbMa5X67WeDn+Ouw/l3HqvyTFXkCPDhDxOayQ5l9h4rWbRf0Hdhe634QgODWX5wcVp3z9BbXhp+1flL0/iF7S0J4dfQ0rVV00FcWj7GHFA058Q/Tuuz03sz9CPMj6oLHRO2pd1BVrL3YW/91YUp5OX6zT8cM9zUeWhXS2xLA786xQi+IxEKvyArK+3dDoFRvwDEWjPgQorcKZKzgPQIOlKgdnaaT2YVGn8Z+pWJrZNPRrEgk29cXadt5bvpdcVpuKd3ucXXH0T8HtTR2cqiTX/Z12hTjZ4oOMNwwqVPGASla5Ys4g+Dm8OgXjCh6qOMoiu+oLMw71sKcGjcDLBZumY7ZCTrbRD1pOENugEc6d66gaI4TaAjglkvog51ShzzAzhu0EVyO86xfqFys4p7bD/AuvHVxWokEdVeOVJp0FLYu3rc8SplRwJtLysTjZHV1Fnp2wpZrP6MIQEVR6uQZJuCF4AtZPMaNub0lA7tYOT/6zbDGg2Y/njqn89gxqHPUPUy0ZIhoHTuPMXkizYwvO+7+HXmxY591j8V2guz1YwlR92WE30up+U/0r7eWMZi5AgRqW3TaGL+4jBS+cYirJwmB3HVPopW0KcydM0lM7kzxmb2uBKxMo6PA/8zn7JVsxk9/k6l3lf+SLWYVftFpGvwiQcX7Zkkc8kSWPOACYa9y9OUMXZWHKQ==",
+    "data1": {
+        "education_details": {
+            "id": 88596,
+            "user_id": 89402,
+            "ug_course": "2",
+            "ug_course_name": "BA",
+            "ug_department": "1",
+            "ug_department_name": "Digital Filmmaking",
+            "ug_university": "581",
+            "ug_university_name": "Other",
+            "ug_institution": "1",
+            "ug_institution_name": "Parvathaneni Brahmayya Siddhartha college of Arts & Science",
+            "ug_year_of_completion": "2024-01-31",
+            "pg_course": "9",
+            "pg_course_name": "MSc",
+            "pg_department": "2",
+            "pg_department_name": "Accountancy",
+            "pg_university": "1",
+            "pg_university_name": "University of Petroleum and Energy Studies",
+            "pg_institution": "2",
+            "pg_institution_name": "Annamacharya Institute of Technology and Sciences",
+            "pg_year_of_completion": "2024-12-02",
+            "phd_course": "18",
+            "phd_course_name": "Ph.D",
+            "phd_department": "3",
+            "phd_department_name": "Actuarial Science",
+            "phd_university": "2",
+            "phd_university_name": "DAV Institute of Engineering & Technology",
+            "phd_institution": "1",
+            "phd_institution_name": "Parvathaneni Brahmayya Siddhartha college of Arts & Science"
+        },
+        "co_authors": 26,
+        "user_details": [
+            {
+                "id": 5,
+                "name": "Pritesh Professional",
+                "country": "India",
+                "state": "Bihar",
+                "followers": 6,
+                "profile_photo_path": "profile-82284-1737716349.png",
+                "followings": 10,
+                "user_type": "2"
+            }
+        ],
+        "topics": [
+            "Conference",
+            "Digital Context",
+            "University Teaching Role",
+            "New Learning Scenarios"
+        ]
+    },
+    "message": "User data!"
+})
+
+const [authdetails , setauthdetails] = useState()
+const fetchauterdetais = async() =>{
+    const res = await dispatch(getAuthorsPapers(94088))
+    setauthdetails(res?.data?.response?.papers)
+    console.log("res 1011" , res?.data?.response)
+}
+
+useEffect(()=>{
+  fetchauterdetais()
+},[])
+
+console.log("authdata -> 101" ,authdetails)
 
   console.log(showCitation, "showCitation");
 
@@ -420,7 +494,7 @@ const FeedDetailsAuthor = () => {
     author_name,
   } = paperDetails || {};
 
-  console.log("✌️paperDetails --->", paperDetails);
+  console.log("paperDetails --->", paperDetails);
 
   const handleClickSummary = () => {
     setShowActive("Summary");
@@ -472,10 +546,32 @@ const FeedDetailsAuthor = () => {
     fetchPaper();
   }, []);
 
+  
+
+
+  const reduxData = useSelector((state) => state.global);
+  const { isUserSide, isRightSide } = reduxData || {};
+
+  const [visibleCount, setVisibleCount] = useState(2); 
+  const [showMore, setShowMore] = useState(false); 
+
+  const handleToggle = () => {
+    if (showMore) {
+    
+      setVisibleCount(2);
+    } else {
+     
+      setVisibleCount(authdata.data1.topics.length);
+    }
+    setShowMore(!showMore); 
+  };
+
+
   return (
     <div className="feed-details-author-container">
-      
-      <div className="main-div">
+      <div className="row">
+        <div className={`${isUserSide || isRightSide ? "col-12" : "col-xl-8 col-lg-7"}`}>
+        <div className="main-div">
         <div className={`${isSide ? "left-w-o" : "left-w"}`}>
           <Breadcrumb
             list={[
@@ -488,10 +584,11 @@ const FeedDetailsAuthor = () => {
           />
           <h1 className="title-text mt-24">
             {title ? title : paper_title ? paper_title : "-"}
-          </h1>
+              </h1>
+              <h1></h1>
           <div className="mt-26">
             <div className="row gy-3">
-              <div className={`${isSide ? "col-12" : "col-lg-7"}`}>
+              <div className="col-12">
                 <p className={`pra-text     ${isSide ? "pra-sm" : "pra-m"}`}>
                   <img
                     src={icons?.avatarTwoIcons}
@@ -517,6 +614,7 @@ const FeedDetailsAuthor = () => {
                       className="span-pra"
                       onClick={() => setShowAuthors(!showAuthors)}
                     >
+                      
                       {!showAuthors
                         ? `+ Show ${authors.length - 2} more`
                         : "   Show Less"}
@@ -565,7 +663,10 @@ const FeedDetailsAuthor = () => {
                             )}
                           </>
                         )}
-
+{/* <div className="row">
+  <div className="col-8"> </div> 
+  <div className="col-4"> </div> 
+  </div> */}
                     {citations?.length > 2 && (
                       <span
                         className="span-pra"
@@ -598,8 +699,37 @@ const FeedDetailsAuthor = () => {
                     </p> */}
                   </div>
                 )}
+
+<div className="">
+  <div className="brave-scroll" style={{maxHeight : "300px" ,overflowY: "auto"}}>
+  <div className="d-flex flex-wrap gap-3">
+        {authdata.data1.topics.slice(0, visibleCount).map((topic, index) => (
+          <div
+            key={index}
+            className="p-12"
+            style={{
+              border: "1px solid #333333",
+              borderRadius: "12px"
+            }}
+          >
+            <span>{topic}</span>
+          </div>
+        ))}
+  
+       
+      </div>
+  </div>
+     
+
+      {/* Toggle button for Show More / Show Less */}
+      <span onClick={handleToggle} className="text-14-500 color-113D" style={{cursor : "pointer"}}>
+      {showMore ? '- Show Less' : `+ Show ${authdata.data1.topics.length - 2}+ more`}
+      </span>
+     
+    </div>
+
               </div>
-              <div className={`${isSide ? "col-12" : "col-lg-5"}`}>
+              {/* <div className={`${isSide ? "col-12" : "col-lg-5"}`}>
                 <div className={`details-box ${isSide ? "b-c-details" : ""}`}>
                   {journal && journal.name && (
                     <div className="fa-center gap-2">
@@ -664,7 +794,7 @@ const FeedDetailsAuthor = () => {
                     </p>
                   </div>
                 )}
-              </div>
+              </div> */}
             </div>
           </div>
           {/* review */}
@@ -901,13 +1031,89 @@ const FeedDetailsAuthor = () => {
           </div>
         )}
       </div>
+        </div>
+        <div className={`${isUserSide || isRightSide ? "col-12" : "col-xl-4 col-lg-5"}`}>
+          <div className="auth-side ">
+            <div className="d-flex align-items-center gap-2 mt-10">
+              <div>
+                <img src={icons.authorsideicon1} alt="authorsideicon1" className="img-fluid w-48 h-48"/>
+              </div>
+              <div>
+                <h1 className="text-16-400 color-3333">Translate this paper in your preferred language</h1>
+              </div>
+            </div>
+            <div className="d-flex  align-items-center gap-2 mt-10">
+              <div>
+                <img src={icons.authorsideicon2} alt="authorsideicon1" className="img-fluid w-48 h-48"/>
+              </div>
+              <div>
+                <h1 className="text-16-400 color-3333">Listen to the abstract of this paper</h1>
+              </div>
+            </div>
+            <div className="d-flex  align-items-center gap-2 mt-10">
+              <div>
+                <img src={icons.authorsideicon3} alt="authorsideicon1" className="img-fluid w-48 h-48"/>
+              </div>
+              <div>
+                <h1 className="text-16-400 color-3333">Ask Paper</h1>
+              </div>
+            </div>
+            <div className="d-flex  align-items-center gap-2 mt-10">
+              <div>
+                <img src={icons.authorsideicon4} alt="authorsideicon1" className="img-fluid w-48 h-48"/>
+              </div>
+              <div>
+                <h1 className="text-16-400 color-3333">Export to reference manager</h1>
+              </div>
+            </div>
+            <div className="d-flex  align-items-center gap-2 mt-10">
+              <div>
+                <img src={icons.authorsideicon5} alt="authorsideicon1" className="img-fluid w-48 h-48"/>
+              </div>
+              <div>
+                <h1 className="text-16-400 color-3333">Bookmark</h1>
+              </div>
+            </div>
+            <div className="d-flex  align-items-center gap-2 mt-10">
+              <div>
+                <img src={icons.authorsideicon6} alt="authorsideicon1" className="img-fluid w-48 h-48"/>
+              </div>
+              <div>
+                <h1 className="text-16-400 color-3333">Save to drive</h1>
+              </div>
+            </div>
+            <div className="d-flex  align-items-center gap-2 mt-10">
+              <div>
+                <img src={icons.authorsideicon7} alt="authorsideicon1" className="img-fluid w-48 h-48"/>
+              </div>
+              <div>
+                <h1 className="text-16-400 color-3333">Share</h1>
+              </div>
+            </div>
+            <div className="d-flex  align-items-center gap-2 mt-10">
+              <div>
+                <img src={icons.authorsideicon8} alt="authorsideicon1" className="img-fluid w-48 h-48"/>
+              </div>
+              <div>
+                <h1 className="text-16-400 color-3333">Report</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+
       <SecondDetails
         isSide={isSide}
         handleClickFullText={handleClickFullText}
-
+        authdata ={authdata}
+        authdetails={authdetails}
       />
       <div className="mt-28">
-        <PackageDetails isSide={isSide} />
+        <PackageDetails isSide={isSide} 
+        authdetails={authdetails}
+        />
       </div>
     </div>
   );

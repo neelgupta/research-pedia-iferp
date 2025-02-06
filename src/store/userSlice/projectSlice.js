@@ -37,7 +37,32 @@ export const getRecommendedPapers = (query) => async (dispatch) => {
   dispatch(setLoading());
   try {
     const res = await api.get(`/user/recommendedPapers?${query}`, {});
+   
     dispatch(clearLoading());
+    return res;
+  } catch (error) {
+    dispatch(handelCatch(error));
+    dispatch(clearLoading());
+  }
+};
+
+export const getTopPapers = (query) => async (dispatch) => {
+  dispatch(setLoading());
+  try {
+    const res = await api.get(`/user/recommendedPapers/networkPost?${query}`,{});
+ 
+    return res;
+  } catch (error) {
+    dispatch(handelCatch(error));
+    dispatch(clearLoading());
+  }
+};
+
+export const getUserInterest = () => async (dispatch) => {
+  dispatch(setLoading());
+  try {
+    const res = await api.get(`/user/recommendedUser`,{});
+
     return res;
   } catch (error) {
     dispatch(handelCatch(error));

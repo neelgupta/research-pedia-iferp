@@ -12,6 +12,7 @@
     .main-div {
         display: flex;
         gap: 24px;
+      
     }
 
     .side-bar {
@@ -40,7 +41,8 @@
         font-size: 16px;
         font-weight: 600;
         line-height: 19.36px;
-
+width: 100%;
+text-wrap: wrap;
 
     }
 

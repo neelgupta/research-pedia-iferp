@@ -162,6 +162,15 @@ import noMessagesIcons from "assets/images/icons/NoMessages.png";
 import hate from "assets/images/icons/hate.png";
 import calander from "assets/images/icons/calander.png";
 
+
+import authorsideicon1 from "assets/images/icons/authorsideicon1.png"
+import authorsideicon2 from "assets/images/icons/authorsideicon2.png"
+import authorsideicon3 from "assets/images/icons/authorsideicon3.png"
+import authorsideicon4 from "assets/images/icons/authorsideicon4.png"
+import authorsideicon5 from "assets/images/icons/authorsideicon5.png"
+import authorsideicon6 from "assets/images/icons/authorsideicon6.png"
+import authorsideicon7 from "assets/images/icons/authorsideicon7.png"
+import authorsideicon8 from "assets/images/icons/authorsideicon8.png"
 export const icons = {
   // avatar,
   Google,
@@ -330,5 +339,15 @@ export const icons = {
   noMessagesIcons,
 
   hate,
-  calander
+  calander,
+
+
+  authorsideicon1,
+  authorsideicon2,
+  authorsideicon3,
+  authorsideicon4,
+  authorsideicon5,
+  authorsideicon6,
+  authorsideicon7,
+  authorsideicon8
 };

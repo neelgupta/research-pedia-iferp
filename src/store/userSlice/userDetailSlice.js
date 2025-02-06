@@ -264,3 +264,20 @@ export const getDepartmentOfOrganization = () => async (dispatch) => {
     dispatch(clearLoading());
   }
 };
+
+
+
+export const getAuthorsPapers = (id) => async (dispatch) => {
+  dispatch(setLoading());
+  try {
+    const res = await api.get(
+      `/user/authorsPaper?authorId=${id}`,
+      {}
+    );
+    dispatch(clearLoading());
+    return res;
+  } catch (error) {
+    dispatch(handelCatch(error));
+    dispatch(clearLoading());
+  }
+};

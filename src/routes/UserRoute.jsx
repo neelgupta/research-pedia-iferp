@@ -1,27 +1,21 @@
-import CreateFeed from "@/pages/CreateFeed";
-import FeedDetails from "@/pages/FeedDetails";
-import FeedDetailsAuthor from "@/pages/FeedDetailsAuthor";
-import InstitutionalProfile from "@/pages/Institutional/InstitutionalProfile";
-import UserLayout from "@/pages/Layout/UserLayout";
-import MyFeed from "@/pages/MyFeed";
-import StudentProfile from "@/pages/Student/StudentProfile";
-import Home from "@/pages/User/Home";
-import Premium from "@/pages/User/Premium/Premium";
-import ProfessionalMemberProfile from "@/pages/User/ProfessionalMemberProfile";
-import { getDataFromLocalStorage } from "@/utils/helpers";
+import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+import { getDataFromLocalStorage } from "@/utils/helpers";
+import { Spinner } from "react-bootstrap";
+
+// Lazy load components
+const CreateFeed = lazy(() => import("@/pages/CreateFeed"));
+const FeedDetails = lazy(() => import("@/pages/FeedDetails"));
+const FeedDetailsAuthor = lazy(() => import("@/pages/FeedDetailsAuthor"));
+const InstitutionalProfile = lazy(() => import("@/pages/Institutional/InstitutionalProfile"));
+const UserLayout = lazy(() => import("@/pages/Layout/UserLayout"));
+const MyFeed = lazy(() => import("@/pages/MyFeed"));
+const StudentProfile = lazy(() => import("@/pages/Student/StudentProfile"));
+const ProfessionalMemberProfile = lazy(() => import("@/pages/User/ProfessionalMemberProfile"));
 
 export const UserRoutes = () => {
   const roleData = getDataFromLocalStorage();
   const role = roleData ? roleData.role : "institutional";
-  // const role = "professional" || "student" || "  institutional";
-
-  // const userRoutes = [
-  //   {
-  //     path: "/",
-  //     component: <ProfessionalMemberProfile />,
-  //   },
-  // ];
 
   const roleBasedRoutes = {
     professional: [
@@ -71,19 +65,32 @@ export const UserRoutes = () => {
   const userRoutes = roleBasedRoutes[role] || [];
 
   return (
-    <Routes>
-      {userRoutes?.map((elm, index) => {
-        return (
-          <Route
-            key={index}
-            path={elm.path}
-            element={<UserLayout>{elm.component}</UserLayout>}
-          />
-        );
-      })}
-      <Route path="*" element={<Navigate to="/" />} />
-      <Route path="/my-feed" element={<MyFeed />} />
-      <Route path="/create-feed" element={<CreateFeed />} />
-    </Routes>
+    <Suspense fallback={
+      <div
+      className="d-flex justify-content-center align-items-center"
+      style={{
+        height: "100vh",
+        width: "100%", 
+      }}
+    >
+      <div className="spinner-grow text-primary" role="status">
+      
+      </div>
+    </div>}>
+      <Routes>
+        {userRoutes?.map((elm, index) => {
+          return (
+            <Route
+              key={index}
+              path={elm.path}
+              element={<UserLayout>{elm.component}</UserLayout>}
+            />
+          );
+        })}
+        <Route path="*" element={<Navigate to="/" />} />
+        <Route path="/my-feed" element={<MyFeed />} />
+        <Route path="/create-feed" element={<CreateFeed />} />
+      </Routes>
+    </Suspense>
   );
 };

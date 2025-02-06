@@ -8,12 +8,15 @@ import SimilarPeople from "./SimilarPeople";
 import RePostPopUp from "./RepostPopUp";
 import { useNavigate } from "react-router-dom";
 import { getDataFromLocalStorage } from "@/utils/helpers";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getProjectByTopics,
   getRecommendedPapers,
+  getTopPapers,
+  getUserInterest,
 } from "@/store/userSlice/projectSlice";
 import moment from "moment";
+import { Spinner } from "react-bootstrap";
 
 const FeedDetails = () => {
   const dropdownRef = useRef(null);
@@ -22,13 +25,17 @@ const FeedDetails = () => {
   const [isRePost, setIsRePost] = useState(false);
   const [topicList, setIsTopicList] = useState([]);
   const [pagination, setPagination] = useState({});
-
+  const [activeTab, setActiveTab] = useState('topPapers'); 
   const [openDropdown, setOpenDropdown] = useState(null);
 
   const handleDropdownToggle = (index) => {
     setOpenDropdown(openDropdown === index ? null : index);
   };
 
+  const reduxData = useSelector((state)=> state.global)
+  const { loading } = reduxData || {};
+
+  console.log("loading" ,loading)
   const rowsPerPage = 4;
   const currentYear = new Date().getFullYear();
 
@@ -36,7 +43,7 @@ const FeedDetails = () => {
 
   const localData = getDataFromLocalStorage();
   const { name } = localData;
-
+1
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -51,7 +58,8 @@ const FeedDetails = () => {
   };
 
   const fetchRecommendedReaserchPapers = async () => {
-    const neQuery = ["Computer"];
+   
+    const neQuery = ["Architecture","science"];
     console.log(topicList, "Topic List");
     const query = `topics=${neQuery}&limit=${rowsPerPage}&page=${currentPage}`;
     if (topicList.length > 0) {
@@ -61,13 +69,55 @@ const FeedDetails = () => {
       if (result?.status === 200) {
         setRecommendedPapers(result?.data?.response?.papers);
         setPagination(result?.data?.response?.pagination);
+      
       }
+
+    }
+  };
+
+  const [InterestUser , setInterestUser] =useState()
+  const fetchUserInterest = async () => {
+    const res = await dispatch(getUserInterest());
+console.log("res user" ,res )
+    if (res?.status === 200) {
+      setInterestUser(res?.data?.response)
+    }
+  }
+  useEffect(() => {
+    fetchUserInterest()
+  }, [])
+  
+  console.log("101 InterestUser" ,InterestUser)
+  // useEffect(() => {
+  //   fetchRecommendedReaserchPapers();
+  // }, [topicList, currentPage]);
+
+  const fetchTopPapers = async () => {
+ 
+    const neQuery = ["Architecture","science"];
+    console.log(topicList, "Topic List 101");
+    const query = `topics=${neQuery}&limit=${rowsPerPage}&page=${currentPage}`; 
+    if (topicList.length > 0) {
+      const result = await dispatch(getTopPapers(query));
+      console.log("result - > ", result)
+      console.log(result?.data?.response, "Result 101->");
+
+      if (result?.status === 200) {
+        setRecommendedPapers(result?.data?.response?.papers);
+        setPagination(result?.data?.response?.pagination);
+      
+      } 
     }
   };
 
   useEffect(() => {
-    fetchRecommendedReaserchPapers();
-  }, [topicList, currentPage]);
+    if (activeTab === 'conference') {
+      fetchRecommendedReaserchPapers();
+    } else if (activeTab === 'topPapers') {
+   
+      fetchTopPapers();
+    }
+  }, [activeTab, currentPage, topicList]);
 
   useEffect(() => {
     fetchprojectTopics();
@@ -115,6 +165,211 @@ const FeedDetails = () => {
 
   console.log(recommendedPapers, "recommendedPapers");
 
+  const renderPapers = (papers) => {
+ 
+  
+    return (
+      <div>
+        <div className="recommended-text">
+          {activeTab === 'topPapers' ? 'Recommended for you' : 'Conference'}
+        </div>
+
+        {papers.length > 0 &&
+          papers.map((papers, index) => {
+            return (
+              <div
+                className="feed-published-box card-d mt-18 pointer"
+                key={index}
+              >
+                {currentYear === papers.year && (
+                  <div className="fb-center">
+                    <div className="post-published">
+                      <img
+                        src={icons?.lightIcons}
+                        alt="light-icon"
+                        loading="lazy"
+                        className="h-12 w-12 object-fit-contain"
+                      />
+                      <p className="text-b">Just Published</p>
+                    </div>
+                    <div>
+                      <img
+                        src={icons?.actionIcons}
+                        alt="action-icons"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                <h4 className="post-title">
+                  {papers.title || papers?.paper_title || "null"}
+                </h4>
+                <p className="post-pra">
+                  {(papers.abstract && papers.abstract) ||
+                    (papers.paper_abstract && papers.paper_abstract) ||
+                    "null"}
+                </p>
+
+                {papers?.url && (
+                  <div className=" docs-box">
+                    <img src={icons?.docsIcons} alt="docs-icons" loading="lazy" />
+                    <p className="docs-title">
+                      <a
+                        href={papers?.url}
+                        className="docs-title hover-link"
+                        target="_blank"
+                      >
+                        {papers?.url || "-"}
+                      </a>
+                    </p>
+                  </div>
+                )}
+
+                <div className="post-details flex-wrap mt-8 gap-2">
+                  <div className="fa-center gap-1">
+                    <img
+                      src={icons?.userTwoIcons}
+                      alt="docs-icons"
+                      loading="lazy"
+                      className="h-20 w-20 rounded-circle"
+                    />
+                    <p className="docs-title">
+                      {papers?.authors && papers.authors.length > 0 ? (
+                        <>
+                          {papers.authors[0].name}
+                          {papers.authors.length > 1 &&
+                            ` +${papers.authors.length - 1}`}
+                        </>
+                      ) : papers?.author_name ? (
+                        papers.author_name
+                      ) : (
+                        "No Authors"
+                      )}
+                    </p>
+                  </div>
+                  <div className="fa-center  gap-md-2 gap-2">
+                    <div className="fa-center gap-1">
+                      <img
+                        src={icons?.calenderIcons}
+                        alt="docs-icons"
+                        loading="lazy"
+                        className="h-16 w-16  object-fit-contain"
+                      />
+                      <p className="docs-title">
+                        {papers.abstract_id
+                          ? moment(papers.created_at).format("MMM DD,YYYY")
+                          : papers.year}
+                      </p>
+                    </div>
+                    <img
+                      src={icons?.dotIcons}
+                      alt="docs-icons"
+                      loading="lazy"
+                      className="h-5 w-5"
+                    />
+                    <div className="fa-center gap-1">
+                      <img
+                        src={icons?.eyeIcons}
+                        alt="docs-icons"
+                        loading="lazy"
+                        className="h-16 w-16  object-fit-contain"
+                      />
+                      <p className="docs-title">31 Views</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="fb-center mt-24 gap-3">
+                  <Button
+                    btnText="Read Paper"
+                    btnStyle="LBA"
+                    className="h-43 ps-18 pe-18"
+                    leftIcon={icons.bookIcons}
+                    leftIconClass="h-16 w-16"
+                    onClick={() => {
+                      handleReadPaper({
+                        paperId: papers.paperId,
+                        abstractId: papers.abstract_id || papers.abstractId
+                      });
+                    }}
+                  />
+                  <div className="fa-center gap-3">
+                    <div className="d-p">
+                      <Button
+                        btnText="Reposted"
+                        btnStyle="BTA"
+                        className="h-43 ps-18 pe-18"
+                        leftIcon={icons.reloadIcons}
+                        leftIconClass="h-16 w-16"
+                        onClick={() => handleDropdownToggle(index)}
+                      />
+                      {openDropdown === index && (
+                        <div className="dropdown-menus" ref={dropdownRef}>
+                          <div
+                            className="d-text"
+                            onClick={() => {
+                              setOpenDropdown(null);
+                            }}
+                          >
+                            <h5 className="repost-text">
+                              Repost with your thoughts
+                            </h5>
+                            <p className="repost-pra">
+                              Share this post and your thoughts about it
+                            </p>
+                          </div>
+
+                          <div
+                            className="d-text mt-4"
+                            onClick={() => {
+                              setOpenDropdown(false);
+                            }}
+                          >
+                            <h5 className="repost-text">Repost</h5>
+                            <p className="repost-pra">
+                              Instantly share this post with others
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    <Button
+                      btnText="Ask Paper"
+                      btnStyle="BTB"
+                      className="h-43 ps-18 pe-18"
+                      leftIcon={icons.messageIcons}
+                      leftIconClass="h-16 w-16"
+                    />
+                    <Button
+                      btnText="Relevant"
+                      btnStyle="BTA"
+                      className="h-43 ps-18 pe-18"
+                      groupIcons={[{ icon: icons.upThumIcons }, { icon: icons.downThumIcons }]}
+                      leftIconClass="h-16 w-16"
+                    />
+                    <Button
+                      btnText="Listen"
+                      btnStyle="BTA"
+                      className="h-43 ps-18 pe-18"
+                      leftIcon={icons.videoIcons}
+                      leftIconClass="h-16 w-16"
+                    />
+
+                    <Button
+                      btnStyle="BTA"
+                      className="h-43 ps-18 pe-18"
+                      leftIcon={icons.saveIcons}
+                      leftIconClass="h-16 w-16"
+                    />
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+      </div>
+    );
+  };
+
   return (
     <div className="feed-details-container">
       {isRePost && (
@@ -158,219 +413,30 @@ const FeedDetails = () => {
         </h4>
         <Button btnText="Edit Preferences" className="h-43" btnStyle="LBA" />
       </div>
-      <div className="recommended-text">Recommended for you</div>
+      
+      
+       <div>
+        <div className="tabs" >
+        <span
+          className={`tab ${activeTab === 'topPapers' ? 'active' : ''} `}
+          onClick={() => setActiveTab('topPapers')}
+        >
+          Top Papers
+        </span>
+        <span
+          className={`tab ${activeTab === 'conference' ? 'active' : ''} `}
+          onClick={() => setActiveTab('conference')}
+        >
+          Conference
+        </span>
+      </div>
 
-      {recommendedPapers.length > 0 &&
-        recommendedPapers.map((papers, index) => {
-          return (
-            <div
-              className="feed-published-box card-d mt-18 pointer"
-              key={index}
-            >
-              {currentYear === papers.year && (
-                <div className="fb-center">
-                  <div className="post-published">
-                    <img
-                      src={icons?.lightIcons}
-                      alt="light-icon"
-                      loading="lazy"
-                      className="h-12 w-12 object-fit-contain"
-                    />
-                    <p className="text-b">Just Published</p>
-                  </div>
-                  <div>
-                    <img
-                      src={icons?.actionIcons}
-                      alt="action-icons"
-                      loading="lazy"
-                    />
-                  </div>
-                </div>
-              )}
+      {renderPapers(recommendedPapers)}
+    </div>
 
-              <h4 className="post-title">
-                {papers.title || papers?.paper_title || "null"}
-              </h4>
-              <p className="post-pra">
-                {(papers.abstract && papers.abstract) ||
-                  (papers.paper_abstract && papers.paper_abstract) ||
-                  "null"}
-              </p>
-
-              {papers?.url && (
-                <div className=" docs-box">
-                  <img src={icons?.docsIcons} alt="docs-icons" loading="lazy" />
-                  <p className="docs-title">
-                    <a
-                      href={papers?.url}
-                      className="docs-title hover-link"
-                      target="_blank"
-                    >
-                      {papers?.url || "-"}
-                      {/* Global International Journal of Innovative Research */}
-                    </a>
-                  </p>
-                </div>
-              )}
-
-              <div className="post-details flex-wrap mt-8 gap-2">
-                <div className="fa-center gap-1">
-                  <img
-                    src={icons?.userTwoIcons}
-                    alt="docs-icons"
-                    loading="lazy"
-                    className="h-20 w-20 rounded-circle"
-                  />
-                  <p className="docs-title">
-                    {papers?.authors && papers.authors.length > 0 ? (
-                      <>
-                        {papers.authors[0].name}
-                        {papers.authors.length > 1 &&
-                          ` +${papers.authors.length - 1}`}
-                      </>
-                    ) : papers?.author_name ? (
-                      papers.author_name
-                    ) : (
-                      "No Authors"
-                    )}
-                  </p>
-                </div>
-                <div className="fa-center  gap-md-2 gap-2">
-                  <div className="fa-center gap-1">
-                    <img
-                      src={icons?.calenderIcons}
-                      alt="docs-icons"
-                      loading="lazy"
-                      className="h-16 w-16  object-fit-contain"
-                    />
-                    <p className="docs-title">
-                      {papers.abstract_id
-                        ? moment(papers.created_at).format("MMM DD,YYYY")
-                        : papers.year}
-                    </p>
-                  </div>
-                  <img
-                    src={icons?.dotIcons}
-                    alt="docs-icons"
-                    loading="lazy"
-                    className="h-5 w-5"
-                  />
-                  <div className="fa-center gap-1">
-                    <img
-                      src={icons?.eyeIcons}
-                      alt="docs-icons"
-                      loading="lazy"
-                      className="h-16 w-16  object-fit-contain"
-                    />
-                    <p className="docs-title">31 Views</p>
-                  </div>
-                </div>
-              </div>
-              <div className="fb-center mt-24 gap-3">
-                <Button
-                  btnText="Read Paper"
-                  btnStyle="LBA"
-                  className="h-43 ps-18 pe-18"
-                  leftIcon={icons.bookIcons}
-                  leftIconClass="h-16 w-16"
-                  onClick={() => {
-                    handleReadPaper({
-                      paperId: papers.paperId,
-                      abstractId: papers.abstract_id || papers.abstractId
-                    });
-                  }}
-                />
-                <div className="fa-center gap-3">
-                  <div className="d-p">
-                    <Button
-                      btnText="Reposted"
-                      btnStyle="BTA"
-                      className="h-43 ps-18 pe-18"
-                      leftIcon={icons.reloadIcons}
-                      leftIconClass="h-16 w-16"
-                      onClick={() => handleDropdownToggle(index)}
-                    />
-                    {openDropdown === index && (
-                      <div className="dropdown-menus" ref={dropdownRef}>
-                        <div
-                          className="d-text"
-                          onClick={() => {
-                            setOpenDropdown(null);
-                          }}
-                        >
-                          <h5 className="repost-text">
-                            Repost with your thoughts
-                          </h5>
-                          <p className="repost-pra">
-                            Share this post and your thoughts about it
-                          </p>
-                        </div>
-
-                        <div
-                          className="d-text mt-4"
-                          onClick={() => {
-                            setOpenDropdown(false);
-                          }}
-                        >
-                          <h5 className="repost-text">Repost</h5>
-                          <p className="repost-pra">
-                            Instantly share this post with others
-                          </p>
-                        </div>
-                        {/* <div
-                        className="d-text"
-                        onClick={() => {
-                          setDropdownOpen(false);
-                        }}
-                      >
-                        <h5 className="repost-text">Delete Repost</h5>
-                      </div> */}
-                      </div>
-                    )}
-                  </div>
-                  <Button
-                    btnText="Ask Paper"
-                    btnStyle="BTB"
-                    className="h-43 ps-18 pe-18"
-                    leftIcon={icons.messageIcons}
-                    leftIconClass="h-16 w-16"
-                  />
-                  <Button
-                    btnText="Relevant"
-                    btnStyle="BTA"
-                    className="h-43 ps-18 pe-18"
-                    groupIcons={[
-                      {
-                        icon: icons.upThumIcons,
-                      },
-                      {
-                        icon: icons.downThumIcons,
-                      },
-                    ]}
-                    leftIconClass="h-16 w-16"
-                  />
-                  <Button
-                    btnText="Listen"
-                    btnStyle="BTA"
-                    className="h-43 ps-18 pe-18"
-                    leftIcon={icons.videoIcons}
-                    leftIconClass="h-16 w-16"
-                  />
-
-                  <Button
-                    btnStyle="BTA"
-                    className="h-43 ps-18 pe-18"
-                    leftIcon={icons.saveIcons}
-                    leftIconClass="h-16 w-16"
-                  />
-                </div>
-              </div>
-            </div>
-          );
-        })}
 
       <div className="mt-18">
-        <SimilarPeople />
+        <SimilarPeople InterestUser={InterestUser} />
       </div>
 
       <div className="Pagination mt-36">

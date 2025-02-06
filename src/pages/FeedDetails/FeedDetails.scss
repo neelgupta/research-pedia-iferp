@@ -70,6 +70,23 @@
     align-items: center;
   }
 
+  .tabs{
+    border-bottom: 1px solid #ddd;
+    padding: 2px;
+    .tab{
+      margin-right: 10px;
+      cursor: pointer;
+      &.active{
+        color : var(--113D);
+        border-bottom: 2px solid var(--113D);
+        padding-bottom: 3px;
+        font-size: 14px;
+        font-weight: 600;
+        
+      }
+    }
+   
+  }
   .in-text {
     font-size: 16px;
     font-weight: 600;
