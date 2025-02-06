@@ -30,11 +30,7 @@ const ProfessionalMemberProfile = () => {
       getProfessionalMemberDetails(localData.roleId)
     );
     setIsUserData(result?.data?.response);
-    setIsPersonalDetailsExist(
-      result?.data?.response?.isPersonalDetailsExistfalse
-    );
   };
-
 
   useEffect(() => {
     fetchUserDetails();
