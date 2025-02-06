@@ -3,16 +3,31 @@ import { Formik } from "formik";
 import "./AuthenticationCode.scss";
 import * as Yup from "yup";
 import { icons } from "@/utils/constants";
+import { useDispatch } from "react-redux";
+import { loginWithTwoFacorAuth } from "@/store/adminSlice/twoFASlice";
+import { storeLocalStorageData } from "@/utils/helpers";
+import { useNavigate } from "react-router-dom";
+
 const AuthenticationCode = () => {
   const initialValues = {
-    Code: "",
+    twoFactorCode: "",
   };
+  const dispatch = useDispatch();
 
   const validationSchema = Yup.object({
-    Code: Yup.string().required("Code is required"),
+    twoFactorCode: Yup.string().required("Code is required"),
   });
 
-  const handleSubmit = async (values, { setSubmitting }) => {};
+  const handleSubmit = async (values, { setSubmitting }) => {
+    const result = await dispatch(loginWithTwoFacorAuth(values));
+    console.log(result.data.response.token, "RESULT DATA");
+    if (result?.status === 200) {
+      storeLocalStorageData({
+        ...result?.data.response,
+        token: result.data.response.token,
+      });
+    }
+  };
   return (
     <>
       <div id="authenticationCode-container">
@@ -58,11 +73,11 @@ const AuthenticationCode = () => {
                 >
                   <div className="mb-24">
                     <TextInput
-                      id="Code"
-                      name="Code"
-                      value={values.Code}
+                      id="twoFactorCode"
+                      name="twoFactorCode"
+                      value={values.twoFactorCode}
                       onChange={handleChange}
-                      error={touched.Code && errors.Code}
+                      error={touched.twoFactorCode && errors.twoFactorCode}
                       placeholder="Enter code"
                       type="text"
                     />

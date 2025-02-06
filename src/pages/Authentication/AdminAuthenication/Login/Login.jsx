@@ -6,9 +6,13 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { handleLogin } from "@/store/globalSlice";
 import { icons } from "@/utils/constants";
+import { useState } from "react";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [authCode, setAuthCode] = useState(false);
+
   const initialValues = {
     email: "",
     password: "",
@@ -21,14 +25,16 @@ const Login = () => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     const res = await dispatch(handleLogin(values));
-
+    console.log(res, "res");
     if (res.status === 200) {
       if (res.data?.response?.role == "admin") {
         navigate("/admin/setting/category-topic");
       }
     }
+    setAuthCode(true);
     setSubmitting(false);
   };
+
   return (
     <div id="login-container">
       <div className="login-card">
@@ -102,6 +108,22 @@ const Login = () => {
                     </span>
                   </div>
                 </div>
+                {authCode && (
+                  <div
+                    className="two-fa-auth"
+                    onClick={() => navigate("/admin/authentication-code")}
+                  >
+                    <span className="d-flex align-items-center">
+                      Login With Authentication Code
+                    </span>
+                  </div>
+                  // <span
+                  //   className="pointer"
+                  //   onClick={() => navigate("/admin/authentication-code")}
+                  // >
+                  //   Login With Authentication Code
+                  // </span>
+                )}
 
                 <div className="login-btn mb-10">
                   <Button

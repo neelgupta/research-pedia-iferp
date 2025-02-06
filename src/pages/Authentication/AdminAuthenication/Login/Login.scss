@@ -72,6 +72,20 @@ padding-bottom: 16px;
           margin-top: 20px;
         }
       }
+
+      .two-fa-auth{
+        cursor: pointer;
+        display: block;
+        font-size: 14px;
+        color: var(--113D);
+        margin-bottom: 30px;
+        text-decoration: none;
+       
+        &:hover {
+          text-decoration: underline;
+        }
+
+      }
       .remember{
         span{
         font-size: 14px;

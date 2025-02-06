@@ -41,7 +41,7 @@ const globalSlice = createSlice({
     setIsTopics(state, action) {
       state.isTopics = action.payload;
     },
-
+    
     toggleSidebar(state, action) {
       state.sidebarOpen = action.payload;
     },
@@ -208,6 +208,7 @@ export const handelCatch = (error) => async (dispatch) => {
   }
   return returnCatch;
 };
+
 export const showSuccess = (message) => async (dispatch) => {
   dispatch(
     setErrorData({
@@ -217,6 +218,7 @@ export const showSuccess = (message) => async (dispatch) => {
     })
   );
 };
+
 export const throwError = (message) => async (dispatch) => {
   let newMessage = message;
   newMessage = message || "Something went wrong!";

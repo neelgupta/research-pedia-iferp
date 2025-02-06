@@ -9,10 +9,9 @@ import { getStudentMemberDetails } from "@/store/userSlice/userDetailSlice";
 
 const StudentProfile = () => {
   const localData = getDataFromLocalStorage();
-  const isPersonalDetailsExist = localData?.isPersonalDetailsExist;
 
   console.log(localData)
-  const [isOpenModal, setIsOpenModal] = useState(isPersonalDetailsExist === false ? true: false);
+  const [isOpenModal, setIsOpenModal] = useState(false) ;
 
   const handleClick = () => {
     setIsOpenModal(true);
@@ -30,11 +29,7 @@ const StudentProfile = () => {
   };
 
 
-  const onHide = () => {
-    if (isPersonalDetailsExist === true) {
-      setIsOpenModal(false);
-    }
-  };
+
 
   useEffect(() => {
     fetchUserDetails();
@@ -56,10 +51,9 @@ const StudentProfile = () => {
         <MyProfilePopUp
           isUserData={isUserData}
           title="Student"
-          // onHide={() => {
-          //   setIsOpenModal(false);
-          // }}
-          onHide={onHide}
+          onHide={() => {
+            setIsOpenModal(false);
+          }}
           fetchData={fetchUserDetails}
         />
       )}

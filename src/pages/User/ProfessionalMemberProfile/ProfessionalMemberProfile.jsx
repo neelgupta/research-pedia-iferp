@@ -10,12 +10,7 @@ import { getProfessionalMemberDetails } from "@/store/userSlice/userDetailSlice"
 
 const ProfessionalMemberProfile = () => {
   const [isUserData, setIsUserData] = useState({});
-
-  const [isPersonalDetailsExist, setIsPersonalDetailsExist] = useState(false);
-
-  const [isOpenModal, setIsOpenModal] = useState(
-    !isPersonalDetailsExist ? true : false
-  );
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   const localData = getDataFromLocalStorage();
   const dispatch = useDispatch();
@@ -31,11 +26,7 @@ const ProfessionalMemberProfile = () => {
       getProfessionalMemberDetails(localData.roleId)
     );
     setIsUserData(result?.data?.response);
-    setIsPersonalDetailsExist(
-      result?.data?.response?.isPersonalDetailsExistfalse
-    );
   };
-
 
   useEffect(() => {
     fetchUserDetails();

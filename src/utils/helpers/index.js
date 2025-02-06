@@ -188,11 +188,12 @@ export const generateRandomColor = () => {
 
   return "#" + randomColor.padStart(6, "0");
 };
-export const handleCopy = async (val) => {
 
+export const handleCopy = async (val) => {
   try {
     await navigator.clipboard.writeText(val);
     showSuccess("Text Copied");
+
     console.log("copied :",val)
   } catch (err) {}
 };
