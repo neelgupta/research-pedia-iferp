@@ -21,7 +21,7 @@ import * as Yup from "yup";
 const PersonalDetailsPopUp = ({
   setValCount,
   setFieldValue,
-  handleSubmit,
+  // handleSubmit,
   handleChange,
   errors,
   setValues,
