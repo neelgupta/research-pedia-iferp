@@ -20,24 +20,24 @@ import { Spinner } from "react-bootstrap";
 import MyProfilePopUp from "../Institutional/InstitutionalProfile/MyProfilePopUp";
 import RegisterProfilePopUp from "./RegisterProfilePopUp/RegisterProfilePopUp";
 
-const FeedDetails = ({popup}) => {
+const FeedDetails = ({ popup }) => {
   const dropdownRef = useRef(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(6);
   const [isRePost, setIsRePost] = useState(false);
   const [topicList, setIsTopicList] = useState([]);
   const [pagination, setPagination] = useState({});
-  const [activeTab, setActiveTab] = useState('topPapers'); 
+  const [activeTab, setActiveTab] = useState("topPapers");
   const [openDropdown, setOpenDropdown] = useState(null);
 
   const handleDropdownToggle = (index) => {
     setOpenDropdown(openDropdown === index ? null : index);
   };
 
-  const reduxData = useSelector((state)=> state.global)
+  const reduxData = useSelector((state) => state.global);
   const { loading } = reduxData || {};
 
-  console.log("loading" ,loading)
+  console.log("loading", loading);
   const rowsPerPage = 4;
   const currentYear = new Date().getFullYear();
 
@@ -45,7 +45,7 @@ const FeedDetails = ({popup}) => {
 
   const localData = getDataFromLocalStorage();
   const { name } = localData;
-1
+  1;
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -58,10 +58,10 @@ const FeedDetails = ({popup}) => {
       setIsTopicList(data);
     }
   };
-
+  const [Recommendedloader, setRecommendedloader] = useState(false);
   const fetchRecommendedReaserchPapers = async () => {
-   
-    const neQuery = ["Architecture","science"];
+    setRecommendedloader(true);
+    const neQuery = ["Architecture", "science"];
     console.log(topicList, "Topic List");
     const query = `topics=${neQuery}&limit=${rowsPerPage}&page=${currentPage}`;
     if (topicList.length > 0) {
@@ -71,52 +71,55 @@ const FeedDetails = ({popup}) => {
       if (result?.status === 200) {
         setRecommendedPapers(result?.data?.response?.papers);
         setPagination(result?.data?.response?.pagination);
-      
+        setRecommendedloader(false);
       }
-
     }
+
+    setRecommendedloader(false);
   };
 
-  const [InterestUser , setInterestUser] =useState()
+  const [InterestUser, setInterestUser] = useState();
   const fetchUserInterest = async () => {
     const res = await dispatch(getUserInterest());
-console.log("res user" ,res )
+    console.log("res user", res);
     if (res?.status === 200) {
-      setInterestUser(res?.data?.response)
+      setInterestUser(res?.data?.response);
     }
-  }
+  };
   useEffect(() => {
-    fetchUserInterest()
-  }, [])
-  
-  console.log("101 InterestUser" ,InterestUser)
+    fetchUserInterest();
+  }, []);
+
+  console.log("101 InterestUser", InterestUser);
   // useEffect(() => {
   //   fetchRecommendedReaserchPapers();
   // }, [topicList, currentPage]);
 
+  const [paperloader, setpaperloader] = useState(false);
+
   const fetchTopPapers = async () => {
- 
-    const neQuery = ["Architecture","science"];
+    setpaperloader(true);
+    const neQuery = ["Architecture", "science"];
     console.log(topicList, "Topic List 101");
-    const query = `topics=${neQuery}&limit=${rowsPerPage}&page=${currentPage}`; 
+    const query = `topics=${neQuery}&limit=${rowsPerPage}&page=${currentPage}`;
     if (topicList.length > 0) {
       const result = await dispatch(getTopPapers(query));
-      console.log("result - > ", result)
+      console.log("result - > ", result);
       console.log(result?.data?.response, "Result 101->");
 
       if (result?.status === 200) {
         setRecommendedPapers(result?.data?.response?.papers);
         setPagination(result?.data?.response?.pagination);
-      
-      } 
+        setpaperloader(false);
+      }
     }
+    setpaperloader(false);
   };
 
   useEffect(() => {
-    if (activeTab === 'conference') {
+    if (activeTab === "conference") {
       fetchRecommendedReaserchPapers();
-    } else if (activeTab === 'topPapers') {
-   
+    } else if (activeTab === "topPapers") {
       fetchTopPapers();
     }
   }, [activeTab, currentPage, topicList]);
@@ -168,12 +171,10 @@ console.log("res user" ,res )
   console.log(recommendedPapers, "recommendedPapers");
 
   const renderPapers = (papers) => {
- 
-  
     return (
       <div>
         <div className="recommended-text">
-          {activeTab === 'topPapers' ? 'Recommended for you' : 'Conference'}
+          {activeTab === "topPapers" ? "Recommended for you" : "Conference"}
         </div>
 
         {papers.length > 0 &&
@@ -215,7 +216,11 @@ console.log("res user" ,res )
 
                 {papers?.url && (
                   <div className=" docs-box">
-                    <img src={icons?.docsIcons} alt="docs-icons" loading="lazy" />
+                    <img
+                      src={icons?.docsIcons}
+                      alt="docs-icons"
+                      loading="lazy"
+                    />
                     <p className="docs-title">
                       <a
                         href={papers?.url}
@@ -291,7 +296,7 @@ console.log("res user" ,res )
                     onClick={() => {
                       handleReadPaper({
                         paperId: papers.paperId,
-                        abstractId: papers.abstract_id || papers.abstractId
+                        abstractId: papers.abstract_id || papers.abstractId,
                       });
                     }}
                   />
@@ -346,7 +351,10 @@ console.log("res user" ,res )
                       btnText="Relevant"
                       btnStyle="BTA"
                       className="h-43 ps-18 pe-18"
-                      groupIcons={[{ icon: icons.upThumIcons }, { icon: icons.downThumIcons }]}
+                      groupIcons={[
+                        { icon: icons.upThumIcons },
+                        { icon: icons.downThumIcons },
+                      ]}
                       leftIconClass="h-16 w-16"
                     />
                     <Button
@@ -418,9 +426,14 @@ console.log("res user" ,res )
         <h4 className="in-text">
           Information Systems Security, Large-scale Software +4 more
         </h4>
-        <Button btnText="Edit Preferences" className="h-43" btnStyle="LBA"  onClick={handleClick}/>
+        <Button
+          btnText="Edit Preferences"
+          className="h-43"
+          btnStyle="LBA"
+          onClick={handleClick}
+        />
       </div>
-      {console.log("popup" , popup)}
+      {console.log("popup", popup)}
       {popup && (
         <RegisterProfilePopUp
           title="Institutional"
@@ -431,26 +444,39 @@ console.log("res user" ,res )
           // fetchUserDetails={fetchUserDetails}
         />
       )}
-      
-       <div>
-        <div className="tabs" >
-        <span
-          className={`tab ${activeTab === 'topPapers' ? 'active' : ''} `}
-          onClick={() => setActiveTab('topPapers')}
-        >
-          Top Papers
-        </span>
-        <span
-          className={`tab ${activeTab === 'conference' ? 'active' : ''} `}
-          onClick={() => setActiveTab('conference')}
-        >
-          Conference
-        </span>
+
+      <div>
+        <div className="tabs">
+          <span
+            className={`tab ${activeTab === "topPapers" ? "active" : ""} `}
+            onClick={() => setActiveTab("topPapers")}
+          >
+            Top Papers
+          </span>
+          <span
+            className={`tab ${activeTab === "conference" ? "active" : ""} `}
+            onClick={() => setActiveTab("conference")}
+          >
+            Conference
+          </span>
+        </div>
+        {Recommendedloader && (
+          <>
+            <div className="loader mt-10">
+              <Spinner animation="border" variant="success" />
+            </div>
+          </>
+        )}
+        {paperloader && (
+          <>
+            <div className="loader mt-10">
+              <Spinner animation="border" variant="primary" />
+            </div>
+          </>
+        )}
+
+        {renderPapers(recommendedPapers)}
       </div>
-
-      {renderPapers(recommendedPapers)}
-    </div>
-
 
       <div className="mt-18">
         <SimilarPeople InterestUser={InterestUser} />

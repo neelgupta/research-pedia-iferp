@@ -8,18 +8,21 @@ import PopupRegistration from "@/pages/User/PopupRegistration/PopupRegistration"
 const CreateFeed = lazy(() => import("@/pages/CreateFeed"));
 const FeedDetails = lazy(() => import("@/pages/FeedDetails"));
 const FeedDetailsAuthor = lazy(() => import("@/pages/FeedDetailsAuthor"));
-const InstitutionalProfile = lazy(() => import("@/pages/Institutional/InstitutionalProfile"));
+const InstitutionalProfile = lazy(
+  () => import("@/pages/Institutional/InstitutionalProfile")
+);
 const UserLayout = lazy(() => import("@/pages/Layout/UserLayout"));
 const MyFeed = lazy(() => import("@/pages/MyFeed"));
 const StudentProfile = lazy(() => import("@/pages/Student/StudentProfile"));
-const ProfessionalMemberProfile = lazy(() => import("@/pages/User/ProfessionalMemberProfile"));
+const ProfessionalMemberProfile = lazy(
+  () => import("@/pages/User/ProfessionalMemberProfile")
+);
 
 export const UserRoutes = () => {
-
   const roleData = getDataFromLocalStorage();
   const role = roleData ? roleData.role : "institutional";
-  
-const popup =false
+
+  const popup = false;
 
   const roleBasedRoutes = {
     professional: [
@@ -53,7 +56,7 @@ const popup =false
     institutional: [
       {
         path: "/",
-        component: <InstitutionalProfile  />,
+        component: <InstitutionalProfile />,
       },
       {
         path: "/feed-details",
@@ -82,8 +85,6 @@ const popup =false
         </div>
       }
     >
-     
-
       <Routes>
         {userRoutes?.map((elm, index) => {
           return (

@@ -21,19 +21,13 @@ export const handleGoogleLogin = (payload) => async (dispatch) => {
   }
 };
 
-
-export const handleUserLogin =
-(payload) => async (dispatch) => {
+export const handleUserLogin = (payload) => async (dispatch) => {
   dispatch(setLoading());
   try {
-    const res = await api.post(
-      `/user/auth/login`,
-      payload,
-      {}
-    );
-    if (res?.status === 200) {
-      dispatch(showSuccess(res?.data?.message));
-    }
+    const res = await api.post(`/user/auth/login`, payload, {});
+    // if (res?.status === 200) {
+    //   dispatch(showSuccess(res?.data?.message));
+    // }
     dispatch(clearLoading());
     return res;
   } catch (error) {
@@ -42,15 +36,10 @@ export const handleUserLogin =
   }
 };
 
-export const handleUserSignUp =
-(payload) => async (dispatch) => {
+export const handleUserSignUp = (payload) => async (dispatch) => {
   dispatch(setLoading());
   try {
-    const res = await api.post(
-      `/user/auth/signUp`,
-      payload,
-      {}
-    );
+    const res = await api.post(`/user/auth/signUp`, payload, {});
     dispatch(clearLoading());
     return res;
   } catch (error) {
@@ -58,5 +47,3 @@ export const handleUserSignUp =
     dispatch(clearLoading());
   }
 };
-
-

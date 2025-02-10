@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { handleGetTopicByCatId } from "@/store/adminSlice/categoryAndTopics";
 import { addProject } from "@/store/userSlice/projectSlice";
 import { getDataFromLocalStorage } from "@/utils/helpers";
+import { Spinner } from "react-bootstrap";
 
 const CreateFeed = () => {
   const navigate = useNavigate();
@@ -16,23 +17,25 @@ const CreateFeed = () => {
   const { state } = location;
   const [selectList, setSelectList] = useState([]);
   const [topics, setTopics] = useState([]);
-
+  const [feedlodder, setfeedlodder] = useState(false);
   const localData = getDataFromLocalStorage();
   const userId = localData.id;
 
   const dispatch = useDispatch();
   const fetchCategory = async () => {
+    setfeedlodder(true);
     const result = await dispatch(
       handleGetTopicByCatId(state?.title?.catId || "")
     );
     setTopics(result?.data?.response);
+    // setfeedlodder(false);
   };
 
   useEffect(() => {
     fetchCategory();
   }, []);
 
-  const FeedList = topics.map((item) => ({
+  const FeedList = topics?.map((item) => ({
     id: item._id,
     title: item.topics,
   }));
@@ -83,23 +86,32 @@ const CreateFeed = () => {
         </h4>
 
         <div className="feed-main">
-          {FeedList?.map((ele, index) => {
-            const isActive = selectList?.some((elem) => elem?.id === ele?.id);
+          {feedlodder ? (
+            <div className="loader-container d-flex justify-content-center">
+              <Spinner animation="border" variant="primary" />
+            </div>
+          ) : (
+            FeedList?.map((ele, index) => {
+              const isActive = selectList?.some((elem) => elem?.id === ele?.id);
 
-            return (
-              <div
-                className={` pointer ${isActive ? "feed-active" : "feed-text-box"}`}
-                key={index}
-                onClick={() => {
-                  handleClick(ele);
-                }}
-              >
-                {ele?.title}
-                <img src={isActive ? icons?.trueWIcons : icons?.pulseBIcons} />
-              </div>
-            );
-          })}
+              return (
+                <div
+                  className={`pointer ${isActive ? "feed-active" : "feed-text-box"}`}
+                  key={index}
+                  onClick={() => {
+                    handleClick(ele);
+                  }}
+                >
+                  {ele?.title}
+                  <img
+                    src={isActive ? icons?.trueWIcons : icons?.pulseBIcons}
+                  />
+                </div>
+              );
+            })
+          )}
         </div>
+
         {/* {selectList?.length > 0 && ( */}
         <div className="d-flex justify-content-end flex-wrap gap-lg-5 gap-md-3 gap-3 t-m">
           <div>

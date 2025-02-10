@@ -16,11 +16,13 @@ import {
   updateProfessionalMemberDetails,
 } from "@/store/userSlice/userDetailSlice";
 import { getDataFromLocalStorage } from "@/utils/helpers";
+import { Formik } from "formik";
+import * as Yup from "yup";
 
 const PersonalDetailsPopUp = ({
   setValCount,
   setFieldValue,
-  handleSubmit,
+  // handleSubmit,
   handleChange,
   errors,
   setValues,
@@ -28,15 +30,19 @@ const PersonalDetailsPopUp = ({
   departmentOptions,
   UniverisityOptions,
   institutetOptions,
+  isUserData,
 }) => {
   const dispatch = useDispatch();
   const [isCountry, setIsCountry] = useState([]);
-  const [isCountryId, setIdCountryId] = useState(values?.country?.id || "");
-  const [isStateId, setIsStateId] = useState(values?.state?.id || "");
+
+  const [isCountryId, setIdCountryId] = useState(values?.country?.id);
+  console.log("con", isCountryId);
+  const [isStateId, setIsStateId] = useState(values?.state?.id);
+  console.log("sta", isStateId);
   const [isState, setIsState] = useState([]);
   const [isCity, setIsCity] = useState([]);
   const [ugCourse, setUgcourse] = useState([]);
-
+  const [phonedropdown, setphonedropdown] = useState("+91");
   const fetchCountry = async () => {
     const result = await dispatch(getCountry());
     setIsCountry(result.data.response);
@@ -85,7 +91,10 @@ const PersonalDetailsPopUp = ({
     value: city.city,
   }));
 
-  const handleNext = async () => {
+  const [loading, setloading] = useState(false);
+  const handleSubmit = async () => {
+    console.log("hello click ");
+    setloading(true);
     values.country = {
       id: isCountryId,
       countryName:
@@ -99,9 +108,10 @@ const PersonalDetailsPopUp = ({
         isState.find((state) => state.id === isStateId)?.state ||
         values?.state?.stateName,
     };
-    
 
     setValCount(1);
+
+    setloading(false);
   };
 
   useEffect(() => {
@@ -111,231 +121,393 @@ const PersonalDetailsPopUp = ({
     fetchUgCourse();
   }, [isCountryId, isStateId]);
 
+  const validationSchema = Yup.object({
+    name: Yup.string().required("Name is required"),
+
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Email is required"),
+
+    phoneNumber: Yup.string().required("Phone number is required"),
+
+    dateOfbirth: Yup.date().required("Date of birth is required"),
+
+    gender: Yup.string().required("Gender is required"),
+
+    country: Yup.object({
+      countryName: Yup.string().required("Country is required"),
+    }).required(),
+
+    state: Yup.object({
+      stateName: Yup.string().required("State is required"),
+    }).required(),
+
+    personalDetails: Yup.object({
+      city: Yup.string().required("City is required"),
+      bacheloerDegreeOrUgDetails: Yup.object({
+        course: Yup.string().required("Course is required"),
+        department: Yup.string().required("Department is required"),
+        university: Yup.string().required("University is required"),
+        // institution: Yup.string().required("Institution is required"),
+        yearOfCompletion: Yup.date()
+          .required("Year of completion is required")
+          .max(new Date(), "Year of completion cannot be in the future")
+          .nullable(),
+      }).required(),
+
+      currentProffessionDetails: Yup.object({
+        insOrOrganizationName: Yup.string().required(
+          "Institution/Organization name is required"
+        ),
+        department: Yup.string().required("Department is required"),
+      }).required(),
+    }).required(),
+
+    profilePicture: Yup.mixed().required("Profile picture is required"),
+    // .test("fileType", "Invalid file format", (value) => {
+    //   return (
+    //     value && ["image/jpeg", "image/png", "image/jpg"].includes(value.type)
+    //   );
+    // }),
+  });
+
+  const initialValues = {
+    name: "",
+    email: "",
+    country: {
+      id: "",
+      countryName: "",
+    },
+    dateOfbirth: "",
+    gender: "",
+    memberShipid: "",
+    phoneNumber: "",
+    profilePicture: "",
+    state: {
+      id: "",
+      stateName: "",
+    },
+    personalDetails: {
+      bacheloerDegreeOrUgDetails: {
+        course: "",
+        department: "",
+        institution: "",
+        university: "",
+        yearOfCompletion: "",
+      },
+      currentProffessionDetails: {
+        department: "",
+        insOrOrganizationName: "",
+      },
+      city: "",
+    },
+    researchDetails: {
+      researchIntrest: {
+        areaOfIntrest: "",
+        comments: "",
+      },
+    },
+  };
+
   return (
-    <div className="personal-details-container">
-      <div className="row row-gap-3">
-        <div className="col-md-6">
-          <TextInput
-            className="h-45"
-            placeholder="Enter your Name"
-            value={values.name}
-            disabled
-          />
-        </div>
-        <div className="col-md-6">
-          <TextInput
-            className="h-45"
-            placeholder="Enter your Email"
-            value={values.email}
-            disabled
-          />
-        </div>
-        <div className="col-md-6">
-          <TextInputwithDropdown
-            placeholder="Phone Number"
-            value={values.phoneNumber}
-            dropdownOptions={dialCode}
-            className="h-45"
-            id="phoneNumber"
-            disabled
-          />
-        </div>
-        <div className="col-md-6">
-          <DatePicker
-            id="dateOfbirth"
-            name="dateOfbirth"
-            value={values.dateOfbirth}
-            selected={null}
-            onChange={handleChange}
-            className="h-45"
-            icon
-            placeholder="Date of birth"
-          />
-        </div>
-        <div className="col-md-6">
-          <Dropdown
-            id="gender"
-            placeholder="Genders"
-            optionLabel="label"
-            optionKey="value"
-            options={[
-              { label: "Male", value: "male" },
-              { label: "Female", value: "female" },
-              { label: "Other", value: "other" },
-            ]}
-            onChange={handleChange}
-            value={values.gender}
-          />
-        </div>
-        <div className="col-md-6">
-          <Dropdown
-            id="country.countryName"
-            optionLabel="label"
-            optionKey="value"
-            placeholder="Country"
-            options={CountryData}
-            onChange={(e) => {
-              handleChange(e), setIdCountryId(e.target.data.id);
-            }}
-            value={values?.country?.countryName}
-          />
-        </div>
-        <div className="col-md-6">
-          <Dropdown
-            id="state.stateName"
-            optionLabel="label"
-            optionKey="value"
-            placeholder="State"
-            options={StateData}
-            onChange={(e) => {
-              handleChange(e), setIsStateId(e.target.data.id);
-            }}
-            value={values?.state?.stateName}
-          />
-        </div>
-        <div className="col-md-6">
-          <Dropdown
-            id="personalDetails.city"
-            optionLabel="label"
-            optionKey="value"
-            placeholder="City"
-            options={CityData}
-            onChange={(e) => {
-              handleChange(e);
-            }}
-            value={values?.personalDetails?.city}
-          />
-        </div>
-        <div className="col-12">
-          <FileUpload
-            onChange={(file) => setFieldValue(`profilePicture`, file)}
-            id="profile-image"
-            fileType="image"
-            acceptType={["png", "jpg", "jpeg"]}
-            label="Upload Profile Image"
-            isRequired={true}
-            placeholder="Choose a file"
-            value={values.profilePicture}
-          />
-          {values.profilePicture && (
-            <div className="preview my-14">
-              <h6>Preview</h6>
-              <img
-                src={values.profilePicture}
-                alt="Profile Preview"
-                style={{
-                  width: "150px",
-                  height: "150px",
-                  objectFit: "cover",
-                }}
-              />
+    <Formik
+      enableReinitialize
+      initialValues={isUserData ? isUserData : initialValues}
+      // validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+    >
+      {(props) => {
+        const {
+          values,
+          errors,
+          handleChange,
+          setFieldValue,
+          handleSubmit,
+          setValues,
+        } = props;
+        console.log("error", errors);
+        return (
+          <div className="personal-details-container">
+            <div className="row row-gap-3">
+              <div className="col-md-6">
+                <TextInput
+                  className="h-45"
+                  placeholder="Enter your Name"
+                  value={values.name}
+                  disabled
+                  error={errors.name}
+                />
+              </div>
+              <div className="col-md-6">
+                <TextInput
+                  className="h-45"
+                  placeholder="Enter your Email"
+                  value={values.email}
+                  disabled
+                  error={errors.email}
+                />
+              </div>
+              <div className="col-md-6">
+                <TextInputwithDropdown
+                  placeholder="Phone Number"
+                  value={values.phoneNumber}
+                  // dropdownOptions={dialCode}
+                  className="h-45"
+                  id="phoneNumber"
+                  disabled
+                  error={errors.phoneNumber}
+                  onDropdownChange={(selected) => setphonedropdown(selected)}
+                  dropdownOptions={dialCode.map((item) => ({
+                    value: "+91" || item.dial_code,
+                    label: ` ${item.dial_code}`,
+                  }))}
+                />
+              </div>
+              <div className="col-md-6">
+                <DatePicker
+                  id="dateOfbirth"
+                  name="dateOfbirth"
+                  value={values.dateOfbirth}
+                  selected={null}
+                  onChange={handleChange}
+                  className="h-45"
+                  icon
+                  placeholder="Date of birth"
+                  error={errors.dateOfbirth}
+                />
+              </div>
+              <div className="col-md-6">
+                <Dropdown
+                  id="gender"
+                  placeholder="Genders"
+                  optionLabel="label"
+                  optionKey="value"
+                  options={[
+                    { label: "Male", value: "male" },
+                    { label: "Female", value: "female" },
+                    { label: "Other", value: "other" },
+                  ]}
+                  onChange={handleChange}
+                  value={values.gender}
+                  error={errors.gender}
+                />
+              </div>
+              <div className="col-md-6">
+                <Dropdown
+                  id="country.countryName"
+                  optionLabel="label"
+                  optionKey="value"
+                  placeholder="Country"
+                  options={CountryData}
+                  onChange={(e) => {
+                    handleChange(e), setIdCountryId(e.target.data.id);
+                  }}
+                  value={values?.country?.countryName}
+                  error={errors.country?.countryName}
+                />
+              </div>
+              <div className="col-md-6">
+                <Dropdown
+                  id="state.stateName"
+                  optionLabel="label"
+                  optionKey="value"
+                  placeholder="State"
+                  options={StateData}
+                  onChange={(e) => {
+                    handleChange(e), setIsStateId(e.target.data.id);
+                  }}
+                  value={values?.state?.stateName}
+                  error={errors.state?.stateName}
+                />
+              </div>
+              <div className="col-md-6">
+                <Dropdown
+                  id="personalDetails.city"
+                  optionLabel="label"
+                  optionKey="value"
+                  placeholder="City"
+                  options={CityData}
+                  onChange={(e) => {
+                    handleChange(e);
+                  }}
+                  value={values?.personalDetails?.city}
+                  error={errors.personalDetails?.city}
+                />
+              </div>
+              <div className="col-12">
+                <FileUpload
+                  onChange={(file) => setFieldValue(`profilePicture`, file)}
+                  id="profile-image"
+                  fileType="image"
+                  acceptType={["png", "jpg", "jpeg"]}
+                  label="Upload Profile Image"
+                  isRequired={true}
+                  placeholder="Choose a file"
+                  value={values.profilePicture}
+                />
+                {values.profilePicture && (
+                  <div className="preview my-14">
+                    <h6>Preview</h6>
+                    <img
+                      src={values.profilePicture}
+                      alt="Profile Preview"
+                      style={{
+                        width: "150px",
+                        height: "150px",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
+              <div className="col-12">
+                <h6 className="degree-details">Bachelor Degree/UG Details</h6>
+              </div>
+              <div className="col-md-6">
+                <Dropdown
+                  id="personalDetails.bacheloerDegreeOrUgDetails.course"
+                  value={
+                    values?.personalDetails?.bacheloerDegreeOrUgDetails?.course
+                  }
+                  optionLabel="label"
+                  optionKey="value"
+                  placeholder="Course"
+                  onChange={(e) => {
+                    handleChange(e);
+                  }}
+                  options={ugCourseOptions}
+                  error={
+                    errors.personalDetails?.bacheloerDegreeOrUgDetails?.course
+                  }
+                />
+              </div>
+              <div className="col-md-6">
+                <Dropdown
+                  placeholder="Department"
+                  id="personalDetails.bacheloerDegreeOrUgDetails.department"
+                  value={
+                    values?.personalDetails?.bacheloerDegreeOrUgDetails
+                      ?.department
+                  }
+                  optionLabel="label"
+                  optionKey="value"
+                  onChange={(e) => {
+                    handleChange(e);
+                  }}
+                  options={departmentOptions || []}
+                  error={
+                    errors.personalDetails?.bacheloerDegreeOrUgDetails
+                      ?.department
+                  }
+                />
+              </div>
+              <div className="col-md-6">
+                <Dropdown
+                  id="personalDetails.bacheloerDegreeOrUgDetails.university"
+                  optionLabel="label"
+                  optionKey="value"
+                  options={UniverisityOptions || []}
+                  placeholder="University"
+                  onChange={handleChange}
+                  value={
+                    values?.personalDetails?.bacheloerDegreeOrUgDetails
+                      ?.university
+                  }
+                  error={
+                    errors.personalDetails?.bacheloerDegreeOrUgDetails
+                      ?.university
+                  }
+                />
+              </div>
+              <div className="col-md-6">
+                <Dropdown
+                  id="personalDetails.bacheloerDegreeOrUgDetails.institution"
+                  value={
+                    values?.personalDetails?.bacheloerDegreeOrUgDetails
+                      ?.institution
+                  }
+                  placeholder="Institution"
+                  options={institutetOptions || []}
+                  onChange={handleChange}
+                  optionLabel="label"
+                  optionKey="value"
+                  error={
+                    errors.personalDetails?.bacheloerDegreeOrUgDetails
+                      ?.institution
+                  }
+                />
+              </div>
+              <div className="col-md-6">
+                <DatePicker
+                  className="h-45"
+                  icon
+                  placeholder="Year of completion"
+                  id="personalDetails.bacheloerDegreeOrUgDetails.yearOfCompletion"
+                  value={
+                    values?.personalDetails?.bacheloerDegreeOrUgDetails
+                      ?.yearOfCompletion
+                  }
+                  selected={null}
+                  onChange={handleChange}
+                  error={
+                    errors.personalDetails?.bacheloerDegreeOrUgDetails
+                      ?.yearOfCompletion
+                  }
+                />
+              </div>
+              <div className="col-12">
+                <h6 className="degree-details">
+                  Current Profession Details (Note: This information will be
+                  Referred for Your Certification Purpose)
+                </h6>
+              </div>
+              <div className="col-md-6">
+                <TextInput
+                  className="h-45"
+                  placeholder="Institution/Organization name"
+                  id="personalDetails.currentProffessionDetails.insOrOrganizationName"
+                  value={
+                    values?.personalDetails?.currentProffessionDetails
+                      ?.insOrOrganizationName
+                  }
+                  onChange={handleChange}
+                  error={
+                    errors.personalDetails?.currentProffessionDetails
+                      ?.insOrOrganizationName
+                  }
+                />
+              </div>
+              <div className="col-md-6">
+                <TextInput
+                  id="personalDetails.currentProffessionDetails.department"
+                  value={
+                    values?.personalDetails?.currentProffessionDetails
+                      ?.department
+                  }
+                  className="h-45"
+                  placeholder="Department"
+                  onChange={handleChange}
+                  error={
+                    errors.personalDetails?.currentProffessionDetails
+                      ?.department
+                  }
+                />
+              </div>
+              <div className="col-12">
+                <div className="d-flex justify-content-end mt-10">
+                  <Button
+                    btnText="Continue"
+                    className="h-49 w-114"
+                    onClick={handleSubmit}
+                    loading={loading}
+                  />
+                </div>
+              </div>
             </div>
-          )}
-        </div>
-        <div className="col-12">
-          <h6 className="degree-details">Bachelor Degree/UG Details</h6>
-        </div>
-        <div className="col-md-6">
-          <Dropdown
-            id="personalDetails.bacheloerDegreeOrUgDetails.course"
-            value={values?.personalDetails?.bacheloerDegreeOrUgDetails.course}
-            optionLabel="label"
-            optionKey="value"
-            placeholder="Course"
-            onChange={(e) => {
-              handleChange(e);
-            }}
-            options={ugCourseOptions}
-          />
-        </div>
-        <div className="col-md-6">
-          <Dropdown
-            placeholder="Department"
-            id="personalDetails.bacheloerDegreeOrUgDetails.department"
-            value={values?.personalDetails?.bacheloerDegreeOrUgDetails.department}
-            optionLabel="label"
-            optionKey="value"
-            onChange={(e) => {
-              handleChange(e);
-            }}
-            options={departmentOptions || []}
-          />
-        </div>
-        <div className="col-md-6">
-          <Dropdown
-            id="personalDetails.bacheloerDegreeOrUgDetails.university"
-            optionLabel="label"
-            optionKey="value"
-            options={UniverisityOptions || []}
-            placeholder="University"
-            onChange={handleChange}
-            value={values?.personalDetails?.bacheloerDegreeOrUgDetails.university}
-          />
-        </div>
-        <div className="col-md-6">
-          <Dropdown
-            id="personalDetails.bacheloerDegreeOrUgDetails.institution"
-            value={
-              values?.personalDetails?.bacheloerDegreeOrUgDetails.institution
-            }
-            placeholder="Institution"
-            options={institutetOptions || []}
-            onChange={handleChange}
-            optionLabel="label"
-            optionKey="value"
-          />
-        </div>
-        <div className="col-md-6">
-          <DatePicker
-            className="h-45"
-            icon
-            placeholder="Year of completion"
-            id="personalDetails.bacheloerDegreeOrUgDetails.yearOfCompletion"
-            value={
-              values?.personalDetails?.bacheloerDegreeOrUgDetails.yearOfCompletion
-            }
-            selected={null}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="col-12">
-          <h6 className="degree-details">
-            Current Profession Details (Note: This information will be Referred
-            for Your Certification Purpose)
-          </h6>
-        </div>
-        <div className="col-md-6">
-          <TextInput
-            className="h-45"
-            placeholder="Institution/Organization name"
-            id="personalDetails.currentProffessionDetails.insOrOrganizationName"
-            value={
-              values?.personalDetails?.currentProffessionDetails
-                .insOrOrganizationName
-            }
-            onChange={handleChange}
-          />
-        </div>
-        <div className="col-md-6">
-          <TextInput
-            id="personalDetails.currentProffessionDetails.department"
-            value={values?.personalDetails?.currentProffessionDetails.department}
-            className="h-45"
-            placeholder="Department"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="col-12">
-          <div className="d-flex justify-content-end mt-10">
-            <Button
-              btnText="Continue"
-              className="h-49 w-114"
-              onClick={handleNext}
-            />
           </div>
-        </div>
-      </div>
-    </div>
+        );
+      }}
+    </Formik>
   );
 };
 

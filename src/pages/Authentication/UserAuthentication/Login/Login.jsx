@@ -15,10 +15,11 @@ import {
 } from "@/store/userSlice/authSlice";
 import { storeLocalStorageData } from "@/utils/helpers";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+import { useState } from "react";
 const UserLogin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const [loading, setlodding] = useState(false);
   const initialValues = {
     email: "",
     password: "",
@@ -30,13 +31,18 @@ const UserLogin = () => {
   });
 
   const handleSubmit = async (values) => {
+    setlodding(true);
     const result = await dispatch(handleUserLogin(values));
     if (result?.status === 200) {
       storeLocalStorageData({
         ...result?.data.response,
         token: result.data.response.token,
       });
+
+      setlodding(false);
+      window.location.reload();
     }
+    setlodding(false);
   };
 
   const handleGoogleLoginSuccess = async (response) => {
@@ -147,6 +153,7 @@ const UserLogin = () => {
                               className=" h-45  br-12 text-18-500"
                               onClick={handleSubmit}
                               disabled={isSubmitting}
+                              loading={loading}
                             />
                           </div>
                           <div className="mt-18 nav-sigup">

@@ -1,6 +1,6 @@
 import { Button, PasswordInput } from "@/components";
 import { Formik } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import LeftsideContainer from "../LeftsideContainer";
 import "./ResetPassword.scss";
 import * as Yup from "yup";
@@ -11,6 +11,7 @@ const UserResetPassword = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
+  const [loading, setlodding] = useState(false);
   const initialValues = {
     password: "",
     ConfirmPassword: "",
@@ -25,6 +26,7 @@ const UserResetPassword = () => {
   });
 
   const handleSubmit = async (values) => {
+    setlodding(true);
     const resetPassword = {
       email: location.state.email,
       password: values.password,
@@ -33,7 +35,9 @@ const UserResetPassword = () => {
 
     if (result.status === 200) {
       navigate("/login");
+      setlodding(false);
     }
+    setlodding(false);
   };
 
   return (
@@ -110,6 +114,7 @@ const UserResetPassword = () => {
                             className=" h-45  br-12 text-18-500"
                             onClick={handleSubmit}
                             disabled={isSubmitting}
+                            loading={loading}
                           />
                         </div>
                         <div className="mt-18 nav-login">

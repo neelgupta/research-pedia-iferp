@@ -6,8 +6,8 @@ import EducationDetailsPopUp from "./EducationDetailsPopUp";
 import SelectPlan from "./SelectPlan";
 import { Formik } from "formik";
 import { Modal } from "@/components";
-
-const MyProfilePopUp = ({ onHide, title, isUserData,fetchUserDetails }) => {
+import * as Yup from "yup";
+const MyProfilePopUp = ({ onHide, title, isUserData, fetchUserDetails }) => {
   const [type, setType] = useState("");
   const [valCount, setValCount] = useState(0);
 
@@ -81,8 +81,105 @@ const MyProfilePopUp = ({ onHide, title, isUserData,fetchUserDetails }) => {
       departmentOfOrganization: "",
     },
   };
-  
-  const handelSave = () => {};
+
+  const validationSchema = Yup.object({
+    name: Yup.string()
+      .required("Name is required")
+      .min(2, "Name must be at least 2 characters")
+      .max(50, "Name must be less than 50 characters"),
+
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Email is required"),
+
+    alternateEmail: Yup.string().email("Invalid email address").notRequired(),
+
+    phoneNumber: Yup.string()
+      .required("Phone number is required")
+      .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
+
+    alternatePhoneNumber: Yup.string()
+      .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits")
+      .notRequired(),
+
+    dateOfbirth: Yup.date()
+      .required("Date of birth is required")
+      .max(new Date(), "Date of birth cannot be in the future"),
+
+    gender: Yup.string()
+      .oneOf(["male", "female", "other"], "Invalid gender")
+      .required("Gender is required"),
+
+    country: Yup.object({
+      id: Yup.string().required("Country is required"),
+      countryName: Yup.string().required("Country name is required"),
+    }),
+
+    state: Yup.object({
+      id: Yup.string().required("State is required"),
+      stateName: Yup.string().required("State name is required"),
+    }),
+
+    city: Yup.string().required("City is required"),
+
+    profilePicture: Yup.string().notRequired(),
+
+    institutionDetails: Yup.object({
+      instituion: Yup.string()
+        .required("Institution name is required")
+        .min(2, "Institution name must be at least 2 characters"),
+
+      institutionEmail: Yup.string()
+        .email("Invalid email address")
+        .required("Institution email is required"),
+
+      institutionContactNumber: Yup.string()
+        .matches(
+          /^[0-9]{10}$/,
+          "Institution contact number must be exactly 10 digits"
+        )
+        .required("Institution contact number is required"),
+
+      noOfPremiumStudent: Yup.number()
+        .required("Number of premium students is required")
+        .positive("Number must be positive")
+        .integer("Number must be an integer"),
+
+      noOfPremiumProfessional: Yup.number()
+        .required("Number of premium professionals is required")
+        .positive("Number must be positive")
+        .integer("Number must be an integer"),
+
+      strengthOfpremiumUGStudents: Yup.number()
+        .required("Strength of premium UG students is required")
+        .positive("Number must be positive")
+        .integer("Number must be an integer"),
+
+      strengthOfpremiumPGStudents: Yup.number()
+        .required("Strength of premium PG students is required")
+        .positive("Number must be positive")
+        .integer("Number must be an integer"),
+
+      strengthOfpremiumResearchScholar: Yup.number()
+        .required("Strength of premium research scholars is required")
+        .positive("Number must be positive")
+        .integer("Number must be an integer"),
+
+      strengthOfinstitute: Yup.number()
+        .required("Strength of the institution is required")
+        .positive("Number must be positive")
+        .integer("Number must be an integer"),
+
+      departmentOfOrganization: Yup.string()
+        .required("Department of organization is required")
+        .min(2, "Department name must be at least 2 characters")
+        .max(100, "Department name must be less than 100 characters"),
+    }),
+  });
+
+  const handelSave = (value) => {
+    console.log("values", value);
+  };
   return (
     <Modal onHide={onHide} size="xl" isClose={false}>
       <div className="profile-modal-container">

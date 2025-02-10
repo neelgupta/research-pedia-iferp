@@ -11,11 +11,11 @@ import {
   handleVerifyCode,
 } from "@/store/userSlice/userDetailSlice";
 
-
 const EmailVerification = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isEmail, setIsEmail] = useState();
+  const [loading, setlodding] = useState(false);
   const initialValues = {
     email: "",
     otp: "",
@@ -33,11 +33,13 @@ const EmailVerification = () => {
   });
 
   const handleSubmit = async (values) => {
+    setlodding(true);
     if (!isEmail) {
       const email = values.email;
       const result = await dispatch(handleForgetPassword({ email }));
       if (result?.status === 200) {
         setIsEmail(true);
+        setlodding(false);
       }
     } else {
       const verifyUser = {
@@ -183,6 +185,7 @@ const EmailVerification = () => {
                               className="h-45 br-12 text-18-500"
                               onClick={handleSubmit}
                               // disabled={isSubmitting}
+                              loading={loading}
                             />
                           </div>
 

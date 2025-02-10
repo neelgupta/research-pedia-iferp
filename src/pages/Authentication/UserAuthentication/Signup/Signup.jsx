@@ -27,7 +27,7 @@ const validationSchema = Yup.object({
 const UserSignup = () => {
   const [isPrivacyChecked, setIsPrivacyChecked] = useState(false);
   const [isOffersChecked, setIsOffersChecked] = useState(false);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const handlePrivacyChange = (e) => {
     setIsPrivacyChecked(e.target.checked);
@@ -40,7 +40,7 @@ const UserSignup = () => {
   const isFormValid = isPrivacyChecked && isOffersChecked;
   const [namedropdown, setnamedropdown] = useState("Dr.");
   const [phonedropdown, setphonedropdown] = useState("+91");
-  
+  const [loading, setlodding] = useState(false);
   const initialValues = {
     email: "",
     password: "",
@@ -49,7 +49,7 @@ const UserSignup = () => {
     name: "",
   };
 
-  const handleSubmit = async(values) => {
+  const handleSubmit = async (values) => {
     const Name = namedropdown + values.name;
     const Phone = values.phoneNumber;
 
@@ -60,12 +60,14 @@ const UserSignup = () => {
       role: values.role,
     };
 
-    const result = await dispatch(handleUserSignUp(finalvalue))
-
-    console.log(result)
-    if(result?.status === 200){
-      navigate("/login")
+    const result = await dispatch(handleUserSignUp(finalvalue));
+    setlodding(true);
+    console.log(result);
+    if (result?.status === 200) {
+      navigate("/login");
+      setlodding(false);
     }
+    setlodding(false);
   };
 
   return (
@@ -111,7 +113,7 @@ const UserSignup = () => {
                           }
                         }}
                       >
-                        {console.log(errors,"errors")}
+                        {console.log(errors, "errors")}
                         {/* Membership Type Dropdown */}
                         <div className="">
                           <Dropdown
@@ -171,7 +173,9 @@ const UserSignup = () => {
                             label="Name"
                             labelClass="pb-8"
                             value={values.name}
-                            onChange={(e) => setFieldValue("name", e.target.value)}
+                            onChange={(e) =>
+                              setFieldValue("name", e.target.value)
+                            }
                             placeholder="Enter name"
                             dropdownOptions={[
                               { value: "Dr.", label: "Dr." },
@@ -181,13 +185,11 @@ const UserSignup = () => {
                               { value: "Ms.", label: "Ms." },
                             ]}
                             onDropdownChange={(selected) =>
-                          
                               setnamedropdown(selected)
                             }
                             error={touched.name && errors.name}
                           />
                         </div>
-
 
                         {/* Email Field */}
                         <div className="mt-16">
@@ -281,6 +283,7 @@ const UserSignup = () => {
                             className="h-45 br-12 text-18-500"
                             onClick={handleSubmit}
                             disabled={isSubmitting || !isFormValid}
+                            loading={loading}
                           />
                         </div>
 

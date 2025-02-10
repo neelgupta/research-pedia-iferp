@@ -118,10 +118,9 @@ const PersonalDetails = ({ onClick, isUserData, role }) => {
           <div className="col-lg-6">
             <div className="detail-box-a">
               <p className="details-label">Year of completion</p>
-              <h5 className="details-name">{
-              moment(yearOfCompletion).format("YYYY")
-               || "-"}</h5>
-
+              <h5 className="details-name">
+                {moment(yearOfCompletion).format("YYYY") || "-"}
+              </h5>
             </div>
           </div>
           <div className="col-12">

@@ -13,7 +13,7 @@ import {
   getUniverisity,
 } from "@/store/userSlice/userDetailSlice";
 import { getDataFromLocalStorage } from "@/utils/helpers";
-
+import * as Yup from "yup";
 const MyProfilePopUp = ({ onHide, title, isUserData, fetchData }) => {
   const dispatch = useDispatch();
   const [type, setType] = useState("");
@@ -130,22 +130,22 @@ const MyProfilePopUp = ({ onHide, title, isUserData, fetchData }) => {
 
   const fetchInstitution = async () => {
     const result = await dispatch(getInstitution());
-    setIsInstitute(result.data.response);
+    setIsInstitute(result?.data?.response);
   };
 
-  const institutetOptions = isInstitute.map((institute) => ({
+  const institutetOptions = isInstitute?.map((institute) => ({
     id: institute._id,
     label: institute.name,
     value: institute.name,
   }));
 
-  const departmentOptions = isDepartment.map((department) => ({
+  const departmentOptions = isDepartment?.map((department) => ({
     id: department._id,
     label: department.categoryName,
     value: department.categoryName,
   }));
 
-  const UniverisityOptions = isUniversity.map((university) => ({
+  const UniverisityOptions = isUniversity?.map((university) => ({
     id: university.id,
     label: university.name,
     value: university.name,
@@ -159,6 +159,7 @@ const MyProfilePopUp = ({ onHide, title, isUserData, fetchData }) => {
 
   const handleSubmit = (values) => {
     // console.log(values, "EDIT USER PROFFESIONAL DATA");
+    console.log("values", values);
   };
 
   return (
@@ -241,6 +242,7 @@ const MyProfilePopUp = ({ onHide, title, isUserData, fetchData }) => {
                     UniverisityOptions={UniverisityOptions}
                     institutetOptions={institutetOptions}
                     fetchData={fetchData}
+                    isUserData={isUserData}
                   />
                 )}
                 {valCount === 1 && (
@@ -256,6 +258,7 @@ const MyProfilePopUp = ({ onHide, title, isUserData, fetchData }) => {
                     institutetOptions={institutetOptions}
                     fetchData={fetchData}
                     isStudent={isStudent}
+                    isUserData={isUserData}
                   />
                 )}
                 {valCount === 2 && (
