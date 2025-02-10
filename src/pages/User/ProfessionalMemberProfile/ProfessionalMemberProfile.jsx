@@ -7,6 +7,7 @@ import MyProfilePopUp from "@/components/layouts/MyProfilePopUp";
 import { getDataFromLocalStorage } from "@/utils/helpers";
 import { useDispatch } from "react-redux";
 import { getProfessionalMemberDetails } from "@/store/userSlice/userDetailSlice";
+import PopupRegistration from "../PopupRegistration/PopupRegistration";
 
 const ProfessionalMemberProfile = () => {
   const [isUserData, setIsUserData] = useState({});
@@ -34,6 +35,7 @@ const ProfessionalMemberProfile = () => {
 
   return (
     <div className="professional-profile-container">
+      <PopupRegistration/>
       <PersonalDetails
         onClick={handleClick}
         role={role}

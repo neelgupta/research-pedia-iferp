@@ -11,13 +11,13 @@ const LeftsideContainer = () => {
     const cards = [
         {
             avatar: icons.avatar,
-            text: "I am extremely satisfied with the professional editing services.",
+            text: "I  am extremely satisfied with the professional editing services.",
             name: "Dr. Margaret Moe",
             designation: "Professor, Lee University, United States",
         },
         {
             avatar: icons.avatar,
-            text: "I am extremely satisfied with the professional editing services.",
+            text: "I  am extremely satisfied with the professional editing services.",
             name: "Dr. John Smith",
             designation: "Researcher, Oxford University, UK",
         },
@@ -29,14 +29,17 @@ const LeftsideContainer = () => {
         },
     ];
 
-
+  
   return (
 
         <div className="right-side d-flex flex-column justify-content-between border">
-          
-                            <div className="img-logo">
-                                <img src={icons.iferplogo} alt="iferplogo" className="img-fluid" />
-                            </div>
+          <div className=''>
+          <div className="img-logo ">
+                                <img src={icons.iferplogo} alt="iferplogo" className="img-fluid position-relative" />
+              </div>
+             
+          </div>
+                          
                             <div className="header-part">
                                 <div className="header-text">
                                     <h1>Accelerate your publication success with us</h1>

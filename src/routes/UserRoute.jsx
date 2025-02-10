@@ -1,7 +1,8 @@
-import { Suspense, lazy } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Suspense, lazy, useEffect, useState } from "react";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { getDataFromLocalStorage } from "@/utils/helpers";
 import { Spinner } from "react-bootstrap";
+import PopupRegistration from "@/pages/User/PopupRegistration/PopupRegistration";
 
 // Lazy load components
 const CreateFeed = lazy(() => import("@/pages/CreateFeed"));
@@ -14,8 +15,11 @@ const StudentProfile = lazy(() => import("@/pages/Student/StudentProfile"));
 const ProfessionalMemberProfile = lazy(() => import("@/pages/User/ProfessionalMemberProfile"));
 
 export const UserRoutes = () => {
+
   const roleData = getDataFromLocalStorage();
   const role = roleData ? roleData.role : "institutional";
+  
+const popup =false
 
   const roleBasedRoutes = {
     professional: [
@@ -49,11 +53,11 @@ export const UserRoutes = () => {
     institutional: [
       {
         path: "/",
-        component: <InstitutionalProfile />,
+        component: <InstitutionalProfile  />,
       },
       {
         path: "/feed-details",
-        component: <FeedDetails />,
+        component: <FeedDetails popup={popup} />,
       },
       {
         path: "/feed-details-author",
@@ -65,18 +69,21 @@ export const UserRoutes = () => {
   const userRoutes = roleBasedRoutes[role] || [];
 
   return (
-    <Suspense fallback={
-      <div
-      className="d-flex justify-content-center align-items-center"
-      style={{
-        height: "100vh",
-        width: "100%", 
-      }}
+    <Suspense
+      fallback={
+        <div
+          className="d-flex justify-content-center align-items-center"
+          style={{
+            height: "100vh",
+            width: "100%",
+          }}
+        >
+          <div className="spinner-grow text-primary" role="status"></div>
+        </div>
+      }
     >
-      <div className="spinner-grow text-primary" role="status">
-      
-      </div>
-    </div>}>
+     
+
       <Routes>
         {userRoutes?.map((elm, index) => {
           return (

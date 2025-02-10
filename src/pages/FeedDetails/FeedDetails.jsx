@@ -17,8 +17,10 @@ import {
 } from "@/store/userSlice/projectSlice";
 import moment from "moment";
 import { Spinner } from "react-bootstrap";
+import MyProfilePopUp from "../Institutional/InstitutionalProfile/MyProfilePopUp";
+import RegisterProfilePopUp from "./RegisterProfilePopUp/RegisterProfilePopUp";
 
-const FeedDetails = () => {
+const FeedDetails = ({popup}) => {
   const dropdownRef = useRef(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(6);
@@ -370,6 +372,11 @@ console.log("res user" ,res )
     );
   };
 
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const handleClick = () => {
+    setIsOpenModal(true);
+  };
+
   return (
     <div className="feed-details-container">
       {isRePost && (
@@ -411,9 +418,19 @@ console.log("res user" ,res )
         <h4 className="in-text">
           Information Systems Security, Large-scale Software +4 more
         </h4>
-        <Button btnText="Edit Preferences" className="h-43" btnStyle="LBA" />
+        <Button btnText="Edit Preferences" className="h-43" btnStyle="LBA"  onClick={handleClick}/>
       </div>
-      
+      {console.log("popup" , popup)}
+      {popup && (
+        <RegisterProfilePopUp
+          title="Institutional"
+          onHide={() => {
+            setIsOpenModal(false);
+          }}
+          // isUserData={isUserData}
+          // fetchUserDetails={fetchUserDetails}
+        />
+      )}
       
        <div>
         <div className="tabs" >

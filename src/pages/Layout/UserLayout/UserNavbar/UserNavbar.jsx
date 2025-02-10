@@ -118,6 +118,9 @@ const UserNavbar = () => {
                     src={icons.downBlackIcons}
                     alt="Profile"
                     className="h-5 w-10 object-fit-contain"
+                    onClick={() => {
+                      setDropdownOpen(!dropdownOpen);
+                    }}
                   />
                 </div>
               </div>
@@ -273,14 +276,16 @@ const UserNavbar = () => {
                         alt="notification-icon"
                         className="h-22 w-22 object-fit-contain"
                       />
-                      <p className="notification-name">Mary Jane</p>
+                      <p className="notification-name">Mary Jane </p>
                     </div>
                     <div className="dropdown-item-p">
                       <div className="w-188">
+                        
                         <Button
                           leftIcon={icons?.lockIcons}
                           leftIconClass="h-16 w-16"
                           btnText="Upgrade to Premium"
+                       
                         />
                       </div>
                     </div>

@@ -171,9 +171,7 @@ const UserSignup = () => {
                             label="Name"
                             labelClass="pb-8"
                             value={values.name}
-                            onChange={(e) =>
-                              setFieldValue("name", e.target.value)
-                            }
+                            onChange={(e) => setFieldValue("name", e.target.value)}
                             placeholder="Enter name"
                             dropdownOptions={[
                               { value: "Dr.", label: "Dr." },
@@ -183,11 +181,13 @@ const UserSignup = () => {
                               { value: "Ms.", label: "Ms." },
                             ]}
                             onDropdownChange={(selected) =>
+                          
                               setnamedropdown(selected)
                             }
                             error={touched.name && errors.name}
                           />
                         </div>
+
 
                         {/* Email Field */}
                         <div className="mt-16">

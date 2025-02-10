@@ -5,6 +5,8 @@ import MyProfilePopUp from "./MyProfilePopUp";
 import { getDataFromLocalStorage } from "@/utils/helpers";
 import { useDispatch } from "react-redux";
 import { getInstitutionalMemberDetails } from "@/store/userSlice/userDetailSlice";
+import PopupRegistration from "@/pages/User/PopupRegistration/PopupRegistration";
+
 
 const InstitutionalProfile = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -29,6 +31,7 @@ const InstitutionalProfile = () => {
 
   return (
     <div className="institutional-profile-container">
+
       <ProfileDetails onClick={handleClick} isUserData={isUserData} />
 
       {isOpenModal && (
