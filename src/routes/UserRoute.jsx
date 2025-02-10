@@ -21,8 +21,11 @@ const ProfessionalMemberProfile = lazy(
 );
 
 export const UserRoutes = () => {
+
   const roleData = getDataFromLocalStorage();
   const role = roleData ? roleData.role : "institutional";
+  
+const popup =false
 
   const popup = false;
 
@@ -58,7 +61,7 @@ export const UserRoutes = () => {
     institutional: [
       {
         path: "/",
-        component: <InstitutionalProfile />,
+        component: <InstitutionalProfile  />,
       },
       {
         path: "/feed-details",
