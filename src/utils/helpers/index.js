@@ -204,3 +204,12 @@ export const handleCopy = (val) => async (dispatch) => {
     console.error("Failed to copy:", err);
   }
 };
+
+// export const handleCopy = (val) => async (dispatch) => {
+//   try {
+//     await navigator.clipboard.writeText(val);
+//     dispatch(showSuccess("Text Copied")); // Dispatch the Redux action properly
+//   } catch (err) {
+//     console.error("Failed to copy:", err);
+//   }
+// };

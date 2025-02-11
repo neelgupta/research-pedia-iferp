@@ -66,6 +66,7 @@ const PersonalDetailsPopUp = ({
     setIsCountry(result.data.response);
   };
 
+  console.log("UserData ->101 ", isUserData);
   const fetchState = async () => {
     if (isCountryId !== undefined) {
       const result = await dispatch(getState(isCountryId));
