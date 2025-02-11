@@ -10,7 +10,7 @@ import { useState } from "react";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const [loading, stloading] = useState(false);
   const [authCode, setAuthCode] = useState(false);
 
   const initialValues = {
@@ -24,13 +24,16 @@ const Login = () => {
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
+    stloading(true);
     const res = await dispatch(handleLogin(values));
     console.log(res, "res");
     if (res.status === 200) {
       if (res.data?.response?.role == "admin") {
         navigate("/admin/setting/category-topic");
       }
+      stloading(false);
     }
+    stloading(false);
     setAuthCode(true);
     setSubmitting(false);
   };
@@ -131,6 +134,7 @@ const Login = () => {
                     className="wp-100 h-45 br-12 text-18-500"
                     onClick={handleSubmit}
                     disabled={isSubmitting}
+                    loading={loading}
                   />
                 </div>
               </form>

@@ -6,11 +6,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { updateforgotpassword } from "@/store/globalSlice";
 import { useDispatch } from "react-redux";
 import { icons } from "@/utils/constants";
+import { useState } from "react";
 const ResetPassword = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { token } = useParams();
-
+  const [loading, stloading] = useState(false);
   const initialValues = {
     password: "",
     ConfirmPassword: "",
@@ -25,12 +26,15 @@ const ResetPassword = () => {
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
+    stloading(true);
     const res = await dispatch(updateforgotpassword({ ...values, token }));
 
     if (res.status === 200) {
       navigate("/admin/login");
+      stloading(false);
     }
     setSubmitting(false);
+    stloading(false);
   };
 
   return (
@@ -109,6 +113,7 @@ const ResetPassword = () => {
                       className="wp-100 h-45 br-12 text-18-500"
                       onClick={handleSubmit}
                       disabled={isSubmitting}
+                      loading={loading}
                     />
                   </div>
                 </form>

@@ -463,7 +463,7 @@ const FeedDetails = ({ popup }) => {
         {Recommendedloader && (
           <>
             <div className="loader mt-10">
-              <Spinner animation="border" variant="success" />
+              <Spinner animation="border" variant="primary" />
             </div>
           </>
         )}

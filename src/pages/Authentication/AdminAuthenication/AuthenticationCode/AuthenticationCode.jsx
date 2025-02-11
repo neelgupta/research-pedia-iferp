@@ -7,18 +7,21 @@ import { useDispatch } from "react-redux";
 import { loginWithTwoFacorAuth } from "@/store/adminSlice/twoFASlice";
 import { storeLocalStorageData } from "@/utils/helpers";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const AuthenticationCode = () => {
   const initialValues = {
     twoFactorCode: "",
   };
   const dispatch = useDispatch();
+  const [loading, stloading] = useState(false);
 
   const validationSchema = Yup.object({
     twoFactorCode: Yup.string().required("Code is required"),
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
+    stloading(true);
     const result = await dispatch(loginWithTwoFacorAuth(values));
     console.log(result.data.response.token, "RESULT DATA");
     if (result?.status === 200) {
@@ -26,7 +29,9 @@ const AuthenticationCode = () => {
         ...result?.data.response,
         token: result.data.response.token,
       });
+      stloading(false);
     }
+    stloading(false);
   };
   return (
     <>
@@ -88,6 +93,7 @@ const AuthenticationCode = () => {
                       className="wp-100 h-45  br-12 text-18-500"
                       onClick={handleSubmit}
                       disabled={isSubmitting}
+                      loading={loading}
                     />
                   </div>
                 </form>

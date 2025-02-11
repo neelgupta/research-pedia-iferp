@@ -6,11 +6,12 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { forgotpasswordsendemail } from "@/store/globalSlice";
 import { icons } from "@/utils/constants";
+import { useState } from "react";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const [loading, stloading] = useState(false);
   const initialValues = {
     email: "",
   };
@@ -20,10 +21,13 @@ const ForgotPassword = () => {
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
+    stloading(true);
     const res = await dispatch(forgotpasswordsendemail(values));
     if (res.status === 200) {
       navigate("/admin/check-mail");
+      stloading(false);
     }
+    stloading(false);
   };
 
   return (
@@ -94,6 +98,7 @@ const ForgotPassword = () => {
                       className="wp-100 h-45  br-12 text-18-500"
                       onClick={handleSubmit}
                       disabled={isSubmitting}
+                      loading={loading}
                     />
                   </div>
                 </form>

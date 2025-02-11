@@ -52,9 +52,10 @@ const EducationDetailsPopUp = ({
     value: phdCourse.name,
   }));
   const [loadingSubmit, setloadingSubmit] = useState(false);
-  const handleSubmit = async () => {
+
+  const handleSubmit = async (values) => {
     setloadingSubmit(true);
-    console.log("hello click ");
+    console.log("values 101->", values);
     delete values.role;
 
     const updateAction = isStudent
@@ -117,6 +118,7 @@ const EducationDetailsPopUp = ({
       },
     },
   };
+
   return (
     <Formik
       enableReinitialize

@@ -72,33 +72,33 @@ export const UserRoutes = () => {
   const userRoutes = roleBasedRoutes[role] || [];
 
   return (
-    <Suspense
-      fallback={
-        <div
-          className="d-flex justify-content-center align-items-center"
-          style={{
-            height: "100vh",
-            width: "100%",
-          }}
-        >
-          <div className="spinner-grow text-primary" role="status"></div>
-        </div>
-      }
-    >
-      <Routes>
-        {userRoutes?.map((elm, index) => {
-          return (
-            <Route
-              key={index}
-              path={elm.path}
-              element={<UserLayout>{elm.component}</UserLayout>}
-            />
-          );
-        })}
-        <Route path="*" element={<Navigate to="/" />} />
-        <Route path="/my-feed" element={<MyFeed />} />
-        <Route path="/create-feed" element={<CreateFeed />} />
-      </Routes>
-    </Suspense>
+    // <Suspense
+    //   fallback={
+    //     <div
+    //       className="d-flex justify-content-center align-items-center"
+    //       style={{
+    //         height: "100vh",
+    //         width: "100%",
+    //       }}
+    //     >
+    //       <div className="spinner-grow text-primary" role="status"></div>
+    //     </div>
+    //   }
+    // >
+    <Routes>
+      {userRoutes?.map((elm, index) => {
+        return (
+          <Route
+            key={index}
+            path={elm.path}
+            element={<UserLayout>{elm.component}</UserLayout>}
+          />
+        );
+      })}
+      <Route path="*" element={<Navigate to="/" />} />
+      <Route path="/my-feed" element={<MyFeed />} />
+      <Route path="/create-feed" element={<CreateFeed />} />
+    </Routes>
+    // </Suspense>
   );
 };

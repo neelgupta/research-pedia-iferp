@@ -29,7 +29,7 @@ const MyFeed = () => {
 
     const filteredTopics = data?.filter((cat) => cat.categoryId);
     setCategories(filteredTopics);
-    //setfeedlodder(false);
+    setfeedlodder(false);
   };
 
   useEffect(() => {
@@ -46,6 +46,7 @@ const MyFeed = () => {
     icon: icons?.rectangleIcons,
   }));
 
+  console.log("feedlist", feedList);
   return (
     <div className="my-feed-container">
       <UserNavbar />

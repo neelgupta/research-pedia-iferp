@@ -49,7 +49,11 @@ const SelectPlan = ({ setValCount }) => {
       <div className="plan-box">
         {planDetails?.map((ele, index) => {
           return (
-            <div key={index} className="main-card">
+            <div
+              key={index}
+              className="main-card border"
+              style={{ borderRadius: "12px" }}
+            >
               <div
                 className={` ${isSelect === ele?.id ? "popular" : "plan-card"} ${ele.isPopular ? "justify-content-start" : ""}`}
               >

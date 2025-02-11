@@ -265,15 +265,10 @@ export const getDepartmentOfOrganization = () => async (dispatch) => {
   }
 };
 
-
-
 export const getAuthorsPapers = (id) => async (dispatch) => {
   dispatch(setLoading());
   try {
-    const res = await api.get(
-      `/user/authorsPaper?authorId=${id}`,
-      {}
-    );
+    const res = await api.get(`/user/authorsPaper?authorId=${id}`, {});
     dispatch(clearLoading());
     return res;
   } catch (error) {

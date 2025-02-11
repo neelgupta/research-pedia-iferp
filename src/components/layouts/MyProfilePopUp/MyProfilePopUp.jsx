@@ -163,7 +163,7 @@ const MyProfilePopUp = ({ onHide, title, isUserData, fetchData }) => {
   };
 
   return (
-    <Modal onHide={onHide} size="xl" isClose={false}>
+    <Modal onHide={onHide} size="xl" isClose={valCount === 2} isCloseOutside>
       <div className="profile-modal-container">
         <p className="title-text">{`My Profile - ${title} Member`}</p>
 

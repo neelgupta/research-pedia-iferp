@@ -12,7 +12,7 @@ const App = () => {
 
   const localData = getDataFromLocalStorage();
 
-  const isAuth = localData.token ? true :false;
+  const isAuth = localData.token ? true : false;
 
   const role = localData ? localData.role : "user";
 

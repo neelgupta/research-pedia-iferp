@@ -48,6 +48,7 @@ const PersonalDetailsPopUp = ({
     setIsCountry(result.data.response);
   };
 
+  console.log("UserData ->101 ", isUserData);
   const fetchState = async () => {
     if (isCountryId !== undefined) {
       const result = await dispatch(getState(isCountryId));
@@ -73,11 +74,13 @@ const PersonalDetailsPopUp = ({
     value: ugCourse.name,
   }));
 
-  const CountryData = isCountry.map((country) => ({
-    id: country.id,
-    label: country?.country,
-    value: country?.country,
-  }));
+  const CountryData = isCountry.map((country) => {
+    return {
+      id: country.id,
+      label: country?.country,
+      value: country?.country,
+    };
+  });
 
   const StateData = isState.map((state) => ({
     id: state.id,
@@ -92,8 +95,8 @@ const PersonalDetailsPopUp = ({
   }));
 
   const [loading, setloading] = useState(false);
-  const handleSubmit = async () => {
-    console.log("hello click ");
+  const handleSubmit = async (values) => {
+    console.log("values form ", values);
     setloading(true);
     values.country = {
       id: isCountryId,
@@ -213,7 +216,7 @@ const PersonalDetailsPopUp = ({
     <Formik
       enableReinitialize
       initialValues={isUserData ? isUserData : initialValues}
-      // validationSchema={validationSchema}
+      validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
       {(props) => {
@@ -247,7 +250,7 @@ const PersonalDetailsPopUp = ({
                   error={errors.email}
                 />
               </div>
-              <div className="col-md-6">
+              <div className="col-lg-6">
                 <TextInputwithDropdown
                   placeholder="Phone Number"
                   value={values.phoneNumber}
@@ -263,7 +266,7 @@ const PersonalDetailsPopUp = ({
                   }))}
                 />
               </div>
-              <div className="col-md-6">
+              <div className="col-lg-6">
                 <DatePicker
                   id="dateOfbirth"
                   name="dateOfbirth"

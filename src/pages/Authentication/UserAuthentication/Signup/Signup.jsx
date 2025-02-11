@@ -40,7 +40,7 @@ const UserSignup = () => {
   const isFormValid = isPrivacyChecked && isOffersChecked;
   const [namedropdown, setnamedropdown] = useState("Dr.");
   const [phonedropdown, setphonedropdown] = useState("+91");
-  const [loading, setlodding] = useState(false);
+  const [Signloading, setlodding] = useState(false);
   const initialValues = {
     email: "",
     password: "",
@@ -50,6 +50,7 @@ const UserSignup = () => {
   };
 
   const handleSubmit = async (values) => {
+    setlodding(true);
     const Name = namedropdown + values.name;
     const Phone = values.phoneNumber;
 
@@ -61,7 +62,7 @@ const UserSignup = () => {
     };
 
     const result = await dispatch(handleUserSignUp(finalvalue));
-    setlodding(true);
+
     console.log(result);
     if (result?.status === 200) {
       navigate("/login");
@@ -221,7 +222,7 @@ const UserSignup = () => {
                             placeholder="Enter phone number"
                             dropdownOptions={dialCode.map((item) => ({
                               value: item.dial_code,
-                              label: `${item.flag} ${item.dial_code}`,
+                              label: `${item.dial_code}`,
                             }))}
                             onDropdownChange={(selected) =>
                               setphonedropdown(selected)
@@ -283,7 +284,7 @@ const UserSignup = () => {
                             className="h-45 br-12 text-18-500"
                             onClick={handleSubmit}
                             disabled={isSubmitting || !isFormValid}
-                            loading={loading}
+                            loading={Signloading}
                           />
                         </div>
 

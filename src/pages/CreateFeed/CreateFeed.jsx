@@ -28,7 +28,7 @@ const CreateFeed = () => {
       handleGetTopicByCatId(state?.title?.catId || "")
     );
     setTopics(result?.data?.response);
-    // setfeedlodder(false);
+    setfeedlodder(false);
   };
 
   useEffect(() => {

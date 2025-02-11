@@ -4,7 +4,7 @@ import "./UserLayout.scss";
 import RightSideBar from "./RightSideBar";
 import { useDispatch, useSelector } from "react-redux";
 import LeftCanvas from "./LeftCanvas";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import RightCanvas from "./RightCanvas";
 import Footer from "./Footer";
 const UserLayout = ({ children }) => {
@@ -37,7 +37,24 @@ const UserLayout = ({ children }) => {
               <UserSidebar />
               {isUserSide && <LeftCanvas />}
             </div>
-            <div className="body-block rearchPedia-scroll">{children}</div>
+            <Suspense
+              fallback={
+                <div
+                  className="d-flex justify-content-center align-items-center"
+                  style={{
+                    height: "100vh",
+                    width: "100%",
+                  }}
+                >
+                  <div
+                    className="spinner-grow text-primary"
+                    role="status"
+                  ></div>
+                </div>
+              }
+            >
+              <div className="body-block rearchPedia-scroll">{children}</div>
+            </Suspense>
 
             <div
               className={`${isRightSide && !isResponsive ? "right-sidebar-w d-flex" : "right-sidebar"}`}
