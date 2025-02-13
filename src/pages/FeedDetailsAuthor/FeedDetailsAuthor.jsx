@@ -581,7 +581,7 @@ const FeedDetailsAuthor = () => {
     <div className="feed-details-author-container">
       <div className="row">
         <div
-          className={`${isUserSide || isRightSide ? "col-12 " : "col-xl-8 col-lg-7"} border`}
+          className={`${isUserSide || isRightSide ? "col-12 " : "col-xl-8 col-lg-7"}`}
         >
           {summaryloadder ? (
             <div
@@ -792,7 +792,7 @@ const FeedDetailsAuthor = () => {
                                   key={index}
                                   className="p-12"
                                   style={{
-                                    border: "1px solid #333333",
+                                    border: "1px solid #333333",  
                                     borderRadius: "12px",
                                   }}
                                 >
@@ -1133,7 +1133,7 @@ const FeedDetailsAuthor = () => {
           )}
         </div>
         <div
-          className={`${isUserSide || isRightSide ? "col-12" : "col-xl-4 col-lg-5"} border`}
+          className={`${isUserSide || isRightSide ? "col-12" : "col-xl-4 col-lg-5"}`}
         >
           <div
             className="auth-side brave-scroll"
