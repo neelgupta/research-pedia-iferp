@@ -38,7 +38,6 @@ const InstitutionalProfile = () => {
 
   return (
     <div className="institutional-profile-container">
-
       <ProfileDetails onClick={handleClick} isUserData={isUserData} />
 
       {(isModalOpen || isOpenModal) && (

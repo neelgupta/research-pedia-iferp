@@ -298,12 +298,10 @@ const UserNavbar = () => {
                     </div>
                     <div className="dropdown-item-p">
                       <div className="w-188">
-                        
                         <Button
                           leftIcon={icons?.lockIcons}
                           leftIconClass="h-16 w-16"
                           btnText="Upgrade to Premium"
-                       
                         />
                       </div>
                     </div>
