@@ -26,7 +26,6 @@ const Login = () => {
   const handleSubmit = async (values, { setSubmitting }) => {
     stloading(true);
     const res = await dispatch(handleLogin(values));
-    console.log(res, "res");
     if (res.status === 200) {
       if (res.data?.response?.role == "admin") {
         navigate("/admin/setting/category-topic");

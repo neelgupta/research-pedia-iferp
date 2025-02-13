@@ -134,53 +134,48 @@ const PersonalDetailsPopUp = ({
             id="institutionDetails.institutionEmail"
           />
         </div>
-       
+
         <div className="col-md-6">
-        <TextInputwithDropdown
-                            isphone
-                            id="phoneno"
-                            name="phoneno"
-                        
-                            labelClass="pb-8"
-                            value={values.PersonalDetails.phoneno}
-                            onChange={(e) =>
-                              setFieldValue("phoneno", e.target.value)
-                            }
-                            placeholder="Enter phone number"
-                            dropdownOptions={dialCode.map((item) => ({
-                              value: item.dial_code,
-                              label: `${item.flag} ${item.dial_code}`,
-                            }))}
-                            onDropdownChange={(selected) =>
-                              setphonedropdown(selected)
-                            }
-                            // error={touched.phoneNumber && errors.phoneNumber}
-                          />
+          <TextInputwithDropdown
+            isphone
+            id="phoneno"
+            name="phoneno"
+            labelClass="pb-8"
+            value={values.PersonalDetails.phoneno}
+            onChange={(e) => setFieldValue("phoneno", e.target.value)}
+            placeholder="Enter phone number"
+            dropdownOptions={dialCode.map((item) => ({
+              value: item.dial_code,
+              label: `${item.flag} ${item.dial_code}`,
+            }))}
+            onDropdownChange={(selected) => setphonedropdown(selected)}
+            // error={touched.phoneNumber && errors.phoneNumber}
+          />
         </div>
         <div className="col-md-6 cmb-22">
-              <DatePicker
-                placeholder="Date of Birth*"
-                id="date_of_birth"
-                value={values.PersonalDetails.date_of_birth}
-                onChange={handleChange}
-                error={errors.date_of_birth}
-                maxDate={new Date()}
-              />
-            </div>
-          <div className="col-md-6 cmb-22">
-              <Dropdown
-                placeholder="Gender*"
-                options={[
-                  { id: "Male", label: "Male" },
-                  { id: "Female", label: "Female" },
-                ]}
-                id="gender"
-                value={values.PersonalDetails.gender}
-                onChange={handleChange}
-                error={errors.gender}
-              />
-            </div>
-       
+          <DatePicker
+            placeholder="Date of Birth*"
+            id="date_of_birth"
+            value={values.PersonalDetails.date_of_birth}
+            onChange={handleChange}
+            error={errors.date_of_birth}
+            maxDate={new Date()}
+          />
+        </div>
+        <div className="col-md-6 cmb-22">
+          <Dropdown
+            placeholder="Gender*"
+            options={[
+              { id: "Male", label: "Male" },
+              { id: "Female", label: "Female" },
+            ]}
+            id="gender"
+            value={values.PersonalDetails.gender}
+            onChange={handleChange}
+            error={errors.gender}
+          />
+        </div>
+
         <div className="col-md-6">
           <Dropdown
             placeholder="Country"
@@ -233,7 +228,6 @@ const PersonalDetailsPopUp = ({
           />
         </div>
 
-       
         <div className="col-md-12">
           <FileUpload
             placeholder="Profile photo"
@@ -261,9 +255,7 @@ const PersonalDetailsPopUp = ({
           )}
         </div>
 
-        <div>
-        Bachelor Degree/UG Details
-        </div>
+        <div>Bachelor Degree/UG Details</div>
         <div className="col-md-6">
           <Dropdown
             placeholder="Course"
@@ -321,7 +313,6 @@ const PersonalDetailsPopUp = ({
         <div className="col-md-6">
           <Dropdown
             placeholder="Institution"
-            // options={DepartmentOption}
             options={[
               { id: "Male", label: "Male" },
               { id: "Female", label: "Female" },
@@ -336,20 +327,19 @@ const PersonalDetailsPopUp = ({
           />
         </div>
         <div className="col-md-6 cmb-22">
-              <DatePicker
-                placeholder="Year of completion *"
-                id="bd_year_of_completion "
-                value={values.PersonalDetails.bd_year_of_completion}
-                onChange={handleChange}
-                error={errors.bd_year_of_completion}
-                maxDate={new Date()}
-              />
-            </div>
-
-        
-         
+          <DatePicker
+            placeholder="Year of completion *"
+            id="bd_year_of_completion "
+            value={values.PersonalDetails.bd_year_of_completion}
+            onChange={handleChange}
+            error={errors.bd_year_of_completion}
+            maxDate={new Date()}
+          />
+        </div>
+            
         <div>
-        Current Profession Details (Note: This information will be Referred for Your Certification Purpose)
+          Current Profession Details (Note: This information will be Referred
+          for Your Certification Purpose)
         </div>
 
         <div className="col-md-6">
@@ -378,7 +368,7 @@ const PersonalDetailsPopUp = ({
               btnText="Continue"
               className="h-49 w-114"
               onClick={() => {
-                handleNext
+                handleNext;
                 setValCount(1);
               }}
             />

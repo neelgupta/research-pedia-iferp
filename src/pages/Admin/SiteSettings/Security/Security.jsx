@@ -18,7 +18,6 @@ const Security = () => {
 
   const openQrcode = async () => {
     const result = await dispatch(handleGenerateCode());
-    console.log(result.data.response.authCode);
     if (result?.status === 201) {
       setOpenQr(true);
       const twoFaCode = result?.data?.response?.authCode;
@@ -34,7 +33,7 @@ const Security = () => {
         const blob = new Blob([response.data], {
           type: "text/csv",
         });
-        
+
         const url = window.URL.createObjectURL(blob);
 
         const link = document.createElement("a");
@@ -84,7 +83,7 @@ const Security = () => {
                   <div className="qr-code-container">
                     {qrText && <ReactQR value={qrText} className="ps-26" />}
                   </div>
-                  <div className="ps-26 d-flex gap-4" >
+                  <div className="ps-26 d-flex gap-4">
                     <TextInput
                       id="qrcodetext"
                       name="qrcodetext"
@@ -97,7 +96,7 @@ const Security = () => {
                     <div
                       className="fa-center gap-2 pointer"
                       onClick={() => {
-                        handleCopy(qrText);
+                        dispatch(handleCopy(qrText));
                       }}
                     >
                       <img src={icons?.copyIcons} alt="copy-icons" />

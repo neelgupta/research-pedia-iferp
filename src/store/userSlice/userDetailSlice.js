@@ -203,9 +203,9 @@ export const updateProfessionalMemberDetails =
         payload,
         {}
       );
-      if (res?.status === 200) {
-        dispatch(showSuccess(res?.data?.message));
-      }
+      // if (res?.status === 200) {
+      //   dispatch(showSuccess(res?.data?.message));
+      // }
       dispatch(clearLoading());
       return res;
     } catch (error) {
@@ -222,9 +222,7 @@ export const updateStudentMemberDetails = (id, payload) => async (dispatch) => {
       payload,
       {}
     );
-    if (res?.status === 200) {
-      dispatch(showSuccess(res?.data?.message));
-    }
+
     dispatch(clearLoading());
     return res;
   } catch (error) {
@@ -232,6 +230,27 @@ export const updateStudentMemberDetails = (id, payload) => async (dispatch) => {
     dispatch(clearLoading());
   }
 };
+
+
+export const Authdata = (id) => async (dispatch) => {
+  dispatch(setLoading());
+  try {
+    const res = await api.get(
+      `/user/authorsPaper?authorId=${id}`,
+   
+      {}
+    );
+    // if (res?.status === 200) {
+    //   dispatch(showSuccess(res?.data?.message));
+    // }
+    dispatch(clearLoading());
+    return res;
+  } catch (error) {
+    dispatch(handelCatch(error));
+    dispatch(clearLoading());
+  }
+};
+
 
 export const updateInstitutionalMemberDetails =
   (id, payload) => async (dispatch) => {

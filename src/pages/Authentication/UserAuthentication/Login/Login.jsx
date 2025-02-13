@@ -13,9 +13,15 @@ import {
   handleGoogleLogin,
   handleUserLogin,
 } from "@/store/userSlice/authSlice";
-import { storeLocalStorageData } from "@/utils/helpers";
+
+import {
+  getDataFromLocalStorage,
+  storeLocalStorageData,
+} from "@/utils/helpers";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { useState } from "react";
+import { setIsModalOpen } from "@/store/globalSlice";
+import { getProjectByTopics } from "../../../../store/userSlice/projectSlice";
 const UserLogin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -30,28 +36,54 @@ const UserLogin = () => {
     password: Yup.string().required("Password is required"),
   });
 
+  const localData = getDataFromLocalStorage();
+
+  const fetchProject = async () => {
+    const result = await dispatch(getProjectByTopics());
+
+    const isProjectAvailable = result?.data?.response?.some(
+      (item) => item._userId === localData.id
+    );
+
+    return isProjectAvailable;
+  };
+
   const handleSubmit = async (values) => {
     setlodding(true);
     const result = await dispatch(handleUserLogin(values));
+
     if (result?.status === 200) {
       storeLocalStorageData({
         ...result?.data.response,
         token: result.data.response.token,
       });
 
+      const isProjectAvailable = await fetchProject();
+
+      const isPersonalDetailExist = await dispatch(
+        setIsModalOpen(result.data.response.isPersonalDetailsCompleted)
+      );
+
+      const isPersonalDetail = isPersonalDetailExist.payload;
+
+      if (isProjectAvailable && !isPersonalDetail) {
+        navigate("/feed-details");
+      } else if (!isPersonalDetail && !isProjectAvailable) {
+        navigate("/my-feed");
+      } else {
+        navigate("/");
+      }
+
       setlodding(false);
-      window.location.reload();
     }
     setlodding(false);
   };
 
   const handleGoogleLoginSuccess = async (response) => {
-    console.log("Google Login Success", response);
     const { credential } = response;
     try {
       const result = await dispatch(handleGoogleLogin());
 
-      console.log(result, "RESULT");
       if (result?.status === 200) {
         storeLocalStorageData({
           ...result?.data.response,

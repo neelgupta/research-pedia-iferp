@@ -9,6 +9,7 @@ import {
 } from "@/store/userSlice/projectSlice";
 import moment from "moment";
 import { Spinner } from "react-bootstrap";
+import { Authdata } from "@/store/userSlice/userDetailSlice";
 
 const SecondDetails = ({
   isSide,
@@ -37,7 +38,6 @@ const SecondDetails = ({
     if (topicList.length > 0) {
       const result = await dispatch(getRecommendedPapers(query));
 
-      console.log(result?.data?.response, "Result");
 
       if (result?.status === 200) {
         setsimilarpaperloadder(false);
@@ -48,7 +48,6 @@ const SecondDetails = ({
     setsimilarpaperloadder(false);
   };
 
-  console.log(similarPapers, "similarPapers");
 
   useEffect(() => {
     fetchprojectTopics();
@@ -58,6 +57,10 @@ const SecondDetails = ({
     fetchSimilarPaprs();
   }, [topicList]);
 
+
+  useEffect(async()=>{
+    const result = await dispatch(Authdata(1490970975));
+  },[])
   // const paperAuthdetails = [
   //   {
   //     paperId: "05a77e4c321e7b025433814170b849bd6c0bd384",
@@ -351,6 +354,8 @@ const SecondDetails = ({
                 <h4 className="sub-title-text" id="similar-papers">
                   Similar Papers
                 </h4>
+            
+
                 {similarpaperloadder ? (
                   <div className="loader-container d-flex justify-content-center">
                     <Spinner animation="border" variant="primary" />
@@ -362,6 +367,7 @@ const SecondDetails = ({
                         className="feed-published-box card-d mt-18"
                         key={index}
                       >
+                        <div>
                         <div className="feed-flex">
                           <div className="col-10">
                             <div className="w-d">
@@ -438,193 +444,8 @@ const SecondDetails = ({
                             </div>
                           </div>
                         </div>
-                      </div>
-                    );
-                  })
-                ) : (
-                  <p>No similar papers found</p>
-                )}
-
-                {similarpaperloadder ? (
-                  <div className="loader-container d-flex justify-content-center">
-                    <Spinner animation="border" variant="primary" />
-                  </div>
-                ) : similarPapers && similarPapers.length > 0 ? (
-                  similarPapers.map((ele, index) => {
-                    return (
-                      <div
-                        className="feed-published-box card-d mt-18"
-                        key={index}
-                      >
-                        <div className="feed-flex">
-                          <div className="col-10">
-                            <div className="w-d">
-                              <h4 className="post-title">
-                                {ele?.title || ele?.paper_title}
-                              </h4>
-                              <p className="post-pra">
-                                Journal of Islamic Contemporary Accounting and
-                                Business | VOL. 1
-                              </p>
-                            </div>
-                          </div>
-                          <div className="col-2 d-flex justify-content-end">
-                            <div className="h-42 w-42">
-                              <Button
-                                leftIcon={icons?.activeSaveIcons}
-                                btnStyle="LB"
-                                className="h-42 w-42"
-                                leftIconClass="h-16 w-16"
-                              />
-                            </div>
-                          </div>
                         </div>
-
-                        <div className="post-details flex-wrap mt-8 gap-2">
-                          <div className="fa-center gap-1">
-                            <img
-                              src={icons?.userTwoIcons}
-                              alt="docs-icons"
-                              loading="lazy"
-                              className="h-20 w-20 rounded-circle"
-                            />
-
-                            {ele?.authors && ele.authors.length > 0 ? (
-                              <>
-                                {ele.authors[0].name}
-                                {ele.authors.length > 1 &&
-                                  ` +${ele.authors.length - 1}`}
-                              </>
-                            ) : ele?.author_name ? (
-                              ele.author_name
-                            ) : (
-                              "No Authors"
-                            )}
-                          </div>
-                          <div className="fa-center gap-md-2 gap-2">
-                            <div className="fa-center gap-1">
-                              <img
-                                src={icons?.calenderIcons}
-                                alt="docs-icons"
-                                loading="lazy"
-                                className="h-16 w-16 object-fit-contain"
-                              />
-                              <p className="docs-title">
-                                {ele.abstract_id
-                                  ? moment(ele.created_at).format("MMM DD,YYYY")
-                                  : ele.year}
-                              </p>
-                            </div>
-                            <img
-                              src={icons?.dotIcons}
-                              alt="docs-icons"
-                              loading="lazy"
-                              className="h-5 w-5"
-                            />
-                            <div className="fa-center gap-1">
-                              <img
-                                src={icons?.eyeIcons}
-                                alt="docs-icons"
-                                loading="lazy"
-                                className="h-16 w-16 object-fit-contain"
-                              />
-                              <p className="docs-title">31 Views</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })
-                ) : (
-                  <p>No similar papers found</p>
-                )}
-                {similarpaperloadder ? (
-                  <div className="loader-container d-flex justify-content-center">
-                    <Spinner animation="border" variant="primary" />
-                  </div>
-                ) : similarPapers && similarPapers.length > 0 ? (
-                  similarPapers.map((ele, index) => {
-                    return (
-                      <div
-                        className="feed-published-box card-d mt-18"
-                        key={index}
-                      >
-                        <div className="feed-flex">
-                          <div className="col-10">
-                            <div className="w-d">
-                              <h4 className="post-title">
-                                {ele?.title || ele?.paper_title}
-                              </h4>
-                              <p className="post-pra">
-                                Journal of Islamic Contemporary Accounting and
-                                Business | VOL. 1
-                              </p>
-                            </div>
-                          </div>
-                          <div className="col-2 d-flex justify-content-end">
-                            <div className="h-42 w-42">
-                              <Button
-                                leftIcon={icons?.activeSaveIcons}
-                                btnStyle="LB"
-                                className="h-42 w-42"
-                                leftIconClass="h-16 w-16"
-                              />
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="post-details flex-wrap mt-8 gap-2">
-                          <div className="fa-center gap-1">
-                            <img
-                              src={icons?.userTwoIcons}
-                              alt="docs-icons"
-                              loading="lazy"
-                              className="h-20 w-20 rounded-circle"
-                            />
-
-                            {ele?.authors && ele.authors.length > 0 ? (
-                              <>
-                                {ele.authors[0].name}
-                                {ele.authors.length > 1 &&
-                                  ` +${ele.authors.length - 1}`}
-                              </>
-                            ) : ele?.author_name ? (
-                              ele.author_name
-                            ) : (
-                              "No Authors"
-                            )}
-                          </div>
-                          <div className="fa-center gap-md-2 gap-2">
-                            <div className="fa-center gap-1">
-                              <img
-                                src={icons?.calenderIcons}
-                                alt="docs-icons"
-                                loading="lazy"
-                                className="h-16 w-16 object-fit-contain"
-                              />
-                              <p className="docs-title">
-                                {ele.abstract_id
-                                  ? moment(ele.created_at).format("MMM DD,YYYY")
-                                  : ele.year}
-                              </p>
-                            </div>
-                            <img
-                              src={icons?.dotIcons}
-                              alt="docs-icons"
-                              loading="lazy"
-                              className="h-5 w-5"
-                            />
-                            <div className="fa-center gap-1">
-                              <img
-                                src={icons?.eyeIcons}
-                                alt="docs-icons"
-                                loading="lazy"
-                                className="h-16 w-16 object-fit-contain"
-                              />
-                              <p className="docs-title">31 Views</p>
-                            </div>
-                          </div>
-                        </div>
+                       
                       </div>
                     );
                   })
@@ -744,83 +565,81 @@ const SecondDetails = ({
                     </div>
 
                     {Seconddetailsloadder ? (
-                      <div className="loader-container d-flex justify-content-center">
-                        <Spinner animation="border" variant="primary" />
-                      </div>
-                    ) : (
-                      paperAuthdetails?.map((ele, index) => {
-                        return (
-                          <div
-                            className="feed-published-box card-d mt-18"
-                            key={index}
-                          >
-                            <div>
-                              <div className="row">
-                                <div className="col-9">
-                                  <div>
-                                    <h4 className="post-title">
-                                      {ele.title || ele.paper_title}
-                                    </h4>
-                                    {ele?.journal?.name ? (
-                                      <p className="post-pra">
-                                        {ele.journal.name}
-                                      </p>
-                                    ) : null}
-                                  </div>
-                                </div>
-                                <div className="col-3">
-                                  <div className="d-flex justify-content-center">
-                                    <Button
-                                      leftIcon={icons?.activeSaveIcons}
-                                      btnStyle="LB"
-                                      className="h-42 w-42"
-                                      leftIconClass="h-16 w-16"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+  <div className="loader-container d-flex justify-content-center">
+    <Spinner animation="border" variant="primary" />
+  </div>
+) : paperAuthdetails?.length > 0 ? (
+  paperAuthdetails.map((ele, index) => {
+    return (
+      <div className="feed-published-box card-d mt-18" key={index}>
+        <div>
+          <div className="row">
+            <div className="col-9">
+              <div>
+                <h4 className="post-title">
+                  {ele.title || ele.paper_title}
+                </h4>
+                {ele?.journal?.name ? (
+                  <p className="post-pra">{ele.journal.name}</p>
+                ) : null}
+              </div>
+            </div>
+            <div className="col-3">
+              <div className="d-flex justify-content-center">
+                <Button
+                  leftIcon={icons?.activeSaveIcons}
+                  btnStyle="LB"
+                  className="h-42 w-42"
+                  leftIconClass="h-16 w-16"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
 
-                            <div className="post-details flex-wrap mt-8 gap-2">
-                              <div className="fa-center gap-md-2 gap-2">
-                                <div className="fa-center gap-1">
-                                  <img
-                                    src={icons?.calenderIcons}
-                                    alt="docs-icons"
-                                    loading="lazy"
-                                    className="h-16 w-16 object-fit-contain"
-                                  />
-                                  {ele?.year ? (
-                                    <p className="docs-title">{ele.year}</p>
-                                  ) : (
-                                    <p className="docs-title">
-                                      {moment(ele.created_at).format(
-                                        "DD MMM YYYY"
-                                      )}
-                                    </p>
-                                  )}
-                                </div>
-                                <img
-                                  src={icons?.dotIcons}
-                                  alt="docs-icons"
-                                  loading="lazy"
-                                  className="h-5 w-5"
-                                />
-                                <div className="fa-center gap-1">
-                                  <img
-                                    src={icons?.eyeIcons}
-                                    alt="docs-icons"
-                                    loading="lazy"
-                                    className="h-16 w-16 object-fit-contain"
-                                  />
-                                  <p className="docs-title">31 Views</p>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })
-                    )}
+        <div className="post-details flex-wrap mt-8 gap-2">
+          <div className="fa-center gap-md-2 gap-2">
+            <div className="fa-center gap-1">
+              <img
+                src={icons?.calenderIcons}
+                alt="docs-icons"
+                loading="lazy"
+                className="h-16 w-16 object-fit-contain"
+              />
+              {ele?.year ? (
+                <p className="docs-title">{ele.year}</p>
+              ) : (
+                <p className="docs-title">
+                  {moment(ele.created_at).format("DD MMM YYYY")}
+                </p>
+              )}
+            </div>
+            <img
+              src={icons?.dotIcons}
+              alt="docs-icons"
+              loading="lazy"
+              className="h-5 w-5"
+            />
+            <div className="fa-center gap-1">
+              <img
+                src={icons?.eyeIcons}
+                alt="docs-icons"
+                loading="lazy"
+                className="h-16 w-16 object-fit-contain"
+              />
+              <p className="docs-title">31 Views</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  })
+) : (
+  <div className="no-papers">
+    <p>Paper not found</p>
+  </div>
+)}
+
                   </div>
                 </>
               )}

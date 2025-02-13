@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getDataFromLocalStorage } from "@/utils/helpers";
 import { Formik } from "formik";
+import { registermodel } from "@/store/globalSlice";
 
 const EducationDetailsPopUp = ({
   setValCount,
@@ -55,7 +56,6 @@ const EducationDetailsPopUp = ({
 
   const handleSubmit = async (values) => {
     setloadingSubmit(true);
-    console.log("values 101->", values);
     delete values.role;
 
     const updateAction = isStudent
@@ -77,6 +77,7 @@ const EducationDetailsPopUp = ({
   const [loadingSkip, setloadingSkip] = useState(false);
 
   const handleSkip = async () => {
+// dispatch(registermodel(!reduxdata))
     setloadingSkip(true);
     delete values.role;
 
@@ -135,7 +136,6 @@ const EducationDetailsPopUp = ({
           handleSubmit,
           setValues,
         } = props;
-        console.log("error", errors);
         return (
           <div className="education-details-container">
             <div className="row row-gap-3">

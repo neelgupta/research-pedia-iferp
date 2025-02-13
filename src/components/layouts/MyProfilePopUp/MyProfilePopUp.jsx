@@ -11,20 +11,40 @@ import {
   getDepartment,
   getInstitution,
   getUniverisity,
+  updateProfessionalMemberDetails,
+  updateStudentMemberDetails,
 } from "@/store/userSlice/userDetailSlice";
 import { getDataFromLocalStorage } from "@/utils/helpers";
 import * as Yup from "yup";
-const MyProfilePopUp = ({ onHide, title, isUserData, fetchData }) => {
+const MyProfilePopUp = ({
+  onHide,
+  title,
+  isUserData,
+  fetchData,
+  onclickevent,
+  setIsOpenModal,
+}) => {
   const dispatch = useDispatch();
   const [type, setType] = useState("");
   const [valCount, setValCount] = useState(0);
   const [isDepartment, setIsDepartment] = useState([]);
   const [isUniversity, setIsUniversity] = useState([]);
   const [isInstitute, setIsInstitute] = useState([]);
+  const [isCountry, setIsCountry] = useState([]);
+  const [isCountryId, setIdCountryId] = useState(isUserData?.country?.id || "");
+
+  const [isStateId, setIsStateId] =
+    useState(isUserData?.state?.id || "");
+
+  const [isState, setIsState] = useState([]);
+  const [isCity, setIsCity] = useState([]);
+  const [ugCourse, setUgcourse] = useState([]);
+
+  const [loading, setloading] = useState(false);
+
   const localData = getDataFromLocalStorage();
 
   const isStudent = localData.role === "student";
-
   const initialValues = {
     name: "",
     email: "",
@@ -79,6 +99,49 @@ const MyProfilePopUp = ({ onHide, title, isUserData, fetchData }) => {
     },
   };
 
+  const validationSchema = Yup.object({
+    name: Yup.string().required("Name is required"),
+
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Email is required"),
+
+    phoneNumber: Yup.string().required("Phone number is required"),
+
+    dateOfbirth: Yup.date().required("Date of birth is required"),
+
+    gender: Yup.string().required("Gender is required"),
+
+    country: Yup.object({
+      countryName: Yup.string().required("Country is required"),
+    }).required(),
+
+    state: Yup.object({
+      stateName: Yup.string().required("State is required"),
+    }).required(),
+
+    personalDetails: Yup.object({
+      city: Yup.string().required("City is required"),
+      bacheloerDegreeOrUgDetails: Yup.object({
+        course: Yup.string().required("Course is required"),
+        department: Yup.string().required("Department is required"),
+        university: Yup.string().required("University is required"),
+        yearOfCompletion: Yup.date()
+          .required("Year of completion is required")
+          .max(new Date(), "Year of completion cannot be in the future")
+          .nullable(),
+      }).required(),
+
+      currentProffessionDetails: Yup.object({
+        insOrOrganizationName: Yup.string().required(
+          "Institution/Organization name is required"
+        ),
+        department: Yup.string().required("Department is required"),
+      }).required(),
+    }).required(),
+
+    profilePicture: Yup.mixed().required("Profile picture is required"),
+  });
   const subTitle = {
     0: "Crafting Your Unique Identity",
     1: "Choose Your Path to Success",
@@ -157,13 +220,50 @@ const MyProfilePopUp = ({ onHide, title, isUserData, fetchData }) => {
     fetchInstitution();
   }, []);
 
-  const handleSubmit = (values) => {
-    // console.log(values, "EDIT USER PROFFESIONAL DATA");
-    console.log("values", values);
+  const handleSubmit = async (values) => {
+    setloading(true);
+    values.country = {
+      id: isCountryId,
+      countryName:
+        isCountry.find((country) => country.id === isCountryId)?.country ||
+        values.country?.countryName,
+    };
+
+    values.state = {
+      id: isStateId,
+      stateName:
+        isState.find((state) => state.id === isStateId)?.state ||
+        values?.state?.stateName,
+    };
+
+    delete values.role;
+
+    const updateAction = isStudent
+      ? updateStudentMemberDetails(localData.roleId, values)
+      : updateProfessionalMemberDetails(localData.roleId, values);
+
+    const result = await dispatch(updateAction);
+
+    if (result?.status === 200) {
+      setValCount(1);
+      fetchData();
+      getDataFromLocalStorage();
+    }
+    setloading(false);
   };
 
+  const [isstate, setisstate] = useState(false);
+
+  useEffect(() => {
+    if (valCount === 2) {
+      setisstate(true);
+    } else {
+      setisstate(false);
+    }
+  }, [valCount]);
+
   return (
-    <Modal onHide={onHide} size="xl" isClose={valCount === 2} isCloseOutside>
+    <Modal onHide={onHide} size="xl" isClose={isstate} isCloseOutside>
       <div className="profile-modal-container">
         <p className="title-text">{`My Profile - ${title} Member`}</p>
 
@@ -215,7 +315,7 @@ const MyProfilePopUp = ({ onHide, title, isUserData, fetchData }) => {
         <Formik
           enableReinitialize
           initialValues={isUserData ? isUserData : initialValues}
-          // validationSchema={validationSchema}
+          validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
           {(props) => {
@@ -242,7 +342,21 @@ const MyProfilePopUp = ({ onHide, title, isUserData, fetchData }) => {
                     UniverisityOptions={UniverisityOptions}
                     institutetOptions={institutetOptions}
                     fetchData={fetchData}
-                    isUserData={isUserData}
+                    isStudent={isStudent}
+                    isCountry={isCountry}
+                    setIsCountry={setIsCountry}
+                    isCountryId={isCountryId}
+                    setIdCountryId={setIdCountryId}
+                    isStateId={isStateId}
+                    setIsStateId={setIsStateId}
+                    isState={isState}
+                    setIsState={setIsState}
+                    isCity={isCity}
+                    setIsCity={setIsCity}
+                    ugCourse={ugCourse}
+                    setUgcourse={setUgcourse}
+                    loading={loading}
+                    setloading={setloading}
                   />
                 )}
                 {valCount === 1 && (
@@ -269,6 +383,9 @@ const MyProfilePopUp = ({ onHide, title, isUserData, fetchData }) => {
                     handleChange={handleChange}
                     handleSubmit={handleSubmit}
                     setFieldValue={setFieldValue}
+                    onclickevent
+                    setIsOpenModal
+                    onHide={onHide}
                   />
                 )}
               </from>

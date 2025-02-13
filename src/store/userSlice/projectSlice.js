@@ -89,7 +89,6 @@ export const getRecommendedPapersById =
         }
       }
 
-      console.log(url, "URL");
 
       const res = await api.get(url, {});
 

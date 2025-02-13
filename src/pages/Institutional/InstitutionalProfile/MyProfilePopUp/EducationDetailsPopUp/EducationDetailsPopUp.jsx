@@ -9,6 +9,7 @@ import { dialCode } from "@/utils/constants";
 import { getDataFromLocalStorage } from "@/utils/helpers";
 import { useDispatch } from "react-redux";
 import { updateInstitutionalMemberDetails } from "@/store/userSlice/userDetailSlice";
+import { useState } from "react";
 
 const EducationDetailsPopUp = ({
   setValCount,
@@ -19,10 +20,11 @@ const EducationDetailsPopUp = ({
   values,
   fetchUserDetails,
 }) => {
+
   const dispatch = useDispatch();
   const localData = getDataFromLocalStorage();
   const userId = localData.roleId;
-
+ const [phonedropdown, setphonedropdown] = useState("+91");
   const handleNext = async () => {
     delete values.role;
     const result = await dispatch(
@@ -68,20 +70,28 @@ const EducationDetailsPopUp = ({
           <TextInputwithDropdown
             className="h-45"
             placeholder="Phone Number"
-            dropdownOptions={dialCode}
             onChange={handleChange}
             value={values.phoneNumber}
             id="phoneNumber"
+            dropdownOptions={dialCode.map((item) => ({
+              value: "+91" || item.dial_code,
+              label: `${item.dial_code}`,
+            }))}
+            onDropdownChange={(selected) => setphonedropdown(selected)}
           />
         </div>
         <div className="col-md-6">
           <TextInputwithDropdown
             className="h-45"
             placeholder="Alternate contact number"
-            dropdownOptions={dialCode}
             onChange={handleChange}
             value={values.alternatePhoneNumber}
             id="alternatePhoneNumber"
+            dropdownOptions={dialCode.map((item) => ({
+              value: "+91" || item.dial_code,
+              label: `${item.dial_code}`,
+            }))}
+            onDropdownChange={(selected) => setphonedropdown(selected)}
           />
         </div>
         <div className="col-12">

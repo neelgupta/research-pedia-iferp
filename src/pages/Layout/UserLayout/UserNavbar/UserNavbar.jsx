@@ -5,11 +5,15 @@ import { Container } from "react-bootstrap";
 import { icons } from "@/utils/constants";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getDataFromLocalStorage } from "@/utils/helpers";
+
 const UserNavbar = () => {
   const token = true;
   const navigate = useNavigate();
 
+  // const localData = getDataFromLocalStorage();
+
   const location = useLocation();
+
   const isMyFeed =
     location?.pathname === "/my-feed" || location?.pathname === "/create-feed";
 
@@ -62,10 +66,10 @@ const UserNavbar = () => {
   }, []);
 
   const handleLogOut = () => {
-  localStorage.removeItem("authData");  
-  window.location.reload();
+    localStorage.removeItem("authData");
+    window.location.reload();
   };
-  
+
   return (
     <>
       <div id="user-navbar">
@@ -109,7 +113,12 @@ const UserNavbar = () => {
                   </div>
                 </div>
                 <div className="ms-3">
-                  <h5 className="user-name">Mary Jane</h5>
+                  <h5 className="user-name">
+                    {/* {localData.name} */}
+                    Test
+                    
+                    </h5>
+
                   <p className="user-id">ID - 18346441</p>
                   <p className="user-plan">Plan - Professional Premium</p>
                 </div>
@@ -133,7 +142,10 @@ const UserNavbar = () => {
                       alt="notification-icon"
                       className="h-22 w-22 object-fit-contain"
                     />
-                    <p className="notification-name">Mary Jane</p>
+                    <p className="notification-name">
+                      {/* {localData.name} */}
+                      Test
+                      </p>
                   </div>
                   <div className="dropdown-item-p">
                     <div className="w-188">
@@ -253,7 +265,10 @@ const UserNavbar = () => {
                     </div>
                   </div>
                   <div className="ms-3">
-                    <h5 className="user-name">Mary Jane</h5>
+                    <h5 className="user-name">
+                      {/* {localData.name} */}
+                      Test
+                      </h5>
                     <p className="user-id">ID - 18346441</p>
                     <p className="user-plan">Plan - Professional Premium</p>
                   </div>
@@ -276,16 +291,17 @@ const UserNavbar = () => {
                         alt="notification-icon"
                         className="h-22 w-22 object-fit-contain"
                       />
-                      <p className="notification-name">Mary Jane </p>
+                      <p className="notification-name">
+                        {/* {localData.name}  */}
+                        Test
+                        </p>
                     </div>
                     <div className="dropdown-item-p">
                       <div className="w-188">
-                        
                         <Button
                           leftIcon={icons?.lockIcons}
                           leftIconClass="h-16 w-16"
                           btnText="Upgrade to Premium"
-                       
                         />
                       </div>
                     </div>

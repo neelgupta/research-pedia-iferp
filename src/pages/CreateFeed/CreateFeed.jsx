@@ -87,7 +87,7 @@ const CreateFeed = () => {
 
         <div className="feed-main">
           {feedlodder ? (
-            <div className="loader-container d-flex justify-content-center">
+            <div className="loader-container d-flex justify-content-center align-items-center">
               <Spinner animation="border" variant="primary" />
             </div>
           ) : (

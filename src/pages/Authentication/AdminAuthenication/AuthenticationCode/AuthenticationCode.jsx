@@ -23,7 +23,6 @@ const AuthenticationCode = () => {
   const handleSubmit = async (values, { setSubmitting }) => {
     stloading(true);
     const result = await dispatch(loginWithTwoFacorAuth(values));
-    console.log(result.data.response.token, "RESULT DATA");
     if (result?.status === 200) {
       storeLocalStorageData({
         ...result?.data.response,

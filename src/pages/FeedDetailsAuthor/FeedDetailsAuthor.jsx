@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getRecommendedPapersById } from "@/store/userSlice/projectSlice";
 import moment from "moment";
 import { getAuthorsPapers } from "@/store/userSlice/userDetailSlice";
+import { Spinner } from "react-bootstrap";
 
 const FeedDetailsAuthor = () => {
   const [showActive, setShowActive] = useState("Summary");
@@ -18,14 +19,15 @@ const FeedDetailsAuthor = () => {
   const [paperDetails, setPaperDetails] = useState({});
   const [showAuthors, setShowAuthors] = useState(false);
   const [showCitation, setShowCitation] = useState(false);
-
-  console.log("101", paperDetails);
+  const [AutherIddetispaper, setAutherIddetispaper] = useState("");
+  const [summaryloadder, setsummaryloadder] = useState(false);
   const location = useLocation();
   const dispatch = useDispatch();
   const topics = location?.state?.topics;
 
-  console.log(topics, "TOPICS DATA");
+
   const fetchPaper = async () => {
+    setsummaryloadder(true);
     const id = location?.state;
     const paperId = id.paperId;
     const abstractId = id.abstractId;
@@ -33,7 +35,16 @@ const FeedDetailsAuthor = () => {
     const result = await dispatch(
       getRecommendedPapersById(paperId, abstractId)
     );
+
+    setAutherIddetispaper(
+      result?.data?.response?.researchPapersWithSummary[0]?.authors[0]?.authorId
+    );
     setPaperDetails(result?.data?.response?.researchPapersWithSummary[0]);
+
+    if (result?.state === 200) {
+      setsummaryloadder(false);
+    }
+    setsummaryloadder(false);
 
     // setPaperDetails({
     //   paperId: "a815c07c04c3f4448b61a3de3bbc31e182416f6a",
@@ -466,10 +477,12 @@ const FeedDetailsAuthor = () => {
   const [paperAuthdetails, setpaperAuthdetails] = useState();
   const [Seconddetailsloadder, setSeconddetailsloadder] = useState(false);
 
+  const [showAllAuthors, setShowAllAuthors] = useState(false);
+
   const fetchauterdetais = async () => {
     setSeconddetailsloadder(true);
-
-    const res = await dispatch(getAuthorsPapers(94088));
+    // AutherIddetispaper
+    const res = await dispatch(getAuthorsPapers(49184733));
     if (res?.status === 200) {
       setpaperAuthdetails(res?.data?.response?.papers);
       setSeconddetailsloadder(false);
@@ -481,7 +494,6 @@ const FeedDetailsAuthor = () => {
     fetchauterdetais();
   }, []);
 
-  console.log(showCitation, "showCitation");
 
   const {
     // Sementic Dat
@@ -500,7 +512,6 @@ const FeedDetailsAuthor = () => {
     author_name,
   } = paperDetails || {};
 
-  console.log("paperDetails --->", paperDetails);
 
   const handleClickSummary = () => {
     setShowActive("Summary");
@@ -562,36 +573,42 @@ const FeedDetailsAuthor = () => {
     if (showMore) {
       setVisibleCount(2);
     } else {
-      setVisibleCount(authdata.data1.topics.length);
+      setVisibleCount(authdatadetails?.data1?.topics?.length);
     }
     setShowMore(!showMore);
   };
-
   return (
     <div className="feed-details-author-container">
       <div className="row">
         <div
-          className={`${isUserSide || isRightSide ? "col-12" : "col-xl-8 col-lg-7"}`}
+          className={`${isUserSide || isRightSide ? "col-12 " : "col-xl-8 col-lg-7"} border`}
         >
-          <div className="main-div">
-            <div className={`${isSide ? "left-w-o" : "left-w"}`}>
-              <Breadcrumb
-                list={[
-                  { title: "Home" },
-                  { title: "Search" },
-                  { title: "Reviewing the effectiveness..." },
-                ]}
-                className="text-16-400"
-                isGreen
-              />
-              <h1 className="title-text mt-24">
-                {title ? title : paper_title ? paper_title : "-"}
-              </h1>
-              <h1></h1>
-              <div className="mt-26">
-                <div className="row gy-3">
-                  <div className="col-12">
-                    <p
+          {summaryloadder ? (
+            <div
+              className="loader-container d-flex justify-content-center align-items-center"
+              style={{ width: "100%", height: "100%" }}
+            >
+              <Spinner animation="border" variant="primary" />
+            </div>
+          ) : (
+            <div className="main-div ">
+              <div className={`${isSide ? "left-w-o" : "left-w"}`}>
+                <Breadcrumb
+                  list={[
+                    { title: "Home" },
+                    { title: "Search" },
+                    { title: "Reviewing the effectiveness..." },
+                  ]}
+                  className="text-16-400"
+                  isGreen
+                />
+                <h1 className="title-text mt-24">
+                  {title ? title : paper_title ? paper_title : "-"}
+                </h1>
+                <div className="mt-26">
+                  <div className="row gy-3">
+                    <div className="col-12">
+                      {/* <p
                       className={`pra-text     ${isSide ? "pra-sm" : "pra-m"}`}
                     >
                       <img
@@ -601,10 +618,10 @@ const FeedDetailsAuthor = () => {
 
                       {authors
                         ? showAuthors && authors.length > 0
-                          ? authors.map((item) => (
+                          ? authors?.map((item) => (
                               <span key={item.id}>{item.name}</span>
                             ))
-                          : authors.length > 0 && (
+                          : authors?.length > 0 && (
                                 <>
                                   {authors[0].name}, {authors[1]?.name}
                                 </>
@@ -614,180 +631,190 @@ const FeedDetailsAuthor = () => {
                         : "Null"}
 
                       <div className="mt-10">
-                        {authdatadetails && authdatadetails.length > 2 && (
+                        {authdatadetails && authdatadetails?.length > 2 && (
                           <span
                             className="span-pra "
                             onClick={() => setShowAuthors(!showAuthors)}
                           >
                             {!showAuthors
-                              ? `+ Show ${authdatadetails.length - 2} more`
+                              ? `+ Show ${authdatadetails?.length - 2} more`
                               : "   Show Less"}
                           </span>
                         )}
                       </div>
-                    </p>
+                    </p> */}
+                      {/* <p className={`pra-text ${isSide ? "pra-sm" : "pra-m"}`}>
+                        <img
+                          src={icons?.avatarTwoIcons}
+                          className="h-32 w-32 rounded-circle me-5"
+                        />
 
-                    <div
-                      className="fa-center gap-2 pointer"
-                      onClick={() => {
-                        handleCopy(externalIds?.DOI);
-                      }}
-                    >
-                      <p className="link-text">{externalIds?.DOI || "Null"}</p>
-                      <img src={icons?.copyIcons} alt="copy-icons" />
-                      <span className="copy-text">Copy DOI</span>
-                    </div>
+                        {authors
+                          ? showAuthors && authors.length > 0
+                            ? authors?.map((item) => (
+                                <span key={item.id}>{item.name}</span>
+                              ))
+                            : authors?.length > 0 && (
+                                  <>
+                                    {console.log(authors[0].name, "AUTHORS")}
+                                    {authors[0]?.name}, {authors[1]?.name}
+                                  </>
+                                )
+                              ? author_name
+                              : author_name
+                          : "No author found"}
 
-                    {!isSide && (
-                      <div
-                        className={`fa-center gap-3 ${isSide ? "mt-26" : "mt-16"}`}
-                      >
-                        {/* {showCitation && citations
-                          ? citations?.map((item) => {
-                              return (
-                                <Button
-                                  btnText={`#${item?.title}`}
-                                  className="h-41"
-                                  btnStyle="BBA"
-                                />
-                              );
-                            })
-                          : citations?.length > 0 && (
+                        <div className="mt-10">
+                          {authdatadetails && authdatadetails.length > 2 && (
+                            <span
+                              className="span-pra "
+                              onClick={() => setShowAuthors(!showAuthors)}
+                            >
+                              {!showAuthors
+                                ? `+ Show ${authdatadetails.length - 2} more`
+                                : "   Show Less"}
+                            </span>
+                          )}
+                        </div>
+                      </p> */}
+
+                      <p className={`pra-text ${isSide ? "pra-sm" : "pra-m"}`}>
+                        {authors && authors.length > 0 ? (
+                          <>
+                            {authors.slice(0, 2).map((item) => (
                               <>
-                                <Button
-                                  btnText={`#${citations[0].title}`}
-                                  className="h-41"
-                                  btnStyle="BBA"
+                                <img
+                                  src={icons?.avatarTwoIcons}
+                                  className="h-32 w-32 rounded-circle me-5"
                                 />
-                                {citations.length > 1 && (
-                                  <Button
-                                    btnText={`#${citations[1]?.title}`}
-                                    className="h-41"
-                                    btnStyle="BBA"
-                                  />
-                                )}
+                                <span key={item.id}>{item.name} </span>
                               </>
-                            )} */}
+                            ))}
 
-                        {showCitation && citations
-                          ? citations.map((item, index) => (
-                              <span
-                                key={index}
-                                className=""
-                                style={{
-                                  border: "1px solid #333333",
-                                  borderRadius: "6px",
+                            {showAllAuthors &&
+                              authors.slice(2).map((item) => (
+                                <>
+                                  <img
+                                    src={icons?.avatarTwoIcons}
+                                    className="h-32 w-32 rounded-circle me-5"
+                                  />
+                                  <span key={item.id}>{item.name} </span>
+                                </>
+                              ))}
 
-                                  padding: "10px",
-                                }}
-                              >
-                                #{item?.title}
-                              </span>
-                            ))
-                          : citations?.length > 0 && (
-                              <>
-                                <span
-                                  className=""
-                                  style={{
-                                    border: "1px solid #333333",
-                                    borderRadius: "6px",
-                                    padding: "10px",
-                                  }}
-                                >
-                                  #{citations[0].title}
-                                </span>
-                                {citations.length > 1 && (
+                            <div className="mt-10">
+                              {authdatadetails &&
+                                authdatadetails?.length > 2 && (
                                   <span
-                                    className=""
-                                    style={{
-                                      border: "1px solid #333333",
-                                      borderRadius: "6px",
-                                      padding: "10px",
-                                    }}
+                                    className="span-pra "
+                                    onClick={() => setShowAuthors(!showAuthors)}
                                   >
-                                    #{citations[1]?.title}
+                                    {!showAuthors
+                                      ? `+ Show ${authdatadetails?.length - 2} more`
+                                      : "   Show Less"}
                                   </span>
                                 )}
-                              </>
-                            )}
-
-                        {/* <div className="row">
-  <div className="col-8"> </div> 
-  <div className="col-4"> </div> 
-  </div> */}
-                        {citations?.length > 2 && (
-                          <span
-                            className="span-pra"
-                            onClick={() => setShowCitation(!showCitation)}
-                          >
-                            {!showCitation
-                              ? `+ Show ${citations.length - 2} more`
-                              : "   Show Less"}
-                          </span>
+                            </div>
+                          </>
+                        ) : (
+                          "No author found"
                         )}
 
-                        {/* {citations && citations
-                      ? citations.map((item) => {
-                          return (
-                            <Button
-                              btnText={`#${item?.title}`}
-                              className="h-41"
-                              btnStyle="BBA"
-                            />
-                          );
-                        })
-                      : ""}
-                    <p className="show-text">
-                      {" "}
-                      <img
-                        src={icons?.pulseBIcons}
-                        className="h-12 w-12"
-                      />{" "}
-                      Show 8 more
-                    </p> */}
-                      </div>
-                    )}
+                        {/* Show "Show More" or "Show Less" */}
+                        <div className="mt-10">
+                          {authdatadetails && authdatadetails.length > 2 && (
+                            <span
+                              className="span-pra"
+                              onClick={() => setShowAllAuthors(!showAllAuthors)} // Toggle the visibility of the remaining authors
+                            >
+                              {!showAllAuthors
+                                ? `+ Show ${authors.length - 2} more`
+                                : "Show Less"}
+                            </span>
+                          )}
+                        </div>
+                      </p>
 
-                    <div className="">
+                      {/* <p className={`pra-text ${isSide ? "pra-sm" : "pra-m"}`}>
+                        {authors && authors.length > 0
+                          ? authors.map((item) => (
+                              <>
+                                <img
+                                  src={icons?.avatarTwoIcons}
+                                  className="h-32 w-32 rounded-circle me-5"
+                                />
+                                <span key={item.id}>{item.name}</span>
+                              </>
+                            ))
+                          : "No author found"}
+
+                        <div className="mt-10">
+                          {authdatadetails && authdatadetails.length > 2 && (
+                            <span
+                              className="span-pra"
+                              onClick={() => setShowAuthors(!showAuthors)}
+                            >
+                              {!showAuthors
+                                ? `+ Show ${authdatadetails.length - 2} more`
+                                : "Show Less"}
+                            </span>
+                          )}
+                        </div>
+                      </p> */}
+
                       <div
-                        className="brave-scroll"
-                        style={{
-                          maxHeight: "300px",
-                          overflowY: "auto",
-                          marginTop: "10px",
+                        className="fa-center gap-2 pointer"
+                        onClick={() => {
+                          dispatch(handleCopy(externalIds?.DOI));
                         }}
                       >
-                        <div className="d-flex flex-wrap gap-3">
-                          {authdatadetails.data1.topics
-                            .slice(0, visibleCount)
-                            .map((topic, index) => (
-                              <div
-                                key={index}
-                                className="p-12"
-                                style={{
-                                  border: "1px solid #333333",
-                                  borderRadius: "12px",
-                                }}
-                              >
-                                <span>{topic}</span>
-                              </div>
-                            ))}
-                        </div>
+                        <p className="link-text">
+                          {externalIds?.DOI || "Null"}
+                        </p>
+                        <img src={icons?.copyIcons} alt="copy-icons" />
+                        <span className="copy-text">Copy DOI</span>
                       </div>
 
-                      {/* Toggle button for Show More / Show Less */}
-                      <span
-                        onClick={handleToggle}
-                        className="text-14-500 color-113D"
-                        style={{ cursor: "pointer" }}
-                      >
-                        {showMore
-                          ? "- Show Less"
-                          : `+ Show ${authdatadetails.data1.topics.length - 2}+ more`}
-                      </span>
+                      <div className="">
+                        <div
+                          className="brave-scroll"
+                          style={{
+                            maxHeight: "300px",
+                            overflowY: "auto",
+                            marginTop: "10px",
+                          }}
+                        >
+                          <div className="d-flex flex-wrap gap-3">
+                            {authdatadetails?.data1?.topics
+                              .slice(0, visibleCount)
+                              .map((topic, index) => (
+                                <div
+                                  key={index}
+                                  className="p-12"
+                                  style={{
+                                    border: "1px solid #333333",
+                                    borderRadius: "12px",
+                                  }}
+                                >
+                                  <span>{topic}</span>
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+
+                        {/* Toggle button for Show More / Show Less */}
+                        <span
+                          onClick={handleToggle}
+                          className="text-14-500 color-113D"
+                          style={{ cursor: "pointer" }}
+                        >
+                          {showMore
+                            ? "- Show Less"
+                            : `+ Show ${authdatadetails?.data1?.topics?.length - visibleCount} more`}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                  {/* <div className={`${isSide ? "col-12" : "col-lg-5"}`}>
+                    {/* <div className={`${isSide ? "col-12" : "col-lg-5"}`}>
                 <div className={`details-box ${isSide ? "b-c-details" : ""}`}>
                   {journal && journal.name && (
                     <div className="fa-center gap-2">
@@ -853,256 +880,267 @@ const FeedDetailsAuthor = () => {
                   </div>
                 )}
               </div> */}
-                </div>
-              </div>
-              {/* review */}
-              <div className="review-box">
-                <div className="fa-center gap-1">
-                  <Button btnText="New" className="h-29 pt-6 pb-6 br-8 w-51" />
-                  <h4 className="review-text">
-                    Get your research rolling with a Literature Review
-                  </h4>
-                </div>
-                <p className="review-pra">
-                  Skip hour sifting through countless paper. Academia can
-                  simplify the process with a comprehensive overview of new and
-                  popular works for your research topic.
-                </p>
-                <p className="review-pra">
-                  Request your preferred subject area for your Literature Review
-                </p>
-                <div className="search-box">
-                  <div className="btn-search">
-                    <TextInput
-                      placeholder="Social Psychology"
-                      className="h-51 black-b"
-                    />
-                  </div>
-                  <div className="btn-c">
-                    <Button
-                      btnText="Get your literature review"
-                      rightIcon={icons?.rightLIcons}
-                      rightIconClass="h-14 w-14 object-fit-contain"
-                      btnStyle="BBA"
-                      className="h-51"
-                    />
                   </div>
                 </div>
-              </div>
-              {/* SEARCH  */}
-              <div className="search-div-box">
-                <div className="search-btn-box">
-                  <div
-                    className={`${showActive === "Summary" ? "show-active-b" : "show-text-b"}`}
-                    onClick={handleClickSummary}
-                  >
-                    Summary
+                {/* review */}
+                <div className="review-box">
+                  <div className="fa-center gap-1">
+                    <Button
+                      btnText="New"
+                      className="h-29 pt-6 pb-6 br-8 w-51"
+                    />
+                    <h4 className="review-text">
+                      Get your research rolling with a Literature Review
+                    </h4>
                   </div>
-                  <div
-                    className={`${showActive === "Abstract" ? "show-active-b" : "show-text-b"}`}
-                    onClick={handleClickActive}
-                  >
-                    Abstract
-                  </div>
-                  <div
-                    className={`${showActive === "Full-Text" ? "show-active-b" : "show-text-b"}`}
-                    onClick={handleClickFullText}
-                  >
-                    Full-Text
-                  </div>
-                  <div
-                    className={`${showActive === "Similar Papers" ? "show-active-b" : "show-text-b"}`}
-                    onClick={handleClickSimilarPapers}
-                  >
-                    Similar Papers
-                  </div>
-                  <div
-                    className={`${showActive === "About Author" ? "show-active-b" : "show-text-b"}`}
-                    onClick={handleClickAboutAuthors}
-                  >
-                    About Author
+                  <p className="review-pra">
+                    Skip hour sifting through countless paper. Academia can
+                    simplify the process with a comprehensive overview of new
+                    and popular works for your research topic.
+                  </p>
+                  <p className="review-pra">
+                    Request your preferred subject area for your Literature
+                    Review
+                  </p>
+                  <div className="search-box">
+                    <div className="btn-search">
+                      <TextInput
+                        placeholder="Social Psychology"
+                        className="h-51 black-b"
+                      />
+                    </div>
+                    <div className="btn-c">
+                      <Button
+                        btnText="Get your literature review"
+                        rightIcon={icons?.rightLIcons}
+                        rightIconClass="h-14 w-14 object-fit-contain"
+                        btnStyle="BBA"
+                        className="h-51"
+                      />
+                    </div>
                   </div>
                 </div>
-                {!isSide && (
-                  <div className="btn-g">
-                    <Button
-                      btnStyle="bg-ffff"
-                      className="h-41"
-                      leftIcon={icons?.translateIcons}
-                    />
-                    <Button
-                      btnStyle="bg-ffff"
-                      className="h-41"
-                      leftIcon={icons?.playIcons}
-                    />
-                    <Button
-                      btnStyle="bg-ffff"
-                      className="h-41"
-                      leftIcon={icons?.askIcons}
-                    />
-                    <Button
-                      btnStyle="bg-ffff"
-                      className="h-41"
-                      leftIcon={icons?.uploadBIcons}
-                    />
-                    <Button
-                      btnStyle="bg-ffff"
-                      className="h-41"
-                      leftIcon={icons?.activeSaveIcons}
-                    />
-                    <Button
-                      btnStyle="bg-ffff"
-                      className="h-41"
-                      leftIcon={icons?.driveIcons}
-                    />
-                    <Button
-                      btnStyle="bg-ffff"
-                      className="h-41"
-                      leftIcon={icons?.shareIcons}
-                    />
-                    <Button
-                      btnStyle="bg-ffff"
-                      className="h-41"
-                      leftIcon={icons?.reportIcons}
-                    />
+                {/* SEARCH  */}
+                <div className="search-div-box" style={{
+                  position: "sticky",
+                  top: "0",
+                  zIndex: 10,
+                }}>
+                  <div className="search-btn-box" >
+                    <div
+                      className={`${showActive === "Summary" ? "show-active-b" : "show-text-b"}`}
+                      onClick={handleClickSummary}
+                    >
+                      Summary
+                    </div>
+                    <div
+                      className={`${showActive === "Abstract" ? "show-active-b" : "show-text-b"}`}
+                      onClick={handleClickActive}
+                    >
+                      Abstract
+                    </div>
+                    <div
+                      className={`${showActive === "Full-Text" ? "show-active-b" : "show-text-b"}`}
+                      onClick={handleClickFullText}
+                    >
+                      Full-Text
+                    </div>
+                    <div
+                      className={`${showActive === "Similar Papers" ? "show-active-b" : "show-text-b"}`}
+                      onClick={handleClickSimilarPapers}
+                    >
+                      Similar Papers
+                    </div>
+                    <div
+                      className={`${showActive === "About Author" ? "show-active-b" : "show-text-b"}`}
+                      onClick={handleClickAboutAuthors}
+                    >
+                      About Author
+                    </div>
                   </div>
-                )}
-              </div>
-              {/* Summary */}
-              <h4 className="sub-title-text" id="summary">
-                Summary
-              </h4>
-              <div className="d-flex gap-3 justify-content-between mt-28 mb-28">
-                <div className="d-flex gap-2">
-                  <img
-                    src={icons?.activeStarIcons}
-                    alt="active-star"
-                    loading="lazy"
-                    className="h-24 w-24"
-                  />
-                  <p className="summer-text">{summary && summary}</p>
+                  {!isSide && (
+                    <div className="btn-g">
+                      <Button
+                        btnStyle="bg-ffff"
+                        className="h-41"
+                        leftIcon={icons?.translateIcons}
+                      />
+                      <Button
+                        btnStyle="bg-ffff"
+                        className="h-41"
+                        leftIcon={icons?.playIcons}
+                      />
+                      <Button
+                        btnStyle="bg-ffff"
+                        className="h-41"
+                        leftIcon={icons?.askIcons}
+                      />
+                      <Button
+                        btnStyle="bg-ffff"
+                        className="h-41"
+                        leftIcon={icons?.uploadBIcons}
+                      />
+                      <Button
+                        btnStyle="bg-ffff"
+                        className="h-41"
+                        leftIcon={icons?.activeSaveIcons}
+                      />
+                      <Button
+                        btnStyle="bg-ffff"
+                        className="h-41"
+                        leftIcon={icons?.driveIcons}
+                      />
+                      <Button
+                        btnStyle="bg-ffff"
+                        className="h-41"
+                        leftIcon={icons?.shareIcons}
+                      />
+                      <Button
+                        btnStyle="bg-ffff"
+                        className="h-41"
+                        leftIcon={icons?.reportIcons}
+                      />
+                    </div>
+                  )}
                 </div>
-                <img
-                  src={icons?.lightCIcons}
-                  alt="copy"
-                  className="h-24 w-24 pointer"
-                  onClick={() => {
-                    handleCopy(summary);
-                    // dispatch(handleCopy(summary));
-                  }}
-                />
-              </div>
-              <div className="abstract-box">
-                <h4 className="sub-title-text" id="abstract">
-                  Abstract
+                {/* Summary */}
+                <h4 className="sub-title-text" id="summary">
+                  Summary
                 </h4>
-                <p className="abstract-text">{abstract && abstract}</p>
-              </div>
-              <div className="ask-box">
-                <div className="d-flex align-items-center gap-2">
-                  <img src={icons?.docSearchIcons} className="h-48 w-48" />
-                  <p className="text-18-500 color-0303"> Ask this paper</p>
-                </div>
-                <div className="fa-center">
-                  <img
-                    src={icons?.rightSAIcons}
-                    className="h-24 w-24 object-fit-contain pointer"
-                  />
-                </div>
-              </div>
-            </div>
+                <div className="d-flex gap-3 justify-content-between mt-28 mb-28">
+                  <div className="d-flex gap-2">
+                    <img
+                      src={icons?.activeStarIcons}
+                      alt="active-star"
+                      loading="lazy"
+                      className="h-24 w-24"
+                    />
 
-            {isSide && (
-              <div className="side-bar">
-                <div className="side-t">
-                  <Button
-                    leftIcon={icons?.translateIcons}
-                    btnStyle="Lb"
-                    leftIconClass="h-24 w-24"
-                    className="h-48 w-48 pb-12 pt-8"
+                    <p className="summer-text ">{summary && summary}</p>
+                  </div>
+                  <img
+                    src={icons?.lightCIcons}
+                    alt="copy"
+                    className="h-24 w-24 pointer"
+                    onClick={() => {
+                      dispatch(handleCopy(summary));
+                    }}
                   />
-                  <p className="side-items">
-                    Translate this paper in your preferred language
+                </div>
+                <div className="abstract-box">
+                  <h4 className="sub-title-text" id="abstract">
+                    Abstract
+                  </h4>
+                  <p className="abstract-text text-justify">
+                    {abstract && abstract}
                   </p>
                 </div>
-                <div className="side-t">
-                  <Button
-                    leftIcon={icons?.playIcons}
-                    btnStyle="Lb"
-                    leftIconClass="h-24 w-24"
-                    className="h-48 w-48 pb-12 pt-8"
-                  />
-                  <p className="side-items">
-                    Listen to the abstract of this paper
-                  </p>
-                </div>
-                <div className="side-t">
-                  <Button
-                    leftIcon={icons?.askIcons}
-                    btnStyle="Lb"
-                    leftIconClass="h-24 w-24"
-                    className="h-48 w-48 pb-12 pt-8"
-                  />
-                  <p className="side-items">Ask Paper</p>
-                </div>
-                <div className="side-t">
-                  <Button
-                    leftIcon={icons?.uploadBIcons}
-                    btnStyle="Lb"
-                    leftIconClass="h-24 w-24"
-                    className="h-48 w-48 pb-12 pt-8"
-                  />
-                  <p className="side-items">Export to reference manager</p>
-                </div>
-                <div className="side-t">
-                  <Button
-                    leftIcon={icons?.activeSaveIcons}
-                    btnStyle="Lb"
-                    leftIconClass="h-24 w-24"
-                    className="h-48 w-48 pb-12 pt-8"
-                  />
-                  <p className="side-items">Bookmark</p>
-                </div>
-                <div className="side-t">
-                  <Button
-                    leftIcon={icons?.driveIcons}
-                    btnStyle="Lb"
-                    leftIconClass="h-24 w-24"
-                    className="h-48 w-48 pb-12 pt-8"
-                  />
-                  <p className="side-items">Save to drive</p>
-                </div>
-                <div className="side-t">
-                  <Button
-                    leftIcon={icons?.shareIcons}
-                    btnStyle="Lb"
-                    leftIconClass="h-24 w-24"
-                    className="h-48 w-48 pb-12 pt-8"
-                  />
-                  <p className="side-items">Share</p>
-                </div>
-                <div className="side-t">
-                  <Button
-                    leftIcon={icons?.reportIcons}
-                    btnStyle="Lb"
-                    leftIconClass="h-24 w-24"
-                    className="h-48 w-48 pb-12 pt-8"
-                  />
-                  <p className="side-items">Report</p>
+                <div className="ask-box">
+                  <div className="d-flex align-items-center gap-2">
+                    <img src={icons?.docSearchIcons} className="h-48 w-48" />
+                    <p className="text-18-500 color-0303"> Ask this paper</p>
+                  </div>
+                  <div className="fa-center">
+                    <img
+                      src={icons?.rightSAIcons}
+                      className="h-24 w-24 object-fit-contain pointer"
+                    />
+                  </div>
                 </div>
               </div>
-            )}
-          </div>
+
+              {isSide && (
+                <div className="side-bar">
+                  <div className="side-t">
+                    <Button
+                      leftIcon={icons?.translateIcons}
+                      btnStyle="Lb"
+                      leftIconClass="h-24 w-24"
+                      className="h-48 w-48 pb-12 pt-8"
+                    />
+                    <p className="side-items">
+                      Translate this paper in your preferred language
+                    </p>
+                  </div>
+                  <div className="side-t">
+                    <Button
+                      leftIcon={icons?.playIcons}
+                      btnStyle="Lb"
+                      leftIconClass="h-24 w-24"
+                      className="h-48 w-48 pb-12 pt-8"
+                    />
+                    <p className="side-items">
+                      Listen to the abstract of this paper
+                    </p>
+                  </div>
+                  <div className="side-t">
+                    <Button
+                      leftIcon={icons?.askIcons}
+                      btnStyle="Lb"
+                      leftIconClass="h-24 w-24"
+                      className="h-48 w-48 pb-12 pt-8"
+                    />
+                    <p className="side-items">Ask Paper</p>
+                  </div>
+                  <div className="side-t">
+                    <Button
+                      leftIcon={icons?.uploadBIcons}
+                      btnStyle="Lb"
+                      leftIconClass="h-24 w-24"
+                      className="h-48 w-48 pb-12 pt-8"
+                    />
+                    <p className="side-items">Export to reference manager</p>
+                  </div>
+                  <div className="side-t">
+                    <Button
+                      leftIcon={icons?.activeSaveIcons}
+                      btnStyle="Lb"
+                      leftIconClass="h-24 w-24"
+                      className="h-48 w-48 pb-12 pt-8"
+                    />
+                    <p className="side-items">Bookmark</p>
+                  </div>
+                  <div className="side-t">
+                    <Button
+                      leftIcon={icons?.driveIcons}
+                      btnStyle="Lb"
+                      leftIconClass="h-24 w-24"
+                      className="h-48 w-48 pb-12 pt-8"
+                    />
+                    <p className="side-items">Save to drive</p>
+                  </div>
+                  <div className="side-t">
+                    <Button
+                      leftIcon={icons?.shareIcons}
+                      btnStyle="Lb"
+                      leftIconClass="h-24 w-24"
+                      className="h-48 w-48 pb-12 pt-8"
+                    />
+                    <p className="side-items">Share</p>
+                  </div>
+                  <div className="side-t">
+                    <Button
+                      leftIcon={icons?.reportIcons}
+                      btnStyle="Lb"
+                      leftIconClass="h-24 w-24"
+                      className="h-48 w-48 pb-12 pt-8"
+                    />
+                    <p className="side-items">Report</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </div>
         <div
-          className={`${isUserSide || isRightSide ? "col-12" : "col-xl-4 col-lg-5"} `}
+          className={`${isUserSide || isRightSide ? "col-12" : "col-xl-4 col-lg-5"} border`}
         >
           <div
             className="auth-side brave-scroll"
             style={{
               position: "sticky",
               top: "0",
-              height: "calc(100vh - 20px)",
+              height: "calc(100vh- 20px)",
               overflowY: "auto",
             }}
           >

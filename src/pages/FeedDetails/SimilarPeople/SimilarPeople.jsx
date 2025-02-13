@@ -33,7 +33,6 @@ const SimilarPeople = ({InterestUser}) => {
   const reduxData = useSelector((state) => state.global);
   const { isUserSide } = reduxData || {};
 
-  console.log("InterestUser" ,InterestUser)
   return (
     <div className="similar-container">
       <h2 className="similar-text">People with similar interest</h2>

@@ -46,7 +46,6 @@ const MyFeed = () => {
     icon: icons?.rectangleIcons,
   }));
 
-  console.log("feedlist", feedList);
   return (
     <div className="my-feed-container">
       <UserNavbar />

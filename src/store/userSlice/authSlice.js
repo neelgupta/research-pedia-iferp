@@ -40,6 +40,9 @@ export const handleUserSignUp = (payload) => async (dispatch) => {
   dispatch(setLoading());
   try {
     const res = await api.post(`/user/auth/signUp`, payload, {});
+    if (res?.status === 200) {
+      dispatch(showSuccess(res?.data?.message));
+    }
     dispatch(clearLoading());
     return res;
   } catch (error) {

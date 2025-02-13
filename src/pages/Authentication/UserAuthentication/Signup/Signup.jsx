@@ -63,7 +63,6 @@ const UserSignup = () => {
 
     const result = await dispatch(handleUserSignUp(finalvalue));
 
-    console.log(result);
     if (result?.status === 200) {
       navigate("/login");
       setlodding(false);
@@ -114,7 +113,6 @@ const UserSignup = () => {
                           }
                         }}
                       >
-                        {console.log(errors, "errors")}
                         {/* Membership Type Dropdown */}
                         <div className="">
                           <Dropdown

@@ -296,583 +296,77 @@ const PackageDetails = ({ isSide, paperAuthdetails, Seconddetailsloadder }) => {
         >
           <div className="similar-box">
             <h4 className="sub-title-text">More From: Sandra Buttibieg</h4>
-            {Seconddetailsloadder ? (
-              <div className="loader-container d-flex justify-content-center">
-                <Spinner animation="border" variant="primary" />
-              </div>
-            ) : (
-              paperAuthdetails?.map((ele, index) => {
-                return (
-                  <div className="feed-published-box card-d mt-18" key={index}>
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        <h4 className="post-title">
-                          {ele.title || ele.paper_title}
-                        </h4>
-                        {ele?.journal?.name ? (
-                          <p className="post-pra">{ele.journal.name}</p>
-                        ) : null}
-                      </div>
-                      <Button
-                        leftIcon={icons?.activeSaveIcons}
-                        btnStyle="LB"
-                        className="h-42 w-42"
-                        leftIconClass="h-16 w-16"
-                      />
-                    </div>
-
-                    <div className="post-details flex-wrap mt-8 gap-2">
-                      <div className="fa-center gap-md-2 gap-2">
-                        <div className="fa-center gap-1">
-                          <img
-                            src={icons?.calenderIcons}
-                            alt="docs-icons"
-                            loading="lazy"
-                            className="h-16 w-16 object-fit-contain"
-                          />
-                          {ele?.year ? (
-                            <p className="docs-title">{ele.year}</p>
-                          ) : (
-                            <p className="docs-title">
-                              {" "}
-                              {moment(ele.created_at).format("DD MMM YYYY")}
-                            </p>
-                          )}
-                        </div>
-                        <img
-                          src={icons?.dotIcons}
-                          alt="docs-icons"
-                          loading="lazy"
-                          className="h-5 w-5"
-                        />
-                        <div className="fa-center gap-1">
-                          <img
-                            src={icons?.eyeIcons}
-                            alt="docs-icons"
-                            loading="lazy"
-                            className="h-16 w-16 object-fit-contain"
-                          />
-                          <p className="docs-title">31 Views</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })
-            )}
 
             {Seconddetailsloadder ? (
-              <div className="loader-container d-flex justify-content-center">
-                <Spinner animation="border" variant="primary" />
-              </div>
-            ) : (
-              paperAuthdetails?.map((ele, index) => {
-                return (
-                  <div className="feed-published-box card-d mt-18" key={index}>
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        <h4 className="post-title">
-                          {ele.title || ele.paper_title}
-                        </h4>
-                        {ele?.journal?.name ? (
-                          <p className="post-pra">{ele.journal.name}</p>
-                        ) : null}
-                      </div>
-                      <Button
-                        leftIcon={icons?.activeSaveIcons}
-                        btnStyle="LB"
-                        className="h-42 w-42"
-                        leftIconClass="h-16 w-16"
-                      />
-                    </div>
+  <div className="loader-container d-flex justify-content-center">
+    <Spinner animation="border" variant="primary" />
+  </div>
+) : paperAuthdetails?.length > 0 ? (
+  paperAuthdetails.map((ele, index) => {
+    return (
+      <div className="feed-published-box card-d mt-18" key={index}>
+        <div className="d-flex justify-content-between">
+          <div>
+            <h4 className="post-title">
+              {ele.title || ele.paper_title}
+            </h4>
+            {ele?.journal?.name ? (
+              <p className="post-pra">{ele.journal.name}</p>
+            ) : null}
+          </div>
+          <Button
+            leftIcon={icons?.activeSaveIcons}
+            btnStyle="LB"
+            className="h-42 w-42"
+            leftIconClass="h-16 w-16"
+          />
+        </div>
 
-                    <div className="post-details flex-wrap mt-8 gap-2">
-                      <div className="fa-center gap-md-2 gap-2">
-                        <div className="fa-center gap-1">
-                          <img
-                            src={icons?.calenderIcons}
-                            alt="docs-icons"
-                            loading="lazy"
-                            className="h-16 w-16 object-fit-contain"
-                          />
-                          {ele?.year ? (
-                            <p className="docs-title">{ele.year}</p>
-                          ) : (
-                            <p className="docs-title">
-                              {" "}
-                              {moment(ele.created_at).format("DD MMM YYYY")}
-                            </p>
-                          )}
-                        </div>
-                        <img
-                          src={icons?.dotIcons}
-                          alt="docs-icons"
-                          loading="lazy"
-                          className="h-5 w-5"
-                        />
-                        <div className="fa-center gap-1">
-                          <img
-                            src={icons?.eyeIcons}
-                            alt="docs-icons"
-                            loading="lazy"
-                            className="h-16 w-16 object-fit-contain"
-                          />
-                          <p className="docs-title">31 Views</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })
-            )}
-            {Seconddetailsloadder ? (
-              <div className="loader-container d-flex justify-content-center">
-                <Spinner animation="border" variant="primary" />
-              </div>
-            ) : (
-              paperAuthdetails?.map((ele, index) => {
-                return (
-                  <div className="feed-published-box card-d mt-18" key={index}>
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        <h4 className="post-title">
-                          {ele.title || ele.paper_title}
-                        </h4>
-                        {ele?.journal?.name ? (
-                          <p className="post-pra">{ele.journal.name}</p>
-                        ) : null}
-                      </div>
-                      <Button
-                        leftIcon={icons?.activeSaveIcons}
-                        btnStyle="LB"
-                        className="h-42 w-42"
-                        leftIconClass="h-16 w-16"
-                      />
-                    </div>
+        <div className="post-details flex-wrap mt-8 gap-2">
+          <div className="fa-center gap-md-2 gap-2">
+            <div className="fa-center gap-1">
+              <img
+                src={icons?.calenderIcons}
+                alt="docs-icons"
+                loading="lazy"
+                className="h-16 w-16 object-fit-contain"
+              />
+              {ele?.year ? (
+                <p className="docs-title">{ele.year}</p>
+              ) : (
+                <p className="docs-title">
+                  {moment(ele.created_at).format("DD MMM YYYY")}
+                </p>
+              )}
+            </div>
+            <img
+              src={icons?.dotIcons}
+              alt="docs-icons"
+              loading="lazy"
+              className="h-5 w-5"
+            />
+            <div className="fa-center gap-1">
+              <img
+                src={icons?.eyeIcons}
+                alt="docs-icons"
+                loading="lazy"
+                className="h-16 w-16 object-fit-contain"
+              />
+              <p className="docs-title">31 Views</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  })
+) : (
+  <div className="no-papers">
+    <p>Paper not found</p>
+  </div>
+)}
 
-                    <div className="post-details flex-wrap mt-8 gap-2">
-                      <div className="fa-center gap-md-2 gap-2">
-                        <div className="fa-center gap-1">
-                          <img
-                            src={icons?.calenderIcons}
-                            alt="docs-icons"
-                            loading="lazy"
-                            className="h-16 w-16 object-fit-contain"
-                          />
-                          {ele?.year ? (
-                            <p className="docs-title">{ele.year}</p>
-                          ) : (
-                            <p className="docs-title">
-                              {" "}
-                              {moment(ele.created_at).format("DD MMM YYYY")}
-                            </p>
-                          )}
-                        </div>
-                        <img
-                          src={icons?.dotIcons}
-                          alt="docs-icons"
-                          loading="lazy"
-                          className="h-5 w-5"
-                        />
-                        <div className="fa-center gap-1">
-                          <img
-                            src={icons?.eyeIcons}
-                            alt="docs-icons"
-                            loading="lazy"
-                            className="h-16 w-16 object-fit-contain"
-                          />
-                          <p className="docs-title">31 Views</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })
-            )}
-            {Seconddetailsloadder ? (
-              <div className="loader-container d-flex justify-content-center">
-                <Spinner animation="border" variant="primary" />
-              </div>
-            ) : (
-              paperAuthdetails?.map((ele, index) => {
-                return (
-                  <div className="feed-published-box card-d mt-18" key={index}>
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        <h4 className="post-title">
-                          {ele.title || ele.paper_title}
-                        </h4>
-                        {ele?.journal?.name ? (
-                          <p className="post-pra">{ele.journal.name}</p>
-                        ) : null}
-                      </div>
-                      <Button
-                        leftIcon={icons?.activeSaveIcons}
-                        btnStyle="LB"
-                        className="h-42 w-42"
-                        leftIconClass="h-16 w-16"
-                      />
-                    </div>
 
-                    <div className="post-details flex-wrap mt-8 gap-2">
-                      <div className="fa-center gap-md-2 gap-2">
-                        <div className="fa-center gap-1">
-                          <img
-                            src={icons?.calenderIcons}
-                            alt="docs-icons"
-                            loading="lazy"
-                            className="h-16 w-16 object-fit-contain"
-                          />
-                          {ele?.year ? (
-                            <p className="docs-title">{ele.year}</p>
-                          ) : (
-                            <p className="docs-title">
-                              {" "}
-                              {moment(ele.created_at).format("DD MMM YYYY")}
-                            </p>
-                          )}
-                        </div>
-                        <img
-                          src={icons?.dotIcons}
-                          alt="docs-icons"
-                          loading="lazy"
-                          className="h-5 w-5"
-                        />
-                        <div className="fa-center gap-1">
-                          <img
-                            src={icons?.eyeIcons}
-                            alt="docs-icons"
-                            loading="lazy"
-                            className="h-16 w-16 object-fit-contain"
-                          />
-                          <p className="docs-title">31 Views</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })
-            )}
-            {Seconddetailsloadder ? (
-              <div className="loader-container d-flex justify-content-center">
-                <Spinner animation="border" variant="primary" />
-              </div>
-            ) : (
-              paperAuthdetails?.map((ele, index) => {
-                return (
-                  <div className="feed-published-box card-d mt-18" key={index}>
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        <h4 className="post-title">
-                          {ele.title || ele.paper_title}
-                        </h4>
-                        {ele?.journal?.name ? (
-                          <p className="post-pra">{ele.journal.name}</p>
-                        ) : null}
-                      </div>
-                      <Button
-                        leftIcon={icons?.activeSaveIcons}
-                        btnStyle="LB"
-                        className="h-42 w-42"
-                        leftIconClass="h-16 w-16"
-                      />
-                    </div>
-
-                    <div className="post-details flex-wrap mt-8 gap-2">
-                      <div className="fa-center gap-md-2 gap-2">
-                        <div className="fa-center gap-1">
-                          <img
-                            src={icons?.calenderIcons}
-                            alt="docs-icons"
-                            loading="lazy"
-                            className="h-16 w-16 object-fit-contain"
-                          />
-                          {ele?.year ? (
-                            <p className="docs-title">{ele.year}</p>
-                          ) : (
-                            <p className="docs-title">
-                              {" "}
-                              {moment(ele.created_at).format("DD MMM YYYY")}
-                            </p>
-                          )}
-                        </div>
-                        <img
-                          src={icons?.dotIcons}
-                          alt="docs-icons"
-                          loading="lazy"
-                          className="h-5 w-5"
-                        />
-                        <div className="fa-center gap-1">
-                          <img
-                            src={icons?.eyeIcons}
-                            alt="docs-icons"
-                            loading="lazy"
-                            className="h-16 w-16 object-fit-contain"
-                          />
-                          <p className="docs-title">31 Views</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })
-            )}
-            {Seconddetailsloadder ? (
-              <div className="loader-container d-flex justify-content-center">
-                <Spinner animation="border" variant="primary" />
-              </div>
-            ) : (
-              paperAuthdetails?.map((ele, index) => {
-                return (
-                  <div className="feed-published-box card-d mt-18" key={index}>
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        <h4 className="post-title">
-                          {ele.title || ele.paper_title}
-                        </h4>
-                        {ele?.journal?.name ? (
-                          <p className="post-pra">{ele.journal.name}</p>
-                        ) : null}
-                      </div>
-                      <Button
-                        leftIcon={icons?.activeSaveIcons}
-                        btnStyle="LB"
-                        className="h-42 w-42"
-                        leftIconClass="h-16 w-16"
-                      />
-                    </div>
-
-                    <div className="post-details flex-wrap mt-8 gap-2">
-                      <div className="fa-center gap-md-2 gap-2">
-                        <div className="fa-center gap-1">
-                          <img
-                            src={icons?.calenderIcons}
-                            alt="docs-icons"
-                            loading="lazy"
-                            className="h-16 w-16 object-fit-contain"
-                          />
-                          {ele?.year ? (
-                            <p className="docs-title">{ele.year}</p>
-                          ) : (
-                            <p className="docs-title">
-                              {" "}
-                              {moment(ele.created_at).format("DD MMM YYYY")}
-                            </p>
-                          )}
-                        </div>
-                        <img
-                          src={icons?.dotIcons}
-                          alt="docs-icons"
-                          loading="lazy"
-                          className="h-5 w-5"
-                        />
-                        <div className="fa-center gap-1">
-                          <img
-                            src={icons?.eyeIcons}
-                            alt="docs-icons"
-                            loading="lazy"
-                            className="h-16 w-16 object-fit-contain"
-                          />
-                          <p className="docs-title">31 Views</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })
-            )}
-            {Seconddetailsloadder ? (
-              <div className="loader-container d-flex justify-content-center">
-                <Spinner animation="border" variant="primary" />
-              </div>
-            ) : (
-              paperAuthdetails?.map((ele, index) => {
-                return (
-                  <div className="feed-published-box card-d mt-18" key={index}>
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        <h4 className="post-title">
-                          {ele.title || ele.paper_title}
-                        </h4>
-                        {ele?.journal?.name ? (
-                          <p className="post-pra">{ele.journal.name}</p>
-                        ) : null}
-                      </div>
-                      <Button
-                        leftIcon={icons?.activeSaveIcons}
-                        btnStyle="LB"
-                        className="h-42 w-42"
-                        leftIconClass="h-16 w-16"
-                      />
-                    </div>
-
-                    <div className="post-details flex-wrap mt-8 gap-2">
-                      <div className="fa-center gap-md-2 gap-2">
-                        <div className="fa-center gap-1">
-                          <img
-                            src={icons?.calenderIcons}
-                            alt="docs-icons"
-                            loading="lazy"
-                            className="h-16 w-16 object-fit-contain"
-                          />
-                          {ele?.year ? (
-                            <p className="docs-title">{ele.year}</p>
-                          ) : (
-                            <p className="docs-title">
-                              {" "}
-                              {moment(ele.created_at).format("DD MMM YYYY")}
-                            </p>
-                          )}
-                        </div>
-                        <img
-                          src={icons?.dotIcons}
-                          alt="docs-icons"
-                          loading="lazy"
-                          className="h-5 w-5"
-                        />
-                        <div className="fa-center gap-1">
-                          <img
-                            src={icons?.eyeIcons}
-                            alt="docs-icons"
-                            loading="lazy"
-                            className="h-16 w-16 object-fit-contain"
-                          />
-                          <p className="docs-title">31 Views</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })
-            )}
-            {Seconddetailsloadder ? (
-              <div className="loader-container d-flex justify-content-center">
-                <Spinner animation="border" variant="primary" />
-              </div>
-            ) : (
-              paperAuthdetails?.map((ele, index) => {
-                return (
-                  <div className="feed-published-box card-d mt-18" key={index}>
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        <h4 className="post-title">
-                          {ele.title || ele.paper_title}
-                        </h4>
-                        {ele?.journal?.name ? (
-                          <p className="post-pra">{ele.journal.name}</p>
-                        ) : null}
-                      </div>
-                      <Button
-                        leftIcon={icons?.activeSaveIcons}
-                        btnStyle="LB"
-                        className="h-42 w-42"
-                        leftIconClass="h-16 w-16"
-                      />
-                    </div>
-
-                    <div className="post-details flex-wrap mt-8 gap-2">
-                      <div className="fa-center gap-md-2 gap-2">
-                        <div className="fa-center gap-1">
-                          <img
-                            src={icons?.calenderIcons}
-                            alt="docs-icons"
-                            loading="lazy"
-                            className="h-16 w-16 object-fit-contain"
-                          />
-                          {ele?.year ? (
-                            <p className="docs-title">{ele.year}</p>
-                          ) : (
-                            <p className="docs-title">
-                              {" "}
-                              {moment(ele.created_at).format("DD MMM YYYY")}
-                            </p>
-                          )}
-                        </div>
-                        <img
-                          src={icons?.dotIcons}
-                          alt="docs-icons"
-                          loading="lazy"
-                          className="h-5 w-5"
-                        />
-                        <div className="fa-center gap-1">
-                          <img
-                            src={icons?.eyeIcons}
-                            alt="docs-icons"
-                            loading="lazy"
-                            className="h-16 w-16 object-fit-contain"
-                          />
-                          <p className="docs-title">31 Views</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })
-            )}
-            {Seconddetailsloadder ? (
-              <div className="loader-container d-flex justify-content-center">
-                <Spinner animation="border" variant="primary" />
-              </div>
-            ) : (
-              paperAuthdetails?.map((ele, index) => {
-                return (
-                  <div className="feed-published-box card-d mt-18" key={index}>
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        <h4 className="post-title">
-                          {ele.title || ele.paper_title}
-                        </h4>
-                        {ele?.journal?.name ? (
-                          <p className="post-pra">{ele.journal.name}</p>
-                        ) : null}
-                      </div>
-                      <Button
-                        leftIcon={icons?.activeSaveIcons}
-                        btnStyle="LB"
-                        className="h-42 w-42"
-                        leftIconClass="h-16 w-16"
-                      />
-                    </div>
-
-                    <div className="post-details flex-wrap mt-8 gap-2">
-                      <div className="fa-center gap-md-2 gap-2">
-                        <div className="fa-center gap-1">
-                          <img
-                            src={icons?.calenderIcons}
-                            alt="docs-icons"
-                            loading="lazy"
-                            className="h-16 w-16 object-fit-contain"
-                          />
-                          {ele?.year ? (
-                            <p className="docs-title">{ele.year}</p>
-                          ) : (
-                            <p className="docs-title">
-                              {" "}
-                              {moment(ele.created_at).format("DD MMM YYYY")}
-                            </p>
-                          )}
-                        </div>
-                        <img
-                          src={icons?.dotIcons}
-                          alt="docs-icons"
-                          loading="lazy"
-                          className="h-5 w-5"
-                        />
-                        <div className="fa-center gap-1">
-                          <img
-                            src={icons?.eyeIcons}
-                            alt="docs-icons"
-                            loading="lazy"
-                            className="h-16 w-16 object-fit-contain"
-                          />
-                          <p className="docs-title">31 Views</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })
-            )}
+          
 
             <div className="f-center mt-18">
               <Button className="h-42" btnText="View more papers" />

@@ -93,7 +93,7 @@ const CategoryTopics = () => {
   const [totalCount, setTotalCount] = useState(0);
   const [isTopicList, setIsTopicList] = useState([]);
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
-
+const [loadding , setloadding] = useState(false)
   const priorityOption = [
     { value: "high", label: "High" },
     { value: "medium", label: "Medium" },
@@ -101,6 +101,7 @@ const CategoryTopics = () => {
   ];
 
   const fetchTopics = async (debouncedSearchTerm = "") => {
+    setloadding(true)
     const result = await dispatch(
       handleGetTopics(currentPage, rowsPerPage, debouncedSearchTerm)
     );
@@ -108,7 +109,9 @@ const CategoryTopics = () => {
       const data = result?.data?.response?.topics;
       setIsTopicList(data);
       setTotalCount(result?.data?.response?.pagination?.totalCount);
+      setloadding(false)
     }
+    setloadding(false)
   };
 
   const handlePriorityChange = async (selectedOption, id) => {
@@ -242,6 +245,7 @@ const CategoryTopics = () => {
             ispaginationcontrols
             ispagination
             istableaction
+            loading={loadding}
           />
         </div>
 

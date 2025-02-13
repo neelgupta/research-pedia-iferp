@@ -7,9 +7,25 @@ import SelectPlan from "./SelectPlan";
 import { Formik } from "formik";
 import { Modal } from "@/components";
 import * as Yup from "yup";
+import { updateInstitutionalMemberDetails } from "@/store/userSlice/userDetailSlice";
+import { useDispatch } from "react-redux";
+import { getDataFromLocalStorage } from "@/utils/helpers";
 const MyProfilePopUp = ({ onHide, title, isUserData, fetchUserDetails }) => {
   const [type, setType] = useState("");
   const [valCount, setValCount] = useState(0);
+
+  const [isCountry, setIsCountry] = useState([]);
+  const [isState, setIsState] = useState([]);
+  const [isCity, setIsCity] = useState([]);
+  const [isCountryId, setIdCountryId] = useState(isUserData?.country?.id || "");
+  const [isStateId, setIsStateId] = useState(isUserData?.state?.id || "");
+  const [departmentOfOrganization, setDepartmentOfOrganization] = useState([]);
+
+  const dispatch = useDispatch();
+
+  const localData = getDataFromLocalStorage();
+
+  const userId = localData.roleId;
 
   const subTitle = {
     0: "Crafting Your Unique Identity",
@@ -83,40 +99,40 @@ const MyProfilePopUp = ({ onHide, title, isUserData, fetchUserDetails }) => {
   };
 
   const validationSchema = Yup.object({
-    name: Yup.string()
-      .required("Name is required")
-      .min(2, "Name must be at least 2 characters")
-      .max(50, "Name must be less than 50 characters"),
+    // name: Yup.string()
+    //   .required("Name is required")
+    //   .min(2, "Name must be at least 2 characters")
+    //   .max(50, "Name must be less than 50 characters"),
 
-    email: Yup.string()
-      .email("Invalid email address")
-      .required("Email is required"),
+    // email: Yup.string()
+    //   .email("Invalid email address")
+    //   .required("Email is required"),
 
-    alternateEmail: Yup.string().email("Invalid email address").notRequired(),
+    // alternateEmail: Yup.string().email("Invalid email address").notRequired(),
 
-    phoneNumber: Yup.string()
-      .required("Phone number is required")
-      .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
+    // phoneNumber: Yup.string()
+    //   .required("Phone number is required")
+    //   .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
 
-    alternatePhoneNumber: Yup.string()
-      .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits")
-      .notRequired(),
+    // alternatePhoneNumber: Yup.string()
+    //   .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits")
+    //   .notRequired(),
 
-    dateOfbirth: Yup.date()
-      .required("Date of birth is required")
-      .max(new Date(), "Date of birth cannot be in the future"),
+    // dateOfbirth: Yup.date()
+    //   .required("Date of birth is required")
+    //   .max(new Date(), "Date of birth cannot be in the future"),
 
-    gender: Yup.string()
-      .oneOf(["male", "female", "other"], "Invalid gender")
-      .required("Gender is required"),
+    // gender: Yup.string()
+    //   .oneOf(["male", "female", "other"], "Invalid gender")
+    //   .required("Gender is required"),
 
     country: Yup.object({
-      id: Yup.string().required("Country is required"),
+      // id: Yup.string().required("Country is required"),
       countryName: Yup.string().required("Country name is required"),
     }),
 
     state: Yup.object({
-      id: Yup.string().required("State is required"),
+      // id: Yup.string().required("State is required"),
       stateName: Yup.string().required("State name is required"),
     }),
 
@@ -177,11 +193,43 @@ const MyProfilePopUp = ({ onHide, title, isUserData, fetchUserDetails }) => {
     }),
   });
 
-  const handelSave = (value) => {
-    console.log("values", value);
+  const handleSubmit = async (values) => {
+
+    values.country = {
+      id: isCountryId,
+      countryName:
+        isCountry.find((country) => country.id === isCountryId)?.country ||
+        values.country?.countryName,
+    };
+
+    values.state = {
+      id: isStateId,
+      stateName:
+        isState?.find((state) => state.id === isStateId)?.state ||
+        values?.state?.stateName,
+    };
+    delete values.role;
+
+    const result = await dispatch(
+      updateInstitutionalMemberDetails(userId, values)
+    );
+
+    if (result?.status === 200) {
+      setValCount(1);
+    }
   };
+  const [isstate, setisstate] = useState(false);
+
+  useEffect(() => {
+    if (valCount === 2) {
+      setisstate(true);
+    } else {
+      setisstate(false);
+    }
+  }, [valCount]);
+
   return (
-    <Modal onHide={onHide} size="xl" isClose={false}>
+    <Modal onHide={onHide} size="xl" isClose={isstate}>
       <div className="profile-modal-container">
         <p className="title-text">{`My Profile - ${title} Member`}</p>
 
@@ -233,8 +281,8 @@ const MyProfilePopUp = ({ onHide, title, isUserData, fetchUserDetails }) => {
         <Formik
           enableReinitialize
           initialValues={isUserData || initialValues}
-          // validationSchema={validationSchema}
-          onSubmit={handelSave}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
         >
           {(props) => {
             const {
@@ -246,6 +294,7 @@ const MyProfilePopUp = ({ onHide, title, isUserData, fetchUserDetails }) => {
             } = props;
             return (
               <from>
+                {console.log(errors, "errors")}
                 {valCount === 0 && (
                   <PersonalDetailsPopUp
                     setValCount={setValCount}
@@ -254,6 +303,19 @@ const MyProfilePopUp = ({ onHide, title, isUserData, fetchUserDetails }) => {
                     handleChange={handleChange}
                     handleSubmit={handleSubmit}
                     setFieldValue={setFieldValue}
+                    //
+                    isCountry={isCountry}
+                    setIsCountry={setIsCountry}
+                    isState={isState}
+                    setIsState={setIsState}
+                    isCity={isCity}
+                    setIsCity={setIsCity}
+                    isCountryId={isCountryId}
+                    setIdCountryId={setIdCountryId}
+                    isStateId={isStateId}
+                    setIsStateId={setIsStateId}
+                    departmentOfOrganization={departmentOfOrganization}
+                    setDepartmentOfOrganization={setDepartmentOfOrganization}
                   />
                 )}
                 {valCount === 1 && (

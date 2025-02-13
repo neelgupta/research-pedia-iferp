@@ -64,7 +64,6 @@ const PopupRegistration = ({show}) => {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
 
-console.log("show" ,show)
   if (!show) return null;
   return (
     <>

@@ -19,16 +19,22 @@ const PersonalDetailsPopUp = ({
   handleChange,
   errors,
   values,
+  // 
+  isCountry,
+  setIsCountry,
+  isState, 
+  setIsState,
+  isCity, 
+  setIsCity,
+  isCountryId, 
+  setIdCountryId,
+  isStateId,
+  setIsStateId,
+  departmentOfOrganization, 
+  setDepartmentOfOrganization,
 }) => {
+  
   const dispatch = useDispatch();
-
-  const [isCountry, setIsCountry] = useState([]);
-  const [isState, setIsState] = useState([]);
-  const [isCity, setIsCity] = useState([]);
-  const [isCountryId, setIdCountryId] = useState(values?.country?.id || "");
-  const [isStateId, setIsStateId] = useState(values?.state?.id || "");
-  const [departmentOfOrganization, setDepartmentOfOrganization] = useState([]);
-
   const fetchCountry = async () => {
     const result = await dispatch(getCountry());
     setIsCountry(result?.data?.response);
@@ -85,23 +91,23 @@ const PersonalDetailsPopUp = ({
     value: city.city,
   }));
 
-  const handleNext = async () => {
-    values.country = {
-      id: isCountryId,
-      countryName:
-        isCountry.find((country) => country.id === isCountryId)?.country ||
-        values.country?.countryName,
-    };
+  // const handleSubmit = async () => {
+  //   values.country = {
+  //     id: isCountryId,
+  //     countryName:
+  //       isCountry.find((country) => country.id === isCountryId)?.country ||
+  //       values.country?.countryName,
+  //   };
 
-    values.state = {
-      id: isStateId,
-      stateName:
-        isState.find((state) => state.id === isStateId)?.state ||
-        values?.state?.stateName,
-    };
+  //   values.state = {
+  //     id: isStateId,
+  //     stateName:
+  //       isState?.find((state) => state.id === isStateId)?.state ||
+  //       values?.state?.stateName,
+  //   };
 
-    setValCount(1);
-  };
+  //   setValCount(1);
+  // };
 
   useEffect(() => {
     fetchCountry();
@@ -118,8 +124,9 @@ const PersonalDetailsPopUp = ({
             className="h-45"
             placeholder="Institution"
             onChange={handleChange}
-            value={values.institutionDetails.instituion}
+            value={values?.institutionDetails?.instituion}
             id="institutionDetails.instituion"
+            error={errors.institutionDetails?.instituion}
           />
         </div>
         <div className="col-md-6">
@@ -127,8 +134,9 @@ const PersonalDetailsPopUp = ({
             className="h-45"
             placeholder="Institution email id"
             onChange={handleChange}
-            value={values.institutionDetails.institutionEmail}
+            value={values?.institutionDetails?.institutionEmail}
             id="institutionDetails.institutionEmail"
+            error={errors.institutionDetails?.institutionEmail}
           />
         </div>
         <div className="col-md-6">
@@ -136,8 +144,9 @@ const PersonalDetailsPopUp = ({
             className="h-45"
             placeholder="Institution contact number"
             onChange={handleChange}
-            value={values.institutionDetails.institutionContactNumber}
+            value={values?.institutionDetails?.institutionContactNumber}
             id="institutionDetails.institutionContactNumber"
+            error={errors.institutionDetails?.institutionContactNumber}
           />
         </div>
         <div className="col-md-6">
@@ -151,6 +160,7 @@ const PersonalDetailsPopUp = ({
               handleChange(e), setIdCountryId(e.target.data.id);
             }}
             value={values?.country?.countryName}
+            error={errors.country?.countryName}
           />
         </div>
         <div className="col-md-6">
@@ -164,6 +174,7 @@ const PersonalDetailsPopUp = ({
               handleChange(e), setIsStateId(e.target.data.id);
             }}
             value={values?.state?.stateName}
+            error={errors.state?.stateName}
           />
         </div>
         <div className="col-md-6">
@@ -177,6 +188,7 @@ const PersonalDetailsPopUp = ({
               handleChange(e);
             }}
             value={values?.city}
+            error={errors.city}
           />
         </div>
         <div className="col-md-6">
@@ -184,8 +196,9 @@ const PersonalDetailsPopUp = ({
             className="h-45"
             placeholder="No. of IFERP premium student members"
             onChange={handleChange}
-            value={values.institutionDetails.noOfPremiumStudent}
+            value={values?.institutionDetails?.noOfPremiumStudent}
             id="institutionDetails.noOfPremiumStudent"
+            error={errors.institutionDetails?.noOfPremiumStudent}
           />
         </div>
         <div className="col-md-6">
@@ -193,8 +206,9 @@ const PersonalDetailsPopUp = ({
             className="h-45"
             placeholder="No. of IFERP premium professional members"
             onChange={handleChange}
-            value={values.institutionDetails.noOfPremiumProfessional}
+            value={values?.institutionDetails?.noOfPremiumProfessional}
             id="institutionDetails.noOfPremiumProfessional"
+            error={errors.institutionDetails?.noOfPremiumProfessional}
           />
         </div>
         <div className="col-md-6">
@@ -202,8 +216,9 @@ const PersonalDetailsPopUp = ({
             className="h-45"
             placeholder="Strength of premium U.G. students"
             onChange={handleChange}
-            value={values.institutionDetails.strengthOfpremiumUGStudents}
+            value={values?.institutionDetails?.strengthOfpremiumUGStudents}
             id="institutionDetails.strengthOfpremiumUGStudents"
+            error={errors.institutionDetails?.strengthOfpremiumUGStudents}
           />
         </div>
         <div className="col-md-6">
@@ -211,8 +226,9 @@ const PersonalDetailsPopUp = ({
             className="h-45"
             placeholder="Strength of premium P.G. students"
             onChange={handleChange}
-            value={values.institutionDetails.strengthOfpremiumPGStudents}
+            value={values?.institutionDetails?.strengthOfpremiumPGStudents}
             id="institutionDetails.strengthOfpremiumPGStudents"
+            error={errors.institutionDetails?.strengthOfpremiumPGStudents}
           />
         </div>
         <div className="col-md-6">
@@ -220,8 +236,9 @@ const PersonalDetailsPopUp = ({
             className="h-45"
             placeholder="Strength of premium research scholars"
             onChange={handleChange}
-            value={values.institutionDetails.strengthOfpremiumResearchScholar}
+            value={values?.institutionDetails?.strengthOfpremiumResearchScholar}
             id="institutionDetails.strengthOfpremiumResearchScholar"
+            error={errors.institutionDetails?.strengthOfpremiumResearchScholar}
           />
         </div>
         <div className="col-md-6">
@@ -229,8 +246,9 @@ const PersonalDetailsPopUp = ({
             className="h-45"
             placeholder="Strength of Institution"
             onChange={handleChange}
-            value={values.institutionDetails.strengthOfinstitute}
+            value={values?.institutionDetails?.strengthOfinstitute}
             id="institutionDetails.strengthOfinstitute"
+            error={errors.institutionDetails?.strengthOfinstitute}
           />
         </div>
         <div className="col-md-6">
@@ -244,6 +262,7 @@ const PersonalDetailsPopUp = ({
               handleChange(e);
             }}
             value={values?.institutionDetails?.departmentOfOrganization}
+            error={errors.institutionDetails?.departmentOfOrganization}
           />
         </div>
 
@@ -256,13 +275,14 @@ const PersonalDetailsPopUp = ({
             acceptType={["png", "jpg", "jpeg"]}
             label="Upload Profile Image"
             isRequired={true}
-            value={values.profilePicture}
+            value={values?.profilePicture}
+            error={errors.profilePicture}
           />
           {values.profilePicture && (
             <div className="preview my-14">
               <h6>Preview</h6>
               <img
-                src={values.profilePicture}
+                src={values?.profilePicture}
                 alt="Profile Preview"
                 style={{
                   width: "150px",
@@ -279,7 +299,7 @@ const PersonalDetailsPopUp = ({
             <Button
               btnText="Continue"
               className="h-49 w-114"
-              onClick={handleNext}
+              onClick={handleSubmit}
               // onClick={() => {
               //   setValCount(1);
               // }}

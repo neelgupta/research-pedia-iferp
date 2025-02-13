@@ -7,10 +7,12 @@ const initialState = {
   authData: null,
   errorData: null,
   sidebarOpen: true,
+  isregisterpopup : false,
   isUserSide: false,
   isRightSide: false,
   rightSideObj: {},
   isTopics: false,
+  isModalOpen:false
 };
 
 const globalSlice = createSlice({
@@ -45,6 +47,9 @@ const globalSlice = createSlice({
     toggleSidebar(state, action) {
       state.sidebarOpen = action.payload;
     },
+    registermodel(state, action) {
+      state.isregisterpopup = action.payload;
+    },
     resetAllState(state) {
       state.authData = null;
       state.errorData = null;
@@ -52,6 +57,9 @@ const globalSlice = createSlice({
       state.isRightSide = false;
       state.rightSideObj = {};
     },
+    setIsModalOpen(state,action){
+      state.isModalOpen = action.payload
+    }
   },
 });
 
@@ -242,6 +250,8 @@ export const {
   setIsRightSide,
   setRightSideObj,
   setIsTopics,
+  registermodel,
+  setIsModalOpen
 } = globalSlice.actions;
 
 export default globalSlice.reducer;

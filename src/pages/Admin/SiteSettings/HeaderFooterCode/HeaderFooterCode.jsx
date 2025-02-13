@@ -19,6 +19,7 @@ const HeaderFooterCode = () => {
     footerCode: "",
   };
 
+  const [loading ,setloading] = useState(false)
 
   const validationSchema = Yup.object({
     headerCode: Yup.string()
@@ -42,10 +43,13 @@ const HeaderFooterCode = () => {
   };
 
   const handleSubmit = async (values) => {
+    setloading(true)
     const result = await dispatch(handleAddOrUpdateHeaderFooter(values));
     if (result.status === 200) {
       fetchHeaderFooter();
+      setloading(false)
     }
+    setloading(false)
   };
 
   useEffect(() => {
@@ -108,6 +112,7 @@ const HeaderFooterCode = () => {
                         onClick={handleSubmit}
                         btnText="Save"
                         className="BWP"
+                        loading={loading}
                       />
                     </div>
                   </div>
