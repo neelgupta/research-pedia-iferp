@@ -192,14 +192,14 @@ const FeedDetails = ({ popup }) => {
                   </div>
                 )}
 
-                <h4 className="post-title">
-                  {papers.title || papers?.paper_title || "null"}
-                </h4>
-                <p className="post-pra">
-                  {(papers.abstract && papers.abstract) ||
-                    (papers.paper_abstract && papers.paper_abstract) ||
-                    "null"}
-                </p>
+          <h4 className="post-title">
+            {papers.title || papers?.paper_title || "null"}
+          </h4>
+          <p className="post-pra">
+            {(papers.abstract && papers.abstract) ||
+              (papers.paper_abstract && papers.paper_abstract) ||
+              "null"}
+          </p>
 
                 {papers?.url && (
                   <div className="docs-box">
@@ -313,44 +313,44 @@ const FeedDetails = ({ popup }) => {
                             </p>
                           </div>
 
-                          <div
-                            className="d-text mt-4"
-                            onClick={() => {
-                              setOpenDropdown(false);
-                            }}
-                          >
-                            <h5 className="repost-text">Repost</h5>
-                            <p className="repost-pra">
-                              Instantly share this post with others
-                            </p>
-                          </div>
-                        </div>
-                      )}
+                    <div
+                      className="d-text mt-4"
+                      onClick={() => {
+                        setOpenDropdown(false);
+                      }}
+                    >
+                      <h5 className="repost-text">Repost</h5>
+                      <p className="repost-pra">
+                        Instantly share this post with others
+                      </p>
                     </div>
-                    <Button
-                      btnText="Ask Paper"
-                      btnStyle="BTB"
-                      className="h-43 ps-18 pe-18"
-                      leftIcon={icons.messageIcons}
-                      leftIconClass="h-16 w-16"
-                    />
-                    <Button
-                      btnText="Relevant"
-                      btnStyle="BTA"
-                      className="h-43 ps-18 pe-18"
-                      groupIcons={[
-                        { icon: icons.upThumIcons },
-                        { icon: icons.downThumIcons },
-                      ]}
-                      leftIconClass="h-16 w-16"
-                    />
-                    <Button
-                      btnText="Listen"
-                      btnStyle="BTA"
-                      className="h-43 ps-18 pe-18"
-                      leftIcon={icons.videoIcons}
-                      leftIconClass="h-16 w-16"
-                    />
+                  </div>
+                )}
+              </div>
+              <Button
+                btnText="Ask Paper"
+                btnStyle="BTB"
+                className="h-43 ps-18 pe-18"
+                leftIcon={icons.messageIcons}
+                leftIconClass="h-16 w-16"
+              />
+              <Button
+                btnText="Relevant"
+                btnStyle="BTA"
+                className="h-43 ps-18 pe-18"
+                groupIcons={[
+                  { icon: icons.upThumIcons },
+                  { icon: icons.downThumIcons },
+                ]}
+                leftIconClass="h-16 w-16"
+              />
+              <Button
+                btnText="Listen"
+                btnStyle="BTA"
+                className="h-43 ps-18 pe-18"
+                leftIcon={icons.videoIcons}
+                leftIconClass="h-16 w-16"
+              />
 
                     <Button
                       btnStyle="BTA"

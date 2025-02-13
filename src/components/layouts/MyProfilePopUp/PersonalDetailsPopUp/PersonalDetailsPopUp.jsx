@@ -21,7 +21,7 @@ import * as Yup from "yup";
 const PersonalDetailsPopUp = ({
   setValCount,
   setFieldValue,
-  // handleSubmit,
+  handleSubmit,
   handleChange,
   errors,
   setValues,
@@ -66,7 +66,6 @@ const PersonalDetailsPopUp = ({
     setIsCountry(result.data.response);
   };
 
-  console.log("UserData ->101 ", isUserData);
   const fetchState = async () => {
     if (isCountryId !== undefined) {
       const result = await dispatch(getState(isCountryId));

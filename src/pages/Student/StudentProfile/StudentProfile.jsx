@@ -20,7 +20,6 @@ const StudentProfile = () => {
   const fetchUserDetails = async () => {
     const result = await dispatch(getStudentMemberDetails(localData.roleId));
     setIsUserData(result?.data?.response);
-
   };
 
 
