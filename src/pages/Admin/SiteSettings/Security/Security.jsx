@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Security.scss";
 import Breadcrumb from "@/components/layouts/Breadcrumb";
 import { Button, TextInput } from "@/components";
@@ -6,6 +6,8 @@ import { icons } from "@/utils/constants/icon";
 import ReactQR from "react-qr-code";
 import { useDispatch } from "react-redux";
 import {
+  getCodeData,
+  getGeneratedCode,
   handleDownLoadExcelSheet,
   handleGenerateCode,
 } from "@/store/adminSlice/twoFASlice";
@@ -24,6 +26,25 @@ const Security = () => {
       setQrText(twoFaCode);
     }
   };
+
+  const fetchGeneratedCode = async()=>{
+    const result = await dispatch(getGeneratedCode());
+    setQrText(result.data.response)
+    console.log(result,"GENERATED CODZE");
+  }
+
+  const fetchData = async () => {
+    const result = await dispatch(getCodeData());
+    console.log("101" ,result.data.response[0].isGenerated)
+    setOpenQr(result.data.response[0].isGenerated)
+    console.log(result);
+  };
+
+  
+  useEffect(() => {
+    fetchData();
+    fetchGeneratedCode()
+  }, []);
 
   const handleDownloadExcel = async () => {
     try {
@@ -99,6 +120,7 @@ const Security = () => {
                         dispatch(handleCopy(qrText));
                       }}
                     >
+                    
                       <img src={icons?.copyIcons} alt="copy-icons" />
                     </div>
                   </div>

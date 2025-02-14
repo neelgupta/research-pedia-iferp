@@ -75,21 +75,24 @@ const Table = ({
 
   const rowOptions = generateRowOptions();
 
+
+  console.log(isOpen,"isOpen")
+
   return (
     <div id="table-container">
-      {/* <div className="top-title">
-        <p>{tableheader}</p>
-      </div> */}
 
       {istableaction && (
         <div className="table-search">
-          {/* {totalPages > 1 && ( */}
           {ispaginationcontrols && (
             <div className="pagination-controls">
               <div className="d-flex justify-content-end gap-md-5 gap-2 flex-wrap">
                 <div className="d-flex align-items-center gap-3">
-                  <div className="select" onClick={() => setIsOpen(!isOpen)}>
-                    <div className="f-center gap-2">
+                  <div
+                    className="select"
+                    onClick={() => setIsOpen(!isOpen)}
+                    style={{ display: "flex", justifyContent: "center" }}
+                  >
+                    <div className="f-center gap-2 ">
                       <div>{rowsPerPage}</div>
                       <div className="pointer w-14">
                         <img
@@ -97,15 +100,14 @@ const Table = ({
                           alt=""
                           className="fit-image"
                           style={{
-                            transform: isOpen
-                              ? "rotate(180deg)"
-                              : "rotate(0deg)",
+                            transform: isOpen ? "rotate(360deg)" : "rotate(0deg)",
+                            transition: "transform 0.3s", 
                           }}
                         />
                       </div>
                     </div>
                     {isOpen && (
-                      <div className="options">
+                      <div className="options brave-scroll">
                         {rowOptions.map((option) => (
                           <div
                             key={option}

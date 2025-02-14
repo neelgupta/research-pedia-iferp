@@ -237,7 +237,6 @@ export const Authdata = (id) => async (dispatch) => {
   try {
     const res = await api.get(
       `/user/authorsPaper?authorId=${id}`,
-   
       {}
     );
     // if (res?.status === 200) {

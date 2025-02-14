@@ -14,26 +14,26 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
   const dispatch = useDispatch();
   const reduxdata = useSelector((state) => state.global.sidebarOpen);
   const admin = [
-    {
-      title: "Manage Users",
-      url: "/admin/manage-users",
-      icon: icons.inactivegroup,
-      activeIcons: icons.group,
-      childoption: [
-        { title: "List Users", url: "/admin/manage-users/list-user" },
-        { title: "User Reports", url: "/admin/manage-users/reports" },
-      ],
-    },
-    {
-      title: "Staff Management",
-      url: "/admin/staff",
-      icon: icons.staff,
-      activeIcons: icons.staffisactive,
-      childoption: [
-        { title: "Administrator User",  url: "/admin/staff/administrator-user" },
-        { title: "Administrator Roles", url: "/admin/staff/administrator-roles" },
-      ],
-    },
+    // {
+    //   title: "Manage Users",
+    //   url: "/admin/manage-users",
+    //   icon: icons.inactivegroup,
+    //   activeIcons: icons.group,
+    //   childoption: [
+    //     { title: "List Users", url: "/admin/manage-users/list-user" },
+    //     { title: "User Reports", url: "/admin/manage-users/reports" },
+    //   ],
+    // },
+    // {
+    //   title: "Staff Management",
+    //   url: "/admin/staff",
+    //   icon: icons.staff,
+    //   activeIcons: icons.staffisactive,
+    //   childoption: [
+    //     { title: "Administrator User",  url: "/admin/staff/administrator-user" },
+    //     { title: "Administrator Roles", url: "/admin/staff/administrator-roles" },
+    //   ],
+    // },
     {
       title: "Site Settings",
       url: "/admin/setting",
@@ -46,36 +46,36 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
         { title: "Header/Footer Code", url: "/admin/setting/header-footer" },
       ],
     },
-    {
-      title: "Feedback",
-      url: "/admin/feedback",
-      icon: icons.feedback,
-      activeIcons: icons.feedbackactive,
-    },
-    {
-      title: "Banner Ads",
-      url: "/admin/ads",
-      icon: icons.Ads,
-      activeIcons: icons.Ads,
-    },
-    {
-      title: "Premium Plan",
-      url: "/admin/plan",
-      icon: icons.plan,
-      activeIcons: icons.plainactive,
-    },
-    {
-      title: "API Keys",
-      url: "/admin/apikey",
-      icon: icons.api,
-      activeIcons: icons.apiactive,
-    },
-    {
-      title: "Reports",
-      url: "/admin/report",
-      icon: icons.report,
-      activeIcons: icons.reportactive,
-    },
+    // {
+    //   title: "Feedback",
+    //   url: "/admin/feedback",
+    //   icon: icons.feedback,
+    //   activeIcons: icons.feedbackactive,
+    // },
+    // {
+    //   title: "Banner Ads",
+    //   url: "/admin/ads",
+    //   icon: icons.Ads,
+    //   activeIcons: icons.Ads,
+    // },
+    // {
+    //   title: "Premium Plan",
+    //   url: "/admin/plan",
+    //   icon: icons.plan,
+    //   activeIcons: icons.plainactive,
+    // },
+    // {
+    //   title: "API Keys",
+    //   url: "/admin/apikey",
+    //   icon: icons.api,
+    //   activeIcons: icons.apiactive,
+    // },
+    // {
+    //   title: "Reports",
+    //   url: "/admin/report",
+    //   icon: icons.report,
+    //   activeIcons: icons.reportactive,
+    // },
   ];
 
   const handleTabClick = (index) => {
