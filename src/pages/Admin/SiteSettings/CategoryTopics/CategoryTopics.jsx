@@ -97,7 +97,6 @@ const CategoryTopics = () => {
         return {};
     }
   };
-
   const rowData = [];
   isTopicList?.forEach((elem, index) => {
     const { topics, priority, category, _id } = elem;
@@ -135,7 +134,10 @@ const CategoryTopics = () => {
       },
       {
         value: (
-          <div className="wp-100 pe-10 pe-50">
+          <div
+            className="wp-100 pe-10 pe-50"
+ 
+          >
             <Dropdown
               id="priority"
               optionLabel="label"
@@ -150,7 +152,8 @@ const CategoryTopics = () => {
           </div>
         ),
         className: "wp-20 justify-content-start flex-wrap pointer",
-      },
+      }
+      
     ];
     rowData.push({ data: obj });
   });
