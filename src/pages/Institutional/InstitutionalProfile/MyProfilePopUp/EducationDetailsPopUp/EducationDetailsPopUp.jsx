@@ -20,7 +20,6 @@ const EducationDetailsPopUp = ({
   values,
   fetchUserDetails,
 }) => {
-
   const dispatch = useDispatch();
   const localData = getDataFromLocalStorage();
   const userId = localData.roleId;
