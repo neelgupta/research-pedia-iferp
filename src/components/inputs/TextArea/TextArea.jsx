@@ -21,7 +21,9 @@ const TextArea = ({
   className,
   startClass,
   isEdit,
+  resize,
 }) => {
+  const textareaStyles = resize ? { resize: "none" } : {};
   return (
     <div id="textarea-container">
       {label && (
@@ -42,6 +44,7 @@ const TextArea = ({
                 },
               });
             }}
+            style={textareaStyles}
           />
         </div>
         {error && <div className="input-error">{error}</div>}

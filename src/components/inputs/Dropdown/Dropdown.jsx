@@ -24,18 +24,27 @@ const Dropdown = ({
   startClass,
   labelClass,
   className,
-  
+  onlyone,
 }) => {
   const optId = optionKey || "id";
   const optVal = optionLabel || "label";
-  
+
   let fillValue = options?.find((o) => `${o?.[optId]}` === `${value}`);
+
+  if (onlyone && fillValue) {
+    const pTagChildren = fillValue[optVal]?.props?.children?.[0];
+    fillValue = {
+      ...fillValue,
+      [optVal]: pTagChildren || fillValue[optVal],
+    };
+  }
+
   if (!fillValue) {
     fillValue = null;
   }
-  
+
   return (
-    <div id={`dropdown-container`} >
+    <div id={`dropdown-container`}>
       {label && (
         <Label
           label={label}
@@ -77,6 +86,28 @@ const Dropdown = ({
                 data: e,
               },
             });
+          }}
+          styles={{
+            option: (base, { data }) => ({
+              ...base,
+              color:
+                data.value === "high"
+                  ? "#FA4520"
+                  : data.value === "low"
+                    ? "#B89137"
+                    : data.value === "medium"
+                      ? "#178368"
+                      : "var(--0000)",
+              backgroundColor: "transparent",
+
+              "&:hover": {
+                backgroundColor: "transparent",
+              },
+            }),
+            singleValue: (base) => ({
+              ...base,
+              color: className,
+            }),
           }}
         />
         {error && <div className="input-error">{error}</div>}

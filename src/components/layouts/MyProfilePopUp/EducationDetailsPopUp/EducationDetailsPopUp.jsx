@@ -77,7 +77,7 @@ const EducationDetailsPopUp = ({
   const [loadingSkip, setloadingSkip] = useState(false);
 
   const handleSkip = async () => {
-// dispatch(registermodel(!reduxdata))
+    // dispatch(registermodel(!reduxdata))
     setloadingSkip(true);
     delete values.role;
 
@@ -311,31 +311,34 @@ const EducationDetailsPopUp = ({
                   value={values.researchDetails?.researchIntrest?.comments}
                   className="h-45"
                   placeholder="Comments if any"
+                  resize={true}
                 />
               </div>
-              <div className="col-12">
-                <div className="d-flex justify-content-end mt-10 gap-3">
-                  <Button
-                    btnText="Previous"
-                    btnStyle="Lb"
-                    className="h-49 w-114"
-                    onClick={() => {
-                      setValCount(0);
-                    }}
-                  />
-                  <Button
-                    btnText="Skip"
-                    btnStyle="LBA"
-                    className="h-49 w-114"
-                    onClick={handleSkip}
-                    loading={loadingSkip}
-                  />
-                  <Button
-                    btnText="Continue"
-                    className="h-49 w-114"
-                    onClick={handleSubmit}
-                    loading={loadingSubmit}
-                  />
+              <div className="mt-60">
+                <div className="col-12">
+                  <div className="d-flex justify-content-end mt-10 gap-3">
+                    <Button
+                      btnText="Previous"
+                      //  btnStyle="Lb"
+                      className="h-49 w-114"
+                      onClick={() => {
+                        setValCount(0);
+                      }}
+                    />
+                    <Button
+                      btnText="Skip"
+                      btnStyle="LBA"
+                      className="h-49 w-114"
+                      onClick={handleSkip}
+                      loading={loadingSkip}
+                    />
+                    <Button
+                      btnText="Continue"
+                      className="h-49 w-114"
+                      onClick={handleSubmit}
+                      loading={loadingSubmit}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

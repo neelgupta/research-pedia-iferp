@@ -124,13 +124,16 @@ const UserSignup = () => {
                             onChange={(e) =>
                               setFieldValue("role", e.target.value)
                             }
+                            onlyone
                             options={[
                               {
                                 id: "professional",
                                 label: (
                                   <div>
-                                    <p>Professional Member</p>
-                                    <span>
+                                    <p className="text-14-400 color-3333">
+                                      Professional Member
+                                    </p>
+                                    <span className="text-12-400 color-6B74">
                                       Academicians, Researchers, Corporate
                                       Individuals
                                     </span>
@@ -141,8 +144,12 @@ const UserSignup = () => {
                                 id: "student",
                                 label: (
                                   <div>
-                                    <p>Student Member</p>
-                                    <span>UG, PG Students</span>
+                                    <p className="text-14-400 color-3333">
+                                      Student Member
+                                    </p>
+                                    <span className="text-12-400 color-6B74">
+                                      UG, PG Students
+                                    </span>
                                   </div>
                                 ),
                               },
@@ -150,8 +157,10 @@ const UserSignup = () => {
                                 id: "institutional",
                                 label: (
                                   <div>
-                                    <p>Institutional Member</p>
-                                    <span>
+                                    <p className="text-14-400 color-3333">
+                                      Institutional Member
+                                    </p>
+                                    <span className="text-12-400 color-6B74">
                                       Universities / Colleges / Institutions
                                     </span>
                                   </div>

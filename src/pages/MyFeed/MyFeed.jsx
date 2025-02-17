@@ -10,7 +10,8 @@ import {
   handleGetCategories,
   handleGetTopics,
 } from "@/store/adminSlice/categoryAndTopics";
-import { Spinner } from "react-bootstrap"; // Importing Spinner component
+import MyFeedmodel from "./MyFeedmodel";
+import { Spinner } from "react-bootstrap";
 
 const MyFeed = () => {
   const navigate = useNavigate();
@@ -46,75 +47,93 @@ const MyFeed = () => {
     icon: icons?.rectangleIcons,
   }));
 
+  const [isOpenModal, setIsOpenModal] = useState(true);
+  const onHide = () => {
+    setIsOpenModal(false);
+  };
   return (
-    <div className="my-feed-container">
-      <UserNavbar />
-      <div className="center-content rearchPedia-scroll">
-        <h6 className="welcome-text text-capitalize">👋 Welcome {name}!</h6>
-        <h4 className="prom-text">Let’s begin your resource journey!</h4>
-        <p className="feed-text">
-          Select your research area to help us setup your feed
-        </p>
+    <>
+      <div className="my-feed-container">
+        <UserNavbar />
+        <div className="center-content rearchPedia-scroll">
+          <h6 className="welcome-text text-capitalize">👋 Welcome {name}!</h6>
+          <h4 className="prom-text">Let’s begin your resource journey!</h4>
+          <p className="feed-text">
+            Select your research area to help us setup your feed
+          </p>
 
-        <div className="card-box">
-          {feedlodder ? (
-            <div className="spinner-container d-flex justify-content-center">
-              <Spinner animation="border" variant="primary" />
-            </div>
-          ) : (
-            <div className="row gy-4">
-              {feedList?.map((ele, index) => {
-                const iaActiveCard = isActive === ele?.id;
-                return (
-                  <div
-                    key={index}
-                    className="col-lg-3 col-md-4 pointer"
-                    onClick={() => {
-                      setIsActive(ele);
-                      setTimeout(() => {
-                        navigate(`/create-feed`, {
-                          state: {
-                            title: ele,
-                          },
-                        });
-                      }, 1000);
-                    }}
-                  >
-                    <div
-                      className={`${iaActiveCard ? "card-details" : "default-card"}`}
-                    >
-                      <div className="image-div">
-                        <img src={ele.icon} alt="Image1" />
-                      </div>
-                      <h5
-                        className={`feed-name-text ${iaActiveCard ? "b-text" : ""}`}
+          <div className="card-box">
+            {feedlodder ? (
+              <div className="spinner-container d-flex justify-content-center">
+                <Spinner animation="border" variant="primary" />
+              </div>
+            ) : (
+              <div
+                style={{
+                  height: "550px",
+
+                  overflow: "auto",
+                  overflowX: "none",
+                }}
+                className="brave-scroll m-10 mb-10"
+              >
+                <div className="row gy-4">
+                  {feedList?.map((ele, index) => {
+                    const iaActiveCard = isActive === ele?.id;
+                    return (
+                      <div
+                        key={index}
+                        className="col-lg-3 col-md-4 pointer"
+                        onClick={() => {
+                          setIsActive(ele);
+                          setTimeout(() => {
+                            navigate(`/create-feed`, {
+                              state: {
+                                title: ele,
+                              },
+                            });
+                          }, 1000);
+                        }}
                       >
-                        {ele.title}
-                      </h5>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
+                        <div
+                          className={`${iaActiveCard ? "card-details" : "default-card"}`}
+                        >
+                          <div className="image-div">
+                            <img src={ele.icon} alt="Image1" />
+                          </div>
+                          <h5
+                            className={`feed-name-text ${iaActiveCard ? "b-text" : ""}`}
+                          >
+                            {ele.title}
+                          </h5>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
 
-          <div className="step-box">
-            <p
-              className="mb-0 text-14-500 color-113D pointer"
-              onClick={() => navigate("/create-feed")}
-            >
-              Skip this step
-            </p>
-            <img
-              src={icons?.rightArrowIcons}
-              alt="right-icons"
-              loading="lazy"
-            />
+            <div className="step-box">
+              <p
+                className="mb-0 text-14-500 color-113D pointer"
+                onClick={() => navigate("/create-feed")}
+              >
+                Skip this step
+              </p>
+              <img
+                src={icons?.rightArrowIcons}
+                alt="right-icons"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
+        <FeedFooter />
       </div>
-      <FeedFooter />
-    </div>
+
+      {isOpenModal && <MyFeedmodel onHide={onHide} />}
+    </>
   );
 };
 

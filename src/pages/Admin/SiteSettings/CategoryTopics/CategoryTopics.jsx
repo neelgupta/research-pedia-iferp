@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "./CategoryTopics.scss";
-import {  Dropdown } from "@/components";
+import { Dropdown } from "@/components";
 import Breadcrumb from "@/components/layouts/Breadcrumb";
 import Table from "@/components/layouts/Table";
 import {
@@ -25,7 +25,7 @@ const CategoryTopics = () => {
     { value: "low", label: "Low" },
   ];
 
-  const [selectedPriority,setSelectedPriority] = useState("")
+  const [selectedPriority, setSelectedPriority] = useState("");
   const fetchTopics = async (debouncedSearchTerm = "") => {
     setloadding(true);
     const result = await dispatch(
@@ -41,8 +41,7 @@ const CategoryTopics = () => {
   };
 
   const handlePriorityChange = async (selectedOption, id) => {
-
-    setSelectedPriority(selectedOption)
+    setSelectedPriority(selectedOption);
     const updateData = {
       priority: selectedOption,
     };
@@ -88,21 +87,18 @@ const CategoryTopics = () => {
   ];
 
   const getPriorityStyle = (selectedPriority) => {
-
-    console.log(selectedPriority,"selectedPriority")
     switch (selectedPriority) {
       case "high":
-        return  "dc35" ; 
+        return "#FA4520";
       case "medium":
-        return "dc35"; 
+        return "#B89137";
       case "low":
-        return "dc35"; 
+        return "#178368";
       default:
         return {};
     }
   };
-  
-  
+
   const rowData = [];
   isTopicList?.forEach((elem, index) => {
     const { topics, priority, category, _id } = elem;
@@ -140,10 +136,7 @@ const CategoryTopics = () => {
       },
       {
         value: (
-          <div
-            className="wp-100 pe-10 pe-50"
- 
-          >
+          <div className="wp-100 pe-10 pe-50">
             <Dropdown
               id="priority"
               optionLabel="label"
@@ -151,14 +144,14 @@ const CategoryTopics = () => {
               value={priority}
               options={priorityOption}
               onChange={(e) => handlePriorityChange(e.target.data.value, _id)}
-             className={`color-${getPriorityStyle(priority)}`}
-              //style={getPriorityStyle(priority)} 
+              // className={`color-${getPriorityStyle(priority)}`}
+              // style={{ color: getPriorityStyle(priority) }}
+              className={getPriorityStyle(priority)}
             />
           </div>
         ),
         className: "wp-20 justify-content-start flex-wrap pointer",
-      }
-      
+      },
     ];
     rowData.push({ data: obj });
   });

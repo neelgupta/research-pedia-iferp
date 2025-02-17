@@ -20,11 +20,10 @@ const EducationDetailsPopUp = ({
   values,
   fetchUserDetails,
 }) => {
-
   const dispatch = useDispatch();
   const localData = getDataFromLocalStorage();
   const userId = localData.roleId;
- const [phonedropdown, setphonedropdown] = useState("+91");
+  const [phonedropdown, setphonedropdown] = useState("+91");
   const handleNext = async () => {
     delete values.role;
     const result = await dispatch(
@@ -94,24 +93,26 @@ const EducationDetailsPopUp = ({
             onDropdownChange={(selected) => setphonedropdown(selected)}
           />
         </div>
-        <div className="col-12">
-          <div className="d-flex justify-content-end mt-10 gap-3">
-            <Button
-              btnText="Previous"
-              btnStyle="Lb"
-              className="h-49 w-114"
-              onClick={() => {
-                setValCount(0);
-              }}
-            />
-            <Button
-              btnText="Continue"
-              className="h-49 w-114"
-              onClick={handleNext}
-              // onClick={() => {
-              //   setValCount(2);
-              // }}
-            />
+        <div className="">
+          <div className="col-12 ">
+            <div className="d-flex justify-content-end mt-10 gap-3">
+              <Button
+                btnText="Previous"
+                // btnStyle="Lb"
+                className="h-49 w-114"
+                onClick={() => {
+                  setValCount(0);
+                }}
+              />
+              <Button
+                btnText="Continue"
+                className="h-49 w-114"
+                onClick={handleNext}
+                // onClick={() => {
+                //   setValCount(2);
+                // }}
+              />
+            </div>
           </div>
         </div>
       </div>

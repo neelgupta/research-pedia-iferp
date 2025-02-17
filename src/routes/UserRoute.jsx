@@ -3,16 +3,18 @@ import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { getDataFromLocalStorage } from "@/utils/helpers";
 import { Spinner } from "react-bootstrap";
 import PopupRegistration from "@/pages/User/PopupRegistration/PopupRegistration";
+import MyFeed from "@/pages/MyFeed";
+import CreateFeed from "@/pages/CreateFeed";
 
 // Lazy load components
-const CreateFeed = lazy(() => import("@/pages/CreateFeed"));
+
 const FeedDetails = lazy(() => import("@/pages/FeedDetails"));
 const FeedDetailsAuthor = lazy(() => import("@/pages/FeedDetailsAuthor"));
 const InstitutionalProfile = lazy(
   () => import("@/pages/Institutional/InstitutionalProfile")
 );
 const UserLayout = lazy(() => import("@/pages/Layout/UserLayout"));
-const MyFeed = lazy(() => import("@/pages/MyFeed"));
+// const MyFeed = lazy(() => import("@/pages/MyFeed"));
 const StudentProfile = lazy(() => import("@/pages/Student/StudentProfile"));
 const ProfessionalMemberProfile = lazy(
   () => import("@/pages/User/ProfessionalMemberProfile")
@@ -95,6 +97,7 @@ export const UserRoutes = () => {
           />
         );
       })}
+
       <Route path="*" element={<Navigate to="/" />} />
       <Route path="/my-feed" element={<MyFeed />} />
       <Route path="/create-feed" element={<CreateFeed />} />

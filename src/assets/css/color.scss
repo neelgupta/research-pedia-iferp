@@ -137,14 +137,14 @@
     --f0ad: #F0AD27;
 
 
-    --dada: #DADAEC
-    --e0e9: #E0E9F480;
-    --3D8A : #3D8A56;
-    --56B5 : #56B5734D;
-    --FF9E : #FF9E004D;
-    --E944 :#E944634D;
-    --B333 : #B3334C4D
-    --B3334 : #B3334C;
+    --dada: #DADAEC --e0e9: #E0E9F480;
+    --3D8A: #3D8A56;
+    --56B5: #56B5734D;
+    --FF9E: #FF9E004D;
+    --E944: #E944634D;
+    --B333: #B3334C4D --B3334: #B3334C;
+
+    --6B74: #6B748E
 }
 
 $colors: (
@@ -279,8 +279,9 @@ $colors: (
     'FF9E' :var(--FF9E),
     'E944' :var(--E944),
     'B333' :var(--B333),
-   
- );
+
+    '6B74' : var(--6B74)
+);
 
 @each $name, $color in $colors {
     .color-#{$name} {

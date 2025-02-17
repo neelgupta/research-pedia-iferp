@@ -48,7 +48,11 @@ const SelectPlan = ({ setValCount }) => {
       <div className="plan-box ">
         {planDetails?.map((ele, index) => {
           return (
-            <div key={index} className="main-card border" style={{borderRadius : "12px"}}>
+            <div
+              key={index}
+              className="main-card border"
+              style={{ borderRadius: "12px" }}
+            >
               <div
                 className={` ${isSelect === ele?.id ? "popular" : "plan-card"} ${ele.isPopular ? "justify-content-start" : ""}`}
               >
@@ -120,7 +124,7 @@ const SelectPlan = ({ setValCount }) => {
           btnStyle="LBA"
           className="h-49 w-114"
           onClick={() => {
-            setValCount(2);
+            navigate("/my-feed");
           }}
         />
         <Button

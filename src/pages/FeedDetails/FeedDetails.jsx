@@ -94,7 +94,7 @@ const FeedDetails = ({ popup }) => {
   const fetchTopPapers = async () => {
     setpaperloader(true);
     // const neQuery = ["Architecture", "science"]; For Testing
-    
+
     const query = `topics=${topicList}&limit=${rowsPerPage}&page=${currentPage}`;
     if (topicList.length > 0) {
       const result = await dispatch(getTopPapers(query));
@@ -159,7 +159,6 @@ const FeedDetails = ({ popup }) => {
     navigate("/feed-details-author", { state: paperId });
   };
 
-
   const renderPapers = (papers) => {
     return (
       <div>
@@ -167,210 +166,210 @@ const FeedDetails = ({ popup }) => {
           {activeTab === "topPapers" ? "Recommended for you" : "Conference"}
         </div> */}
 
-        {
-  papers.length > 0 ? (
-    papers.map((papers, index) => {
-      return (
-        <div className="feed-published-box card-d mt-18 pointer" key={index}>
-          {currentYear === papers.year && (
-            <div className="fb-center">
-              <div className="post-published">
-                <img
-                  src={icons?.lightIcons}
-                  alt="light-icon"
-                  loading="lazy"
-                  className="h-12 w-12 object-fit-contain"
-                />
-                <p className="text-b">Just Published</p>
-              </div>
-              <div>
-                <img
-                  src={icons?.actionIcons}
-                  alt="action-icons"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-          )}
-
-          <h4 className="post-title">
-            {papers.title || papers?.paper_title || "null"}
-          </h4>
-          <p className="post-pra">
-            {(papers.abstract && papers.abstract) ||
-              (papers.paper_abstract && papers.paper_abstract) ||
-              "null"}
-          </p>
-
-          {papers?.url && (
-            <div className="docs-box">
-              <img
-                src={icons?.docsIcons}
-                alt="docs-icons"
-                loading="lazy"
-              />
-              <p className="docs-title">
-                <a
-                  href={papers?.url}
-                  className="docs-title hover-link"
-                  target="_blank"
-                >
-                  {papers?.url || "-"}
-                </a>
-              </p>
-            </div>
-          )}
-
-          <div className="post-details flex-wrap mt-8 gap-2">
-            <div className="fa-center gap-1">
-              <img
-                src={icons?.userTwoIcons}
-                alt="docs-icons"
-                loading="lazy"
-                className="h-20 w-20 rounded-circle"
-              />
-              <p className="docs-title">
-                {papers?.authors && papers.authors.length > 0 ? (
-                  <>
-                    {papers.authors[0].name}
-                    {papers.authors.length > 1 &&
-                       ` +${papers.authors.length - 1}`}
-                  </>
-                ) : papers?.author_name ? (
-                  papers.author_name
-                ) : (
-                  "No Authors"
-                )}
-              </p>
-            </div>
-            <div className="fa-center gap-md-2 gap-2">
-              <div className="fa-center gap-1">
-                <img
-                  src={icons?.calenderIcons}
-                  alt="docs-icons"
-                  loading="lazy"
-                  className="h-16 w-16 object-fit-contain"
-                />
-                <p className="docs-title">
-                  {papers.abstract_id
-                    ? moment(papers.created_at).format("MMM DD,YYYY")
-                    : papers.year}
-                </p>
-              </div>
-              <img
-                src={icons?.dotIcons}
-                alt="docs-icons"
-                loading="lazy"
-                className="h-5 w-5"
-              />
-              <div className="fa-center gap-1">
-                <img
-                  src={icons?.eyeIcons}
-                  alt="docs-icons"
-                  loading="lazy"
-                  className="h-16 w-16 object-fit-contain"
-                />
-                <p className="docs-title">31 Views</p>
-              </div>
-            </div>
-          </div>
-          <div className="fb-center mt-24 gap-3">
-            <Button
-              btnText="Read Paper"
-              btnStyle="LBA"
-              className="h-43 ps-18 pe-18"
-              leftIcon={icons.bookIcons}
-              leftIconClass="h-16 w-16"
-              onClick={() => {
-                handleReadPaper({
-                  paperId: papers.paperId,
-                  abstractId: papers.abstract_id || papers.abstractId,
-                });
-              }}
-            />
-            <div className="fa-center gap-3">
-              <div className="d-p">
-                <Button
-                  btnText="Reposted"
-                  btnStyle="BTA"
-                  className="h-43 ps-18 pe-18"
-                  leftIcon={icons.reloadIcons}
-                  leftIconClass="h-16 w-16"
-                  onClick={() => handleDropdownToggle(index)}
-                />
-                {openDropdown === index && (
-                  <div className="dropdown-menus" ref={dropdownRef}>
-                    <div
-                      className="d-text"
-                      onClick={() => {
-                        setOpenDropdown(null);
-                      }}
-                    >
-                      <h5 className="repost-text">
-                        Repost with your thoughts
-                      </h5>
-                      <p className="repost-pra">
-                        Share this post and your thoughts about it
-                      </p>
+        {papers.length > 0 ? (
+          papers.map((papers, index) => {
+            return (
+              <div
+                className="feed-published-box card-d mt-18 pointer"
+                key={index}
+              >
+                {currentYear === papers.year && (
+                  <div className="fb-center">
+                    <div className="post-published">
+                      <img
+                        src={icons?.lightIcons}
+                        alt="light-icon"
+                        loading="lazy"
+                        className="h-12 w-12 object-fit-contain"
+                      />
+                      <p className="text-b">Just Published</p>
                     </div>
-
-                    <div
-                      className="d-text mt-4"
-                      onClick={() => {
-                        setOpenDropdown(false);
-                      }}
-                    >
-                      <h5 className="repost-text">Repost</h5>
-                      <p className="repost-pra">
-                        Instantly share this post with others
-                      </p>
+                    <div>
+                      <img
+                        src={icons?.actionIcons}
+                        alt="action-icons"
+                        loading="lazy"
+                      />
                     </div>
                   </div>
                 )}
+
+                <h4 className="post-title">
+                  {papers.title || papers?.paper_title || "null"}
+                </h4>
+                <p className="post-pra">
+                  {(papers.abstract && papers.abstract) ||
+                    (papers.paper_abstract && papers.paper_abstract) ||
+                    "null"}
+                </p>
+
+                {papers?.url && (
+                  <div className="docs-box">
+                    <img
+                      src={icons?.docsIcons}
+                      alt="docs-icons"
+                      loading="lazy"
+                    />
+                    <p className="docs-title">
+                      <a
+                        href={papers?.url}
+                        className="docs-title hover-link"
+                        target="_blank"
+                      >
+                        {papers?.url || "-"}
+                      </a>
+                    </p>
+                  </div>
+                )}
+
+                <div className="post-details flex-wrap mt-8 gap-2">
+                  <div className="fa-center gap-1">
+                    <img
+                      src={icons?.userTwoIcons}
+                      alt="docs-icons"
+                      loading="lazy"
+                      className="h-20 w-20 rounded-circle"
+                    />
+                    <p className="docs-title">
+                      {papers?.authors && papers.authors.length > 0 ? (
+                        <>
+                          {papers.authors[0].name}
+                          {papers.authors.length > 1 &&
+                            ` +${papers.authors.length - 1}`}
+                        </>
+                      ) : papers?.author_name ? (
+                        papers.author_name
+                      ) : (
+                        "No Authors"
+                      )}
+                    </p>
+                  </div>
+                  <div className="fa-center gap-md-2 gap-2">
+                    <div className="fa-center gap-1">
+                      <img
+                        src={icons?.calenderIcons}
+                        alt="docs-icons"
+                        loading="lazy"
+                        className="h-16 w-16 object-fit-contain"
+                      />
+                      <p className="docs-title">
+                        {papers.abstract_id
+                          ? moment(papers.created_at).format("MMM DD,YYYY")
+                          : papers.year}
+                      </p>
+                    </div>
+                    <img
+                      src={icons?.dotIcons}
+                      alt="docs-icons"
+                      loading="lazy"
+                      className="h-5 w-5"
+                    />
+                    <div className="fa-center gap-1">
+                      <img
+                        src={icons?.eyeIcons}
+                        alt="docs-icons"
+                        loading="lazy"
+                        className="h-16 w-16 object-fit-contain"
+                      />
+                      <p className="docs-title">31 Views</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="fb-center mt-24 gap-3">
+                  <Button
+                    btnText="Read Paper"
+                    btnStyle="LBA"
+                    className="h-43 ps-18 pe-18"
+                    leftIcon={icons.bookIcons}
+                    leftIconClass="h-16 w-16"
+                    onClick={() => {
+                      handleReadPaper({
+                        paperId: papers.paperId,
+                        abstractId: papers.abstract_id || papers.abstractId,
+                      });
+                    }}
+                  />
+                  <div className="fa-center gap-3">
+                    <div className="d-p">
+                      <Button
+                        btnText="Reposted"
+                        btnStyle="BTA"
+                        className="h-43 ps-18 pe-18"
+                        leftIcon={icons.reloadIcons}
+                        leftIconClass="h-16 w-16"
+                        onClick={() => handleDropdownToggle(index)}
+                      />
+                      {openDropdown === index && (
+                        <div className="dropdown-menus" ref={dropdownRef}>
+                          <div
+                            className="d-text"
+                            onClick={() => {
+                              setOpenDropdown(null);
+                            }}
+                          >
+                            <h5 className="repost-text">
+                              Repost with your thoughts
+                            </h5>
+                            <p className="repost-pra">
+                              Share this post and your thoughts about it
+                            </p>
+                          </div>
+
+                          <div
+                            className="d-text mt-4"
+                            onClick={() => {
+                              setOpenDropdown(false);
+                            }}
+                          >
+                            <h5 className="repost-text">Repost</h5>
+                            <p className="repost-pra">
+                              Instantly share this post with others
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    <Button
+                      btnText="Ask Paper"
+                      btnStyle="BTB"
+                      className="h-43 ps-18 pe-18"
+                      leftIcon={icons.messageIcons}
+                      leftIconClass="h-16 w-16"
+                    />
+                    <Button
+                      btnText="Relevant"
+                      btnStyle="BTA"
+                      className="h-43 ps-18 pe-18"
+                      groupIcons={[
+                        { icon: icons.upThumIcons },
+                        { icon: icons.downThumIcons },
+                      ]}
+                      leftIconClass="h-16 w-16"
+                    />
+                    <Button
+                      btnText="Listen"
+                      btnStyle="BTA"
+                      className="h-43 ps-18 pe-18"
+                      leftIcon={icons.videoIcons}
+                      leftIconClass="h-16 w-16"
+                    />
+
+                    <Button
+                      btnStyle="BTA"
+                      className="h-43 ps-18 pe-18"
+                      leftIcon={icons.saveIcons}
+                      leftIconClass="h-16 w-16"
+                    />
+                  </div>
+                </div>
               </div>
-              <Button
-                btnText="Ask Paper"
-                btnStyle="BTB"
-                className="h-43 ps-18 pe-18"
-                leftIcon={icons.messageIcons}
-                leftIconClass="h-16 w-16"
-              />
-              <Button
-                btnText="Relevant"
-                btnStyle="BTA"
-                className="h-43 ps-18 pe-18"
-                groupIcons={[
-                  { icon: icons.upThumIcons },
-                  { icon: icons.downThumIcons },
-                ]}
-                leftIconClass="h-16 w-16"
-              />
-              <Button
-                btnText="Listen"
-                btnStyle="BTA"
-                className="h-43 ps-18 pe-18"
-                leftIcon={icons.videoIcons}
-                leftIconClass="h-16 w-16"
-              />
-
-              <Button
-                btnStyle="BTA"
-                className="h-43 ps-18 pe-18"
-                leftIcon={icons.saveIcons}
-                leftIconClass="h-16 w-16"
-              />
-            </div>
+            );
+          })
+        ) : (
+          <div className="no-papers">
+            <p>Paper not found</p>
           </div>
-        </div>
-      );
-    })
-  ) : (
-    <div className="no-papers">
-      <p>Paper not found</p>
-    </div>
-  )
-}
-
+        )}
       </div>
     );
   };
@@ -454,7 +453,7 @@ const FeedDetails = ({ popup }) => {
             Conference
           </span>
         </div>
-        {Recommendedloader && (
+        {/* {Recommendedloader && (
           <>
             <div className="loader mt-10 d-flex justify-content-center">
               <Spinner animation="border" variant="primary" />
@@ -469,7 +468,15 @@ const FeedDetails = ({ popup }) => {
           </>
         )}
 
-        {renderPapers(recommendedPapers)}
+        {renderPapers(recommendedPapers)} */}
+
+        {Recommendedloader || paperloader ? (
+          <div className="loader mt-10 d-flex justify-content-center">
+            <Spinner animation="border" variant="primary" />
+          </div>
+        ) : (
+          renderPapers(recommendedPapers)
+        )}
       </div>
 
       <div className="mt-18">

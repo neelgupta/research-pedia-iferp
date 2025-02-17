@@ -109,7 +109,7 @@ const SelectPlan = ({ setValCount }) => {
       <div className="d-flex justify-content-end flex-wrap mt-32 gap-3">
         <Button
           btnText="Previous"
-          btnStyle="Lb"
+          //  btnStyle="Lb"
           className="h-49 w-114"
           onClick={() => {
             setValCount(1);
@@ -120,7 +120,7 @@ const SelectPlan = ({ setValCount }) => {
           btnStyle="LBA"
           className="h-49 w-114"
           onClick={() => {
-            setValCount(2);
+            navigate("/my-feed");
           }}
         />
         <Button

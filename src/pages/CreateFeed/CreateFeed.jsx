@@ -85,7 +85,15 @@ const CreateFeed = () => {
           Add topics to set your preferences
         </h4>
 
-        <div className="feed-main">
+        <div
+          className="feed-main brave-scroll m-10 mb-10  d-flex align-items-center justify-content-center"
+          style={{
+            height: "550px",
+
+            overflow: "auto",
+            overflowX: "none",
+          }}
+        >
           {feedlodder ? (
             <div className="loader-container d-flex justify-content-center align-items-center">
               <Spinner animation="border" variant="primary" />
@@ -95,17 +103,19 @@ const CreateFeed = () => {
               const isActive = selectList?.some((elem) => elem?.id === ele?.id);
 
               return (
-                <div
-                  className={`pointer ${isActive ? "feed-active" : "feed-text-box"}`}
-                  key={index}
-                  onClick={() => {
-                    handleClick(ele);
-                  }}
-                >
-                  {ele?.title}
-                  <img
-                    src={isActive ? icons?.trueWIcons : icons?.pulseBIcons}
-                  />
+                <div>
+                  <div
+                    className={`pointer ${isActive ? "feed-active" : "feed-text-box"}`}
+                    key={index}
+                    onClick={() => {
+                      handleClick(ele);
+                    }}
+                  >
+                    {ele?.title}
+                    <img
+                      src={isActive ? icons?.trueWIcons : icons?.pulseBIcons}
+                    />
+                  </div>
                 </div>
               );
             })
