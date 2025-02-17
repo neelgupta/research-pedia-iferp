@@ -52,10 +52,10 @@ const TextInputwithDropdown = ({
             value={selectedOption}
           >
             <option value="" disabled>
-              <span className="text-14-400 color-3333">
+              {/* <span className="text-14-400 color-3333">
                 {" "}
                 {isphone && "+ 91"} {isname && "Dr"}{" "}
-              </span>
+              </span> */}
             </option>
             {dropdownOptions.map((option, index) => (
               <option key={index} value={option.value}>
