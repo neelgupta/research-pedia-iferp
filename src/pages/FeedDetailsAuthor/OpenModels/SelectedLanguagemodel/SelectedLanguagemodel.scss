@@ -1,0 +1,15 @@
+#SelectedLanguagemodel {
+    .language-show {
+        height: 360px;
+        overflow-y: auto;
+
+        .language-item {
+            cursor: pointer;
+
+            &.selected {
+                color: #113DCD;
+
+            }
+        }
+    }
+}

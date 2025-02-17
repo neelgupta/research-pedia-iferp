@@ -144,7 +144,9 @@
     --E944: #E944634D;
     --B333: #B3334C4D --B3334: #B3334C;
 
-    --6B74: #6B748E
+    --6B74: #6B748E;
+
+    --F4F6F: #F4F6FCB2
 }
 
 $colors: (
@@ -280,7 +282,8 @@ $colors: (
     'E944' :var(--E944),
     'B333' :var(--B333),
 
-    '6B74' : var(--6B74)
+    '6B74' : var(--6B74),
+    'F4F6F' : var(--F4F6F)
 );
 
 @each $name, $color in $colors {

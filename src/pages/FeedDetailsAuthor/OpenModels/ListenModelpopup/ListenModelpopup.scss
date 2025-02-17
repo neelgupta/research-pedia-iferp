@@ -1,0 +1,29 @@
+#SelectedLanguagemodel {
+    .summary-section {
+        .start-stop-section {
+            .start-stop-card {
+                padding: 16px 14px 16px 14px;
+                border-bottom: 1px solid #ddd;
+
+                &.active-start-stop-card {
+                    padding: 16px 14px 16px 14px;
+                    background-color: #113DCD1A;
+                    ;
+                }
+            }
+
+
+        }
+
+        .Abstract-model {
+            background-color: #113DCD0A;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .track-info {
+            //background-color: var(--F4F6F);
+        }
+    }
+
+}

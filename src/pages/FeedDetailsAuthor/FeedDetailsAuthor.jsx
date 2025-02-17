@@ -12,6 +12,8 @@ import { getRecommendedPapersById } from "@/store/userSlice/projectSlice";
 import moment from "moment";
 import { getAuthorsPapers } from "@/store/userSlice/userDetailSlice";
 import { Spinner } from "react-bootstrap";
+import SelectedLanguagemodel from "./OpenModels/SelectedLanguagemodel";
+import ListenModelpopup from "./OpenModels/ListenModelpopup";
 
 const FeedDetailsAuthor = () => {
   const [showActive, setShowActive] = useState("Summary");
@@ -21,6 +23,8 @@ const FeedDetailsAuthor = () => {
   const [showCitation, setShowCitation] = useState(false);
   const [AutherIddetispaper, setAutherIddetispaper] = useState("");
   const [summaryloadder, setsummaryloadder] = useState(false);
+  const [LanguageModel, setLanguageModel] = useState(false);
+
   const location = useLocation();
   const dispatch = useDispatch();
   const topics = location?.state?.topics;
@@ -44,8 +48,6 @@ const FeedDetailsAuthor = () => {
       setsummaryloadder(false);
     }
     setsummaryloadder(false);
-
-    
   };
 
   const [authdatadetails, setauthdata] = useState({
@@ -145,7 +147,6 @@ const FeedDetailsAuthor = () => {
     author_name,
   } = paperDetails || {};
 
-
   const handleClickSummary = () => {
     setShowActive("Summary");
     const summaryElement = document.getElementById("summary");
@@ -209,6 +210,12 @@ const FeedDetailsAuthor = () => {
       setVisibleCount(authdatadetails?.data1?.topics?.length);
     }
     setShowMore(!showMore);
+  };
+  const [isLanguageOpenModal, setIsLanguageOpenModal] = useState(false);
+  const [isTexttospeechModal, setIsTexttospeechModal] = useState(false);
+  const onHide = () => {
+    setIsLanguageOpenModal(false);
+    setIsTexttospeechModal(false);
   };
   return (
     <div className="feed-details-author-container">
@@ -425,7 +432,7 @@ const FeedDetailsAuthor = () => {
                                   key={index}
                                   className="p-12"
                                   style={{
-                                    border: "1px solid #333333",  
+                                    border: "1px solid #333333",
                                     borderRadius: "12px",
                                   }}
                                 >
@@ -554,12 +561,15 @@ const FeedDetailsAuthor = () => {
                   </div>
                 </div>
                 {/* SEARCH  */}
-                <div className="search-div-box" style={{
-                  position: "sticky",
-                  top: "0",
-                  zIndex: 10,
-                }}>
-                  <div className="search-btn-box" >
+                <div
+                  className="search-div-box"
+                  style={{
+                    position: "sticky",
+                    top: "0",
+                    zIndex: 10,
+                  }}
+                >
+                  <div className="search-btn-box">
                     <div
                       className={`${showActive === "Summary" ? "show-active-b" : "show-text-b"}`}
                       onClick={handleClickSummary}
@@ -684,7 +694,7 @@ const FeedDetailsAuthor = () => {
 
               {isSide && (
                 <div className="side-bar">
-                  <div className="side-t">
+                  <div className="side-t" onClick={() => {}}>
                     <Button
                       leftIcon={icons?.translateIcons}
                       btnStyle="Lb"
@@ -692,7 +702,7 @@ const FeedDetailsAuthor = () => {
                       className="h-48 w-48 pb-12 pt-8"
                     />
                     <p className="side-items">
-                      Translate this paper in your preferred language
+                      Translate this paper in your preferred languages
                     </p>
                   </div>
                   <div className="side-t">
@@ -777,7 +787,11 @@ const FeedDetailsAuthor = () => {
               overflowY: "auto",
             }}
           >
-            <div className="d-flex align-items-center gap-2 mt-10">
+            <div
+              className="d-flex align-items-center gap-2 mt-10"
+              onClick={() => setIsLanguageOpenModal(true)}
+              style={{ cursor: "pointer" }}
+            >
               <div>
                 <img
                   src={icons.authorsideicon1}
@@ -791,7 +805,11 @@ const FeedDetailsAuthor = () => {
                 </h1>
               </div>
             </div>
-            <div className="d-flex  align-items-center gap-2 mt-10">
+            <div
+              className="d-flex  align-items-center gap-2 mt-10"
+              onClick={() => setIsTexttospeechModal(true)}
+              style={{ cursor: "pointer" }}
+            >
               <div>
                 <img
                   src={icons.authorsideicon2}
@@ -897,6 +915,9 @@ const FeedDetailsAuthor = () => {
           Seconddetailsloadder={Seconddetailsloadder}
         />
       </div>
+
+      {isLanguageOpenModal && <SelectedLanguagemodel onHide={onHide} />}
+      {isTexttospeechModal && <ListenModelpopup onHide={onHide} />}
     </div>
   );
 };

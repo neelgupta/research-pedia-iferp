@@ -162,17 +162,27 @@ import noMessagesIcons from "assets/images/icons/NoMessages.png";
 import hate from "assets/images/icons/hate.png";
 import calander from "assets/images/icons/calander.png";
 
+import authorsideicon1 from "assets/images/icons/authorsideicon1.png";
+import authorsideicon2 from "assets/images/icons/authorsideicon2.png";
+import authorsideicon3 from "assets/images/icons/authorsideicon3.png";
+import authorsideicon4 from "assets/images/icons/authorsideicon4.png";
+import authorsideicon5 from "assets/images/icons/authorsideicon5.png";
+import authorsideicon6 from "assets/images/icons/authorsideicon6.png";
+import authorsideicon7 from "assets/images/icons/authorsideicon7.png";
+import authorsideicon8 from "assets/images/icons/authorsideicon8.png";
 
-import authorsideicon1 from "assets/images/icons/authorsideicon1.png"
-import authorsideicon2 from "assets/images/icons/authorsideicon2.png"
-import authorsideicon3 from "assets/images/icons/authorsideicon3.png"
-import authorsideicon4 from "assets/images/icons/authorsideicon4.png"
-import authorsideicon5 from "assets/images/icons/authorsideicon5.png"
-import authorsideicon6 from "assets/images/icons/authorsideicon6.png"
-import authorsideicon7 from "assets/images/icons/authorsideicon7.png"
-import authorsideicon8 from "assets/images/icons/authorsideicon8.png"
+import leftskip from "assets/images/icons/leftskip.png";
+import rightskip from "assets/images/icons/rightskip.png";
+import leftsec from "assets/images/icons/leftsec.png";
+import rightsec from "assets/images/icons/rightsec.svg";
+import volume from "assets/images/icons/volume.png";
 export const icons = {
   // avatar,
+  leftskip,
+  rightskip,
+  leftsec,
+  rightsec,
+  volume,
   Google,
   UserHome,
   Userpdf,
@@ -341,7 +351,6 @@ export const icons = {
   hate,
   calander,
 
-
   authorsideicon1,
   authorsideicon2,
   authorsideicon3,
@@ -349,5 +358,5 @@ export const icons = {
   authorsideicon5,
   authorsideicon6,
   authorsideicon7,
-  authorsideicon8
+  authorsideicon8,
 };

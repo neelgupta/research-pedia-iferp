@@ -27,23 +27,22 @@ const Security = () => {
     }
   };
 
-  const fetchGeneratedCode = async()=>{
+  const fetchGeneratedCode = async () => {
     const result = await dispatch(getGeneratedCode());
-    setQrText(result.data.response)
-    console.log(result,"GENERATED CODZE");
-  }
+    setQrText(result.data.response);
+    console.log(result, "GENERATED CODZE");
+  };
 
   const fetchData = async () => {
     const result = await dispatch(getCodeData());
-    console.log("101" ,result.data.response[0].isGenerated)
-    setOpenQr(result.data.response[0].isGenerated)
+
+    setOpenQr(result.data.response[0].isGenerated);
     console.log(result);
   };
 
-  
   useEffect(() => {
     fetchData();
-    fetchGeneratedCode()
+    fetchGeneratedCode();
   }, []);
 
   const handleDownloadExcel = async () => {
@@ -120,7 +119,6 @@ const Security = () => {
                         dispatch(handleCopy(qrText));
                       }}
                     >
-                    
                       <img src={icons?.copyIcons} alt="copy-icons" />
                     </div>
                   </div>

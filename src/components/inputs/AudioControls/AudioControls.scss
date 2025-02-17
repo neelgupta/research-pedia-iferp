@@ -1,0 +1,184 @@
+.audio-controls {
+    display: flex;
+
+    align-items: center;
+    gap: 10px;
+    justify-content: start;
+    padding: 10px;
+    // background-color: #222;
+    border-radius: 10px;
+    background-color: var(--F4F6F);
+    border-radius: 50px;
+
+}
+
+.btn-pause {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .pause {
+        background-color: blue; // Set the background color
+        color: white; // Icon color
+        border: none;
+        width: 50px; // Adjust as needed
+        height: 50px; // Adjust as needed
+        border-radius: 50%; // Makes it a circle
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+
+
+    }
+}
+
+.audio-controls button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.audio-controls button img {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.audio-controls button:hover img {
+    transform: scale(1.1);
+}
+
+.progress-bar {
+    width: 100%;
+    // max-width: 300px;
+    height: 5px;
+    appearance: none;
+    background: linear-gradient(to right, #0000FF 0%, #0000FF var(--progress), #E1E7F8 var(--progress));
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+}
+
+.progress-bar::-webkit-slider-runnable-track {
+    height: 5px;
+    background: linear-gradient(to right, #0000FF 0%, #0000FF var(--progress), #E1E7F8 var(--progress));
+    border-radius: 5px;
+}
+
+.progress-bar::-webkit-slider-thumb {
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: #0000FF;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -4px;
+    margin-left: -10px;
+}
+
+.progress-bar::-moz-range-track {
+    height: 5px;
+    background: linear-gradient(to right, #0000FF 0%, #0000FF var(--progress), #777 var(--progress));
+    border-radius: 5px;
+}
+
+.progress-bar::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.speed-control {
+
+    .dropdown-select {
+        height: 45px;
+        padding: 10px;
+        font-size: 16px;
+        outline: none;
+        border: none;
+        border-radius: 6px 0 0 6px;
+        background-color: var(--F4F6F);
+        cursor: pointer;
+
+    }
+
+    .dropdown-select:disabled {
+        cursor: not-allowed !important;
+        border: 1px solid var(--e0e9);
+        background-color: var(--F4F6F);
+
+    }
+
+    .dropdown-select:focus,
+    .dropdown-select:active {
+        border: none;
+        outline: none;
+        box-shadow: none;
+        /* Removes any shadow effect */
+    }
+}
+
+.language-control {
+    .dropdown-select {
+        height: 45px;
+        padding: 10px;
+        font-size: 16px;
+        outline: none;
+        border: none;
+        border-radius: 6px 0 0 6px;
+        background-color: var(--F4F6F);
+        cursor: pointer;
+
+    }
+
+    .dropdown-select:disabled {
+        cursor: not-allowed !important;
+        border: 1px solid var(--e0e9);
+        background-color: var(--F4F6F);
+
+    }
+
+    .dropdown-select:focus,
+    .dropdown-select:active {
+        border: none;
+        outline: none;
+        box-shadow: none;
+        /* Removes any shadow effect */
+    }
+}
+
+/* Style for the volume control and vertical slider */
+// .volume-range {
+//     width: 10px;
+//     height: 200px;
+//     transform: rotate(270deg);
+//     transform-origin: center center;
+//     display: block;
+//     margin-left: 10px;
+//     transition: all 0.3s ease-in-out;
+// }
+
+/* Style for the volume control button */
+// .volume {
+//     background: none;
+//     border: none;
+//     cursor: pointer;
+//     padding: 5px;
+// }
+
+// /* Optional: Add transition effect for showing/hiding the range */
+// .volume-range {
+//     opacity: 0;
+//     visibility: hidden;
+//     transition: opacity 0.3s, visibility 0.3s;
+// }
+
+// .volume-range.show {
+//     opacity: 1;
+//     visibility: visible;
+// }
