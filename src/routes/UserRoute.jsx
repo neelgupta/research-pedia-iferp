@@ -5,6 +5,7 @@ import { Spinner } from "react-bootstrap";
 import PopupRegistration from "@/pages/User/PopupRegistration/PopupRegistration";
 import MyFeed from "@/pages/MyFeed";
 import CreateFeed from "@/pages/CreateFeed";
+import UploadAskPdf from "@/pages/UploadAskPdf";
 
 // Lazy load components
 
@@ -39,6 +40,10 @@ export const UserRoutes = () => {
       {
         path: "/feed-details-author",
         component: <FeedDetailsAuthor />,
+      },
+      {
+        path: "/uploadpdf",
+        component: <UploadAskPdf />,
       },
     ],
     student: [

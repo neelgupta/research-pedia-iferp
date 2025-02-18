@@ -61,160 +61,170 @@ const AudioControls = ({
     setIsVolumeOpen(!isVolumeOpen);
   };
   return (
-    <div className="audio-controls">
-      <div className="">
-        <button
-          type="button"
-          className="prev"
-          aria-label="Previous"
-          onClick={onPrevClick}
-        >
-          <img src={icons.leftskip} alt="Previous" />
-        </button>
-      </div>
-
-      <div className="">
-        <button
-          type="button"
-          className="sec"
-          aria-label="Rewind 10 seconds"
-          onClick={onRewind10} // Handle 10 seconds rewind
-        >
-          <img src={icons.leftsec} alt="Rewind 10s" />
-        </button>
-      </div>
-
-      {isPlaying ? (
-        <div className="btn-pause">
+    <div className="audio-controls ps-28 pe-28 flex-wrap">
+      <div className="d-flex align-items-center gap-10">
+        <div className="me-12">
           <button
             type="button"
-            className="pause"
-            onClick={() => onPlayPauseClick(false)}
-            aria-label="Pause"
+            className="prev"
+            aria-label="Previous"
+            onClick={onPrevClick}
           >
-            <BsPause size={32} />
+            <img src={icons.leftskip} alt="Previous" />
           </button>
         </div>
-      ) : (
-        <div className="btn-pause">
+
+        <div className="me-12">
           <button
             type="button"
-            className="pause"
-            onClick={() => onPlayPauseClick(true)}
-            aria-label="Play"
+            className="sec"
+            aria-label="Rewind 10 seconds"
+            onClick={onRewind10} // Handle 10 seconds rewind
           >
-            <FaPlay />
+            <img src={icons.leftsec} alt="Rewind 10s" />
           </button>
         </div>
-      )}
 
-      <div className="ms-12 ">
-        <button
-          type="button"
-          className="sec"
-          aria-label="Forward 10 seconds"
-          onClick={onForward10} // Handle 10 seconds forward
-        >
-          <img src={icons.rightsec} alt="Forward 10s" />
-        </button>
-      </div>
+        {isPlaying ? (
+          <div className="btn-pause me-12">
+            <button
+              type="button"
+              className="pause"
+              onClick={() => onPlayPauseClick(false)}
+              aria-label="Pause"
+            >
+              <BsPause size={32} />
+            </button>
+          </div>
+        ) : (
+          <div className="btn-pause me-12">
+            <button
+              type="button"
+              className="pause"
+              onClick={() => onPlayPauseClick(true)}
+              aria-label="Play"
+            >
+              <FaPlay />
+            </button>
+          </div>
+        )}
 
-      <div>
-        <button
-          type="button"
-          className="next"
-          aria-label="Next"
-          onClick={onNextClick}
-        >
-          <img src={icons.rightskip} alt="Next" />
-        </button>
-      </div>
-
-      <div className="d-flex align-items-center">
-        <p className="text-14-400 color-0000">
-          {`${Math.floor(progress / 60)}:${Math.floor(progress % 60)
-            .toString()
-            .padStart(2, "0")} / ${Math.floor(duration / 60)}:${Math.floor(
-            duration % 60
-          )
-            .toString()
-            .padStart(2, "0")}`}
-        </p>
-      </div>
-
-      <div className="ms-12 me-12" style={{ width: "600px" }}>
-        <input
-          type="range"
-          value={progress}
-          step="1"
-          min="0"
-          max={duration || 0}
-          onChange={(e) => onScrub(e.target.value)}
-          onMouseUp={onScrubEnd}
-          onKeyUp={onScrubEnd}
-          className="progress-bar"
-          style={{
-            "--progress": `${currentPercentage}%`,
-            background: `linear-gradient(to right, #0000FF 0%, #0000FF ${currentPercentage}%, #777 ${currentPercentage}%)`,
-          }}
-        />
-      </div>
-
-      <div>
-        <div>
+        <div className="me-12">
           <button
             type="button"
-            className="volume"
-            aria-label="volume"
-            onClick={toggleVolumeControl}
+            className="sec"
+            aria-label="Forward 10 seconds"
+            onClick={onForward10} // Handle 10 seconds forward
           >
-            <img src={icons.volume} alt="volume" />
+            <img src={icons.rightsec} alt="Forward 10s" />
           </button>
+        </div>
 
-          {/* inputrange */}
-          {isVolumeOpen && (
-            <input
-              type="range"
-              min="0"
-              max="1"
-              step="0.01"
-              value={volume}
-              onChange={handleVolumeChange}
-              className="volume-range"
-              aria-label="Volume Control"
-            />
-          )}
+        <div className="me-12">
+          <button
+            type="button"
+            className="next"
+            aria-label="Next"
+            onClick={onNextClick}
+          >
+            <img src={icons.rightskip} alt="Next" />
+          </button>
         </div>
       </div>
 
-      <div className="speed-control d-flex align-items-center">
-        <span>Speed:</span>
-        <select
-          value={playbackSpeed}
-          onChange={handleSpeedChange}
-          className="dropdown-select"
+      <div className="d-flex align-items-center gap-10">
+        <div className="d-flex align-items-center">
+          <p className="text-14-400 color-0000">
+            {`${Math.floor(progress / 60)}:${Math.floor(progress % 60)
+              .toString()
+              .padStart(2, "0")} / ${Math.floor(duration / 60)}:${Math.floor(
+              duration % 60
+            )
+              .toString()
+              .padStart(2, "0")}`}
+          </p>
+        </div>
+
+        <div
+          className="ms-12 me-12 "
+          style={{ maxWidth: "600px", width: "800px" }}
         >
-          {speedOptions.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
+          <input
+            type="range"
+            value={progress}
+            step="1"
+            min="0"
+            max={duration || 0}
+            onChange={(e) => onScrub(e.target.value)}
+            onMouseUp={onScrubEnd}
+            onKeyUp={onScrubEnd}
+            className="progress-bar"
+            style={{
+              "--progress": `${currentPercentage}%`,
+              background: `linear-gradient(to right, #0000FF 0%, #0000FF ${currentPercentage}%, #777 ${currentPercentage}%)`,
+            }}
+          />
+        </div>
+        <div className="me-10">
+          <div className="position-relative">
+            <button
+              type="button"
+              className="volume"
+              aria-label="volume"
+              onClick={toggleVolumeControl}
+            >
+              <img src={icons.volume} alt="volume" />
+            </button>
+
+            {/* inputrange */}
+            <div className="position-absolute bottom-100 start-50">
+              {isVolumeOpen && (
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value={volume}
+                  onChange={handleVolumeChange}
+                  className="volume-range"
+                  aria-label="Volume Control"
+                />
+              )}
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="language-control d-flex align-items-center">
-        <span>Voice:</span>
-        <select
-          value={Language}
-          onChange={(e) => setLanguage(e.target.value)}
-          className="dropdown-select"
-        >
-          {LanguageOption.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
+      <div className="d-flex align-items-center gap-10">
+        <div className="speed-control d-flex align-items-center">
+          <span>Speed:</span>
+          <select
+            value={playbackSpeed}
+            onChange={handleSpeedChange}
+            className="dropdown-select"
+          >
+            {speedOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="language-control d-flex align-items-center">
+          <span>Voice:</span>
+          <select
+            value={Language}
+            onChange={(e) => setLanguage(e.target.value)}
+            className="dropdown-select"
+          >
+            {LanguageOption.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
     </div>
   );

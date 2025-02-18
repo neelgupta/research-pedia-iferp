@@ -13,6 +13,8 @@
   "dependencies": {
     "@ramonak/react-progress-bar": "^5.3.0",
     "@react-oauth/google": "^0.12.1",
+    "@react-pdf-viewer/core": "^3.12.0",
+    "@react-pdf-viewer/default-layout": "^3.12.0",
     "@reduxjs/toolkit": "^2.2.7",
     "apexcharts": "^4.3.0",
     "axios": "^1.7.2",
@@ -23,6 +25,7 @@
     "formik": "^2.4.6",
     "lodash": "^4.17.21",
     "moment": "^2.30.1",
+    "pdfjs-dist": "^3.11.174",
     "plop": "^4.0.1",
     "prettier": "^3.4.2",
     "react": "^18.3.1",

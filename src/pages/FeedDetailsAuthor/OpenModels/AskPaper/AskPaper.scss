@@ -1,0 +1,47 @@
+#AskPaper {
+    .right-side-conatiner {
+        height: 95vh;
+
+
+        .ask-que {
+            .qua {
+                bottom: 0;
+                padding: 16px 14px;
+                background-color: #F6F8FC;
+                border: 1px solid #E0E9F4;
+                border-radius: 8px;
+            }
+        }
+
+        .custom-input-group {
+            border-radius: 30px;
+            border: 1px solid #ccc;
+            overflow: hidden;
+            padding: 5px;
+            display: flex;
+            background-color: white;
+
+            .custom-input {
+                border: none;
+                outline: none;
+                box-shadow: none;
+                flex: 1;
+                padding-left: 15px;
+                font-size: 16px;
+            }
+
+            .custom-button {
+                background-color: #113DCD;
+                border: none;
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: background 0.3s ease;
+            }
+        }
+    }
+}

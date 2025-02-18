@@ -3,7 +3,7 @@
 
     align-items: center;
     gap: 10px;
-    justify-content: start;
+    justify-content: space-around;
     padding: 10px;
     // background-color: #222;
     border-radius: 10px;
@@ -151,6 +151,25 @@
         /* Removes any shadow effect */
     }
 }
+
+.input-volumn {
+    bottom: 100px;
+    left: 40px;
+}
+
+.volume-range {
+    appearance: slider-vertical;
+    /* For browsers that support it */
+    writing-mode: bt-lr;
+    /* Bottom to top (left to right axis) */
+    transform: rotate(180deg);
+    /* Adjust orientation */
+    width: 8px;
+    /* Adjust width */
+    height: 100px;
+    /* Adjust height */
+}
+
 
 /* Style for the volume control and vertical slider */
 // .volume-range {

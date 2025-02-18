@@ -176,8 +176,26 @@ import rightskip from "assets/images/icons/rightskip.png";
 import leftsec from "assets/images/icons/leftsec.png";
 import rightsec from "assets/images/icons/rightsec.svg";
 import volume from "assets/images/icons/volume.png";
+
+import referenceimg1 from "assets/images/icons/referenceimg1.png";
+import referenceimg2 from "assets/images/icons/referenceimg2.png";
+import pdf from "assets/images/icons/pdf.png";
+import rightsidearrow from "assets/images/icons/rightsidearrow.png";
+import whiterightarrow from "assets/images/icons/whiterightarrow.png";
+import Askpaper from "assets/images/icons/Askpaper.png";
+
+import whitepdf from "assets/images/icons/whitepdf.png";
+import whiteAdd from "assets/images/icons/whiteAdd.png";
 export const icons = {
   // avatar,
+  whiteAdd,
+  whitepdf,
+  Askpaper,
+  whiterightarrow,
+  rightsidearrow,
+  pdf,
+  referenceimg1,
+  referenceimg2,
   leftskip,
   rightskip,
   leftsec,

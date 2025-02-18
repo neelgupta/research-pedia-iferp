@@ -14,6 +14,8 @@ import { getAuthorsPapers } from "@/store/userSlice/userDetailSlice";
 import { Spinner } from "react-bootstrap";
 import SelectedLanguagemodel from "./OpenModels/SelectedLanguagemodel";
 import ListenModelpopup from "./OpenModels/ListenModelpopup";
+import ReferenceManager from "./OpenModels/ReferenceManager";
+import AskPaper from "./OpenModels/AskPaper";
 
 const FeedDetailsAuthor = () => {
   const [showActive, setShowActive] = useState("Summary");
@@ -213,9 +215,13 @@ const FeedDetailsAuthor = () => {
   };
   const [isLanguageOpenModal, setIsLanguageOpenModal] = useState(false);
   const [isTexttospeechModal, setIsTexttospeechModal] = useState(false);
+  const [isReference, setisReference] = useState(false);
+  const [isAskPaper, setisAskPaper] = useState(false);
   const onHide = () => {
     setIsLanguageOpenModal(false);
     setIsTexttospeechModal(false);
+    setisReference(false);
+    setisAskPaper(false);
   };
   return (
     <div className="feed-details-author-container">
@@ -823,7 +829,10 @@ const FeedDetailsAuthor = () => {
                 </h1>
               </div>
             </div>
-            <div className="d-flex  align-items-center gap-2 mt-10">
+            <div
+              className="d-flex  align-items-center gap-2 mt-10"
+              onClick={() => setisAskPaper(true)}
+            >
               <div>
                 <img
                   src={icons.authorsideicon3}
@@ -835,7 +844,10 @@ const FeedDetailsAuthor = () => {
                 <h1 className="text-16-400 color-3333">Ask Paper</h1>
               </div>
             </div>
-            <div className="d-flex  align-items-center gap-2 mt-10">
+            <div
+              className="d-flex  align-items-center gap-2 mt-10"
+              onClick={() => setisReference(true)}
+            >
               <div>
                 <img
                   src={icons.authorsideicon4}
@@ -918,6 +930,8 @@ const FeedDetailsAuthor = () => {
 
       {isLanguageOpenModal && <SelectedLanguagemodel onHide={onHide} />}
       {isTexttospeechModal && <ListenModelpopup onHide={onHide} />}
+      {isReference && <ReferenceManager onHide={onHide} />}
+      {isAskPaper && <AskPaper onHide={onHide} />}
     </div>
   );
 };
