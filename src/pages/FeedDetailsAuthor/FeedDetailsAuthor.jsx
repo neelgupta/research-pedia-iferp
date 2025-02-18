@@ -879,14 +879,14 @@ const FeedDetailsAuthor = () => {
 
                                     {console.log(ele.author_name, "ELE")}
                                     {(ele?.authors || ele.author_name) &&
-                                    ele.authors.length > 0 ? (
+                                    ele?.authors?.length > 0 ? (
                                       <>
-                                        {ele.authors[0].name || ele.author_name}
-                                        {ele.authors.length > 1 &&
-                                          ` +${ele.authors.length - 1}`}
+                                        {ele?.authors?.[0]?.name || ele?.author_name}
+                                        {ele?.authors?.length > 1 &&
+                                          ` +${ele?.authors?.length - 1}`}
                                       </>
                                     ) : ele?.author_name ? (
-                                      ele.author_name
+                                      ele?.author_name
                                     ) : (
                                       "No Authors"
                                     )}
