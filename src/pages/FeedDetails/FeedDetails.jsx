@@ -358,7 +358,7 @@ const FeedDetails = ({ popup }) => {
                 <div className="post-details flex-wrap mt-8 gap-2">
                   <div className="fa-center gap-1">
                     <img
-                      src={icons?.userTwoIcons}
+                      src={icons?.avatarTwoIcons}
                       alt="docs-icons"
                       loading="lazy"
                       className="h-20 w-20 rounded-circle"
