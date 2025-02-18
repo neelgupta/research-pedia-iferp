@@ -37,7 +37,7 @@ const LeftCanvas = () => {
           onHide={() => {
             dispatch(setIsUserSide(false));
           }}
-          responsive="lg"
+          responsive="xl"
           style={{
             maxWidth: "280px",
           }}

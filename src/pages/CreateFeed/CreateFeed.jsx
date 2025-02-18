@@ -86,17 +86,25 @@ const CreateFeed = () => {
         </h4>
 
         <div
-          className="feed-main brave-scroll m-10 mb-10  d-flex align-items-center justify-content-center"
+          className="feed-main brave-scroll m-10 mb-10  d-flex "
           style={{
             height: "550px",
-
             overflow: "auto",
             overflowX: "none",
           }}
         >
           {feedlodder ? (
-            <div className="loader-container d-flex justify-content-center align-items-center">
-              <Spinner animation="border" variant="primary" />
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div className="loader-container d-flex justify-content-center">
+                <Spinner animation="border" variant="primary" />
+              </div>
             </div>
           ) : (
             FeedList?.map((ele, index) => {
@@ -106,6 +114,9 @@ const CreateFeed = () => {
                 <div>
                   <div
                     className={`pointer ${isActive ? "feed-active" : "feed-text-box"}`}
+                    style={{
+                      textAlign:"justify"
+                    }}
                     key={index}
                     onClick={() => {
                       handleClick(ele);

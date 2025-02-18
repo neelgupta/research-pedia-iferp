@@ -60,8 +60,8 @@ const FeedDetails = ({ popup }) => {
   const [Recommendedloader, setRecommendedloader] = useState(false);
   const fetchRecommendedReaserchPapers = async () => {
     setRecommendedloader(true);
-    const neQuery = ["Architecture", "science"];
-    const query = `topics=${neQuery}&limit=${rowsPerPage}&page=${currentPage}`;
+    // const neQuery = ["Architecture", "science"];
+    const query = `topics=${topicList}&limit=${rowsPerPage}&page=${currentPage}`;
     if (topicList.length > 0) {
       const result = await dispatch(getRecommendedPapers(query));
 
@@ -77,10 +77,12 @@ const FeedDetails = ({ popup }) => {
   const [InterestUser, setInterestUser] = useState();
   const fetchUserInterest = async () => {
     const res = await dispatch(getUserInterest());
+
     if (res?.status === 200) {
       setInterestUser(res?.data?.response);
     }
   };
+
   useEffect(() => {
     fetchUserInterest();
   }, []);
@@ -162,10 +164,6 @@ const FeedDetails = ({ popup }) => {
   const renderPapers = (papers) => {
     return (
       <div>
-        {/* <div className="recommended-text">
-          {activeTab === "topPapers" ? "Recommended for you" : "Conference"}
-        </div> */}
-
         {papers.length > 0 ? (
           papers.map((papers, index) => {
             return (
@@ -225,7 +223,7 @@ const FeedDetails = ({ popup }) => {
                 <div className="post-details flex-wrap mt-8 gap-2">
                   <div className="fa-center gap-1">
                     <img
-                      src={icons?.userTwoIcons}
+                      src={icons?.avatarTwoIcons}
                       alt="docs-icons"
                       loading="lazy"
                       className="h-20 w-20 rounded-circle"
@@ -375,6 +373,7 @@ const FeedDetails = ({ popup }) => {
   };
 
   const [isOpenModal, setIsOpenModal] = useState(false);
+
   const handleClick = () => {
     setIsOpenModal(true);
   };
@@ -389,7 +388,7 @@ const FeedDetails = ({ popup }) => {
         />
       )}
       <div className="professional-top-box">
-        <h2 className="details-text">Personal Details</h2>
+        <h2 className="details-text">Project 1</h2>
         <h4 className="pointer switch-text">Switch/Create Project</h4>
       </div>
       <div className="user-box">
@@ -418,8 +417,16 @@ const FeedDetails = ({ popup }) => {
       </div>
       <div className="information-box">
         <h4 className="in-text">
-          Information Systems Security, Large-scale Software +4 more
+          {topicList?.map((topic, index) => {
+            return (
+              <span key={index}>
+                {topic}
+                {index < topicList.length - 1 && ", "}
+              </span>
+            );
+          })}
         </h4>
+
         <Button
           btnText="Edit Preferences"
           className="h-43"
@@ -433,8 +440,6 @@ const FeedDetails = ({ popup }) => {
           onHide={() => {
             setIsOpenModal(false);
           }}
-          // isUserData={isUserData}
-          // fetchUserDetails={fetchUserDetails}
         />
       )}
 
@@ -453,22 +458,6 @@ const FeedDetails = ({ popup }) => {
             Conference
           </span>
         </div>
-        {/* {Recommendedloader && (
-          <>
-            <div className="loader mt-10 d-flex justify-content-center">
-              <Spinner animation="border" variant="primary" />
-            </div>
-          </>
-        )}
-        {paperloader && (
-          <>
-            <div className="loader mt-10 d-flex justify-content-center">
-              <Spinner animation="border" variant="primary" />
-            </div>
-          </>
-        )}
-
-        {renderPapers(recommendedPapers)} */}
 
         {Recommendedloader || paperloader ? (
           <div className="loader mt-10 d-flex justify-content-center">
@@ -479,9 +468,11 @@ const FeedDetails = ({ popup }) => {
         )}
       </div>
 
-      <div className="mt-18">
-        <SimilarPeople InterestUser={InterestUser} />
-      </div>
+      {InterestUser && InterestUser?.length > 0 && (
+        <div className="mt-18">
+          <SimilarPeople InterestUser={InterestUser} />
+        </div>
+      )}
 
       <div className="Pagination mt-36">
         <div className="d-flex justify-content-center align-items-center flex-wrap gap-md-3 gap-2">

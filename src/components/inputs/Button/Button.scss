@@ -22,6 +22,11 @@
       cursor: not-allowed;
     }
   }
+  .BBA-hover:hover {
+    background-color: var(--113D);
+    color: var(--ffff);
+    
+  }
 
   .Lb {
     background-color: var(--c92e);
@@ -32,7 +37,6 @@
     background-color: var(--ffff);
     color: var(--113D);
     border: 1px solid var(--113D);
-
   }
 
   .BA {
@@ -40,18 +44,14 @@
     color: var(--ffff);
   }
 
-
-
   .BTA {
     background-color: var(--f4f6);
     color: var(--113D);
-
   }
 
   .BTB {
     background-color: var(--113d);
     color: var(--113D);
-
   }
 
   .BBA {
@@ -59,8 +59,6 @@
     border: 1px solid var(--3333);
     color: var(--3333);
   }
-
-
 
   .btn-f-s {
     font-family: "GilroyMedium";
@@ -92,7 +90,7 @@
     font-size: 16px;
     padding: 15px 27px;
 
-    @media (max-width : 500px) {
+    @media (max-width: 500px) {
       padding: 8px 14px;
     }
   }
@@ -104,7 +102,7 @@
     font-size: 16px;
     padding: 15px 36px;
 
-    @media (max-width : 500px) {
+    @media (max-width: 500px) {
       padding: 8px 14px;
     }
   }
@@ -164,11 +162,10 @@
   }
 
   .PB {
-    background-color: #F29339;
+    background-color: #f29339;
     color: var(--ffff);
     padding: 0px 20px;
     border-radius: 800px;
-
   }
 
   .PDG {
@@ -592,7 +589,8 @@
     width: 104px;
     min-height: 26px;
     background-color: var(--fe5c);
-    box-shadow: 0px 0.86px 3.89px 0px #00000024,
+    box-shadow:
+      0px 0.86px 3.89px 0px #00000024,
       0px 0.86px 0px 0px #d45e44 inset;
     line-height: 12.09px;
     letter-spacing: 0.02em;
