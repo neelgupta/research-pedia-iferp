@@ -1,0 +1,153 @@
+.created-feed-container {
+    height: 100vh;
+
+    .created-center-content {
+        padding: 48px;
+        height: calc(100% - 150px);
+        overflow-y: auto;
+
+    }
+
+    .feed-main {
+        margin-top: 34px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+    }
+
+    .title-feed {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 21.78px;
+        color: var(--3333);
+
+    }
+
+    .pra-feed {
+        font-size: 22px;
+        font-weight: 600;
+        line-height: 26.63px;
+        color: var(--113D);
+        margin-top: 42px;
+
+    }
+
+    .feed-text-box {
+
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        background-color: var(--113d);
+        border-radius: 4px;
+        gap: 8px;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 16.94px;
+        color: var(--3333);
+
+
+        img {
+            width: 12px;
+            height: 12px;
+            object-fit: cover;
+        }
+    }
+
+    .feed-active {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        background-color: var(--113D);
+        border-radius: 4px;
+        gap: 8px;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 16.94px;
+        color: var(--ffff);
+
+
+        img {
+            width: 12px;
+            height: 12px;
+            object-fit: cover;
+        }
+    }
+
+    .select-text {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 19.36px;
+        color: var(--3333);
+        margin-bottom: 7px;
+
+    }
+
+    .select-val {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 19.36px;
+        color: var(--113D);
+        margin-bottom: 0;
+
+    }
+
+    .t-m {
+        margin-top: 100px;
+    }
+
+    @media (max-width:768px) {
+        .created-center-content {
+            padding: 32px;
+
+        }
+
+    }
+
+    @media (max-width:576px) {
+        .created-center-content {
+            padding: 28px 12px;
+            height: calc(100% - 212px);
+
+        }
+
+        .feed-text-box {
+            font-size: 12px;
+
+        }
+
+        .feed-main {
+            margin-top: 20px;
+            gap: 8px;
+        }
+
+
+        .select-text {
+            font-size: 14px;
+            margin-bottom: 4px;
+
+        }
+
+        .select-val {
+            font-size: 14px;
+
+
+        }
+
+        .title-feed {
+            font-size: 14px;
+
+        }
+
+        .pra-feed {
+            font-size: 18px;
+            margin-top: 26px;
+
+        }
+
+        .t-m {
+            margin-top: 50px;
+        }
+
+
+    }
+}

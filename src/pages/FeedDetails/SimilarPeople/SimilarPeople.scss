@@ -1,0 +1,36 @@
+.similar-container {
+    .similar-text {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 21.78px;
+        color: var(--0303);
+        margin-bottom: 12px;
+
+    }
+
+    .people-box {
+        width:232px;
+        padding: 16px;
+        border-radius: 8px;
+        border: 1px solid var(--e0e9);
+   
+    }
+
+    .user-name {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 19.36px;
+        color: var(--3333);
+        margin-bottom: 4px;
+
+    }
+
+    .user-pra {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 16.94px;
+        color: var(--3333);
+
+
+    }
+}

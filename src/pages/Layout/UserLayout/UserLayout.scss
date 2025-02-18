@@ -1,0 +1,39 @@
+#userlayout-container {
+  // min-height: 100vh;
+  height: 100vh;
+  overflow-y: auto;
+
+
+
+  .right-body-content {
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+    flex-direction: column;
+
+    .body-block {
+      flex-grow: 1;
+      // min-height: calc(100vh - 166.55px);
+      height: calc(100vh - 166.55px);
+      overflow-y: auto;
+    }
+
+    .left-sidebar,
+    .right-sidebar {
+      width: 80px;
+      flex-shrink: 0;
+    }
+
+    .left-sidebar-w {
+      width: 360px;
+    }
+
+    .right-sidebar-w {
+      width: 360px;
+
+    }
+
+  }
+
+
+}

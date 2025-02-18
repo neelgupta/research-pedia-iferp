@@ -1,0 +1,69 @@
+#dropdownwithtags{
+    .category-text{
+        p{
+            font-family: Inter;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 21px;
+            text-align: left;
+            text-underline-position: from-font;
+            text-decoration-skip-ink: none;
+            
+            color : #1D2630;
+        }
+       
+    }
+    .tag{
+        align-items: start;
+       .tag-text{
+     
+            font-family: Inter;
+font-size: 14px;
+font-weight: 400;
+line-height: 21px;
+text-align: left;
+text-underline-position: from-font;
+text-decoration-skip-ink: none;
+color : #1D2630;
+        
+       }
+       .selected-tag{
+        border-radius: 8px;
+        min-height: 47px;
+        span{
+            width: 100%;
+           
+                        background-color: #113DCD;
+                        border-radius: 8px;
+                        padding: 6px 10px;
+                     
+            color: #ffffff;
+            font-family: Inter;
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 14.52px;
+            
+            text-underline-position: from-font;
+            text-decoration-skip-ink: none;
+                 display: "inline-flex";
+                 align-items: start;
+            margin-top: 16px;
+            margin-right: 4px;
+            // border :1px solid #BEC8D0;
+            
+                    }
+                    .tag-input{
+                       
+                        border: none; /* Remove all borders */
+                        outline: none; /* Remove focus outline */
+                        box-shadow: none; /* Remove any box-shadow */
+                        background: none; /* Remove background if any */
+                    }
+       }
+       
+    }
+
+    .css-13cymwt-control{
+        min-height: 47px;
+    }
+}

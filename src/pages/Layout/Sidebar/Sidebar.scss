@@ -1,0 +1,118 @@
+.slide-container{
+   height: 100vh;
+    width: 280px;
+     background-color: #F8F9FA;
+    padding: 12px;
+     border-right: 1px solid #BEC8D0;
+
+     flex-grow: 1;
+     overflow-y: auto;
+    .profile-header{
+      padding: 20px;
+      background-color: #F3F5F7;
+      border: 1px solid #E7EAEE;
+      border-radius: 12px;
+      margin-bottom: 26px;
+      margin-top: 10px;
+        .profile-img{
+            margin-right: 16px;
+            width: 45px;
+            height: 45px;
+        }
+    
+        .profile-title{
+            h1{
+                font-family: Inter;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 16.94px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color : #1D2630
+            }
+            p{
+                font-family: Inter;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 13.31px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color : #1D2630;
+            }
+        }
+    }
+    .tabsidebar-conatiner{
+        
+        .tab-bar{
+            height: 54px;
+            //
+            border-radius: 8px;
+            padding: 12px;
+          &.active-tab{
+            background-color: #E7ECFA;
+          }
+            .tab-icon{
+                margin-right: 8px;
+                height: 22px ;
+                width: 22px;
+            }
+            .tab-title{
+            
+                h1{
+                    margin-top: 6px;
+                    margin-bottom: 0px;
+                    font-family: Inter;
+                    font-size: 16px;
+                    font-weight: 400;
+                    line-height: 19.36px;
+                    text-align: left;
+                    text-underline-position: from-font;
+                    text-decoration-skip-ink: none;
+                    color : #5B6B79;
+                }
+            
+                &.active-text{
+                    h1{
+                        color : #113DCD;
+                    }
+                }
+            }
+        }
+      .child-tab{
+        height: auto;
+        padding: 8px;
+        margin-bottom: 14px;
+        padding-top: 0px;
+        .chile-icon{
+            margin-right: 8px;
+        }
+        .child-text{
+            h1{
+                margin-left: 8px;
+                font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16.94px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color : #5B6B79
+            }
+            &.activetabtext{
+                h1{
+                    color : #113DCD
+                }
+               
+            }
+        }
+      }
+    }
+    
+}
+
+
+.offcanvas-body {
+    padding: 0px;
+}

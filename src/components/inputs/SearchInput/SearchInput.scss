@@ -1,0 +1,37 @@
+#searchinput-container {
+  width: 100%;
+  position: relative;
+
+  input {
+    width: 100%;
+    border: 1px solid var(--bec8);
+    height: 45px;
+    outline: unset;
+    box-shadow: unset;
+    padding: 14px 16px 14px 40px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 400;
+    box-shadow: 0px 0px 2.5px 0px #00000012;
+    background: var(--f9f9);
+
+    &:disabled {
+      background-color: var(--ffff);
+      border: 0.7px solid var(--dddd);
+    }
+  }
+
+  ::placeholder {
+    color: var(--d0d0);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+  }
+
+  span {
+    position: absolute;
+    top: 12px;
+    left: 13px;
+  }
+}
