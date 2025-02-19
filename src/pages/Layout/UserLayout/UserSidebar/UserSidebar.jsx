@@ -6,11 +6,13 @@ import {
   setIsUserSide,
   setRightSideObj,
 } from "@/store/globalSlice";
+import { useNavigate } from "react-router-dom";
 
 const UserSidebar = () => {
   const reduxData = useSelector((state) => state.global);
   const { isUserSide, isRightSide } = reduxData || {};
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   return (
     <div className="user-sidebar-container">
       <div
@@ -53,7 +55,12 @@ const UserSidebar = () => {
         />
         <p className="menu-item-name">Library</p>
       </div>
-      <div className="d-flex flex-column align-items-center mb-3 mb-24 ">
+      <div
+        className="d-flex flex-column align-items-center mb-3 mb-24 "
+        onClick={() => {
+          navigate("/uploadpdf");
+        }}
+      >
         <img
           src={icons.chatIcons}
           alt="img"
@@ -61,7 +68,12 @@ const UserSidebar = () => {
         />
         <p className="menu-item-name">Chat With Doc</p>
       </div>
-      <div className="d-flex flex-column align-items-center mb-3 mb-24 ">
+      <div
+        className="d-flex flex-column align-items-center mb-3 mb-24 "
+        onClick={() => {
+          navigate("/literature-review");
+        }}
+      >
         <img
           src={icons.reviewIcons}
           alt="img"

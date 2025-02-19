@@ -21,7 +21,7 @@ const AskPaper = ({ onHide }) => {
 
   return (
     <Modal onHide={onHide} size="md" fullscreen>
-      <div id="AskPaper">
+      <div id="AskPaper" style={{ padding: "0px" }}>
         <div className="row">
           <div className="col-8" style={{ height: "95vh", padding: 0 }}>
             <div style={{ height: "100%" }}>

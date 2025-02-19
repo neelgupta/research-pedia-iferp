@@ -28,7 +28,6 @@ const Navbar = () => {
     window.location.reload();
   };
 
-
   return (
     <div id="Navbar-container" className="">
       <div className="d-flex justify-content-between align-items-center mt-20">
@@ -53,40 +52,47 @@ const Navbar = () => {
             <img src={icons.notifcation} alt="img" className="img-fluid" />
           </div>
           <div className="dropdown">
-            <img src={icons.avatar} alt="img" className="img-fluid w-40 h-40" style={{cursor : "pointer"}}  onClick={() => {
-                        setDropdownOpen(!dropdownOpen);
-                      }}/>
-                      {dropdownOpen && (
-                        <div className="dropdown-menus" ref={dropdownRef}>
-                  <div className="dropdown-item-f">
-                    <img
-                      src={icons.profileIcons}
-                      alt="notification-icon"
-                      className="h-22 w-22 object-fit-contain"
-                    />
-                    <p className="notification-name">
-                      {/* {localData.name} */}
-                      Test
-                      </p>
-                  </div>
-                
-                  <div
-                    className="dropdown-item-p pointer"
-                    onClick={() => {
-                     // setDropdownOpen(false);
-                    }}
-                  >
-                    <div className="w-188 text-l" onClick={handleLogOut}>Log Out</div>
+            <img
+              src={icons.avatar}
+              alt="img"
+              className="img-fluid w-40 h-40"
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                setDropdownOpen(!dropdownOpen);
+              }}
+            />
+            {dropdownOpen && (
+              <div className="dropdown-menus" ref={dropdownRef}>
+                <div className="dropdown-item-f">
+                  <img
+                    src={icons.profileIcons}
+                    alt="notification-icon"
+                    className="h-22 w-22 object-fit-contain"
+                  />
+                  <p className="notification-name">
+                    {/* {localData.name} */}
+                    Test
+                  </p>
+                </div>
+
+                <div
+                  className="dropdown-item-p pointer"
+                  onClick={() => {
+                    // setDropdownOpen(false);
+                  }}
+                >
+                  <div className="w-188 text-l" onClick={handleLogOut}>
+                    Log Out
                   </div>
                 </div>
-                      )}
-            
+              </div>
+            )}
           </div>
         </div>
 
         {/* {dropdownOpen && ( */}
-              
-              {/* )} */}
+
+        {/* )} */}
       </div>
     </div>
   );

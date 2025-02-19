@@ -6,6 +6,7 @@ import PopupRegistration from "@/pages/User/PopupRegistration/PopupRegistration"
 import MyFeed from "@/pages/MyFeed";
 import CreateFeed from "@/pages/CreateFeed";
 import UploadAskPdf from "@/pages/UploadAskPdf";
+import LiteratureReview from "@/pages/LiteratureReview";
 
 // Lazy load components
 
@@ -44,6 +45,10 @@ export const UserRoutes = () => {
       {
         path: "/uploadpdf",
         component: <UploadAskPdf />,
+      },
+      {
+        path: "/literature-review",
+        component: <LiteratureReview />,
       },
     ],
     student: [

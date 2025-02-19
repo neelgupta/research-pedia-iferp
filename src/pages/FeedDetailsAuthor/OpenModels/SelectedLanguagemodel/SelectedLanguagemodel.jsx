@@ -54,7 +54,7 @@ const SelectedLanguagemodel = ({ onHide }) => {
                   }`}
                   onClick={() => handleSelectLanguage(lang)}
                 >
-                  <p>{lang.name}</p>
+                  <p className="text-16-400">{lang.name}</p>
                 </div>
               ))}
             </div>

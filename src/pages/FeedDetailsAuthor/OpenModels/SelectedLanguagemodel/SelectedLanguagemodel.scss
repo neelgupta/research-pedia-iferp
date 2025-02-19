@@ -6,6 +6,10 @@
         .language-item {
             cursor: pointer;
 
+            &:hover {
+                color: #113DCD;
+            }
+
             &.selected {
                 color: #113DCD;
 

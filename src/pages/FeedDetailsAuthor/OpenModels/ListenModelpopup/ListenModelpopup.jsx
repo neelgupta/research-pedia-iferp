@@ -221,10 +221,8 @@ const ListenModelpopup = ({ onHide }) => {
   };
 
   const updatevolumn = (volume) => {
-    // Set volume state in parent
     setVolume(volume);
 
-    // Apply to audio element through reference (audioRef)
     if (audioRef.current) {
       audioRef.current.volume = volume;
     }

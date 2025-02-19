@@ -146,8 +146,8 @@ const AudioControls = ({
         </div>
 
         <div
-          className="ms-12 me-12 "
-          style={{ maxWidth: "600px", width: "800px" }}
+          className="ms-24 me-24 "
+          style={{ maxWidth: "600px", width: "600px" }}
         >
           <input
             type="range"

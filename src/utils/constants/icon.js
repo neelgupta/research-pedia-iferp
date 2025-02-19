@@ -186,8 +186,17 @@ import Askpaper from "assets/images/icons/Askpaper.png";
 
 import whitepdf from "assets/images/icons/whitepdf.png";
 import whiteAdd from "assets/images/icons/whiteAdd.png";
+import Search from "assets/images/icons/Search.png";
+
+import searchingimg from "assets/images/icons/searchingimg.png";
+import Recantsimg from "assets/images/icons/Recantsimg.png";
+import downgry from "assets/images/icons/down-gry.png";
 export const icons = {
   // avatar,
+  downgry,
+  searchingimg,
+  Recantsimg,
+  Search,
   whiteAdd,
   whitepdf,
   Askpaper,
