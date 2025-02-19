@@ -33,7 +33,7 @@ export const decrypt = (encryptedData) => {
       returnData = JSON.parse(decryped);
     }
   } catch (error) {
-    // console.log("CATCH", encryptedData);
+    console.log("CATCH", error);
   }
   return returnData;
 };

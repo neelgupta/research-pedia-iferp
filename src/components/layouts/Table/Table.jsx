@@ -76,7 +76,6 @@ const Table = ({
   const rowOptions = generateRowOptions();
 
 
-  console.log(isOpen,"isOpen")
 
   return (
     <div id="table-container">

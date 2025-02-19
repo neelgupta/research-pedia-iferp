@@ -29,20 +29,11 @@ const Security = () => {
 
   const fetchGeneratedCode = async()=>{
     const result = await dispatch(getGeneratedCode());
-    setQrText(result.data.response)
-    console.log(result,"GENERATED CODZE");
+    setQrText(result.data.response.twoFACode)
+    setOpenQr(result.data.response.isGenerated)
   }
 
-  const fetchData = async () => {
-    const result = await dispatch(getCodeData());
-    console.log("101" ,result.data.response[0].isGenerated)
-    setOpenQr(result.data.response[0].isGenerated)
-    console.log(result);
-  };
-
-  
   useEffect(() => {
-    fetchData();
     fetchGeneratedCode()
   }, []);
 

@@ -80,8 +80,6 @@ export const getAuthorSocialDetails = (id) => async (dispatch) => {
       `/user/recommendedPapers/getAuthorsDetails?id=${id}`,
       {}
     );
-
-    console.log(res,"RESPONSE AASUA")
     return res;
   } catch (error) {
     dispatch(handelCatch(error));

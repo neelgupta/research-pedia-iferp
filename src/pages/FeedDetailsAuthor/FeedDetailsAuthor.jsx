@@ -100,16 +100,11 @@ const FeedDetailsAuthor = () => {
     const paperId = id.paperId;
     const abstractId = id.abstractId;
 
-    console.log(paperId, { abstractId });
 
     const result = await dispatch(
       getRecommendedPapersById(paperId, abstractId)
     );
 
-    console.log(
-      result?.data.response?.researchPapersWithSummary[0].author,
-      "strange"
-    );
     setAutherIddetispaper(
       result?.data.response?.researchPapersWithSummary[0]?.authors
         ? result?.data.response?.researchPapersWithSummary[0]?.authors[0]
@@ -127,7 +122,6 @@ const FeedDetailsAuthor = () => {
   };
 
   const fetchIferpAuthorSData = async () => {
-    console.log(iferpAuthorId, "IN SIDE THIS");
     if (iferpAuthorId !== undefined) {
       const result = await dispatch(getAuthorSocialDetails(iferpAuthorId));
 
@@ -137,7 +131,6 @@ const FeedDetailsAuthor = () => {
     }
   };
 
-  console.log(authdatadetails, "authdatadetails");
 
   useEffect(() => {
     fetchIferpAuthorSData();
@@ -220,7 +213,6 @@ const FeedDetailsAuthor = () => {
     paper_abstract,
   } = paperDetails || {};
 
-  console.log(paperDetails, "paperDetails");
 
   const handleClickSummary = () => {
     setShowActive("Summary");
@@ -276,7 +268,6 @@ const FeedDetailsAuthor = () => {
   const [isTop, setIsTop] = useState(false);
   const searchDivRef = useRef(null);
   const checkIfTop = () => {
-    console.log("rect", searchDivRef.current.getBoundingClientRect());
     // if (searchDivRef.current) {
     const rect = searchDivRef.current.getBoundingClientRect();
 
@@ -877,7 +868,6 @@ const FeedDetailsAuthor = () => {
                                       className="h-20 w-20 rounded-circle"
                                     />
 
-                                    {console.log(ele.author_name, "ELE")}
                                     {(ele?.authors || ele.author_name) &&
                                     ele?.authors?.length > 0 ? (
                                       <>

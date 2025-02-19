@@ -294,7 +294,6 @@ const MyProfilePopUp = ({ onHide, title, isUserData, fetchUserDetails }) => {
             } = props;
             return (
               <from>
-                {console.log(errors, "errors")}
                 {valCount === 0 && (
                   <PersonalDetailsPopUp
                     setValCount={setValCount}
