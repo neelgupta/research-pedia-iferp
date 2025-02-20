@@ -115,14 +115,14 @@ const SelectPlan = ({ setValCount, setIsOpenModal, onHide }) => {
           btnStyle="LBA"
           className="h-49 w-114"
           onClick={() => {
-            navigate("/my-feed");
+            onHide()
           }}
         />
         <Button
           btnText="Continue to Payment"
           className="h-49 w-213"
           onClick={() => {
-            navigate("/my-feed");
+            onHide()
           }}
         />
       </div>

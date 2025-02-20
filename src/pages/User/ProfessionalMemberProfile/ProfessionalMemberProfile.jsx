@@ -13,7 +13,7 @@ import { setIsModalOpen } from "@/store/globalSlice";
 const ProfessionalMemberProfile = () => {
   const [isUserData, setIsUserData] = useState({});
   const [isOpenModal, setIsOpenModal] = useState(false);
-
+  
   const isModalOpen = useSelector((state) => state.global.isModalOpen);
 
   const localData = getDataFromLocalStorage();

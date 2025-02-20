@@ -99,40 +99,12 @@ const MyProfilePopUp = ({ onHide, title, isUserData, fetchUserDetails }) => {
   };
 
   const validationSchema = Yup.object({
-    // name: Yup.string()
-    //   .required("Name is required")
-    //   .min(2, "Name must be at least 2 characters")
-    //   .max(50, "Name must be less than 50 characters"),
-
-    // email: Yup.string()
-    //   .email("Invalid email address")
-    //   .required("Email is required"),
-
-    // alternateEmail: Yup.string().email("Invalid email address").notRequired(),
-
-    // phoneNumber: Yup.string()
-    //   .required("Phone number is required")
-    //   .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
-
-    // alternatePhoneNumber: Yup.string()
-    //   .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits")
-    //   .notRequired(),
-
-    // dateOfbirth: Yup.date()
-    //   .required("Date of birth is required")
-    //   .max(new Date(), "Date of birth cannot be in the future"),
-
-    // gender: Yup.string()
-    //   .oneOf(["male", "female", "other"], "Invalid gender")
-    //   .required("Gender is required"),
 
     country: Yup.object({
-      // id: Yup.string().required("Country is required"),
       countryName: Yup.string().required("Country name is required"),
     }),
 
     state: Yup.object({
-      // id: Yup.string().required("State is required"),
       stateName: Yup.string().required("State name is required"),
     }),
 
@@ -194,7 +166,6 @@ const MyProfilePopUp = ({ onHide, title, isUserData, fetchUserDetails }) => {
   });
 
   const handleSubmit = async (values) => {
-
     values.country = {
       id: isCountryId,
       countryName:

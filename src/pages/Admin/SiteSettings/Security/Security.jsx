@@ -6,7 +6,6 @@ import { icons } from "@/utils/constants/icon";
 import ReactQR from "react-qr-code";
 import { useDispatch } from "react-redux";
 import {
-  getCodeData,
   getGeneratedCode,
   handleDownLoadExcelSheet,
   handleGenerateCode,

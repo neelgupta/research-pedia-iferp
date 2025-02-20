@@ -1,1 +1,1 @@
-export { default } from "./MyProfilePopUp";
+export { default as InstituteMyProfile } from "./MyProfilePopUp";

@@ -17,8 +17,15 @@ import {
 } from "@/store/userSlice/projectSlice";
 import moment from "moment";
 import { Spinner } from "react-bootstrap";
-import MyProfilePopUp from "../Institutional/InstitutionalProfile/MyProfilePopUp";
 import RegisterProfilePopUp from "./RegisterProfilePopUp/RegisterProfilePopUp";
+import { setIsModalOpen } from "@/store/globalSlice";
+import {
+  getInstitutionalMemberDetails,
+  getProfessionalMemberDetails,
+  getStudentMemberDetails,
+} from "@/store/userSlice/userDetailSlice";
+import MyProfilePopUp from "@/components/layouts/MyProfilePopUp";
+import { InstituteMyProfile } from "../Institutional/InstitutionalProfile/MyProfilePopUp";
 
 const FeedDetails = ({ popup }) => {
   const dropdownRef = useRef(null);
@@ -29,6 +36,10 @@ const FeedDetails = ({ popup }) => {
   const [pagination, setPagination] = useState({});
   const [activeTab, setActiveTab] = useState("topPapers");
   const [openDropdown, setOpenDropdown] = useState(null);
+  const [isUserData, setIsUserData] = useState({});
+  const [isInsUserData, setIsInsUserData] = useState({});
+  const [isStudentUserData, setIsStudentUserData] = useState({});
+  const isModalOpen = useSelector((state) => state.global.isModalOpen);
 
   const handleDropdownToggle = (index) => {
     setOpenDropdown(openDropdown === index ? null : index);
@@ -44,7 +55,8 @@ const FeedDetails = ({ popup }) => {
 
   const localData = getDataFromLocalStorage();
   const { name } = localData;
-  1;
+
+  console.log(localData, "localData");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -57,14 +69,39 @@ const FeedDetails = ({ popup }) => {
       setIsTopicList(data);
     }
   };
+
+  const fetchUserDetails = async () => {
+    const result = await dispatch(
+      getProfessionalMemberDetails(localData.roleId)
+    );
+    setIsUserData(result?.data?.response);
+  };
+
+  const fetchStudentUserDetails = async () => {
+    const result = await dispatch(getStudentMemberDetails(localData.roleId));
+    setIsStudentUserData(result?.data?.response);
+  };
+
+  const fetchInsUserDetails = async () => {
+    const result = await dispatch(
+      getInstitutionalMemberDetails(localData.roleId)
+    );
+    setIsInsUserData(result?.data?.response);
+  };
+
+  const onHide = () => {
+    dispatch(setIsModalOpen(false));
+  };
+
   const [Recommendedloader, setRecommendedloader] = useState(false);
+
   const fetchRecommendedReaserchPapers = async () => {
     setRecommendedloader(true);
     // const neQuery = ["Architecture", "science"];
     const query = `topics=${topicList}&limit=${rowsPerPage}&page=${currentPage}`;
     if (topicList.length > 0) {
       const result = await dispatch(getRecommendedPapers(query));
-
+      console.log(result, "result");
       if (result?.status === 200) {
         setRecommendedPapers(result?.data?.response?.papers);
         setPagination(result?.data?.response?.pagination);
@@ -85,6 +122,14 @@ const FeedDetails = ({ popup }) => {
 
   useEffect(() => {
     fetchUserInterest();
+
+    if (localData.role === "professional") {
+      fetchUserDetails();
+    } else if (localData.role === "institutional") {
+      fetchInsUserDetails();
+    } else {
+      fetchStudentUserDetails();
+    }
   }, []);
 
   // useEffect(() => {
@@ -403,7 +448,10 @@ const FeedDetails = ({ popup }) => {
             your interests.
           </p>
         </div>
-        <div className="right-box">
+        <div
+          className="right-box pointer"
+          onClick={() => dispatch(setIsModalOpen(!isModalOpen))}
+        >
           <div className="d-flex align-items-center gap-2">
             <p className="gap-2 text-14-500 color-3333">
               Click here to complete your profile
@@ -459,7 +507,7 @@ const FeedDetails = ({ popup }) => {
             className={`tab ${activeTab === "conference" ? "active" : ""} `}
             onClick={() => setActiveTab("conference")}
           >
-            Conference
+            Conference Papers
           </span>
         </div>
         {Recommendedloader || paperloader ? (
@@ -510,6 +558,29 @@ const FeedDetails = ({ popup }) => {
           />
         </div>
       </div>
+      {localData?.role === "professional" || localData?.role === "student"
+        ? isModalOpen && (
+            <MyProfilePopUp
+              isUserData={
+                localData.role === "student" ? isStudentUserData : isUserData
+              }
+              title={localData.role === "student" ? "Student" : "Professional"}
+              onHide={onHide}
+              fetchData={
+                localData.role === "student"
+                  ? fetchStudentUserDetails
+                  : fetchUserDetails
+              }
+            />
+          )
+        : isModalOpen && (
+            <InstituteMyProfile
+              isUserData={isInsUserData}
+              title="Institutional"
+              onHide={onHide}
+              fetchData={fetchInsUserDetails}
+            />
+          )}
     </div>
   );
 };

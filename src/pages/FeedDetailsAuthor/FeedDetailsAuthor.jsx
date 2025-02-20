@@ -27,65 +27,6 @@ const FeedDetailsAuthor = () => {
   const [AutherIddetispaper, setAutherIddetispaper] = useState("");
   const [summaryloadder, setsummaryloadder] = useState(false);
   const [similarPapers, setSimilarPapers] = useState([]);
-  // const [authdatadetails, setauthdata] = useState({
-  //   status: 200,
-  //   data: "PjEWfh2LHaz/8dE0NOFFn4uJ2nX2bOy6u+TT8c7FrT7gJZjhI6RHB7aXaptLm8cDGaM1tTK/lp1LnBaUli6dVnmgURbsGXXaUzhsbRQ5p+vV4+wqUeY3bDmeAAijXNZNFAhyVMixLW4UaBIVsKXgTnAIaUnvhFeCtfbn98eL9bKCMy4XS+1X/wmXvLI8pp7kU31pvzhM/omO9eXN14/GF1fFf+bEm0I7YHsZHq3VtCm0ThQ6kIGhXdof1xZgAMk0hmELBg2OXZbLxY7m2Sdu7FO+XkwWa96zv9zNEYcGhJFwNWaUFB0M6+17FoI6qCCBDvPosid3UDpNhferVbLZwatNjPd4oT8MBKoY+0Lz7ejrpBREihlRA8vesJn8jGOtfrUJ/BzTxvMR9YYf+QxJUAn9HMKEYGlqkS6XAKJjHmBm3zlXDdwf5EYoK0BY+8egdrXUiVqUn3qCd8DGwQsNagu2gl4rzTLFRN5I+DVwf9q1LyssiEPCJ8Rmorjm6TWB0TEzgJ2+7N6nwnChRxFHA04w4CD2lB7JQuT6RMVdKDjLJcdKFzW9X10rDrFj8VvHZuJSLkiStI795Wr4GnMtNuBi9WxSxdnlQCnRxYTygshoklCuZtdlwJ2k5Etnp6vCscP7P3iW/EFGJadthcn0gpWF73ilAlRSi8arFApZg7sprxXlCu2L+q/9XyOZJT7WRDJx/eJ6NpuHtXSS5uT1U+6HmgdJ0SlXiQ0ANO0xl+cpDJ3KEvg8GSQvoQWqocxLm1E9bsS62pvsLbYdJ/V3m+aVp8gWUhCDjFHb40PQh8RfNCKre7UxhEA3yecD3YEqp/DUP5/Cz2lAiOc0XKiOD4Zl1lw0s7hU94v1vUUlkpRQKje03unaIlCjaZokDplIhshvnwH1rRB8ABBFvZRrDLAOl2d83ptmA6Gm+ou2/yoGnJK4xXDYAcIrMm5NxrqjqH7ukFxszF9JlvEFAFA15NeEoxNGlkBIxbMa5X67WeDn+Ouw/l3HqvyTFXkCPDhDxOayQ5l9h4rWbRf0Hdhe634QgODWX5wcVp3z9BbXhp+1flL0/iF7S0J4dfQ0rVV00FcWj7GHFA058Q/Tuuz03sz9CPMj6oLHRO2pd1BVrL3YW/91YUp5OX6zT8cM9zUeWhXS2xLA786xQi+IxEKvyArK+3dDoFRvwDEWjPgQorcKZKzgPQIOlKgdnaaT2YVGn8Z+pWJrZNPRrEgk29cXadt5bvpdcVpuKd3ucXXH0T8HtTR2cqiTX/Z12hTjZ4oOMNwwqVPGASla5Ys4g+Dm8OgXjCh6qOMoiu+oLMw71sKcGjcDLBZumY7ZCTrbRD1pOENugEc6d66gaI4TaAjglkvog51ShzzAzhu0EVyO86xfqFys4p7bD/AuvHVxWokEdVeOVJp0FLYu3rc8SplRwJtLysTjZHV1Fnp2wpZrP6MIQEVR6uQZJuCF4AtZPMaNub0lA7tYOT/6zbDGg2Y/njqn89gxqHPUPUy0ZIhoHTuPMXkizYwvO+7+HXmxY591j8V2guz1YwlR92WE30up+U/0r7eWMZi5AgRqW3TaGL+4jBS+cYirJwmB3HVPopW0KcydM0lM7kzxmb2uBKxMo6PA/8zn7JVsxk9/k6l3lf+SLWYVftFpGvwiQcX7Zkkc8kSWPOACYa9y9OUMXZWHKQ==",
-  //   data1: {
-  //     education_details: {
-  //       id: 88596,
-  //       user_id: 89402,
-  //       ug_course: "2",
-  //       ug_course_name: "BA",
-  //       ug_department: "1",
-  //       ug_department_name: "Digital Filmmaking",
-  //       ug_university: "581",
-  //       ug_university_name: "Other",
-  //       ug_institution: "1",
-  //       ug_institution_name:
-  //         "Parvathaneni Brahmayya Siddhartha college of Arts & Science",
-  //       ug_year_of_completion: "2024-01-31",
-  //       pg_course: "9",
-  //       pg_course_name: "MSc",
-  //       pg_department: "2",
-  //       pg_department_name: "Accountancy",
-  //       pg_university: "1",
-  //       pg_university_name: "University of Petroleum and Energy Studies",
-  //       pg_institution: "2",
-  //       pg_institution_name:
-  //         "Annamacharya Institute of Technology and Sciences",
-  //       pg_year_of_completion: "2024-12-02",
-  //       phd_course: "18",
-  //       phd_course_name: "Ph.D",
-  //       phd_department: "3",
-  //       phd_department_name: "Actuarial Science",
-  //       phd_university: "2",
-  //       phd_university_name: "DAV Institute of Engineering & Technology",
-  //       phd_institution: "1",
-  //       phd_institution_name:
-  //         "Parvathaneni Brahmayya Siddhartha college of Arts & Science",
-  //     },
-  //     co_authors: 26,
-  //     user_details: [
-  //       {
-  //         id: 5,
-  //         name: "Pritesh Professional",
-  //         country: "India",
-  //         state: "Bihar",
-  //         followers: 6,
-  //         profile_photo_path: "profile-82284-1737716349.png",
-  //         followings: 10,
-  //         user_type: "2",
-  //       },
-  //     ],
-  //     topics: [
-  //       "Conference",
-  //       "Digital Context",
-  //       "University Teaching Role",
-  //       "New Learning Scenarios",
-  //     ],
-  //   },
-  //   message: "User data!",
-  // });
 
   const [authdatadetails, setauthdata] = useState({});
   const [iferpAuthorId, setIferpAuthorId] = useState();
@@ -250,6 +191,8 @@ const FeedDetailsAuthor = () => {
   };
 
   const reduxData = useSelector((state) => state.global);
+  const { isUserSide,isRightSide } = reduxData || {};
+
 
   const [visibleCount, setVisibleCount] = useState(2);
   const [showMore, setShowMore] = useState(false);
@@ -283,7 +226,6 @@ const FeedDetailsAuthor = () => {
     };
   }, []);
 
-  console.log("isTop", isTop);
   return (
     <div className="feed-details-author-container">
       <div className="row">

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./InstitutionalProfile.scss";
 import ProfileDetails from "./ProfileDetails";
-import MyProfilePopUp from "./MyProfilePopUp";
+import  { InstituteMyProfile } from "./MyProfilePopUp";
 import { getDataFromLocalStorage } from "@/utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { getInstitutionalMemberDetails } from "@/store/userSlice/userDetailSlice";
@@ -41,7 +41,7 @@ const InstitutionalProfile = () => {
       <ProfileDetails onClick={handleClick} isUserData={isUserData} />
 
       {(isModalOpen || isOpenModal) && (
-        <MyProfilePopUp
+        <InstituteMyProfile
           title="Institutional"
           onHide={onHide}
           isUserData={isUserData}
