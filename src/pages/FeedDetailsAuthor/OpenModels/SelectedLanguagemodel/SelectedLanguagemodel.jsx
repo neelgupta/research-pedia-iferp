@@ -4,6 +4,7 @@ import SearchInput from "@/components/inputs/SearchInput";
 import "./SelectedLanguagemodel.scss";
 import Button from "@/components/inputs/Button";
 import { Modal } from "@/components";
+import { Spinner } from "react-bootstrap";
 const SelectedLanguagemodel = ({ onHide }) => {
   const [languagelist, setlanguagelist] = useState([
     { name: "Hindi" },
@@ -27,7 +28,7 @@ const SelectedLanguagemodel = ({ onHide }) => {
     { name: "Thai" },
     { name: "Vietnamese" },
   ]);
-
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState(null);
 
   const handleSelectLanguage = (lang) => {
@@ -45,21 +46,31 @@ const SelectedLanguagemodel = ({ onHide }) => {
             <div className="search-box mb-18">
               <SearchInput placeholder="Search language" />
             </div>
-            <div className="language-show brave-scroll-gry">
-              {languagelist.map((lang, index) => (
-                <div
-                  key={index}
-                  className={`language-item mb-18 ${
-                    selectedLanguage === lang ? "selected" : ""
-                  }`}
-                  onClick={() => handleSelectLanguage(lang)}
-                >
-                  <p className="text-16-400">{lang.name}</p>
-                </div>
-              ))}
-            </div>
+            {isLoading ? (
+              <div
+                className="loader-container d-flex justify-content-center align-items-center"
+                style={{ height: "100%" }}
+              >
+                <Spinner animation="border" variant="primary" />
+              </div>
+            ) : (
+              <div className="language-show brave-scroll-gry">
+                {languagelist.map((lang, index) => (
+                  <div
+                    key={index}
+                    className={`language-item mb-18 ${
+                      selectedLanguage === lang ? "selected" : ""
+                    }`}
+                    onClick={() => handleSelectLanguage(lang)}
+                  >
+                    <p className="text-16-400">{lang.name}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
             <div className="d-flex justify-content-end mt-32">
-              <Button btnText="Translate" className="w-150 h-49" />
+              <Button btnText="Translate" className="w-128 h-49" />
             </div>
           </div>
         </div>

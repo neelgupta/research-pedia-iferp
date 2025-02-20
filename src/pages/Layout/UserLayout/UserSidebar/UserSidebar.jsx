@@ -39,7 +39,12 @@ const UserSidebar = () => {
           />
         </div>
       </div>
-      <div className="d-flex flex-column align-items-center mb-3 mb-24 ">
+      <div
+        className="d-flex flex-column align-items-center mb-3 mb-24 "
+        style={{
+          cursor: "pointer",
+        }}
+      >
         <img
           src={icons.UserHome}
           alt="img"
@@ -47,7 +52,12 @@ const UserSidebar = () => {
         />
         <p className="menu-item-name">Home</p>
       </div>
-      <div className="d-flex flex-column align-items-center mb-3 mb-24 ">
+      <div
+        className="d-flex flex-column align-items-center mb-3 mb-24 "
+        style={{
+          cursor: "pointer",
+        }}
+      >
         <img
           src={icons.bookIconsB}
           alt="img"
@@ -59,6 +69,9 @@ const UserSidebar = () => {
         className="d-flex flex-column align-items-center mb-3 mb-24 "
         onClick={() => {
           navigate("/uploadpdf");
+        }}
+        style={{
+          cursor: "pointer",
         }}
       >
         <img
@@ -73,6 +86,9 @@ const UserSidebar = () => {
         onClick={() => {
           navigate("/literature-review");
         }}
+        style={{
+          cursor: "pointer",
+        }}
       >
         <img
           src={icons.reviewIcons}
@@ -81,7 +97,12 @@ const UserSidebar = () => {
         />
         <p className="menu-item-name">Literature Review</p>
       </div>
-      <div className="d-flex flex-column align-items-center mb-3 mb-24 ">
+      <div
+        className="d-flex flex-column align-items-center mb-3 mb-24 "
+        style={{
+          cursor: "pointer",
+        }}
+      >
         <img
           src={icons.transactionIcons}
           alt="img"
@@ -89,7 +110,12 @@ const UserSidebar = () => {
         />
         <p className="menu-item-name">Translation</p>
       </div>
-      <div className="d-flex flex-column align-items-center mb-3 mb-24 ">
+      <div
+        className="d-flex flex-column align-items-center mb-3 mb-24 "
+        style={{
+          cursor: "pointer",
+        }}
+      >
         <img
           src={icons.primeAIcons}
           alt="img"

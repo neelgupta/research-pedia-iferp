@@ -6,7 +6,7 @@ import { handleCopy } from "@/utils/helpers";
 import { Button, TextInput } from "@/components";
 import SecondDetails from "./SecondDetails";
 import PackageDetails from "./PackageDetails";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getRecommendedPapersById } from "@/store/userSlice/projectSlice";
 import moment from "moment";
@@ -26,7 +26,7 @@ const FeedDetailsAuthor = () => {
   const [AutherIddetispaper, setAutherIddetispaper] = useState("");
   const [summaryloadder, setsummaryloadder] = useState(false);
   const [LanguageModel, setLanguageModel] = useState(false);
-
+  const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
   const topics = location?.state?.topics;
@@ -223,6 +223,7 @@ const FeedDetailsAuthor = () => {
     setisReference(false);
     setisAskPaper(false);
   };
+
   return (
     <div className="feed-details-author-container">
       <div className="row">
@@ -529,7 +530,10 @@ const FeedDetailsAuthor = () => {
                   </div>
                 </div>
                 {/* review */}
-                <div className="review-box">
+                <div
+                  className="review-box"
+                  onClick={() => navigate("/literature-review")}
+                >
                   <div className="fa-center gap-1">
                     <Button
                       btnText="New"

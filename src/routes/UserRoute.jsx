@@ -5,8 +5,9 @@ import { Spinner } from "react-bootstrap";
 import PopupRegistration from "@/pages/User/PopupRegistration/PopupRegistration";
 import MyFeed from "@/pages/MyFeed";
 import CreateFeed from "@/pages/CreateFeed";
-import UploadAskPdf from "@/pages/UploadAskPdf";
-import LiteratureReview from "@/pages/LiteratureReview";
+
+// import UploadAskPdf from "@/pages/UploadAskPdf";
+// import LiteratureReview from "@/pages/LiteratureReview";
 
 // Lazy load components
 
@@ -21,7 +22,8 @@ const StudentProfile = lazy(() => import("@/pages/Student/StudentProfile"));
 const ProfessionalMemberProfile = lazy(
   () => import("@/pages/User/ProfessionalMemberProfile")
 );
-
+const UploadAskPdf = lazy(() => import("@/pages/UploadAskPdf"));
+const LiteratureReview = lazy(() => import("@/pages/LiteratureReview"));
 export const UserRoutes = () => {
   const roleData = getDataFromLocalStorage();
   const role = roleData ? roleData.role : "institutional";

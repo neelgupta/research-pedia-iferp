@@ -117,6 +117,7 @@
         width: 90%;
         max-width: 800px;
         overflow-y: auto;
+        min-height: 150px;
         max-height: 350px;
 
         .dropdown {
@@ -153,6 +154,16 @@
                 }
             }
 
+        }
+
+        .toggle-btn {
+            span {
+                color: "#333333";
+
+                &:hover {
+                    color: "#113DCD"
+                }
+            }
         }
 
         @media (max-width : 800px) {

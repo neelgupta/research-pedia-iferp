@@ -17,12 +17,28 @@
 
         .Abstract-model {
             background-color: #113DCD0A;
+            min-height: 40vh;
             max-height: 70vh;
             overflow-y: auto;
+            border-radius: 22px;
+
+            @media (max-width : "1122px") {
+                max-height: 60vh;
+            }
+
+            @media (max-width : "1088px") {
+                max-height: 55vh;
+            }
+
+            @media (max-width : "856px") {
+                max-height: 50vh;
+            }
+
         }
 
         .track-info {
             //background-color: var(--F4F6F);
+            min-height: 84px;
         }
     }
 

@@ -14,6 +14,8 @@ const Modal = ({
   isCloseOutside,
   textClass,
   isClose = true,
+  paddingnone,
+  borderRadiusnone,
 }) => {
   return (
     <BootrsapModal
@@ -29,6 +31,9 @@ const Modal = ({
         id={`modal-container`}
         style={{
           maxWidth: width ? width : "",
+          padding: paddingnone ? "0px" : "",
+          paddingRight: paddingnone ? "16px" : "",
+          borderRadius: borderRadiusnone ? "0px" : "",
         }}
       >
         {isClose && !hideCloseButton && (

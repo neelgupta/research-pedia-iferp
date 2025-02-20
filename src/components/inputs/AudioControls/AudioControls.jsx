@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaPlay } from "react-icons/fa";
 import { BsPause } from "react-icons/bs";
 import { icons } from "@/utils/constants";
@@ -53,13 +53,30 @@ const AudioControls = ({
 
   const handleVolumeChange = (e) => {
     const newVolume = e.target.value;
-    setVolume(newVolume); // Call the passed function to update volume in parent
+    setVolume(newVolume);
   };
   const [isVolumeOpen, setIsVolumeOpen] = useState(false);
 
   const toggleVolumeControl = () => {
     setIsVolumeOpen(!isVolumeOpen);
   };
+
+  const dropdownvolumn = useRef(null);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        dropdownvolumn.current &&
+        !dropdownvolumn.current.contains(event.target)
+      ) {
+        setIsVolumeOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   return (
     <div className="audio-controls ps-28 pe-28 flex-wrap">
       <div className="d-flex align-items-center gap-10">
@@ -146,8 +163,8 @@ const AudioControls = ({
         </div>
 
         <div
-          className="ms-24 me-24 "
-          style={{ maxWidth: "600px", width: "600px" }}
+          className="ms-24 me-24 input-range-conatiner"
+          // style={{ maxWidth: "600px", width: "100%" }}
         >
           <input
             type="range"
@@ -177,7 +194,16 @@ const AudioControls = ({
             </button>
 
             {/* inputrange */}
-            <div className="position-absolute bottom-100 start-50">
+            <div
+              className=""
+              ref={dropdownvolumn}
+              style={{
+                position: "absolute",
+                bottom: "100%",
+                left: "35%",
+                width: "100%",
+              }}
+            >
               {isVolumeOpen && (
                 <input
                   type="range"
@@ -195,8 +221,8 @@ const AudioControls = ({
         </div>
       </div>
 
-      <div className="d-flex align-items-center gap-10">
-        <div className="speed-control d-flex align-items-center">
+      <div className="d-flex align-items-center gap-4 ">
+        <div className="speed-control d-flex align-items-center ">
           <span>Speed:</span>
           <select
             value={playbackSpeed}
@@ -211,7 +237,7 @@ const AudioControls = ({
           </select>
         </div>
 
-        <div className="language-control d-flex align-items-center">
+        <div className="language-control d-flex align-items-center ">
           <span>Voice:</span>
           <select
             value={Language}
