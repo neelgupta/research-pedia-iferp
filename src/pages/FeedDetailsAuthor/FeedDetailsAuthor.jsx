@@ -532,7 +532,7 @@ const FeedDetailsAuthor = () => {
                 {/* review */}
                 <div
                   className="review-box"
-                  onClick={() => navigate("/literature-review")}
+                  // onClick={() => navigate("/literature-review")}
                 >
                   <div className="fa-center gap-1">
                     <Button

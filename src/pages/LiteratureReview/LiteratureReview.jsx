@@ -152,7 +152,7 @@ const LiteratureReview = () => {
           </div>
         )}
 
-        {search && (
+        {search && searchTerm && (
           <div className="search-dropdown brave-scroll-gry">
             <div className="recent-searches">
               <span className="text-14-500 color-0303"> Recent searches</span>
