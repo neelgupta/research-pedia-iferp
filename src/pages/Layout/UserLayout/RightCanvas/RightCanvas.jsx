@@ -23,7 +23,7 @@ const RightCanvas = () => {
               })
             );
           }}
-          responsive="lg"
+          responsive="xl"
           style={{
             maxWidth: "280px",
           }}

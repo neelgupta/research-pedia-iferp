@@ -62,6 +62,7 @@ const MyFeed = () => {
             Select your research area to help us setup your feed
           </p>
 
+      
           <div className="card-box">
             {feedlodder ? (
               <div className="spinner-container d-flex justify-content-center">
@@ -71,9 +72,9 @@ const MyFeed = () => {
               <div
                 style={{
                   height: "550px",
-
                   overflow: "auto",
-                  overflowX: "none",
+                  // overflowX: "none",
+                  overflowX:"hidden"
                 }}
                 className="brave-scroll m-10 mb-10"
               >
@@ -128,6 +129,7 @@ const MyFeed = () => {
               />
             </div>
           </div>
+
         </div>
         <FeedFooter />
       </div>

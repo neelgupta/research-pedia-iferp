@@ -8,7 +8,7 @@ const initialState = {
   errorData: null,
   sidebarOpen: true,
   isregisterpopup : false,
-  isUserSide: false,
+  isUserSide: true,
   isRightSide: false,
   rightSideObj: {},
   isTopics: false,
@@ -53,7 +53,7 @@ const globalSlice = createSlice({
     resetAllState(state) {
       state.authData = null;
       state.errorData = null;
-      state.isUserSide = false;
+      state.isUserSide = true;
       state.isRightSide = false;
       state.rightSideObj = {};
     },

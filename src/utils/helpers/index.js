@@ -33,7 +33,7 @@ export const decrypt = (encryptedData) => {
       returnData = JSON.parse(decryped);
     }
   } catch (error) {
-    // console.log("CATCH", encryptedData);
+    console.log("CATCH", error);
   }
   return returnData;
 };
@@ -204,3 +204,11 @@ export const handleCopy = (val) => async (dispatch) => {
     console.error("Failed to copy:", err);
   }
 };
+
+// export const handleCopy = (val) => async (dispatch) => {
+//   try {
+//     await navigator.clipboard.writeText(val);
+//     showSuccess("Text Copied");
+//   } catch (err) {}
+// };
+

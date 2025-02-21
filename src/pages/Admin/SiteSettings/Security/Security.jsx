@@ -6,7 +6,6 @@ import { icons } from "@/utils/constants/icon";
 import ReactQR from "react-qr-code";
 import { useDispatch } from "react-redux";
 import {
-  getCodeData,
   getGeneratedCode,
   handleDownLoadExcelSheet,
   handleGenerateCode,
@@ -29,19 +28,11 @@ const Security = () => {
 
   const fetchGeneratedCode = async () => {
     const result = await dispatch(getGeneratedCode());
-    setQrText(result.data.response);
-    console.log(result, "GENERATED CODZE");
-  };
-
-  const fetchData = async () => {
-    const result = await dispatch(getCodeData());
-
-    setOpenQr(result.data.response[0].isGenerated);
-    console.log(result);
+    setQrText(result.data.response.twoFACode);
+    setOpenQr(result.data.response.isGenerated);
   };
 
   useEffect(() => {
-    fetchData();
     fetchGeneratedCode();
   }, []);
 

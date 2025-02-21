@@ -35,18 +35,18 @@ export const getGeneratedCode = () => async (dispatch) => {
   }
 };
 
-export const getCodeData = () => async (dispatch) => {
-  dispatch(setLoading());
-  try {
-    const res = await api.get(`/admin/securityCode`, {});
+// export const getCodeData = () => async (dispatch) => {
+//   dispatch(setLoading());
+//   try {
+//     const res = await api.get(`/admin/securityCode`, {});
 
-    dispatch(clearLoading());
-    return res;
-  } catch (error) {
-    dispatch(handelCatch(error));
-    dispatch(clearLoading());
-  }
-};
+//     dispatch(clearLoading());
+//     return res;
+//   } catch (error) {
+//     dispatch(handelCatch(error));
+//     dispatch(clearLoading());
+//   }
+// };
 
 export const handleDownLoadExcelSheet = (payload) => async (dispatch) => {
   dispatch(setLoading());

@@ -20,7 +20,7 @@ import {
 } from "@/utils/helpers";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { useState } from "react";
-import { setIsModalOpen } from "@/store/globalSlice";
+// import { setIsModalOpen } from "@/store/globalSlice";
 import { getProjectByTopics } from "../../../../store/userSlice/projectSlice";
 const UserLogin = () => {
   const navigate = useNavigate();
@@ -60,18 +60,16 @@ const UserLogin = () => {
 
       const isProjectAvailable = await fetchProject();
 
-      const isPersonalDetailExist = await dispatch(
-        setIsModalOpen(result.data.response.isPersonalDetailsCompleted)
-      );
+      // const isPersonalDetailExist = await dispatch(
+      //   setIsModalOpen(result.data.response.isPersonalDetailsCompleted)
+      // );
 
-      const isPersonalDetail = isPersonalDetailExist.payload;
+      // const isPersonalDetail = isPersonalDetailExist.payload;
 
-      if (isProjectAvailable && !isPersonalDetail) {
+      if (isProjectAvailable) {
         navigate("/feed-details");
-      } else if (!isPersonalDetail && !isProjectAvailable) {
+      } else if (!isProjectAvailable) {
         navigate("/my-feed");
-      } else {
-        navigate("/");
       }
 
       setlodding(false);

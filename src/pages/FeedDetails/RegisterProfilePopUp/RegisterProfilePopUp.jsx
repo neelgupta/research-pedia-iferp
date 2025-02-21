@@ -152,7 +152,6 @@ const RegisterProfilePopUp = ({ onHide, title, isUserData,fetchUserDetails }) =>
               setFieldValue,
               handleSubmit,
             } = props;
-            console.log("values ->" ,values)
             return (
               <from>
                 {valCount === 0 && (

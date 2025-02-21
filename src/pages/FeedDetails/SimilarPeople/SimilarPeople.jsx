@@ -3,34 +3,10 @@ import "./SimilarPeople.scss";
 import { Button } from "@/components";
 import { useSelector } from "react-redux";
 
-const SimilarPeople = ({InterestUser}) => {
-  // const peopleList = [
-  //   {
-  //     id: 1,
-  //     name: "Eva Kahana",
-  //     image: icons?.avatarOneIcons,
-  //     title: "Case western reserve university",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Eva Kahana",
-  //     image: icons?.avatarOneIcons,
-  //     title: "Case western reserve university",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Bodil HansenBlix",
-  //     image: icons?.avatarOneIcons,
-  //     title: "University of thomso",
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "Gloria Gutman",
-  //     image: icons?.avatarOneIcons,
-  //     title: "Simon fraser University",
-  //   },
-  // ];
+const SimilarPeople = ({ InterestUser }) => {
+
   const reduxData = useSelector((state) => state.global);
+  
   const { isUserSide } = reduxData || {};
 
   return (
@@ -40,7 +16,11 @@ const SimilarPeople = ({InterestUser}) => {
         {InterestUser?.map((ele, index) => {
           return (
             <div
-              className={`${isUserSide ? "col-lg-4 col-md-4 col-sm-6" : "col-lg-3 col-md-4 col-sm-6"}`}
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                width: "232px",
+              }}
               key={index}
             >
               <div className="people-box">

@@ -27,8 +27,10 @@ const LiteratureReview = lazy(() => import("@/pages/LiteratureReview"));
 export const UserRoutes = () => {
   const roleData = getDataFromLocalStorage();
   const role = roleData ? roleData.role : "institutional";
+  
+const popup =false
 
-  const popup = false;
+
 
   const roleBasedRoutes = {
     professional: [

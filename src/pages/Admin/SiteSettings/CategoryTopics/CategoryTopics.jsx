@@ -66,7 +66,6 @@ const CategoryTopics = () => {
   useEffect(() => {
     fetchTopics(debouncedSearchTerm);
   }, [currentPage, rowsPerPage, debouncedSearchTerm]);
-
   const header = [
     {
       title: "Sr. No",
@@ -98,7 +97,6 @@ const CategoryTopics = () => {
         return {};
     }
   };
-
   const rowData = [];
   isTopicList?.forEach((elem, index) => {
     const { topics, priority, category, _id } = elem;

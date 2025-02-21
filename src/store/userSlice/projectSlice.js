@@ -37,7 +37,7 @@ export const getRecommendedPapers = (query) => async (dispatch) => {
   dispatch(setLoading());
   try {
     const res = await api.get(`/user/recommendedPapers?${query}`, {});
-   
+
     dispatch(clearLoading());
     return res;
   } catch (error) {
@@ -49,8 +49,11 @@ export const getRecommendedPapers = (query) => async (dispatch) => {
 export const getTopPapers = (query) => async (dispatch) => {
   dispatch(setLoading());
   try {
-    const res = await api.get(`/user/recommendedPapers/networkPost?${query}`,{});
- 
+    const res = await api.get(
+      `/user/recommendedPapers/networkPost?${query}`,
+      {}
+    );
+
     return res;
   } catch (error) {
     dispatch(handelCatch(error));
@@ -61,8 +64,22 @@ export const getTopPapers = (query) => async (dispatch) => {
 export const getUserInterest = () => async (dispatch) => {
   dispatch(setLoading());
   try {
-    const res = await api.get(`/user/recommendedUser`,{});
+    const res = await api.get(`/user/recommendedUser`, {});
 
+    return res;
+  } catch (error) {
+    dispatch(handelCatch(error));
+    dispatch(clearLoading());
+  }
+};
+
+export const getAuthorSocialDetails = (id) => async (dispatch) => {
+  dispatch(setLoading());
+  try {
+    const res = await api.get(
+      `/user/recommendedPapers/getAuthorsDetails?id=${id}`,
+      {}
+    );
     return res;
   } catch (error) {
     dispatch(handelCatch(error));
@@ -88,7 +105,6 @@ export const getRecommendedPapersById =
           url += `abstract_id=${abstractId}`;
         }
       }
-
 
       const res = await api.get(url, {});
 

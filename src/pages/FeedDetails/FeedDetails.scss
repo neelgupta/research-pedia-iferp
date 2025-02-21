@@ -73,6 +73,8 @@
   .tabs{
     border-bottom: 1px solid #ddd;
     padding: 2px;
+    display: flex;
+    gap: 28px;
     .tab{
       margin-right: 10px;
       cursor: pointer;
@@ -80,8 +82,8 @@
         color : var(--113D);
         border-bottom: 2px solid var(--113D);
         padding-bottom: 3px;
-        font-size: 14px;
-        font-weight: 600;
+        font-size: 16px;
+        font-weight: 400;
         
       }
     }
@@ -140,7 +142,7 @@
     margin-top: 8px;
     max-height: 80px;
     max-width: 700px;
-    font-size: 18px;
+    font-size: 21px;
     font-weight: 500;
     line-height: 21.78px;
     color: var(--113D);
@@ -148,7 +150,7 @@
 
   .post-pra {
     margin-top: 8px;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 400;
     line-height: 19.36px;
     color: var(--1D26);

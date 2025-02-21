@@ -22,6 +22,13 @@ const StudentProfile = () => {
     setIsUserData(result?.data?.response);
   };
 
+
+  // const onHide = () => {
+  //   if (isPersonalDetailsExist === true) {
+  //     setIsOpenModal(false);
+  //   }
+  // };
+
   const onHide =()=>{
     setIsOpenModal(false);
     dispatch(setIsModalOpen(false))
