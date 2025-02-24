@@ -5,13 +5,17 @@ import { Container } from "react-bootstrap";
 import { icons } from "@/utils/constants";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getDataFromLocalStorage } from "@/utils/helpers";
-
+import { Formik, Form } from "formik";
 const UserNavbar = () => {
   const token = true;
   const navigate = useNavigate();
 
   // const localData = getDataFromLocalStorage();
+  const initialValues = {
+    search: "",
+  };
 
+  const handleSubmit = (values) => {};
   const location = useLocation();
 
   const isMyFeed =
@@ -100,7 +104,19 @@ const UserNavbar = () => {
             </div>
             {!isMyFeed && (
               <div className="search-box">
-                <SearchInput placeholder="Search over 200+ million research papers" />
+                <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+                  {({ values, handleChange, handleBlur, errors, touched }) => (
+                    <Form>
+                      <SearchInput
+                        id="search"
+                        name="search"
+                        placeholder="Search over 200+ million research papers"
+                        value={values.search}
+                        onChange={handleChange}
+                      />
+                    </Form>
+                  )}
+                </Formik>
               </div>
             )}
 
@@ -116,8 +132,7 @@ const UserNavbar = () => {
                   <h5 className="user-name">
                     {/* {localData.name} */}
                     Test
-                    
-                    </h5>
+                  </h5>
 
                   <p className="user-id">ID - 18346441</p>
                   <p className="user-plan">Plan - Professional Premium</p>
@@ -145,7 +160,7 @@ const UserNavbar = () => {
                     <p className="notification-name">
                       {/* {localData.name} */}
                       Test
-                      </p>
+                    </p>
                   </div>
                   <div className="dropdown-item-p">
                     <div className="w-188">
@@ -268,7 +283,7 @@ const UserNavbar = () => {
                     <h5 className="user-name">
                       {/* {localData.name} */}
                       Test
-                      </h5>
+                    </h5>
                     <p className="user-id">ID - 18346441</p>
                     <p className="user-plan">Plan - Professional Premium</p>
                   </div>
@@ -294,7 +309,7 @@ const UserNavbar = () => {
                       <p className="notification-name">
                         {/* {localData.name}  */}
                         Test
-                        </p>
+                      </p>
                     </div>
                     <div className="dropdown-item-p">
                       <div className="w-188">

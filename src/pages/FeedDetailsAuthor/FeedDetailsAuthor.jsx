@@ -18,6 +18,10 @@ import moment from "moment";
 import { getAuthorsPapers } from "@/store/userSlice/userDetailSlice";
 import { Spinner } from "react-bootstrap";
 import talkToUs from "../../assets/images/talk-us-logo.png";
+import SelectedLanguagemodel from "./OpenModels/SelectedLanguagemodel";
+import ListenModelpopup from "./OpenModels/ListenModelpopup";
+import ReferenceManager from "./OpenModels/ReferenceManager";
+import AskPaper from "./OpenModels/AskPaper";
 
 const FeedDetailsAuthor = () => {
   const [showActive, setShowActive] = useState("Summary");
@@ -33,6 +37,7 @@ const FeedDetailsAuthor = () => {
   const location = useLocation();
   const dispatch = useDispatch();
 
+  const navigation = useNavigate();
   const topics = location?.state?.topics;
 
   const fetchPaper = async () => {
@@ -222,8 +227,39 @@ const FeedDetailsAuthor = () => {
     };
   }, []);
 
+  const [search, setsearch] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedPaper, setSelectedPaper] = useState(5);
+  const [isLoading, setIsLoading] = useState(false);
+  const handleSelect = (value) => {
+    setSelectedPaper(value);
+    setDropdownOpen(false);
+  };
+
+  const recentSearches = [
+    "How does climate change impact biodiversity?",
+    "What is the significance of higher-dimensional algebra?",
+  ];
+  const suggestions = [
+    "How does climate change impact biodiversity?",
+    "How does social media affect the college selection process?",
+    "What are the interesting theories about dark matter and dark energy?",
+    "What is the significance of higher-dimensional algebra?",
+  ];
+  const [isLanguageOpenModal, setIsLanguageOpenModal] = useState(false);
+  const [isTexttospeechModal, setIsTexttospeechModal] = useState(false);
+  const [isReference, setisReference] = useState(false);
+  const [isAskPaper, setisAskPaper] = useState(false);
+
+  const onHide = () => {
+    setIsLanguageOpenModal(false);
+    setIsTexttospeechModal(false);
+    setisReference(false);
+    setisAskPaper(false);
+  };
+
   return (
-    <div className="feed-details-author-container">
+    <div id="feed-details-author-container">
       <div className="row">
         <div
         // className={`${isUserSide || isRightSide ? "col-12 " : "col-xl-9 col-lg-7"}`}
@@ -248,7 +284,9 @@ const FeedDetailsAuthor = () => {
                   isGreen
                 />
                 <section className="sectionOne">
-                  <div className="title-section">
+                  <div
+                    className={`${isUserSide || isRightSide ? "active-title-section" : "title-section"}`}
+                  >
                     {(title || paper_title) && (
                       <h1 className="title-text mt-24">
                         {title ? title : paper_title ? paper_title : ""}
@@ -442,11 +480,72 @@ const FeedDetailsAuthor = () => {
                       </p>
                       <div className="search-box">
                         <div className="btn-search">
-                          <TextInput
-                            placeholder="Social Psychology"
-                            className="h-51 black-b"
-                          />
+                          <div>
+                            <TextInput
+                              placeholder="Social Psychology"
+                              className="h-51 black-b"
+                              value={searchTerm}
+                              onChange={(e) => {
+                                setsearch(true);
+                                setSearchTerm(e.target.value);
+                              }}
+                            />
+                          </div>
+
+                          {search && searchTerm && (
+                            <div className="search-histroy-conatiner d-flex   justify-content-start  mt-10">
+                              <div className="search-dropdown brave-scroll-gry ">
+                                <div className="recent-searches">
+                                  <span className="text-14-500 color-0303">
+                                    {" "}
+                                    Recent searches
+                                  </span>
+                                  {recentSearches.map((item, index) => (
+                                    <div
+                                      key={index}
+                                      className="search-item mt-2"
+                                      onClick={() => {
+                                        setsearch(false);
+
+                                        setSearchTerm(item);
+                                      }}
+                                    >
+                                      <img
+                                        src={icons.Recantsimg}
+                                        className="img-fluid"
+                                        alt="img"
+                                      />{" "}
+                                      <span className="text-14-400 ">
+                                        {item}
+                                      </span>
+                                    </div>
+                                  ))}
+                                </div>
+                                <div className="suggestions">
+                                  <span className="text-14-500 color-0303">
+                                    Try asking or searching for:
+                                  </span>
+                                  {suggestions.map((item, index) => (
+                                    <div
+                                      key={index}
+                                      className="search-item mt-2"
+                                    >
+                                      <img
+                                        src={icons.searchingimg}
+                                        className="img-fluid"
+                                        alt="img"
+                                      />{" "}
+                                      <span className="text-14-400 ">
+                                        {item}
+                                      </span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          )}
                         </div>
+
                         <div className="btn-c">
                           <Button
                             btnText="Get your literature review"
@@ -454,6 +553,13 @@ const FeedDetailsAuthor = () => {
                             rightIconClass="h-14 w-14 object-fit-contain"
                             btnStyle="BBA BBA-hover"
                             className="h-51"
+                            onClick={() =>
+                              navigation("/literature-review", {
+                                state: {
+                                  searchitem: searchTerm,
+                                },
+                              })
+                            }
                           />
                         </div>
                       </div>
@@ -560,7 +666,9 @@ const FeedDetailsAuthor = () => {
                     </div>
                   </div>
 
-                  <div className="sectionOne-tool-bar">
+                  <div
+                    className={`${isUserSide || isRightSide ? "active-sectionOne-tool-bar" : "sectionOne-tool-bar"}`}
+                  >
                     <div
                       className="auth-side brave-scroll"
                       style={{
@@ -575,7 +683,10 @@ const FeedDetailsAuthor = () => {
                         // border:"2px solid red"
                       }}
                     >
-                      <div className="d-flex align-items-center gap-2 mt-10 pr-right-side-text">
+                      <div
+                        className="d-flex align-items-center gap-2 mt-10 pr-right-side-text"
+                        onClick={() => setIsLanguageOpenModal(true)}
+                      >
                         <div>
                           <img
                             src={icons.authorsideicon1}
@@ -589,7 +700,10 @@ const FeedDetailsAuthor = () => {
                           </h1>
                         </div>
                       </div>
-                      <div className="d-flex  align-items-center gap-2 mt-10 pr-right-side-text">
+                      <div
+                        className="d-flex  align-items-center gap-2 mt-10 pr-right-side-text"
+                        onClick={() => setIsTexttospeechModal(true)}
+                      >
                         <div>
                           <img
                             src={icons.authorsideicon2}
@@ -603,7 +717,10 @@ const FeedDetailsAuthor = () => {
                           </h1>
                         </div>
                       </div>
-                      <div className="d-flex  align-items-center gap-2 mt-10 pr-right-side-text">
+                      <div
+                        className="d-flex  align-items-center gap-2 mt-10 pr-right-side-text"
+                        onClick={() => setisAskPaper(true)}
+                      >
                         <div>
                           <img
                             src={icons.authorsideicon3}
@@ -684,7 +801,9 @@ const FeedDetailsAuthor = () => {
                 {/* Section 2 */}
 
                 <section className="sectionTwo">
-                  <div className="sectionTwo-details">
+                  <div
+                    className={`${isUserSide || isRightSide ? "active-sectionTwo-details" : "sectionTwo-details"}`}
+                  >
                     <div style={{ paddingTop: "3rem" }}>
                       <h4 id="full-text" style={{ marginBottom: "1rem" }}>
                         Full Text
@@ -867,7 +986,9 @@ const FeedDetailsAuthor = () => {
                     </div>
                   </div>
 
-                  <div className="sectionTwo-author-details">
+                  <div
+                    className={`${isUserSide || isRightSide ? "active-sectionTwo-author-details" : "sectionTwo-author-details"}`}
+                  >
                     {!isSide && (
                       <>
                         <h4
@@ -1136,6 +1257,11 @@ const FeedDetailsAuthor = () => {
           />
         </div>
       )}
+
+      {isLanguageOpenModal && <SelectedLanguagemodel onHide={onHide} />}
+      {isTexttospeechModal && <ListenModelpopup onHide={onHide} />}
+      {isReference && <ReferenceManager onHide={onHide} />}
+      {isAskPaper && <AskPaper onHide={onHide} />}
     </div>
   );
 };

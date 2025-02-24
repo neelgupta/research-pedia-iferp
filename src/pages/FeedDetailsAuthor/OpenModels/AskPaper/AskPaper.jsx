@@ -9,7 +9,6 @@ import { Formik, Field, Form } from "formik";
 import MultipleDropdown from "@/components/inputs/MultipleDropdown";
 import { Spinner } from "react-bootstrap";
 const AskPaper = ({ onHide }) => {
-  console.log("pdf", pdf);
   const Askpaper = [
     {
       title: "Summarize the paper in a few sentences ",
@@ -39,7 +38,7 @@ const AskPaper = ({ onHide }) => {
                 </div>
               ) : (
                 <iframe
-                  src="https://www.rd.usda.gov/sites/default/files/pdf-sample_0.pdf"
+                  src="https://doc.rero.ch/record/294716/files/86-6-485.pdf"
                   width="100%"
                   height="100%"
                   style={{ border: "none" }}
@@ -96,12 +95,7 @@ const AskPaper = ({ onHide }) => {
                 <div className="">
                   <Formik
                     initialValues={{ question: "" }}
-                    onSubmit={(values) => {
-                      console.log(
-                        "Form submitted with value:",
-                        values.question
-                      );
-                    }}
+                    onSubmit={(values) => {}}
                   >
                     {({ setFieldValue }) => (
                       <Form className="d-flex align-items-center custom-input-group mt-28 mb-28 ">

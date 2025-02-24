@@ -18,7 +18,11 @@ import {
 import moment from "moment";
 import { Spinner } from "react-bootstrap";
 import RegisterProfilePopUp from "./RegisterProfilePopUp/RegisterProfilePopUp";
-import { setIsModalOpen } from "@/store/globalSlice";
+import {
+  setIsCreateProjectselectOpen,
+  setIsModalOpen,
+  setIsProjectselectOpen,
+} from "@/store/globalSlice";
 import {
   getInstitutionalMemberDetails,
   getProfessionalMemberDetails,
@@ -26,6 +30,11 @@ import {
 } from "@/store/userSlice/userDetailSlice";
 import MyProfilePopUp from "@/components/layouts/MyProfilePopUp";
 import { InstituteMyProfile } from "../Institutional/InstitutionalProfile/MyProfilePopUp";
+import SelectProject from "./PopupModels/SelectProject";
+import CreateProject from "./PopupModels/CreateProject";
+import EditProject from "./PopupModels/EditProject";
+import DeleteProject from "./PopupModels/DeleteProject";
+import SearchPaper from "../Searching/SearchPaper";
 
 const FeedDetails = ({ popup }) => {
   const dropdownRef = useRef(null);
@@ -40,7 +49,19 @@ const FeedDetails = ({ popup }) => {
   const [isInsUserData, setIsInsUserData] = useState({});
   const [isStudentUserData, setIsStudentUserData] = useState({});
   const isModalOpen = useSelector((state) => state.global.isModalOpen);
+  const isprojectselect = useSelector((state) => state.global.isprojectselect);
 
+  const iscreateprojectselect = useSelector(
+    (state) => state.global.iscreateprojectselect
+  );
+
+  const iseditprojectselect = useSelector(
+    (state) => state.global.iseditprojectselect
+  );
+
+  const isdeleteprojectselect = useSelector(
+    (state) => state.global.isdeleteprojectselect
+  );
   const handleDropdownToggle = (index) => {
     setOpenDropdown(openDropdown === index ? null : index);
   };
@@ -56,7 +77,6 @@ const FeedDetails = ({ popup }) => {
   const localData = getDataFromLocalStorage();
   const { name } = localData;
 
-  console.log(localData, "localData");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -89,10 +109,6 @@ const FeedDetails = ({ popup }) => {
     setIsInsUserData(result?.data?.response);
   };
 
-  const onHide = () => {
-    dispatch(setIsModalOpen(false));
-  };
-
   const [Recommendedloader, setRecommendedloader] = useState(false);
 
   const fetchRecommendedReaserchPapers = async () => {
@@ -101,7 +117,7 @@ const FeedDetails = ({ popup }) => {
     const query = `topics=${topicList}&limit=${rowsPerPage}&page=${currentPage}`;
     if (topicList.length > 0) {
       const result = await dispatch(getRecommendedPapers(query));
-      console.log(result, "result");
+
       if (result?.status === 200) {
         setRecommendedPapers(result?.data?.response?.papers);
         setPagination(result?.data?.response?.pagination);
@@ -427,161 +443,197 @@ const FeedDetails = ({ popup }) => {
     setIsOpenModal(true);
   };
 
+  const onHide = () => {
+    dispatch(setIsModalOpen(false));
+    dispatch(setIsProjectselectOpen(false));
+    dispatch(setIsCreateProjectselectOpen(false));
+  };
+
+  const isSearchActive = useSelector((state) => state.global.isSearchActive);
+
   return (
-    <div className="feed-details-container">
-      {isRePost && (
-        <RePostPopUp
-          onHide={() => {
-            setIsRePost(false);
-          }}
-        />
-      )}
-      <div className="professional-top-box">
-        <h2 className="details-text">Project 1</h2>
-        <h4 className="pointer switch-text">Switch/Create Project</h4>
-      </div>
-      <div className="user-box">
-        <div>
-          <h3 className="user-name">Hi {name}!</h3>
-          <p className="user-pra">
-            We’ve put together a selection of recommended papers that align with
-            your interests.
-          </p>
-        </div>
-        <div
-          className="right-box pointer"
-          onClick={() => dispatch(setIsModalOpen(!isModalOpen))}
-        >
-          <div className="d-flex align-items-center gap-2">
-            <p className="gap-2 text-14-500 color-3333">
-              Click here to complete your profile
-            </p>
-            <img src={icons?.rightIcons} />
-          </div>
-          <div className="fa-center text-12-500 color-3333 gap-2 mt-8 mb-8">
-            <div className="w-212  ">
-              <Progress now={40} height="8px" />
-            </div>
-
-            <span>40%</span>
-          </div>
-        </div>
-      </div>
-      <div className="information-box">
-        <h4 className="in-text">
-          {topicList?.map((topic, index) => {
-            return (
-              <span key={index}>
-                {topic}
-                {index < topicList.length - 1 && ", "}
-              </span>
-            );
-          })}
-        </h4>
-
-        <Button
-          btnText="Edit Preferences"
-          className="h-43"
-          btnStyle="LBA"
-          onClick={handleClick}
-        />
-      </div>
-      {popup && (
-        <RegisterProfilePopUp
-          title="Institutional"
-          onHide={() => {
-            setIsOpenModal(false);
-          }}
-        />
-      )}
-
-      <div>
-        <div className="tabs">
-          <span
-            className={`tab ${activeTab === "topPapers" ? "active" : ""} `}
-            onClick={() => setActiveTab("topPapers")}
-          >
-            Top Papers
-          </span>
-          <span
-            className={`tab ${activeTab === "conference" ? "active" : ""} `}
-            onClick={() => setActiveTab("conference")}
-          >
-            Conference Papers
-          </span>
-        </div>
-        {Recommendedloader || paperloader ? (
-          <div className="loader mt-10 d-flex justify-content-center">
-            <Spinner animation="border" variant="primary" />
-          </div>
-        ) : (
-          renderPapers(recommendedPapers)
-        )}
-      </div>
-
-      {InterestUser && InterestUser?.length > 0 && (
-        <div className="mt-18">
-          <SimilarPeople InterestUser={InterestUser} />
-        </div>
-      )}
-
-      <div className="Pagination mt-36">
-        <div className="d-flex justify-content-center align-items-center flex-wrap gap-md-3 gap-2">
-          <Button
-            btnText="First"
-            btnStyle="BTB"
-            className="h-36 text-12-600 color-3333"
-            onClick={() => handlePageChange(1)}
-            disabled={currentPage === 1}
-          />
-          <Button
-            btnText="Previous"
-            btnStyle="BTB"
-            className="h-36 text-12-600 color-3333"
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-          />
-          {renderPageNumbers()}
-          <Button
-            btnText="Next"
-            btnStyle="BTB"
-            className="h-36 text-12-600 color-3333"
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === pagination?.totalPages}
-          />
-          <Button
-            btnText="Last"
-            btnStyle="BTB"
-            className="h-36 text-12-600 color-3333"
-            onClick={() => handlePageChange(totalPages)}
-            disabled={currentPage === pagination?.totalPages}
-          />
-        </div>
-      </div>
-      {localData?.role === "professional" || localData?.role === "student"
-        ? isModalOpen && (
-            <MyProfilePopUp
-              isUserData={
-                localData.role === "student" ? isStudentUserData : isUserData
-              }
-              title={localData.role === "student" ? "Student" : "Professional"}
-              onHide={onHide}
-              fetchData={
-                localData.role === "student"
-                  ? fetchStudentUserDetails
-                  : fetchUserDetails
-              }
-            />
-          )
-        : isModalOpen && (
-            <InstituteMyProfile
-              isUserData={isInsUserData}
-              title="Institutional"
-              onHide={onHide}
-              fetchData={fetchInsUserDetails}
+    <>
+      {isSearchActive ? (
+        <SearchPaper />
+      ) : (
+        <div className="feed-details-container">
+          {isRePost && (
+            <RePostPopUp
+              onHide={() => {
+                setIsRePost(false);
+              }}
             />
           )}
-    </div>
+          <div className="professional-top-box">
+            <h2 className="details-text">Project 1</h2>
+            <h4
+              className="pointer switch-text"
+              onClick={() => dispatch(setIsProjectselectOpen(true))}
+            >
+              Switch/Create Project
+            </h4>
+          </div>
+          <div className="user-box">
+            <div>
+              <h3 className="user-name">Hi {name}!</h3>
+              <p className="user-pra">
+                We’ve put together a selection of recommended papers that align
+                with your interests.
+              </p>
+            </div>
+            <div
+              className="right-box pointer"
+              onClick={() => dispatch(setIsModalOpen(!isModalOpen))}
+            >
+              <div className="d-flex align-items-center gap-2">
+                <p className="gap-2 text-14-500 color-3333">
+                  Click here to complete your profile
+                </p>
+                <img src={icons?.rightIcons} />
+              </div>
+              <div className="fa-center text-12-500 color-3333 gap-2 mt-8 mb-8">
+                <div className="w-212  ">
+                  <Progress now={40} height="8px" />
+                </div>
+
+                <span>40%</span>
+              </div>
+            </div>
+          </div>
+          <div className="information-box">
+            <h4 className="in-text">
+              {topicList?.map((topic, index) => {
+                return (
+                  <span key={index}>
+                    {topic}
+                    {index < topicList.length - 1 && ", "}
+                  </span>
+                );
+              })}
+            </h4>
+
+            <Button
+              btnText="Edit Preferences"
+              className="h-43"
+              btnStyle="LBA"
+              onClick={handleClick}
+            />
+          </div>
+          {popup && (
+            <RegisterProfilePopUp
+              title="Institutional"
+              onHide={() => {
+                setIsOpenModal(false);
+              }}
+            />
+          )}
+
+          <div>
+            <div className="tabs">
+              <span
+                className={`tab ${activeTab === "topPapers" ? "active" : ""} `}
+                onClick={() => setActiveTab("topPapers")}
+              >
+                Top Papers
+              </span>
+              <span
+                className={`tab ${activeTab === "conference" ? "active" : ""} `}
+                onClick={() => setActiveTab("conference")}
+              >
+                Conference Papers
+              </span>
+            </div>
+            {Recommendedloader || paperloader ? (
+              <div className="loader mt-10 d-flex justify-content-center">
+                <Spinner animation="border" variant="primary" />
+              </div>
+            ) : (
+              renderPapers(recommendedPapers)
+            )}
+          </div>
+
+          {InterestUser && InterestUser?.length > 0 && (
+            <div className="mt-18">
+              <SimilarPeople InterestUser={InterestUser} />
+            </div>
+          )}
+
+          <div className="Pagination mt-36">
+            <div className="d-flex justify-content-center align-items-center flex-wrap gap-md-3 gap-2">
+              <Button
+                btnText="First"
+                btnStyle="BTB"
+                className="h-36 text-12-600 color-3333"
+                onClick={() => handlePageChange(1)}
+                disabled={currentPage === 1}
+              />
+              <Button
+                btnText="Previous"
+                btnStyle="BTB"
+                className="h-36 text-12-600 color-3333"
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+              />
+              {renderPageNumbers()}
+              <Button
+                btnText="Next"
+                btnStyle="BTB"
+                className="h-36 text-12-600 color-3333"
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === pagination?.totalPages}
+              />
+              <Button
+                btnText="Last"
+                btnStyle="BTB"
+                className="h-36 text-12-600 color-3333"
+                onClick={() => handlePageChange(totalPages)}
+                disabled={currentPage === pagination?.totalPages}
+              />
+            </div>
+          </div>
+          {localData?.role === "professional" || localData?.role === "student"
+            ? isModalOpen && (
+                <MyProfilePopUp
+                  isUserData={
+                    localData.role === "student"
+                      ? isStudentUserData
+                      : isUserData
+                  }
+                  title={
+                    localData.role === "student" ? "Student" : "Professional"
+                  }
+                  onHide={onHide}
+                  fetchData={
+                    localData.role === "student"
+                      ? fetchStudentUserDetails
+                      : fetchUserDetails
+                  }
+                />
+              )
+            : isModalOpen && (
+                <InstituteMyProfile
+                  isUserData={isInsUserData}
+                  title="Institutional"
+                  onHide={onHide}
+                  fetchData={fetchInsUserDetails}
+                />
+              )}
+
+          <div>
+            {isprojectselect && (
+              <SelectProject
+                onHide={() => {
+                  dispatch(setIsProjectselectOpen(false));
+                }}
+              />
+            )}
+            {iscreateprojectselect && <CreateProject />}
+            {iseditprojectselect && <EditProject />}
+            {isdeleteprojectselect && <DeleteProject />}
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

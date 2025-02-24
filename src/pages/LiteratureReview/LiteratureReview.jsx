@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Form, InputGroup, Spinner } from "react-bootstrap";
 import { Search } from "react-feather";
-
+import { useLocation } from "react-router-dom";
 import "./LiteratureReview.scss";
 import { icons } from "@/utils/constants";
 import { LuDot } from "react-icons/lu";
@@ -10,6 +10,10 @@ const LiteratureReview = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedPaper, setSelectedPaper] = useState(5);
   const [isLoading, setIsLoading] = useState(false);
+
+  const location = useLocation();
+  const { searchitem } = location.state || {};
+
   const handleSelect = (value) => {
     setSelectedPaper(value);
     setDropdownOpen(false);
@@ -102,6 +106,12 @@ const LiteratureReview = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (searchitem) {
+      setSearchresponse(true);
+    }
+    setSearchTerm(searchitem);
+  }, []);
   return (
     <div>
       <div className="search-container d-flex flex-column justify-content-center align-items-center text-center p-4 position-relative">

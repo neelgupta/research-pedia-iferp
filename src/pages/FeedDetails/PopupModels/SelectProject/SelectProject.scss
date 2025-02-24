@@ -1,0 +1,28 @@
+#selectproject-conatiner {
+    .selectproject {
+        margin-top: 32px;
+        max-height: 400px;
+        overflow-y: auto;
+
+        .project {
+            border: 1px solid #E0E9F4;
+            padding: 16px 13px;
+            border-radius: 6px;
+
+            &.activeproject {
+                border: 1px solid #113DCD;
+                background-color: #113DCD0D;
+                border-radius: 6px;
+
+            }
+
+            .project-text {
+                color: #333333;
+
+                &.activeproject-text {
+                    color: #113DCD;
+                }
+            }
+        }
+    }
+}

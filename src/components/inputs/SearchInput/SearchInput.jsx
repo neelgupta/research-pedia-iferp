@@ -2,6 +2,8 @@ import { Label } from "components";
 import { trimLeftSpace } from "utils/helpers";
 import "./SearchInput.scss";
 import { icons } from "@/utils/constants";
+import { useDispatch } from "react-redux";
+import { setisSearchActive } from "@/store/globalSlice";
 
 const SearchInput = ({
   id,
@@ -22,6 +24,25 @@ const SearchInput = ({
   startClass,
   isEdit,
 }) => {
+  const dispatch = useDispatch();
+
+  const handleChange = (e) => {
+    const inputValue = e.target.value;
+
+    if (inputValue.trim() !== "") {
+      dispatch(setisSearchActive(true));
+    } else {
+      dispatch(setisSearchActive(false));
+    }
+
+    onChange({
+      target: {
+        id: id,
+        value: trimLeftSpace(inputValue),
+      },
+    });
+  };
+
   return (
     <div id="searchinput-container">
       {label && (
@@ -42,20 +63,7 @@ const SearchInput = ({
             value={value}
             onBlur={onBlur}
             autoComplete="new-password"
-            onChange={(e) => {
-              if (numeric) {
-                e.target.value = e.target.value.replace(
-                  /^(0|[^1-9][0-9]*)$/,
-                  ""
-                );
-              }
-              onChange({
-                target: {
-                  id: id,
-                  value: trimLeftSpace(e.target.value),
-                },
-              });
-            }}
+            onChange={handleChange}
             disabled={disabled}
             placeholder={placeholder}
             inputMode={numeric ? "numeric" : undefined}

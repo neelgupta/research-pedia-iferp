@@ -7,12 +7,18 @@ const initialState = {
   authData: null,
   errorData: null,
   sidebarOpen: true,
-  isregisterpopup : false,
+  isregisterpopup: false,
   isUserSide: true,
   isRightSide: false,
   rightSideObj: {},
   isTopics: false,
-  isModalOpen:false
+  isModalOpen: false,
+  isprojectselect: false,
+  iseditprojectselect: false,
+  isdeleteprojectselect: false,
+  iscreateprojectselect: false,
+  selectedProject: null,
+  isSearchActive: false,
 };
 
 const globalSlice = createSlice({
@@ -43,7 +49,7 @@ const globalSlice = createSlice({
     setIsTopics(state, action) {
       state.isTopics = action.payload;
     },
-    
+
     toggleSidebar(state, action) {
       state.sidebarOpen = action.payload;
     },
@@ -57,9 +63,27 @@ const globalSlice = createSlice({
       state.isRightSide = false;
       state.rightSideObj = {};
     },
-    setIsModalOpen(state,action){
-      state.isModalOpen = action.payload
-    }
+    setIsModalOpen(state, action) {
+      state.isModalOpen = action.payload;
+    },
+    setIsProjectselectOpen(state, action) {
+      state.isprojectselect = action.payload;
+    },
+    setIsEditProjectselectOpen(state, action) {
+      state.iseditprojectselect = action.payload;
+    },
+    setIsDeleteProjectselectOpen(state, action) {
+      state.isdeleteprojectselect = action.payload;
+    },
+    setIsCreateProjectselectOpen(state, action) {
+      state.iscreateprojectselect = action.payload;
+    },
+    setSelectedProject: (state, action) => {
+      state.selectedProject = action.payload;
+    },
+    setisSearchActive: (state, action) => {
+      state.isSearchActive = action.payload;
+    },
   },
 });
 
@@ -251,7 +275,13 @@ export const {
   setRightSideObj,
   setIsTopics,
   registermodel,
-  setIsModalOpen
+  setIsModalOpen,
+  setIsCreateProjectselectOpen,
+  setIsDeleteProjectselectOpen,
+  setIsEditProjectselectOpen,
+  setIsProjectselectOpen,
+  setSelectedProject,
+  setisSearchActive,
 } = globalSlice.actions;
 
 export default globalSlice.reducer;

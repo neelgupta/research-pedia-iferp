@@ -79,149 +79,150 @@ const AudioControls = ({
   }, []);
   return (
     <div className="audio-controls ps-28 pe-28 flex-wrap">
-      <div className="d-flex align-items-center gap-10">
-        <div className="me-12">
-          <button
-            type="button"
-            className="prev"
-            aria-label="Previous"
-            onClick={onPrevClick}
-          >
-            <img src={icons.leftskip} alt="Previous" />
-          </button>
-        </div>
-
-        <div className="me-12">
-          <button
-            type="button"
-            className="sec"
-            aria-label="Rewind 10 seconds"
-            onClick={onRewind10} // Handle 10 seconds rewind
-          >
-            <img src={icons.leftsec} alt="Rewind 10s" />
-          </button>
-        </div>
-
-        {isPlaying ? (
-          <div className="btn-pause me-12">
-            <button
-              type="button"
-              className="pause"
-              onClick={() => onPlayPauseClick(false)}
-              aria-label="Pause"
-            >
-              <BsPause size={32} />
-            </button>
-          </div>
-        ) : (
-          <div className="btn-pause me-12">
-            <button
-              type="button"
-              className="pause"
-              onClick={() => onPlayPauseClick(true)}
-              aria-label="Play"
-            >
-              <FaPlay />
-            </button>
-          </div>
-        )}
-
-        <div className="me-12">
-          <button
-            type="button"
-            className="sec"
-            aria-label="Forward 10 seconds"
-            onClick={onForward10} // Handle 10 seconds forward
-          >
-            <img src={icons.rightsec} alt="Forward 10s" />
-          </button>
-        </div>
-
-        <div className="me-12">
-          <button
-            type="button"
-            className="next"
-            aria-label="Next"
-            onClick={onNextClick}
-          >
-            <img src={icons.rightskip} alt="Next" />
-          </button>
-        </div>
-      </div>
-
-      <div className="d-flex align-items-center gap-10">
+      <div className=" d-flex align-items-center   flex-wrap justify-content-center">
         <div className="d-flex align-items-center">
-          <p className="text-14-400 color-0000">
-            {`${Math.floor(progress / 60)}:${Math.floor(progress % 60)
-              .toString()
-              .padStart(2, "0")} / ${Math.floor(duration / 60)}:${Math.floor(
-              duration % 60
-            )
-              .toString()
-              .padStart(2, "0")}`}
-          </p>
-        </div>
-
-        <div
-          className="ms-24 me-24 input-range-conatiner"
-          // style={{ maxWidth: "600px", width: "100%" }}
-        >
-          <input
-            type="range"
-            value={progress}
-            step="1"
-            min="0"
-            max={duration || 0}
-            onChange={(e) => onScrub(e.target.value)}
-            onMouseUp={onScrubEnd}
-            onKeyUp={onScrubEnd}
-            className="progress-bar"
-            style={{
-              "--progress": `${currentPercentage}%`,
-              background: `linear-gradient(to right, #0000FF 0%, #0000FF ${currentPercentage}%, #777 ${currentPercentage}%)`,
-            }}
-          />
-        </div>
-        <div className="me-10">
-          <div className="position-relative">
+          <div className="me-12">
             <button
               type="button"
-              className="volume"
-              aria-label="volume"
-              onClick={toggleVolumeControl}
+              className="prev"
+              aria-label="Previous"
+              onClick={onPrevClick}
             >
-              <img src={icons.volume} alt="volume" />
+              <img src={icons.leftskip} alt="Previous" />
             </button>
+          </div>
 
-            {/* inputrange */}
-            <div
-              className=""
-              ref={dropdownvolumn}
-              style={{
-                position: "absolute",
-                bottom: "100%",
-                left: "35%",
-                width: "100%",
-              }}
+          <div className="me-12">
+            <button
+              type="button"
+              className="sec"
+              aria-label="Rewind 10 seconds"
+              onClick={onRewind10} // Handle 10 seconds rewind
             >
-              {isVolumeOpen && (
-                <input
-                  type="range"
-                  min="0"
-                  max="1"
-                  step="0.01"
-                  value={volume}
-                  onChange={handleVolumeChange}
-                  className="volume-range"
-                  aria-label="Volume Control"
-                />
-              )}
+              <img src={icons.leftsec} alt="Rewind 10s" />
+            </button>
+          </div>
+
+          {isPlaying ? (
+            <div className="btn-pause me-12">
+              <button
+                type="button"
+                className="pause"
+                onClick={() => onPlayPauseClick(false)}
+                aria-label="Pause"
+              >
+                <BsPause size={32} />
+              </button>
+            </div>
+          ) : (
+            <div className="btn-pause me-12">
+              <button
+                type="button"
+                className="pause"
+                onClick={() => onPlayPauseClick(true)}
+                aria-label="Play"
+              >
+                <FaPlay />
+              </button>
+            </div>
+          )}
+
+          <div className="me-12">
+            <button
+              type="button"
+              className="sec"
+              aria-label="Forward 10 seconds"
+              onClick={onForward10} // Handle 10 seconds forward
+            >
+              <img src={icons.rightsec} alt="Forward 10s" />
+            </button>
+          </div>
+
+          <div className="me-12">
+            <button
+              type="button"
+              className="next"
+              aria-label="Next"
+              onClick={onNextClick}
+            >
+              <img src={icons.rightskip} alt="Next" />
+            </button>
+          </div>
+        </div>
+        <div className=" d-flex align-items-center gap-10 ">
+          <div className="d-flex align-items-center">
+            <p className="text-14-400 color-0000">
+              {`${Math.floor(progress / 60)}:${Math.floor(progress % 60)
+                .toString()
+                .padStart(2, "0")} / ${Math.floor(duration / 60)}:${Math.floor(
+                duration % 60
+              )
+                .toString()
+                .padStart(2, "0")}`}
+            </p>
+          </div>
+
+          <div
+            className="ms-24 me-24 input-range-conatiner"
+            // style={{ maxWidth: "600px", width: "100%" }}
+          >
+            <input
+              type="range"
+              value={progress}
+              step="1"
+              min="0"
+              max={duration || 0}
+              onChange={(e) => onScrub(e.target.value)}
+              onMouseUp={onScrubEnd}
+              onKeyUp={onScrubEnd}
+              className="progress-bar"
+              style={{
+                "--progress": `${currentPercentage}%`,
+                background: `linear-gradient(to right, #0000FF 0%, #0000FF ${currentPercentage}%, #777 ${currentPercentage}%)`,
+              }}
+            />
+          </div>
+          <div className="me-10">
+            <div className="position-relative">
+              <button
+                type="button"
+                className="volume"
+                aria-label="volume"
+                onClick={toggleVolumeControl}
+              >
+                <img src={icons.volume} alt="volume" />
+              </button>
+
+              {/* inputrange */}
+              <div
+                className=""
+                ref={dropdownvolumn}
+                style={{
+                  position: "absolute",
+                  bottom: "100%",
+                  left: "35%",
+                  width: "100%",
+                }}
+              >
+                {isVolumeOpen && (
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value={volume}
+                    onChange={handleVolumeChange}
+                    className="volume-range"
+                    aria-label="Volume Control"
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="d-flex align-items-center gap-4 ">
+      <div className=" d-flex align-items-center gap-4 ">
         <div className="speed-control d-flex align-items-center ">
           <span>Speed:</span>
           <select

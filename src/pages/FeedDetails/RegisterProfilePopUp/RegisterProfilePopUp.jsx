@@ -7,7 +7,12 @@ import SelectPlan from "./SelectPlan";
 import { Formik } from "formik";
 import { Modal } from "@/components";
 
-const RegisterProfilePopUp = ({ onHide, title, isUserData,fetchUserDetails }) => {
+const RegisterProfilePopUp = ({
+  onHide,
+  title,
+  isUserData,
+  fetchUserDetails,
+}) => {
   const [type, setType] = useState("");
   const [valCount, setValCount] = useState(1);
 
@@ -66,7 +71,7 @@ const RegisterProfilePopUp = ({ onHide, title, isUserData,fetchUserDetails }) =>
       bd_institution: "",
       organizationname: "",
       departmentname: "",
-      bd_year_of_completion : ""
+      bd_year_of_completion: "",
     },
 
     eductiondetails: {
@@ -79,15 +84,11 @@ const RegisterProfilePopUp = ({ onHide, title, isUserData,fetchUserDetails }) =>
       phd_department: "",
       phd_university: "",
       phd_institution: "",
-      phdyear_of_completion : ""
+      phdyear_of_completion: "",
     },
-
-
   };
-  
-  const handelSave = (values) => {
-    console.log("values ->" ,values)
-  };
+
+  const handelSave = (values) => {};
   return (
     <Modal onHide={onHide} size="xl" isClose={false}>
       <div className="profile-modal-container">

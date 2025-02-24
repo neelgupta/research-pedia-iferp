@@ -15,6 +15,7 @@ const Button = ({
   rightIconClass,
   textClass,
   type,
+  groupIcons,
 }) => {
   return (
     <div id="button-container">
@@ -50,6 +51,20 @@ const Button = ({
               />
             </span>
           )}
+          {groupIcons && (
+            <span className="d-flex align-items-center gap-2">
+              {groupIcons.map((iconObj, index) => (
+                <span key={index} className="h-18 f-center">
+                  <img
+                    src={iconObj.icon}
+                    alt={`group-icon-${index}`}
+                    className="fit-image"
+                  />
+                </span>
+              ))}
+            </span>
+          )}
+
           {loading && (
             <span>
               <Roundedloader

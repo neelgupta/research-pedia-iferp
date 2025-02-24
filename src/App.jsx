@@ -6,7 +6,7 @@ import { getDataFromLocalStorage } from "./utils/helpers";
 
 import { AppRoutes } from "./routes/AppRoute";
 import { UserRoutes } from "./routes/UserRoute";
- 
+
 const App = () => {
   const reduxData = useSelector((state) => state.global);
 

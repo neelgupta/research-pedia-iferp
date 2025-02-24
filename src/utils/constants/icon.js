@@ -191,8 +191,32 @@ import Search from "assets/images/icons/Search.png";
 import searchingimg from "assets/images/icons/searchingimg.png";
 import Recantsimg from "assets/images/icons/Recantsimg.png";
 import downgry from "assets/images/icons/down-gry.png";
+
+import activedelete from "assets/images/icons/activedelete.png";
+import disactivedelete from "assets/images/icons/disactivedelete.png";
+import activeedit from "assets/images/icons/activeedit.png";
+
+import rightarrowWhite from "assets/images/icons/rightarrowWhite.png";
+import Advancepaper from "assets/images/icons/Advancepaper.png";
+import pdfpaper from "assets/images/icons/pdfpaper.png";
+import activedownthump from "assets/images/icons/activedownthump.png";
+import disactivedownthump from "assets/images/icons/disactivedownthump.png";
+import disactiveupthump from "assets/images/icons/disactiveupthump.png";
+import activeupthump from "assets/images/icons/activeupthump.png";
+import disSave from "assets/images/icons/disSave.png";
 export const icons = {
   // avatar,
+  disSave,
+  activeupthump,
+  disactiveupthump,
+  disactivedownthump,
+  activedownthump,
+  pdfpaper,
+  Advancepaper,
+  rightarrowWhite,
+  activeedit,
+  disactivedelete,
+  activedelete,
   downgry,
   searchingimg,
   Recantsimg,
