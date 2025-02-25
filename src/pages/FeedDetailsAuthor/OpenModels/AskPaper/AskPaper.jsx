@@ -31,7 +31,7 @@ const AskPaper = ({ onHide }) => {
             <div className="" style={{ height: "100%" }}>
               {isLoading ? (
                 <div
-                  className="loader-container d-flex justify-content-center align-items-center"
+                  className="loader-container d-flex justify-content-center align-items-center "
                   style={{ height: "100%" }}
                 >
                   <Spinner animation="border" variant="primary" />

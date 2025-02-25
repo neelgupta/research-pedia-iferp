@@ -101,11 +101,11 @@ const Login = () => {
                     <input type="checkbox" id="rememberMe" />
                     <span className="ms-2">Remember me?</span>
                   </div>
-                  <div
-                    className="forgot-password mt-16"
-                    onClick={() => navigate("/admin/forgot-password")}
-                  >
-                    <span className="d-flex align-items-center">
+                  <div className="forgot-password mt-16">
+                    <span
+                      className="d-flex align-items-center"
+                      onClick={() => navigate("/admin/forgot-password")}
+                    >
                       Forgot Password?
                     </span>
                   </div>

@@ -16,9 +16,13 @@ const EmailVerification = () => {
   const dispatch = useDispatch();
   const [isEmail, setIsEmail] = useState();
   const [loading, setlodding] = useState(false);
+  const [resendLoading, setResendLoading] = useState(false);
+  console.log("✌️resendLoading --->", resendLoading);
+
   const initialValues = {
     email: "",
-    otp: "",
+    // otp: "",
+    otp: "    ",
   };
 
   // Validation schema using Yup
@@ -32,16 +36,23 @@ const EmailVerification = () => {
     //   .required("OTP is required"),
   });
 
+  const handleResendPassword = async (email) => {
+    setResendLoading(true);
+    const resend = await dispatch(handleForgetPassword({ email }));
+    setResendLoading(false);
+  };
+
   const handleSubmit = async (values) => {
-    setlodding(true);
     if (!isEmail) {
+      setlodding(true);
       const email = values.email;
       const result = await dispatch(handleForgetPassword({ email }));
       if (result?.status === 200) {
         setIsEmail(true);
-        setlodding(false);
       }
+      setlodding(false);
     } else {
+      setlodding(true);
       const verifyUser = {
         email: values.email,
         verificationCode: values.otp,
@@ -50,28 +61,33 @@ const EmailVerification = () => {
       if (result?.status === 200) {
         navigate("/reset-password", { state: { email: values.email } });
       }
+      setlodding(false);
     }
   };
 
   const handleOTPChange = (e, index, otp, setFieldValue) => {
     const value = e.target.value;
-    if (/^\d$/.test(value)) {
-      // Update the OTP string by replacing the character at the specified index
-      const updatedOtp =
-        otp.substring(0, index) + value + otp.substring(index + 1);
-      setFieldValue("otp", updatedOtp);
 
-      if (index < otp.length - 1 && value) {
-        // Focus next input after entering a digit
-        document.getElementById(`otp-input-${index + 1}`).focus();
-      }
-    }
+    if (!/^\d$/.test(value)) return; // Allow only digits
+
+    let updatedOtp = otp.split("");
+    updatedOtp[index] = value;
+    setFieldValue("otp", updatedOtp.join(""));
+
+    // Move focus to the next input
+    document.getElementById(`otp-input-${index + 1}`)?.focus();
   };
 
   const handleKeyDown = (e, index, otp, setFieldValue) => {
-    if (e.key === "Backspace" && !otp[index] && index > 0) {
-      // Move focus to previous input when backspace is pressed
-      document.getElementById(`otp-input-${index - 1}`).focus();
+    if (e.key === "Backspace") {
+      let updatedOtp = otp.split("");
+      updatedOtp[index] = " "; // Clear current input
+
+      if (index > 0) {
+        document.getElementById(`otp-input-${index - 1}`)?.focus();
+      }
+
+      setFieldValue("otp", updatedOtp.join(""));
     }
   };
 
@@ -136,7 +152,7 @@ const EmailVerification = () => {
                           {isEmail && (
                             <>
                               {/* OTP Input */}
-                              <div className="otp-veri d-flex align-items-center justify-content-between">
+                              {/* <div className="otp-veri d-flex align-items-center justify-content-between">
                                 <div className="d-flex gap-2">
                                   {[0, 1, 2, 3].map((index) => (
                                     <input
@@ -171,6 +187,52 @@ const EmailVerification = () => {
                                     Resend OTP
                                   </p>
                                 </div>
+                              </div> */}
+                              <div className="otp-veri d-flex align-items-center justify-content-between">
+                                <div className="d-flex gap-2">
+                                  {[0, 1, 2, 3].map((index) => (
+                                    <input
+                                      key={index}
+                                      id={`otp-input-${index}`}
+                                      type="text"
+                                      maxLength="1"
+                                      value={
+                                        values.otp[index] !== " "
+                                          ? values.otp[index]
+                                          : ""
+                                      }
+                                      onChange={(e) =>
+                                        handleOTPChange(
+                                          e,
+                                          index,
+                                          values.otp,
+                                          setFieldValue
+                                        )
+                                      }
+                                      onKeyDown={(e) =>
+                                        handleKeyDown(
+                                          e,
+                                          index,
+                                          values.otp,
+                                          setFieldValue
+                                        )
+                                      }
+                                      className="text-otp w-45 h-45 border text-center"
+                                      style={{ borderRadius: "6px" }}
+                                    />
+                                  ))}
+                                </div>
+                                <div>
+                                  <p
+                                    className={`text-14-500 ${resendLoading ? "color-6E75 not-allow" : "color-113D pointer"} `}
+                                    onClick={() => {
+                                      handleResendPassword(values.email);
+                                      setFieldValue("otp", "    ");
+                                    }}
+                                  >
+                                    Resend OTP
+                                  </p>
+                                </div>
                               </div>
                               {touched.otp && errors.otp && (
                                 <p className="text-danger">{errors.otp}</p>
@@ -184,7 +246,10 @@ const EmailVerification = () => {
                               btnText="Verify Email"
                               className="h-45 br-12 text-18-500"
                               onClick={handleSubmit}
-                              // disabled={isSubmitting}
+                              disabled={
+                                loading ||
+                                (isEmail && !/^\d{4}$/.test(values.otp))
+                              }
                               loading={loading}
                             />
                           </div>

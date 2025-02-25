@@ -1,6 +1,15 @@
 .feed-details-container {
   padding: 24px;
 
+  .no-papers {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19.36px;
+    color: var(--3333);
+    padding: 60px 0;
+  }
+
   .professional-top-box {
     display: flex;
     justify-content: space-between;
@@ -70,25 +79,28 @@
     align-items: center;
   }
 
-  .tabs{
+  .tabs {
     border-bottom: 1px solid #ddd;
     padding: 2px;
     display: flex;
     gap: 28px;
-    .tab{
+
+    .tab {
       margin-right: 10px;
       cursor: pointer;
-      &.active{
-        color : var(--113D);
+
+      &.active {
+        color: var(--113D);
         border-bottom: 2px solid var(--113D);
         padding-bottom: 3px;
         font-size: 16px;
         font-weight: 400;
-        
+
       }
     }
-   
+
   }
+
   .in-text {
     font-size: 16px;
     font-weight: 600;

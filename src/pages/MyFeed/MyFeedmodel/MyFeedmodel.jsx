@@ -11,7 +11,8 @@ const MyFeedmodel = ({ onHide }) => {
           <iframe
             width="100%"
             height="600px"
-            src="https://www.youtube.com/watch?v=F0inmbEn3Zg"
+            // src="https://www.youtube.com/watch?v=F0inmbEn3Zg"
+            src="https://www.youtube.com/embed/F0inmbEn3Zg?si=wg485HxewbEbGlCz"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           ></iframe>

@@ -43,6 +43,7 @@ const FeedDetails = ({ popup }) => {
   const [isRePost, setIsRePost] = useState(false);
   const [topicList, setIsTopicList] = useState([]);
   const [pagination, setPagination] = useState({});
+  console.log("✌️pagination --->", pagination);
   const [activeTab, setActiveTab] = useState("topPapers");
   const [openDropdown, setOpenDropdown] = useState(null);
   const [isUserData, setIsUserData] = useState({});
@@ -558,39 +559,42 @@ const FeedDetails = ({ popup }) => {
             </div>
           )}
 
-          <div className="Pagination mt-36">
-            <div className="d-flex justify-content-center align-items-center flex-wrap gap-md-3 gap-2">
-              <Button
-                btnText="First"
-                btnStyle="BTB"
-                className="h-36 text-12-600 color-3333"
-                onClick={() => handlePageChange(1)}
-                disabled={currentPage === 1}
-              />
-              <Button
-                btnText="Previous"
-                btnStyle="BTB"
-                className="h-36 text-12-600 color-3333"
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-              />
-              {renderPageNumbers()}
-              <Button
-                btnText="Next"
-                btnStyle="BTB"
-                className="h-36 text-12-600 color-3333"
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === pagination?.totalPages}
-              />
-              <Button
-                btnText="Last"
-                btnStyle="BTB"
-                className="h-36 text-12-600 color-3333"
-                onClick={() => handlePageChange(totalPages)}
-                disabled={currentPage === pagination?.totalPages}
-              />
+          {pagination.totalCount > 0 && (
+            <div className="Pagination mt-36">
+              <div className="d-flex justify-content-center align-items-center flex-wrap gap-md-3 gap-2">
+                <Button
+                  btnText="First"
+                  btnStyle="BTB"
+                  className="h-36 text-12-600 color-3333"
+                  onClick={() => handlePageChange(1)}
+                  disabled={currentPage === 1}
+                />
+                <Button
+                  btnText="Previous"
+                  btnStyle="BTB"
+                  className="h-36 text-12-600 color-3333"
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                />
+                {renderPageNumbers()}
+                <Button
+                  btnText="Next"
+                  btnStyle="BTB"
+                  className="h-36 text-12-600 color-3333"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === pagination?.totalPages}
+                />
+                <Button
+                  btnText="Last"
+                  btnStyle="BTB"
+                  className="h-36 text-12-600 color-3333"
+                  onClick={() => handlePageChange(totalPages)}
+                  disabled={currentPage === pagination?.totalPages}
+                />
+              </div>
             </div>
-          </div>
+          )}
+
           {localData?.role === "professional" || localData?.role === "student"
             ? isModalOpen && (
                 <MyProfilePopUp

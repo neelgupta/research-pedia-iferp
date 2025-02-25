@@ -167,13 +167,13 @@ const UserLogin = () => {
                               placeholder="Password"
                             />
                           </div>
-                          <div
-                            className="form-text"
-                            onClick={() => {
-                              navigate("/email-verification");
-                            }}
-                          >
-                            <p className="mb-8 text-end text-14-500 color-113D">
+                          <div className=" d-flex align-items-end justify-content-end not-allow">
+                            <p
+                              className="mb-8 text-end text-14-500 color-113D d-inline-block pointer"
+                              onClick={() => {
+                                navigate("/email-verification");
+                              }}
+                            >
                               Forgot Password?
                             </p>
                           </div>
