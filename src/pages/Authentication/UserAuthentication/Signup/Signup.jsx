@@ -10,6 +10,7 @@ import * as Yup from "yup"; // Import Yup for validation
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { handleUserSignUp } from "@/store/userSlice/authSlice";
+import { storeLocalStorageData } from "@/utils/helpers";
 
 // Define the validation schema
 const validationSchema = Yup.object({
@@ -26,7 +27,7 @@ const validationSchema = Yup.object({
 
 const UserSignup = () => {
   const [isPrivacyChecked, setIsPrivacyChecked] = useState(false);
-  const [isOffersChecked, setIsOffersChecked] = useState(false);
+  const [isOffersChecked, setIsOffersChecked] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handlePrivacyChange = (e) => {
@@ -37,7 +38,7 @@ const UserSignup = () => {
     setIsOffersChecked(e.target.checked);
   };
 
-  const isFormValid = isPrivacyChecked && isOffersChecked;
+  const isFormValid = isPrivacyChecked;
   const [namedropdown, setnamedropdown] = useState("Dr.");
   const [phonedropdown, setphonedropdown] = useState("+91");
   const [Signloading, setlodding] = useState(false);
@@ -61,13 +62,37 @@ const UserSignup = () => {
       role: values.role,
     };
 
-    const result = await dispatch(handleUserSignUp(finalvalue));
+    // const result = await dispatch(handleUserSignUp(finalvalue));
 
-    if (result?.status === 200) {
-      navigate("/login");
+    // if (result?.status === 200) {
+    //   // navigate("/login");
+    //   console.log("🚀 ~ handleSubmit ~ result?.data.response:", result?.data.response)
+    //    storeLocalStorageData({
+    //           ...result?.data.response,
+    //           token: result.data.response.token,
+    //         });
+    //   setlodding(false);
+    //   navigate("/my-feed");
+
+    // }
+    // setlodding(false);
+    try {
+      const result = await dispatch(handleUserSignUp(finalvalue));
+      console.log("Signup Response:", result);
+
+      if (result?.status === 200) {
+        storeLocalStorageData({
+          ...result?.data.response,
+          token: result.data.response.token,
+        });
+
+        navigate("/my-feed"); // Ensure this runs correctly
+      }
+    } catch (error) {
+      console.error("Signup Error:", error);
+    } finally {
       setlodding(false);
     }
-    setlodding(false);
   };
 
   return (
