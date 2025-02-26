@@ -15,6 +15,7 @@ import { Spinner } from "react-bootstrap";
 
 const MyFeed = () => {
   const setIsProjectCreate = useSelector((state) => state.global.isProjectCreate);
+  console.log("🚀 ~ MyFeed ~ setIsProjectCreate:", setIsProjectCreate)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isActive, setIsActive] = useState(null);
