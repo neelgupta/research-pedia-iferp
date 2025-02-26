@@ -104,7 +104,8 @@ const EmailVerification = () => {
           >
             <div className="usersignin-container">
               <div className="form-header mb-32">
-                <h1>Email Verification</h1>
+                {/* <h1>Email Verification</h1> */}
+                <h1>Forgot Password?</h1>
               </div>
               <div className="form">
                 <Formik
@@ -243,7 +244,8 @@ const EmailVerification = () => {
                           {/* Submit Button */}
                           <div className="login-btn mt-20">
                             <Button
-                              btnText="Verify Email"
+                              // btnText="Verify Email"
+                              btnText="Continues"
                               className="h-45 br-12 text-18-500"
                               onClick={handleSubmit}
                               disabled={

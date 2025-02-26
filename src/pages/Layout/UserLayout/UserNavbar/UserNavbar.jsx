@@ -10,7 +10,7 @@ const UserNavbar = () => {
   const token = true;
   const navigate = useNavigate();
 
-  // const localData = getDataFromLocalStorage();
+  const localData = getDataFromLocalStorage();
   const initialValues = {
     search: "",
   };
@@ -123,15 +123,15 @@ const UserNavbar = () => {
             <div className="post-b-a">
               <div className="profile-inner-box">
                 <div className="profile-img">
-                  <img src={icons.profileimg} alt="Profile" />
+                  <img src={localData?.profilePicture || icons.profileimg} alt="Profile" />
                   <div className="prime-i">
                     <img src={icons.primeIIcons} alt="prime-icon" />
                   </div>
                 </div>
                 <div className="ms-3">
                   <h5 className="user-name">
-                    {/* {localData.name} */}
-                    Test
+                    {localData.name}
+                    {/* Test */}
                   </h5>
 
                   <p className="user-id">ID - 18346441</p>
@@ -158,8 +158,8 @@ const UserNavbar = () => {
                       className="h-22 w-22 object-fit-contain"
                     />
                     <p className="notification-name">
-                      {/* {localData.name} */}
-                      Test
+                      {localData.name}
+                      {/* Test */}
                     </p>
                   </div>
                   <div className="dropdown-item-p">
@@ -274,15 +274,15 @@ const UserNavbar = () => {
               <div className="profile-card">
                 <div className="profile-inner-box">
                   <div className="profile-img">
-                    <img src={icons.profileimg} alt="Profile" />
+                    <img src={localData?.profilePicture ||icons.profileimg} alt="Profile" />
                     <div className="prime-i">
                       <img src={icons.primeIIcons} alt="prime-icon" />
                     </div>
                   </div>
                   <div className="ms-3">
                     <h5 className="user-name">
-                      {/* {localData.name} */}
-                      Test
+                      {localData.name}
+                      {/* Test... */}
                     </h5>
                     <p className="user-id">ID - 18346441</p>
                     <p className="user-plan">Plan - Professional Premium</p>
@@ -307,8 +307,8 @@ const UserNavbar = () => {
                         className="h-22 w-22 object-fit-contain"
                       />
                       <p className="notification-name">
-                        {/* {localData.name}  */}
-                        Test
+                        {localData.name} 
+                        {/* Test */}
                       </p>
                     </div>
                     <div className="dropdown-item-p">

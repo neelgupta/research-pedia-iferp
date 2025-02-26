@@ -93,9 +93,9 @@ const Dropdown = ({
               color:
                 data.value === "high"
                   ? "#FA4520"
-                  : data.value === "low"
+                  : data.value === "medium"
                     ? "#B89137"
-                    : data.value === "medium"
+                    : data.value === "low"
                       ? "#178368"
                       : "var(--0000)",
               backgroundColor: "transparent",
