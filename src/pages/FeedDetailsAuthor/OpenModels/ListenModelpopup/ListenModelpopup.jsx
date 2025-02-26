@@ -7,7 +7,9 @@ import cali from "../../../../assets/song.mp3";
 import fifty from "../../../../assets/song.mp3";
 import iwonder from "../../../../assets/song.mp3";
 import { Spinner } from "react-bootstrap";
-const ListenModelpopup = ({ onHide }) => {
+import { TextTospeech } from "@/store/userSlice/projectSlice";
+import { useDispatch } from "react-redux";
+const ListenModelpopup = ({ onHide, abstract }) => {
   const [trackIndex, setTrackIndex] = useState(0);
   const [trackProgress, setTrackProgress] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -15,12 +17,37 @@ const ListenModelpopup = ({ onHide }) => {
   const [playbackSpeed, setPlaybackSpeed] = useState(2.0);
   const [selectedLanguage, setSelectedLanguage] = useState("eng-uk");
   const [isLoading, setIsLoading] = useState(false);
-
+  const dispatch = useDispatch();
   const tracks = [
     { audioSrc: cali, title: "Cali" },
     { audioSrc: fifty, title: "Fifty" },
     { audioSrc: iwonder, title: "I Wonder" },
   ];
+
+  const abstrctpara = `Purpose Islamic financial institutions (IFIs) in
+                        Malaysia continue to promote Shari
+                        Purpose Islamic financial institutions (IFIs) in
+                        Malaysia continue to promote Shari
+                        Purpose Islamic financial institutions (IFIs) in
+                        Malaysia continue to promote Shari
+                        Purpose Islamic financial institutions (IFIs) in
+                        Malaysia continue to promote Shari
+                        Purpose Islamic financial institutions (IFIs) in
+                        Malaysia continue to promote Shari Purpose Islamic financial institutions (IFIs) in
+                        Malaysia continue to promote Shari
+                        Purpose Islamic financial institutions (IFIs) in
+                        Malaysia continue to promote Shari
+                        Purpose Islamic financial institutions (IFIs) in
+                        Malaysia continue to promote Shari
+                        Purpose Islamic financial institutions (IFIs) in
+                        Malaysia continue to promote Shari Purpose Islamic financial institutions (IFIs) in
+                        Malaysia continue to promote Shari
+                        Purpose Islamic financial institutions (IFIs) in
+                        Malaysia continue to promote Shari
+                        Purpose Islamic financial institutions (IFIs) in
+                        Malaysia continue to promote Shari
+                        Purpose Islamic financial institutions (IFIs) in
+                        Malaysia continue to promote Shari`;
 
   const { audioSrc } = tracks[trackIndex];
 
@@ -143,6 +170,25 @@ const ListenModelpopup = ({ onHide }) => {
     setTrackProgress(updatedTime);
   };
 
+  const fetchaudio = async () => {
+    try {
+      const res = await dispatch(
+        TextTospeech({
+          abstractText: abstrctpara,
+          voice: "en-US-Standard-C",
+        })
+      );
+
+      console.log("Audio File Response ->", res);
+    } catch (error) {
+      console.error("Error fetching audio:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchaudio();
+  }, []);
+
   return (
     <div>
       <Modal onHide={onHide} fullscreen>
@@ -196,7 +242,7 @@ const ListenModelpopup = ({ onHide }) => {
                   ) : (
                     <div className="mb-20">
                       <p className="text-20-400 color-3333 mb-20">
-                        Purpose Islamic financial institutions (IFIs) in
+                        {/* Purpose Islamic financial institutions (IFIs) in
                         Malaysia continue to promote Shari‘ah-compliant business
                         and transactions. As a result, the governors have a lot
                         to think about before issuing any fatwa or ordinance,
@@ -243,7 +289,9 @@ const ListenModelpopup = ({ onHide }) => {
                         the practical experiences of governors in carrying out
                         the responsibilities of al-Siyasah al-Shar‘iyyah within
                         the decision-making process. The objective is to
-                        investigate the perspectives
+                        investigate the perspectives */}
+
+                        {abstrctpara}
                       </p>
                     </div>
                   )}

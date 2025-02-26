@@ -115,3 +115,65 @@ export const getRecommendedPapersById =
       dispatch(clearLoading());
     }
   };
+
+export const TextTospeech = (payload) => async (dispatch) => {
+  dispatch(setLoading());
+  try {
+    const res = await api.post(
+      `/user/googleTranslate/textToSpeech`,
+      payload,
+      {}
+    );
+
+    return res;
+  } catch (error) {
+    dispatch(handelCatch(error));
+    dispatch(clearLoading());
+  }
+};
+
+export const Literaturesearch = (payload) => async (dispatch) => {
+  dispatch(setLoading());
+  try {
+    const res = await api.get(
+      `/user/literatureReview/authoComplete?search=${payload}`,
+      {}
+    );
+
+    return res;
+  } catch (error) {
+    dispatch(handelCatch(error));
+    dispatch(clearLoading());
+  }
+};
+
+export const LiteraturesearchResult = (payload) => async (dispatch) => {
+  const { title, selectedPaper } = payload;
+
+  dispatch(setLoading());
+  try {
+    const res = await api.get(
+      `/user/literatureReview?title=${title}&limit=${selectedPaper}`,
+      {}
+    );
+    console.log("LiteraturesearchResult", res);
+    return res;
+  } catch (error) {
+    dispatch(handelCatch(error));
+    dispatch(clearLoading());
+  }
+};
+
+export const SaveToNote = (payload) => async (dispatch) => {
+  console.log("SaveToNotebook", payload);
+
+  dispatch(setLoading());
+  try {
+    const res = await api.post(`/user/saveToNote/`, payload, {});
+    console.log("LiteraturesearchResult", res);
+    return res;
+  } catch (error) {
+    dispatch(handelCatch(error));
+    dispatch(clearLoading());
+  }
+};

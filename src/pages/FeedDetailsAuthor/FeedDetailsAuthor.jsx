@@ -1259,7 +1259,9 @@ const FeedDetailsAuthor = () => {
       )}
 
       {isLanguageOpenModal && <SelectedLanguagemodel onHide={onHide} />}
-      {isTexttospeechModal && <ListenModelpopup onHide={onHide} />}
+      {isTexttospeechModal && (
+        <ListenModelpopup onHide={onHide} abstract={abstract} />
+      )}
       {isReference && <ReferenceManager onHide={onHide} />}
       {isAskPaper && <AskPaper onHide={onHide} />}
     </div>
