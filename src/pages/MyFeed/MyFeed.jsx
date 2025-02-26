@@ -117,7 +117,7 @@ const MyFeed = () => {
                 </div>
               </div>
             )}
-
+{/* 
             <div className="step-box">
               <p
                 className="mb-0 text-14-500 color-113D pointer"
@@ -130,7 +130,7 @@ const MyFeed = () => {
                 alt="right-icons"
                 loading="lazy"
               />
-            </div>
+            </div> */}
           </div>
 
         </div>
