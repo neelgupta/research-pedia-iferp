@@ -19,6 +19,7 @@ const initialState = {
   iscreateprojectselect: false,
   selectedProject: null,
   isSearchActive: false,
+  isProjectCreate: false,
 };
 
 const globalSlice = createSlice({
@@ -83,6 +84,9 @@ const globalSlice = createSlice({
     },
     setisSearchActive: (state, action) => {
       state.isSearchActive = action.payload;
+    },
+    setIsProjectCreate: (state, action) => {
+      state.isProjectCreate = action.payload;
     },
   },
 });
@@ -282,6 +286,7 @@ export const {
   setIsProjectselectOpen,
   setSelectedProject,
   setisSearchActive,
+  setIsProjectCreate
 } = globalSlice.actions;
 
 export default globalSlice.reducer;

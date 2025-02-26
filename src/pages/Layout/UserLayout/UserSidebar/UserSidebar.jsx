@@ -44,6 +44,9 @@ const UserSidebar = () => {
         style={{
           cursor: "pointer",
         }}
+        onClick={() => {
+          navigate("/feed-details");
+        }}
       >
         <img
           src={icons.UserHome}

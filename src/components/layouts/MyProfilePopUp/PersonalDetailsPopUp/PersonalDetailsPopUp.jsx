@@ -63,26 +63,26 @@ const PersonalDetailsPopUp = ({
 
   const fetchCountry = async () => {
     const result = await dispatch(getCountry());
-    setIsCountry(result.data.response);
+    setIsCountry(result?.data?.response);
   };
 
   const fetchState = async () => {
     if (isCountryId !== undefined) {
       const result = await dispatch(getState(isCountryId));
-      setIsState(result.data.response);
+      setIsState(result?.data?.response);
     }
   };
 
   const fetchCity = async () => {
     if (isStateId !== undefined) {
       const result = await dispatch(getCity(isStateId));
-      setIsCity(result.data.response);
+      setIsCity(result?.data?.response);
     }
   };
 
   const fetchUgCourse = async () => {
     const result = await dispatch(getCourse("ug"));
-    setUgcourse(result.data.response);
+    setUgcourse(result?.data?.response);
   };
 
   const ugCourseOptions = ugCourse.map((ugCourse) => ({
@@ -99,13 +99,13 @@ const PersonalDetailsPopUp = ({
     };
   });
 
-  const StateData = isState.map((state) => ({
+  const StateData = isState?.map((state) => ({
     id: state.id,
     label: state.state,
     value: state.state,
   }));
 
-  const CityData = isCity.map((city) => ({
+  const CityData = isCity?.map((city) => ({
     id: city.id,
     label: city.city,
     value: city.city,
