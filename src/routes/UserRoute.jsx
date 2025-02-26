@@ -110,9 +110,9 @@ export const UserRoutes = () => {
         );
       })}
 
-      <Route path="*" element={<Navigate to="/" />} />
       <Route path="/my-feed" element={<MyFeed />} />
       <Route path="/create-feed" element={<CreateFeed />} />
+      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
     // </Suspense>
   );

@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { handleUserSignUp } from "@/store/userSlice/authSlice";
 import { storeLocalStorageData } from "@/utils/helpers";
+import { getProjectByTopics } from "@/store/userSlice/projectSlice";
 
 // Define the validation schema
 const validationSchema = Yup.object({
@@ -50,6 +51,16 @@ const UserSignup = () => {
     name: "",
   };
 
+  const fetchProject = async () => {
+    const result = await dispatch(getProjectByTopics());
+
+    const isProjectAvailable = result?.data?.response?.some(
+      (item) => item._userId === localData.id
+    );
+
+    return isProjectAvailable;
+  };
+
   const handleSubmit = async (values) => {
     setlodding(true);
     const Name = namedropdown + values.name;
@@ -81,12 +92,18 @@ const UserSignup = () => {
       console.log("Signup Response:", result);
 
       if (result?.status === 200) {
+        console.log("hello");
+
         storeLocalStorageData({
           ...result?.data.response,
           token: result.data.response.token,
         });
-
-        navigate("/my-feed"); // Ensure this runs correctly
+        const isProjectAvailable = await fetchProject();
+        if (isProjectAvailable) {
+          navigate("/feed-details");
+        } else if (!isProjectAvailable) {
+          navigate("/my-feed");
+        }
       }
     } catch (error) {
       console.error("Signup Error:", error);
@@ -327,7 +344,7 @@ const UserSignup = () => {
                             <span
                               className="color-113D"
                               style={{ cursor: "pointer" }}
-                              onClick={() => navigate("/login")}
+                              // onClick={() => navigate("/login")}
                             >
                               Login
                             </span>
