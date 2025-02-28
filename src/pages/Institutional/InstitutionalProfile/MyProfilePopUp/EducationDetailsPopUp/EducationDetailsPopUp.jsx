@@ -29,15 +29,17 @@ const EducationDetailsPopUp = ({
     const result = await dispatch(
       updateInstitutionalMemberDetails(userId, values)
     );
-    if (result.status === 200) {
-      fetchUserDetails();
+    if (result?.status === 200) {
+
       setValCount(2);
+      fetchUserDetails();
+
     }
   };
 
   return (
     <div className="education-details-container">
-      <div className="row row-gap-3">
+      <div className="row row-gap-3" >
         <div className="col-12">
           <TextInput
             className="h-45"
@@ -45,18 +47,21 @@ const EducationDetailsPopUp = ({
             onChange={handleChange}
             value={values.name}
             id="name"
+            disabled="true"
           />
         </div>
-        <div className="col-md-6">
+        <div className="col-lg-6">
           <TextInput
             className="h-45"
             placeholder="Email"
             onChange={handleChange}
             value={values.email}
             id="email"
+            disabled="true"
+
           />
         </div>
-        <div className="col-md-6">
+        <div className="col-lg-6 col-12">
           <TextInput
             className="h-45"
             placeholder="Alternate email id"
@@ -65,16 +70,19 @@ const EducationDetailsPopUp = ({
             id="alternateEmail"
           />
         </div>
-        <div className="col-md-6">
+        <div className="col-lg-6">
           <TextInputwithDropdown
             className="h-45"
             placeholder="Phone Number"
             onChange={handleChange}
             value={values.phoneNumber}
+            disabled
+            values={values}
             id="phoneNumber"
             dropdownOptions={dialCode.map((item) => ({
               value: "+91" || item.dial_code,
-              label: `${item.dial_code}`,
+              // label: `${item.dial_code}`,
+              label: `${values.countryCode ? values.countryCode : item.dial_code} `,
             }))}
             onDropdownChange={(selected) => setphonedropdown(selected)}
           />
@@ -90,6 +98,7 @@ const EducationDetailsPopUp = ({
               value: "+91" || item.dial_code,
               label: `${item.dial_code}`,
             }))}
+            
             onDropdownChange={(selected) => setphonedropdown(selected)}
           />
         </div>

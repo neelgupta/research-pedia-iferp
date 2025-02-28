@@ -25,7 +25,10 @@ const TextInputwithDropdown = ({
   onDropdownChange,
   isphone,
   isname,
+  values
 }) => {
+
+  console.log(values,"valuesCountrycode")
   const [showPassword, setShowPassword] = useState(false);
   const [selectedOption, setSelectedOption] = useState("+91");
 
@@ -50,12 +53,10 @@ const TextInputwithDropdown = ({
             className="dropdown-select"
             onChange={handleDropdownChange}
             value={selectedOption}
+            disabled={values?.countryCode}
           >
             <option value="" disabled>
-              {/* <span className="text-14-400 color-3333">
-                {" "}
-                {isphone && "+ 91"} {isname && "Dr"}{" "}
-              </span> */}
+      
             </option>
             {dropdownOptions.map((option, index) => (
               <option key={index} value={option.value}>
@@ -92,7 +93,6 @@ const TextInputwithDropdown = ({
             maxLength={maxLength}
           />
 
-          {/* Dropdown Menu */}
         </div>
         {error && <div className="input-error">{error}</div>}
       </div>

@@ -19,21 +19,15 @@ const HeaderFooterCode = () => {
     footerCode: "",
   };
 
-  const [loading ,setloading] = useState(false)
+  const [loading, setloading] = useState(false);
 
   const validationSchema = Yup.object({
     headerCode: Yup.string()
       .required("Header code is required")
-      .matches(
-        /<\/?[a-z][\s\S]*>/i,
-        "Invalid HTML or JavaScript snippet"
-      ),
+      .matches(/<\/?[a-z][\s\S]*>/i, "Invalid HTML or JavaScript snippet"),
     footerCode: Yup.string()
       .required("Footer code is required")
-      .matches(
-        /<\/?[a-z][\s\S]*>/i,
-        "Invalid HTML or JavaScript snippet"
-      ),
+      .matches(/<\/?[a-z][\s\S]*>/i, "Invalid HTML or JavaScript snippet"),
   });
   const fetchHeaderFooter = async () => {
     const result = await dispatch(handleGetHeaderFooter());
@@ -42,14 +36,16 @@ const HeaderFooterCode = () => {
     }
   };
 
+  console.log(isHfCode, "isHfCode");
   const handleSubmit = async (values) => {
-    setloading(true)
+    console.log(values, "VALS");
+    setloading(true);
     const result = await dispatch(handleAddOrUpdateHeaderFooter(values));
     if (result.status === 200) {
       fetchHeaderFooter();
-      setloading(false)
+      setloading(false);
     }
-    setloading(false)
+    setloading(false);
   };
 
   useEffect(() => {
@@ -68,13 +64,16 @@ const HeaderFooterCode = () => {
         </div>
         <Formik
           enableReinitialize
-          initialValues={isHfCode || initialValues}
+          initialValues={isHfCode.length > 0 ? isHfCode : initialValues}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
           {(props) => {
             const { values, handleChange, handleSubmit, errors, touched } =
               props;
+            {
+              console.log(values, "values");
+            }
             return (
               <form onSubmit={handleSubmit}>
                 <div className="categorytopics-title">
@@ -88,10 +87,11 @@ const HeaderFooterCode = () => {
                     <div className="text-add">
                       <h1>Header Code</h1>
                       <TextArea
+                        name="headerCode"
+                        id="headerCode"
                         onChange={handleChange}
                         value={values.headerCode}
                         error={touched.headerCode && errors.headerCode}
-                        id="headerCode"
                         className="me-26 ms-26"
                         rows={12}
                       />
@@ -99,6 +99,7 @@ const HeaderFooterCode = () => {
                     <div className="text-add mt-28">
                       <h1>Footer Code</h1>
                       <TextArea
+                        name="footerCode"
                         onChange={handleChange}
                         value={values.footerCode}
                         error={touched.footerCode && errors.footerCode}
@@ -113,6 +114,7 @@ const HeaderFooterCode = () => {
                         btnText="Save"
                         className="BWP"
                         loading={loading}
+                        disabled={loading}
                       />
                     </div>
                   </div>

@@ -14,7 +14,10 @@ import {
   updateProfessionalMemberDetails,
   updateStudentMemberDetails,
 } from "@/store/userSlice/userDetailSlice";
-import { getDataFromLocalStorage, storeLocalStorageData } from "@/utils/helpers";
+import {
+  getDataFromLocalStorage,
+  storeLocalStorageData,
+} from "@/utils/helpers";
 import * as Yup from "yup";
 const MyProfilePopUp = ({
   onHide,
@@ -33,8 +36,7 @@ const MyProfilePopUp = ({
   const [isCountry, setIsCountry] = useState([]);
   const [isCountryId, setIdCountryId] = useState(isUserData?.country?.id || "");
 
-  const [isStateId, setIsStateId] =
-    useState(isUserData?.state?.id || "");
+  const [isStateId, setIsStateId] = useState(isUserData?.state?.id || "");
 
   const [isState, setIsState] = useState([]);
   const [isCity, setIsCity] = useState([]);
@@ -249,7 +251,7 @@ const MyProfilePopUp = ({
       setValCount(1);
       fetchData();
       getDataFromLocalStorage();
-      storeLocalStorageData(result?.data?.response)
+      storeLocalStorageData(result?.data?.response);
     }
     setloading(false);
   };
@@ -265,12 +267,10 @@ const MyProfilePopUp = ({
   }, [valCount]);
 
   return (
-    <Modal onHide={onHide} size="xl" isClose={isstate} isCloseOutside>
+    <Modal onHide={onHide} size="xl" isClose={isstate}>
       <div className="profile-modal-container">
         <p className="title-text">{`My Profile - ${title} Member`}</p>
-
         <div className="sub-title">{subTitle[valCount]}</div>
-
         <div className="details-list mb-34">
           {arrayOption.map((elem, index) => {
             const isComplete = valCount >= elem.id;

@@ -220,7 +220,13 @@ const FeedDetails = ({ popup }) => {
   };
 
   const handleReadPaper = (paperId) => {
-    navigate("/feed-details-author", { state: paperId });
+    const queryParams = new URLSearchParams(paperId).toString();
+    console.log( queryParams,"query params")
+    window.open(`/feed-details-author?${queryParams}`, "_blank");
+
+
+    
+    // navigate("/feed-details-author", { state: paperId });
   };
 
   const renderPapers = (papers) => {
@@ -258,13 +264,23 @@ const FeedDetails = ({ popup }) => {
                   </div>
                 )}
 
-                <h4 className="post-title">
-                  {papers.title || papers?.paper_title || "null"}
+                {/* {console.log(papers, "papers id1223")} */}
+                <h4
+                  className="post-title"
+                  style={{ maxWidth: "100%" }}
+                  onClick={() => {
+                    handleReadPaper({
+                      paperId: papers.paperId,
+                      abstractId: papers.abstract_id || papers.abstractId,
+                    });
+                  }}
+                >
+                  {papers.title || papers?.paper_title || "No Title Found"}
                 </h4>
                 <p className="post-pra">
                   {(papers.abstract && papers.abstract) ||
                     (papers.paper_abstract && papers.paper_abstract) ||
-                    "null"}
+                    "No Abstract Found"}
                 </p>
 
                 {papers?.url && (
@@ -289,7 +305,7 @@ const FeedDetails = ({ popup }) => {
                 <div className="post-details flex-wrap mt-8 gap-2">
                   <div className="fa-center gap-1">
                     <img
-                      src={icons?.userTwoIcons}
+                      src={icons?.avatarOneIcons}
                       alt="docs-icons"
                       loading="lazy"
                       className="h-20 w-20 rounded-circle"
@@ -356,7 +372,7 @@ const FeedDetails = ({ popup }) => {
                   <div className="fa-center gap-3">
                     <div className="d-p">
                       <Button
-                        btnText="Reposted"
+                        btnText="Repost"
                         btnStyle="BTA"
                         className="h-43 ps-18 pe-18"
                         leftIcon={icons.reloadIcons}

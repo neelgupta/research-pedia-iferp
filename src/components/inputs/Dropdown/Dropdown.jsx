@@ -87,6 +87,7 @@ const Dropdown = ({
               },
             });
           }}
+          
           styles={{
             option: (base, { data }) => ({
               ...base,
@@ -109,6 +110,7 @@ const Dropdown = ({
               color: className,
             }),
           }}
+          inputProps={{ autoComplete: "off" }}
         />
         {error && <div className="input-error">{error}</div>}
       </div>

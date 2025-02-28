@@ -118,7 +118,7 @@ const MyFeed = () => {
               </div>
             )}
 
-            <div className="step-box">
+            {/* <div className="step-box">
               <p
                 className="mb-0 text-14-500 color-113D pointer"
                 onClick={() => navigate("/create-feed")}
@@ -130,7 +130,7 @@ const MyFeed = () => {
                 alt="right-icons"
                 loading="lazy"
               />
-            </div>
+            </div> */}
           </div>
 
         </div>

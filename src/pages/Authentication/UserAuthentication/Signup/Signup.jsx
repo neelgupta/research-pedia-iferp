@@ -48,7 +48,9 @@ const UserSignup = () => {
     password: "",
     role: "",
     phoneNumber: "",
+    namePrefix: "",
     name: "",
+    countryCode: "",
   };
 
   const fetchProject = async () => {
@@ -63,13 +65,16 @@ const UserSignup = () => {
 
   const handleSubmit = async (values) => {
     setlodding(true);
-    const Name = namedropdown + values.name;
+
+    const Name = values.name;
     const Phone = values.phoneNumber;
 
     const finalvalue = {
       ...values,
       name: Name,
       phoneNumber: Phone,
+      namePrefix: namedropdown,
+      countryCode: phonedropdown,
       role: values.role,
     };
 
@@ -88,6 +93,9 @@ const UserSignup = () => {
     // }
     // setlodding(false);
     try {
+
+
+      console.log(finalvalue,"final values")
       const result = await dispatch(handleUserSignUp(finalvalue));
       console.log("Signup Response:", result);
 
@@ -344,7 +352,7 @@ const UserSignup = () => {
                             <span
                               className="color-113D"
                               style={{ cursor: "pointer" }}
-                              // onClick={() => navigate("/login")}
+                              onClick={() => navigate("/login")}
                             >
                               Login
                             </span>

@@ -33,8 +33,6 @@ const PersonalDetailsPopUp = ({
   isStudent,
   fetchData,
 
-
-
   isCountry,
   setIsCountry,
   isCountryId,
@@ -48,17 +46,9 @@ const PersonalDetailsPopUp = ({
   ugCourse,
   setUgcourse,
   loading,
-  setloading
+  setloading,
 }) => {
   const dispatch = useDispatch();
-  // const [isCountry, setIsCountry] = useState([]);
-  // const localData = getDataFromLocalStorage();
-
-  // const [isCountryId, setIdCountryId] = useState(values?.country?.id);
-  // const [isStateId, setIsStateId] = useState(values?.state?.id);
-  // const [isState, setIsState] = useState([]);
-  // const [isCity, setIsCity] = useState([]);
-  // const [ugCourse, setUgcourse] = useState([]);
   const [phonedropdown, setphonedropdown] = useState("+91");
 
   const fetchCountry = async () => {
@@ -91,7 +81,7 @@ const PersonalDetailsPopUp = ({
     value: ugCourse.name,
   }));
 
-  const CountryData = isCountry.map((country) => {
+  const CountryData = isCountry?.map((country) => {
     return {
       id: country.id,
       label: country?.country,
@@ -110,6 +100,8 @@ const PersonalDetailsPopUp = ({
     label: city.city,
     value: city.city,
   }));
+
+  console.log(values, "hey vals");
 
   // const [loading, setloading] = useState(false);
 
@@ -130,7 +122,6 @@ const PersonalDetailsPopUp = ({
   //   };
 
   //   delete values.role;
-
 
   //   const updateAction = isStudent
   //     ? updateStudentMemberDetails(localData.roleId, values)
@@ -175,14 +166,13 @@ const PersonalDetailsPopUp = ({
   }, [isCountryId, isStateId]);
 
   return (
-
     <div className="personal-details-container">
       <div className="row row-gap-3">
         <div className="col-md-6">
           <TextInput
             className="h-45"
             placeholder="Enter your Name"
-            value={values.name}
+            value={` ${values?.namePrefix && values?.namePrefix} ${values.name}`}
             disabled
             error={errors.name}
           />
@@ -200,15 +190,15 @@ const PersonalDetailsPopUp = ({
           <TextInputwithDropdown
             placeholder="Phone Number"
             value={values.phoneNumber}
-            // dropdownOptions={dialCode}
             className="h-45"
             id="phoneNumber"
             disabled
+            values={values}
             error={errors.phoneNumber}
             onDropdownChange={(selected) => setphonedropdown(selected)}
             dropdownOptions={dialCode.map((item) => ({
               value: "+91" || item.dial_code,
-              label: ` ${item.dial_code}`,
+              label: `${values.countryCode ? values.countryCode : item.dial_code} `,
             }))}
           />
         </div>
@@ -228,7 +218,7 @@ const PersonalDetailsPopUp = ({
         <div className="col-md-6">
           <Dropdown
             id="gender"
-            placeholder="Genders"
+            placeholder="Gender"
             optionLabel="label"
             optionKey="value"
             options={[
