@@ -36,6 +36,7 @@ const HeaderFooterCode = () => {
     }
   };
 
+  console.log(isHfCode, "isHfCode");
   const handleSubmit = async (values) => {
     console.log(values, "VALS");
     setloading(true);

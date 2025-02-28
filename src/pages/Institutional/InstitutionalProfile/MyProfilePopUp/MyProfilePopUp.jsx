@@ -20,6 +20,8 @@ const MyProfilePopUp = ({ onHide, title, isUserData, fetchUserDetails }) => {
   const [isCountryId, setIdCountryId] = useState(isUserData?.country?.id || "");
   const [isStateId, setIsStateId] = useState(isUserData?.state?.id || "");
   const [departmentOfOrganization, setDepartmentOfOrganization] = useState([]);
+  
+  console.log(valCount,"valCount")
 
   console.log(valCount, "valCount");
 
