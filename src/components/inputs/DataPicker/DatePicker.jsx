@@ -48,10 +48,12 @@ const DatePicker = ({
           minDate={minDate ? new Date(minDate) : null}
           maxDate={maxDate ? new Date(maxDate) : null}
           placeholderText={placeholder}
+          autoComplete="off"
           disabled={disabled}
           onInput={(e) => {
             e.target.value = "";
           }}
+          
           onChange={(e) => {
             onChange({
               target: {

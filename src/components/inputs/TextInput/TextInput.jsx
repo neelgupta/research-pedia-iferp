@@ -46,7 +46,7 @@ const TextInput = ({
             type={isShowPass && showPassword ? "text" : type || "text"}
             value={value}
             onBlur={onBlur}
-            autoComplete="new-password"
+            autoComplete="off"
             onChange={(e) => {
               if (numeric) {
                 e.target.value = e.target.value.replace(

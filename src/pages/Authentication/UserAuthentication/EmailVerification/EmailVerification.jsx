@@ -245,7 +245,8 @@ const EmailVerification = () => {
                           <div className="login-btn mt-20">
                             <Button
                               // btnText="Verify Email"
-                              btnText="Continues"
+                              btnText={isEmail ? "Verify Email" : "Continue"}
+
                               className="h-45 br-12 text-18-500"
                               onClick={handleSubmit}
                               disabled={

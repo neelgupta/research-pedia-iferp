@@ -36,11 +36,15 @@ const PackageDetails = ({
     },
   ];
 
+  console.log(Seconddetailsloadder, "Seconddetailsloadder");
+  // className={`${isUserSide || isRightSide ? "active-title-section" : "title-section"}`}
 
   return (
     <div className="package-details-container mt-40">
       <div className="sectionThree gy-3">
-        <div className="more-from-author">
+        <div
+          className={`${isUserSide || isRightSide ? "more-from-author-isRight" : "more-from-author"}`}
+        >
           <div className="similar-box">
             <h4 className="sub-title-text">
               More From:{" "}
@@ -89,29 +93,32 @@ const PackageDetails = ({
                     </div>
 
                     <div className="post-details flex-wrap mt-8 gap-2">
-                      <div
-                        style={{
-                          display: "flex",
-                          gap: "4px",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <img
-                          src={icons?.avatarTwoIcons}
-                          alt="Author's Image"
-                          loading="lazy"
-                          className="h-20 w-20 object-fit-contain"
-                        />
-                        {ele.authors.slice(0, 1).map((author, index) => {
-                          return (
-                            <p key={index}>
-                              {author.name || author.author_name}
-                            </p>
-                          );
-                        })}{" "}
-                        <span> + {ele.authors.length - 1}</span>
-                      </div>
+                      {ele?.authors && (
+                        <div
+                          style={{
+                            display: "flex",
+                            gap: "4px",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <img
+                            src={icons?.avatarTwoIcons}
+                            alt="Author's Image"
+                            loading="lazy"
+                            className="h-20 w-20 object-fit-contain"
+                          />
+                          {ele?.authors?.slice(0, 1)?.map((author, index) => {
+                            return (
+                              <p key={index}>
+                                {author.name || author.author_name}
+                              </p>
+                            );
+                          })}{" "}
+                          <span> + {ele?.authors?.length - 1}</span>
+                        </div>
+                      )}
+
                       <div className="fa-center gap-md-2 gap-2">
                         <div className="fa-center gap-1">
                           <img
@@ -124,7 +131,7 @@ const PackageDetails = ({
                             <p className="docs-title">{ele.year}</p>
                           ) : (
                             <p className="docs-title">
-                              {moment(ele.created_at).format("DD MMM YYYY")}
+                              {moment(ele?.created_at).format("DD MMM YYYY")}
                             </p>
                           )}
                         </div>
@@ -177,7 +184,9 @@ const PackageDetails = ({
           </div>
         </div>
 
-        <div className="bannerDiv">
+        <div
+          className={`${isUserSide || isRightSide ? "bannerDiv-isRightSide brave-scroll" : "bannerDiv brave-scroll"}`}
+        >
           <div className="side-bar-p">
             <div className="head-line">
               <p className="price-text">

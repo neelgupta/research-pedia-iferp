@@ -260,9 +260,7 @@ export const updateInstitutionalMemberDetails =
         payload,
         {}
       );
-      if (res?.status === 200) {
-        dispatch(showSuccess(res?.data?.message));
-      }
+
       dispatch(clearLoading());
       return res;
     } catch (error) {

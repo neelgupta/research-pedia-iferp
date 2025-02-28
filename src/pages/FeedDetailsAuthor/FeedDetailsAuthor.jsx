@@ -6,7 +6,7 @@ import { handleCopy } from "@/utils/helpers";
 import { Button, TextInput } from "@/components";
 import SecondDetails from "./SecondDetails";
 import PackageDetails from "./PackageDetails";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAuthorSocialDetails,
@@ -45,23 +45,32 @@ const FeedDetailsAuthor = () => {
 
   console.log("paperDetails", paperDetails);
   const navigation = useNavigate();
-  const topics = location?.state?.topics;
+  const queryParams = new URLSearchParams(location.search);
+  const paperId = queryParams.get("paperId");
+  const abstractId = queryParams.get('abstractId')
 
+  const topics = location?.state?.topics;
+  console.log(paperId, "PAPERID11");
+  console.log(abstractId, "abstractId")
   const fetchPaper = async () => {
     setsummaryloadder(true);
-    const id = location?.state;
-    console.log("id", id);
-    const paperId = id.paperId;
-    const abstractId = id.abstractId;
-    console.log("papperif", paperId);
+    // const id = location?.state;
+    // const paperId = id.paperId;
+    // const abstractId = id.abstractId;
+
+;
+
     const result = await dispatch(
       getRecommendedPapersById(paperId, abstractId)
     );
 
+
+    console.log(result,"result")
+
     setAutherIddetispaper(
       result?.data.response?.researchPapersWithSummary[0]?.authors
-        ? result?.data.response?.researchPapersWithSummary[0]?.authors[0]
-            .authorId
+        ? result?.data.response?.researchPapersWithSummary[0]?.authors?.[0]
+            ?.authorId
         : result?.data.response?.researchPapersWithSummary[0].author
     );
 
@@ -166,6 +175,22 @@ const FeedDetailsAuthor = () => {
     paper_abstract,
   } = paperDetails || {};
 
+  console.log({ paper_abstract }, { abstract }, "ABC");
+  useEffect(() => {
+    if (!summary) {
+      setShowActive("Abstract");
+    }
+    if (
+      !summary &&
+      (paper_abstract === null ||
+        paper_abstract === undefined ||
+        abstract === undefined ||
+        abstract === null)
+    ) {
+      setShowActive("Full-Text");
+    }
+  }, []);
+
   const handleClickSummary = () => {
     setShowActive("Summary");
     const summaryElement = document.getElementById("summary");
@@ -222,9 +247,9 @@ const FeedDetailsAuthor = () => {
   const searchDivRef = useRef(null);
   const checkIfTop = () => {
     // if (searchDivRef.current) {
-    const rect = searchDivRef.current.getBoundingClientRect();
+    const rect = searchDivRef?.current?.getBoundingClientRect();
 
-    setIsTop(rect.top <= 0);
+    setIsTop(rect?.top <= 0);
     // }
   };
 
@@ -313,9 +338,7 @@ const FeedDetailsAuthor = () => {
   return (
     <div id="feed-details-author-container">
       <div className="row">
-        <div
-        // className={`${isUserSide || isRightSide ? "col-12 " : "col-xl-9 col-lg-7"}`}
-        >
+        <div>
           {summaryloadder ? (
             <div
               className="loader-container d-flex justify-content-center align-items-center"
@@ -419,7 +442,7 @@ const FeedDetailsAuthor = () => {
                                 paddingBottom: "36px",
                               }}
                               onClick={() => {
-                                dispatch(handleCopy(externalIds?.DOI));
+                                dispatch(handleCopy(`https://doi.org/${externalIds?.DOI}`));
                               }}
                             >
                               <p className="link-text">
@@ -431,20 +454,23 @@ const FeedDetailsAuthor = () => {
                           )}
 
                           <div className="journal-details">
-                            <div className="d-flex gap-3 align-items-center">
-                              <img src={icons.noteBIcons} alt="" />
-                              <span>
-                                Journal:{" "}
-                                <span
-                                  style={{
-                                    textDecoration: "underline",
-                                    cursor: "pointer",
-                                  }}
-                                >
-                                  {journal?.name}
+                            {journal?.name && (
+                              <div className="d-flex gap-3 align-items-center">
+                                <img src={icons.noteBIcons} alt="" />
+                                <span>
+                                  Journal:{" "}
+                                  <span
+                                    style={{
+                                      textDecoration: "underline",
+                                      cursor: "pointer",
+                                    }}
+                                  >
+                                    {journal?.name}
+                                  </span>
                                 </span>
-                              </span>
-                            </div>
+                              </div>
+                            )}
+
                             <div className="d-flex flex-column flex-sm-row gap-3 align-items-sm-center flex-wrap">
                               {(publicationDate || year) && (
                                 <div className="d-flex align-items-center gap-3">
@@ -489,22 +515,23 @@ const FeedDetailsAuthor = () => {
                                       </div>
                                     ))}
                               </div>
-
-                              {authdatadetails?.data1?.topics !== "" && (
-                                <div
-                                  onClick={handleToggle}
-                                  className="text-14-500 color-113D"
-                                  style={{
-                                    cursor: "pointer",
-                                    display: "flex",
-                                    alignItems: "center",
-                                  }}
-                                >
-                                  {showMore
-                                    ? "- Show Less"
-                                    : `+ Show ${authdatadetails?.data1?.topics?.length - visibleCount} more`}
-                                </div>
-                              )}
+                              {console.log(authdatadetails, "auth data")}
+                              {authdatadetails.hasOwnProperty("data1") &&
+                                authdatadetails?.data1?.topics !== "" && (
+                                  <div
+                                    onClick={handleToggle}
+                                    className="text-14-500 color-113D"
+                                    style={{
+                                      cursor: "pointer",
+                                      display: "flex",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    {showMore
+                                      ? "- Show Less"
+                                      : `+ Show ${authdatadetails?.data1?.topics?.length - visibleCount} more`}
+                                  </div>
+                                )}
                             </div>
                           </div>
                         </div>
@@ -630,30 +657,39 @@ const FeedDetailsAuthor = () => {
                       }}
                     >
                       <div className="search-btn-box">
-                        <div
-                          className={`${showActive === "Summary" ? "show-active-b" : "show-text-b"}`}
-                          onClick={handleClickSummary}
-                        >
-                          Summary
-                        </div>
-                        <div
-                          className={`${showActive === "Abstract" ? "show-active-b" : "show-text-b"}`}
-                          onClick={handleClickActive}
-                        >
-                          Abstract
-                        </div>
+                        {summary && (
+                          <div
+                            className={`${showActive === "Summary" ? "show-active-b" : "show-text-b"}`}
+                            onClick={handleClickSummary}
+                          >
+                            Summary
+                          </div>
+                        )}
+
+                        {(paper_abstract || abstract) && (
+                          <div
+                            className={`${showActive === "Abstract" ? "show-active-b" : "show-text-b"}`}
+                            onClick={handleClickActive}
+                          >
+                            Abstract
+                          </div>
+                        )}
+
                         <div
                           className={`${showActive === "Full-Text" ? "show-active-b" : "show-text-b"}`}
                           onClick={handleClickFullText}
                         >
                           Full-Text
                         </div>
-                        <div
-                          className={`${showActive === "Similar Papers" ? "show-active-b" : "show-text-b"}`}
-                          onClick={handleClickSimilarPapers}
-                        >
-                          Similar Papers
-                        </div>
+
+                        {similarPapers?.length >= 0 && (
+                          <div
+                            className={`${showActive === "Similar Papers" ? "show-active-b" : "show-text-b"}`}
+                            onClick={handleClickSimilarPapers}
+                          >
+                            Similar Papers
+                          </div>
+                        )}
                       </div>
                     </div>
 
@@ -1082,22 +1118,50 @@ const FeedDetailsAuthor = () => {
                                       >
                                         <div className="user-img">
                                           <img
-                                            src={icons?.aboutImgIcons}
+                                            src={icons?.avatarOneIcons}
                                             alt="docs-icons"
                                             loading="lazy"
                                           />
                                         </div>
                                       </div>
                                       <div>
-                                        <h5 className="about-user-text">
-                                          Sandra Buttibieg
+                                        <h5
+                                          className="about-user-text"
+                                          style={{
+                                            textTransform: "capitalize",
+                                          }}
+                                        >
+                                          {
+                                            authdatadetails.data1
+                                              .user_details?.[0].name
+                                          }
                                         </h5>
                                         <p className="text-14-400 color-3333">
                                           Academy of Special Education named
-                                          after Maria Grzegorzewska in Warsaw /
-                                          Maria Grzegorzewska University,
-                                          Institute of Psychology, Faculty
-                                          Member
+                                          after{" "}
+                                          <span
+                                            style={{
+                                              textTransform: "capitalize",
+                                            }}
+                                          >
+                                            {
+                                              authdatadetails.data1
+                                                .user_details?.[0].name
+                                            }
+                                          </span>{" "}
+                                          in Warsaw /
+                                          <span
+                                            style={{
+                                              textTransform: "capitalize",
+                                            }}
+                                          >
+                                            {
+                                              authdatadetails.data1
+                                                .user_details?.[0].name
+                                            }
+                                          </span>{" "}
+                                          University, Institute of Psychology,
+                                          Faculty Member
                                         </p>
                                         <div
                                           className="d-flex   mt-12"
@@ -1166,7 +1230,11 @@ const FeedDetailsAuthor = () => {
                                               Public views
                                             </p>
                                             <p className="text-16-600 color-3333">
-                                              7
+                                              {console.log(
+                                                authdatadetails,
+                                                "authdatadetails"
+                                              )}
+                                              -
                                             </p>
                                           </div>
                                         </div>
@@ -1264,16 +1332,19 @@ const FeedDetailsAuthor = () => {
                                         )}
                                       </span>
 
-                                      <span className="d-flex">
-                                        <img
-                                          src={icons?.avatarTwoIcons}
-                                          className="w-20 h-20 rounded-circle "
-                                        />
-                                        <p className="docs-title">
-                                          {ele?.author_name ||
-                                            ele?.authors?.[0].name}
-                                        </p>
-                                      </span>
+                                      {ele?.author_name ||
+                                        (ele?.authors?.[0].name && (
+                                          <span className="d-flex">
+                                            <img
+                                              src={icons?.avatarTwoIcons}
+                                              className="w-20 h-20 rounded-circle "
+                                            />
+                                            <p className="docs-title">
+                                              {ele?.author_name ||
+                                                ele?.authors?.[0].name}
+                                            </p>
+                                          </span>
+                                        ))}
 
                                       <span className="fa-center gap-1">
                                         <img
@@ -1303,23 +1374,19 @@ const FeedDetailsAuthor = () => {
             </div>
           )}
         </div>
-
-        {/* <SecondDetails
-          isSide={isSide}
-          handleClickFullText={handleClickFullText}
-          authdata={authdatadetails}
-          paperAuthdetails={paperAuthdetails}
-          Seconddetailsloadder={Seconddetailsloadder}
-        /> */}
       </div>
 
-      {authors?.length > 0 && (
+      {console.log(authors, "AUTHORS")}
+
+      {authors !== undefined && (
         <div className="mt-40">
           <PackageDetails
             isSide={isSide}
             paperAuthdetails={paperAuthdetails}
             Seconddetailsloadder={Seconddetailsloadder}
             authors={authors}
+            isUserSide={isUserSide}  
+            isRightSide={isRightSide} 
           />
         </div>
       )}

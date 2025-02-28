@@ -141,7 +141,9 @@ const CreateFeed = () => {
           {/* {selectList?.length > 0 && ( */}
           <div className="d-flex justify-content-end flex-wrap gap-lg-5 gap-md-3 gap-3 flex-grow-1 align-items-end">
             <div>
-              <p className="select-text">Selected topic(s) or journal(s)</p>
+              <p className="select-text">Selected topic(s) 
+                {/* or journal(s) */}
+                </p>
               <h6 className="select-val">
                 {selectList?.[0]?.title}{" "}
                 {selectList?.length > 1 ? `+ ${selectList?.length - 1}` : ""}
