@@ -14,7 +14,10 @@ import {
   updateProfessionalMemberDetails,
   updateStudentMemberDetails,
 } from "@/store/userSlice/userDetailSlice";
-import { getDataFromLocalStorage, storeLocalStorageData } from "@/utils/helpers";
+import {
+  getDataFromLocalStorage,
+  storeLocalStorageData,
+} from "@/utils/helpers";
 import * as Yup from "yup";
 const MyProfilePopUp = ({
   onHide,

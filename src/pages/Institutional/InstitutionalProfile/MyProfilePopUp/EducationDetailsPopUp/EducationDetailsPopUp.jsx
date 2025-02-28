@@ -46,7 +46,7 @@ const EducationDetailsPopUp = ({
 
   return (
     <div className="education-details-container">
-      <div className="row row-gap-3">
+      <div className="row row-gap-3" >
         <div className="col-12">
           <TextInput
             className="h-45"
@@ -110,6 +110,7 @@ const EducationDetailsPopUp = ({
               value: item.dial_code,
               label: `${item.dial_code} `,
             }))}
+            
             onDropdownChange={(selected) => setphonedropdown(selected)}
             maxLength={15}
             type="text"
