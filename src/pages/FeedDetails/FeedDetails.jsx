@@ -441,7 +441,9 @@ const FeedDetails = ({ popup }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   const handleClick = () => {
-    setIsOpenModal(true);
+    // setIsOpenModal(true);
+
+    navigate("/Edit-Preferences");
   };
 
   const onHide = () => {

@@ -221,8 +221,13 @@ import question1 from "assets/images/icons/question1.png";
 import copyrites1 from "assets/images/icons/copyrites1.png";
 import importanc1 from "assets/images/icons/importanc1.png";
 import personupload1 from "assets/images/icons/personupload1.png";
+
+import block from "assets/images/icons/block.png";
+import Add from "assets/images/icons/Add.png";
 export const icons = {
   // avatar,
+  block,
+  Add,
   facebook,
   whatsapp,
   emailicon,

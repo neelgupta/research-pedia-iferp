@@ -5,6 +5,7 @@ import { Spinner } from "react-bootstrap";
 import PopupRegistration from "@/pages/User/PopupRegistration/PopupRegistration";
 import MyFeed from "@/pages/MyFeed";
 import CreateFeed from "@/pages/CreateFeed";
+import EditPreferences from "@/pages/FeedDetails/EditPreferences/EditPreferences";
 
 // import UploadAskPdf from "@/pages/UploadAskPdf";
 // import LiteratureReview from "@/pages/LiteratureReview";
@@ -112,6 +113,7 @@ export const UserRoutes = () => {
 
       <Route path="/my-feed" element={<MyFeed />} />
       <Route path="/create-feed" element={<CreateFeed />} />
+      <Route path="/Edit-Preferences" element={<EditPreferences />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
     // </Suspense>
