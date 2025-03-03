@@ -14,7 +14,7 @@ import {
   updateProfessionalMemberDetails,
   updateStudentMemberDetails,
 } from "@/store/userSlice/userDetailSlice";
-import { getDataFromLocalStorage } from "@/utils/helpers";
+import { getDataFromLocalStorage, storeLocalStorageData } from "@/utils/helpers";
 import * as Yup from "yup";
 const MyProfilePopUp = ({
   onHide,
@@ -243,11 +243,13 @@ const MyProfilePopUp = ({
       : updateProfessionalMemberDetails(localData.roleId, values);
 
     const result = await dispatch(updateAction);
+    // console.log("🚀 ~ handleSubmit ~ updateAction:", result?.data?.response)
 
     if (result?.status === 200) {
       setValCount(1);
       fetchData();
       getDataFromLocalStorage();
+      storeLocalStorageData(result?.data?.response)
     }
     setloading(false);
   };

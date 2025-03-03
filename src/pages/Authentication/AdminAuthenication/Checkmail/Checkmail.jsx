@@ -28,7 +28,7 @@ const Checkmail = () => {
             <Button
               btnText="Login"
               className="wp-100 h-45 br-12 text-18-500"
-              onClick={() => navigate("/admin/reset-password")}
+              onClick={() => navigate("/admin/login")}
             />
           </div>
         </div>

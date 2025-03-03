@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import FeedFooter from "@/components/layouts/FeedFooter";
 import { useNavigate } from "react-router-dom";
 import { getDataFromLocalStorage } from "@/utils/helpers";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   handleGetCategories,
   handleGetTopics,
@@ -14,6 +14,8 @@ import MyFeedmodel from "./MyFeedmodel";
 import { Spinner } from "react-bootstrap";
 
 const MyFeed = () => {
+  const setIsProjectCreate = useSelector((state) => state.global.isProjectCreate);
+  console.log("🚀 ~ MyFeed ~ setIsProjectCreate:", setIsProjectCreate)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isActive, setIsActive] = useState(null);
@@ -34,11 +36,12 @@ const MyFeed = () => {
   };
 
   useEffect(() => {
+    setIsProjectCreate ? navigate("/"):""
     fetchAllCategories();
   }, [limitData]);
 
   const localData = getDataFromLocalStorage();
-  const { name } = localData;
+  const { name, isFirstLogin } = localData;
 
   const feedList = categories?.map((item) => ({
     id: item._id,
@@ -47,7 +50,7 @@ const MyFeed = () => {
     icon: icons?.rectangleIcons,
   }));
 
-  const [isOpenModal, setIsOpenModal] = useState(true);
+  const [isOpenModal, setIsOpenModal] = useState(isFirstLogin);
   const onHide = () => {
     setIsOpenModal(false);
   };
