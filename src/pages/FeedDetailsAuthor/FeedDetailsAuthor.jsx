@@ -366,7 +366,6 @@ const FeedDetailsAuthor = () => {
   return (
     <div id="feed-details-author-container">
       <div className="row">
-
           {summaryloadder ? (
             <div
               className="loader-container d-flex justify-content-center align-items-center"
@@ -797,6 +796,123 @@ const FeedDetailsAuthor = () => {
                               Similar Papers
                             </div>
                           )}
+
+                          {/* <div
+                            className="fb-center"
+                            style={{ padding: "1.5rem" }}
+                          >
+                            {paperAuthdetails &&
+                              paperAuthdetails?.length > 2 && (
+                                <>
+                                  <p className="text-18-500 color-0303 mb-0">
+                                    {paperAuthdetails?.length - 2} More
+                                  </p>
+
+                                  <div className="fa-center gap-2">
+                                    <p className="text-18-500  color-113D">
+                                      View all
+                                    </p>
+                                    <img src={icons?.rightArrowIcons} />
+                                  </div>
+                                </>
+                              )}
+                          </div> */}
+
+                          {/* <div
+                            style={{
+                              height: "100%",
+                              display: "flex",
+                              flexDirection: "column",
+                              gap: "22px",
+                            }}
+                          >
+                            {Seconddetailsloadder ? (
+                              <div className="loader-container d-flex justify-content-center">
+                                <Spinner animation="border" variant="primary" />
+                              </div>
+                            ) : paperAuthdetails?.length > 0 ? (
+                              paperAuthdetails.slice(0, 2).map((ele, index) => {
+                                return (
+                                  <div
+                                    className="feed-published-box card-d "
+                                    key={index}
+                                  >
+                                    <div>
+                                      <div className="row">
+                                        <div className="col-12">
+                                          <div>
+                                            <h4 className="post-title">
+                                              {ele.title || ele.paper_title}
+                                            </h4>
+                                            {ele?.journal?.name ? (
+                                              <p className="post-pra">
+                                                {ele.journal.name}
+                                              </p>
+                                            ) : null}
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div
+                                      className="gap-md-2"
+                                      style={{
+                                        width: "100%",
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        gap: "6px",
+                                      }}
+                                    >
+                                      <span className="fa-center gap-1">
+                                        <img
+                                          src={icons?.calenderIcons}
+                                          alt="docs-icons"
+                                          loading="lazy"
+                                          className="h-16 w-16 object-fit-contain"
+                                        />
+                                        {ele?.year ? (
+                                          <p className="docs-title">
+                                            {ele.year}
+                                          </p>
+                                        ) : (
+                                          <p className="docs-title">
+                                            {moment(ele.created_at).format(
+                                              "DD MMM YYYY"
+                                            )}
+                                          </p>
+                                        )}
+                                      </span>
+
+                                      <span className="d-flex">
+                                        <img
+                                          src={icons?.avatarTwoIcons}
+                                          className="w-20 h-20 rounded-circle "
+                                        />
+                                        <p className="docs-title">
+                                          {ele?.author_name ||
+                                            ele?.authors?.[0].name}
+                                        </p>
+                                      </span>
+
+                                      <span className="fa-center gap-1">
+                                        <img
+                                          src={icons?.eyeIcons}
+                                          alt="docs-icons"
+                                          loading="lazy"
+                                          className="h-16 w-16 object-fit-contain"
+                                        />
+                                        <p className="docs-title">31 Views</p>
+                                      </span>
+                                    </div>
+                                  </div>
+                                );
+                              })
+                            ) : (
+                              <div className="no-papers">
+                                <p>Paper not found</p>
+                              </div>
+                            )}
+                          </div> */}
                         </div>
                       </div>
 
