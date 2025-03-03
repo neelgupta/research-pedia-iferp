@@ -121,9 +121,17 @@ const UserNavbar = () => {
             )}
 
             <div className="post-b-a">
-              <div className="profile-inner-box">
+              <div
+                className="profile-inner-box"
+                onClick={() => {
+                  setDropdownOpen(!dropdownOpen);
+                }}
+              >
                 <div className="profile-img">
-                  <img src={localData?.profilePicture || icons.profileimg} alt="Profile" />
+                  <img
+                    src={localData?.profilePicture || icons.profileimg}
+                    alt="Profile"
+                  />
                   <div className="prime-i">
                     <img src={icons.primeIIcons} alt="prime-icon" />
                   </div>
@@ -142,9 +150,6 @@ const UserNavbar = () => {
                     src={icons.downBlackIcons}
                     alt="Profile"
                     className="h-5 w-10 object-fit-contain"
-                    onClick={() => {
-                      setDropdownOpen(!dropdownOpen);
-                    }}
                   />
                 </div>
               </div>
@@ -217,7 +222,10 @@ const UserNavbar = () => {
                       setDropdownOpen(false);
                     }}
                   >
-                    <div className="w-188 text-l">Log Out</div>
+                    <div className="w-188 text-l" onClick={handleLogOut}>
+                      {" "}
+                      Log Out
+                    </div>
                   </div>
                 </div>
               )}
@@ -271,10 +279,18 @@ const UserNavbar = () => {
                   </div>
                 </div>
               )}
-              <div className="profile-card">
+              <div
+                className="profile-card"
+                onClick={() => {
+                  setDropdownOpen(!dropdownOpen);
+                }}
+              >
                 <div className="profile-inner-box">
                   <div className="profile-img">
-                    <img src={localData?.profilePicture ||icons.profileimg} alt="Profile" />
+                    <img
+                      src={localData?.profilePicture || icons.profileimg}
+                      alt="Profile"
+                    />
                     <div className="prime-i">
                       <img src={icons.primeIIcons} alt="prime-icon" />
                     </div>
@@ -292,9 +308,6 @@ const UserNavbar = () => {
                       src={icons.downBlackIcons}
                       alt="Profile"
                       className="h-5 w-10 object-fit-contain"
-                      onClick={() => {
-                        setDropdownOpen(!dropdownOpen);
-                      }}
                     />
                   </div>
                 </div>
@@ -307,7 +320,7 @@ const UserNavbar = () => {
                         className="h-22 w-22 object-fit-contain"
                       />
                       <p className="notification-name">
-                        {localData.name} 
+                        {localData.name}
                         {/* Test */}
                       </p>
                     </div>

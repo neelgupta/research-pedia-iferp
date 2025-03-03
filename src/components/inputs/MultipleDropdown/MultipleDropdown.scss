@@ -28,18 +28,18 @@
     font-weight: 500;
   }
   .multi-select__multi-value {
-    background-color: #f5efea;
+    background-color: rgb(236, 234, 234);
     border-radius: 8px;
   }
   .multi-select__multi-value__label {
     padding: 8px 3px 8px 11px;
-    color: #f75b1e;
+    color: black;
     font-size: 14px;
     font-weight: 400;
   }
   .multi-select__multi-value__remove {
     padding-right: 10px;
-    color: #f75b1e;
+    color: black;
     &:hover {
       background-color: unset;
     }

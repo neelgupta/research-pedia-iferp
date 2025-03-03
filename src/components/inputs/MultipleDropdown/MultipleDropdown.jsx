@@ -14,23 +14,24 @@ const MultipleDropdown = ({
   customStyles,
   error,
 }) => {
-  // const findVal = options?.find((o) => o.value === value) || null;
+  const handleChange = (selectedOptions) => {
+    const values = selectedOptions ? selectedOptions.map((opt) => opt.value) : [];
+    onChange({ target: { id, value: values } }); // Update Formik values correctly
+  };
+
+  const selectedValues = options?.filter((opt) => value?.includes(opt.value));
 
   return (
     <div id="multipledropdown-container">
-      {label && (
-        <Label label={label} required={required} labelClass={labelClass} />
-      )}
+      {label && <Label label={label} required={required} labelClass={labelClass} />}
       <div>
         <Select
           id={id}
           classNamePrefix="multi-select"
           options={options}
           placeholder={placeholder || "Select"}
-          value={value}
-          onChange={(e) => {
-            onChange({ target: { id: id, value: e || "" } });
-          }}
+          value={selectedValues}
+          onChange={handleChange}
           styles={customStyles || {}}
           isClearable={false}
           isMulti

@@ -225,18 +225,20 @@
 
   .bannerDiv {
     width: 20%;
-    position: sticky;
-    top: 0;
-    height: calc(100vh - 20px);
-    overflow-y: auto
+    // position: sticky;
+    // top: 0;
+    // height: calc(100vh - 20px);
+    height: 100vh;
+    // overflow-y: auto
   }
 
   .bannerDiv-isRightSide{
     width: 30%;
-    position: sticky;
-    top: 0;
-    height: calc(100vh - 20px);
-    overflow-y: auto
+    // position: sticky;
+    // top: 0;
+    // height: calc(100vh - 20px);
+    height:100vh;
+    // overflow-y: auto
   }
 
 //   .desclaimer-section{

@@ -43,7 +43,6 @@ const FeedDetails = ({ popup }) => {
   const [isRePost, setIsRePost] = useState(false);
   const [topicList, setIsTopicList] = useState([]);
   const [pagination, setPagination] = useState({});
-  console.log("✌️pagination --->", pagination);
   const [activeTab, setActiveTab] = useState("topPapers");
   const [openDropdown, setOpenDropdown] = useState(null);
   const [isUserData, setIsUserData] = useState({});
@@ -113,14 +112,18 @@ const FeedDetails = ({ popup }) => {
   const [Recommendedloader, setRecommendedloader] = useState(false);
 
   const fetchRecommendedReaserchPapers = async () => {
+
+
     setRecommendedloader(true);
-    // const neQuery = ["Architecture", "science"];
     const query = `topics=${topicList}&limit=${rowsPerPage}&page=${currentPage}`;
     if (topicList.length > 0) {
       const result = await dispatch(getRecommendedPapers(query));
+      console.log(result.data.response,"RESONSA")
 
       if (result?.status === 200) {
         setRecommendedPapers(result?.data?.response?.papers);
+
+
         setPagination(result?.data?.response?.pagination);
         setRecommendedloader(false);
       }
@@ -157,7 +160,6 @@ const FeedDetails = ({ popup }) => {
 
   const fetchTopPapers = async () => {
     setpaperloader(true);
-    // const neQuery = ["Architecture", "science"]; For Testing
 
     const query = `topics=${topicList}&limit=${rowsPerPage}&page=${currentPage}`;
     if (topicList.length > 0) {
@@ -221,11 +223,9 @@ const FeedDetails = ({ popup }) => {
 
   const handleReadPaper = (paperId) => {
     const queryParams = new URLSearchParams(paperId).toString();
-    console.log( queryParams,"query params")
+    console.log(queryParams, "query params");
     window.open(`/feed-details-author?${queryParams}`, "_blank");
 
-
-    
     // navigate("/feed-details-author", { state: paperId });
   };
 
@@ -236,14 +236,15 @@ const FeedDetails = ({ popup }) => {
           {activeTab === "topPapers" ? "Recommended for you" : "Conference"}
         </div> */}
 
-        {papers.length > 0 ? (
-          papers.map((papers, index) => {
+        {papers?.length > 0 ? (
+          papers?.map((papers, index) => {
+        
             return (
               <div
                 className="feed-published-box card-d mt-18 pointer"
                 key={index}
               >
-                {currentYear === papers.year && (
+                {currentYear === papers?.year && (
                   <div className="fb-center">
                     <div className="post-published">
                       <img
@@ -264,22 +265,21 @@ const FeedDetails = ({ popup }) => {
                   </div>
                 )}
 
-                {/* {console.log(papers, "papers id1223")} */}
                 <h4
                   className="post-title"
                   style={{ maxWidth: "100%" }}
                   onClick={() => {
                     handleReadPaper({
-                      paperId: papers.paperId,
-                      abstractId: papers.abstract_id || papers.abstractId,
+                      paperId: papers?.paperId,
+                      abstractId: papers?.abstract_id || papers?.abstractId,
                     });
                   }}
                 >
-                  {papers.title || papers?.paper_title || "No Title Found"}
+                  {papers?.title || papers?.paper_title || "No Title Found"}
                 </h4>
                 <p className="post-pra">
-                  {(papers.abstract && papers.abstract) ||
-                    (papers.paper_abstract && papers.paper_abstract) ||
+                  {(papers?.abstract && papers?.abstract) ||
+                    (papers?.paper_abstract && papers?.paper_abstract) ||
                     "No Abstract Found"}
                 </p>
 
@@ -310,40 +310,50 @@ const FeedDetails = ({ popup }) => {
                       loading="lazy"
                       className="h-20 w-20 rounded-circle"
                     />
+
                     <p className="docs-title">
-                      {papers?.authors && papers.authors.length > 0 ? (
-                        <>
-                          {papers.authors[0].name}
-                          {papers.authors.length > 1 &&
-                            ` +${papers.authors.length - 1}`}
-                        </>
-                      ) : papers?.author_name ? (
-                        papers.author_name
-                      ) : (
-                        "No Authors"
-                      )}
+                      {console.log(papers, "author DETAILS:")}
+
+                      {Array.isArray(papers)
+                        ? papers.length > 0
+                          ? papers.map((author) => author.name).join(", ")
+                          : "No Authors"
+                        : papers?.authors && papers.authors.length > 0
+                          ? `${papers.authors[0].name}${
+                              papers.authors.length > 1
+                                ? ` +${papers.authors.length - 1}`
+                                : ""
+                            }`
+                          : papers?.author_name
+                            ? papers.author_name
+                            : "No Authors"}
                     </p>
                   </div>
                   <div className="fa-center gap-md-2 gap-2">
-                    <div className="fa-center gap-1">
-                      <img
-                        src={icons?.calenderIcons}
-                        alt="docs-icons"
-                        loading="lazy"
-                        className="h-16 w-16 object-fit-contain"
-                      />
-                      <p className="docs-title">
-                        {papers.abstract_id
-                          ? moment(papers.created_at).format("MMM DD,YYYY")
-                          : papers.year}
-                      </p>
-                    </div>
-                    <img
-                      src={icons?.dotIcons}
-                      alt="docs-icons"
-                      loading="lazy"
-                      className="h-5 w-5"
-                    />
+                    {(papers?.created_at || papers?.year) && (
+                      <>
+                        <div className="fa-center gap-1">
+                          <img
+                            src={icons?.calenderIcons}
+                            alt="docs-icons"
+                            loading="lazy"
+                            className="h-16 w-16 object-fit-contain"
+                          />
+                          <p className="docs-title">
+                            {papers?.created_at
+                              ? moment(papers?.created_at).format("MMM DD,YYYY")
+                              : papers?.year}
+                          </p>
+                        </div>
+                        <img
+                          src={icons?.dotIcons}
+                          alt="docs-icons"
+                          loading="lazy"
+                          className="h-5 w-5"
+                        />
+                      </>
+                    )}
+
                     <div className="fa-center gap-1">
                       <img
                         src={icons?.eyeIcons}
@@ -575,7 +585,9 @@ const FeedDetails = ({ popup }) => {
             </div>
           )}
 
-          {pagination.totalCount > 0 && (
+          {console.log(pagination,"pagination")}
+
+          {(pagination.totalCount > 0 ) && (
             <div className="Pagination mt-36">
               <div className="d-flex justify-content-center align-items-center flex-wrap gap-md-3 gap-2">
                 <Button

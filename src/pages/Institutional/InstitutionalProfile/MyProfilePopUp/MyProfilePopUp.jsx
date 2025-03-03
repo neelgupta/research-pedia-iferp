@@ -124,11 +124,10 @@ const MyProfilePopUp = ({ onHide, title, isUserData, fetchUserDetails }) => {
         .required("Institution email is required"),
 
       institutionContactNumber: Yup.string()
-        .matches(
-          /^[0-9]{10}$/,
-          "Institution contact number must be exactly 10 digits"
-        )
-        .required("Institution contact number is required"),
+      .matches(/^\d+$/, "Phone number should be in numbers only")
+      .min(10, "Phone number must be at least 10 digits")
+      .max(15, "Phone number can't be more than 15 digits")
+      .required("Phone number is required"),
 
       noOfPremiumStudent: Yup.number()
         .required("Number of premium students is required")

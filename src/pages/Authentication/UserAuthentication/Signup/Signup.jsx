@@ -17,12 +17,18 @@ import { getProjectByTopics } from "@/store/userSlice/projectSlice";
 const validationSchema = Yup.object({
   email: Yup.string()
     .email("Invalid email format")
+    .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.com$/, "Invalid Email")
     .required("Email is required"),
   password: Yup.string()
     .min(8, "Password must be at least 8 characters")
     .required("Password is required"),
   name: Yup.string().required("Name is required"),
-  phoneNumber: Yup.string().required("Phone number is required"),
+  // phoneNumber: Yup.number().required("Phone number is required"),
+  phoneNumber: Yup.string()
+  .matches(/^\d+$/, "Phone number should be in numbers only")
+  .min(10, "Phone number must be at least 10 digits")
+  .max(15, "Phone number can't be more than 15 digits")
+  .required("Phone number is required"),
   role: Yup.string().required("Please select a membership type"),
 });
 
@@ -260,7 +266,7 @@ const UserSignup = () => {
                             onChange={handleChange}
                             error={touched.email && errors.email}
                             placeholder="Email"
-                            type="text"
+                            type="email"
                           />
                         </div>
 
@@ -285,6 +291,8 @@ const UserSignup = () => {
                               setphonedropdown(selected)
                             }
                             error={touched.phoneNumber && errors.phoneNumber}
+                            type="text"
+                            maxLength={15}
                           />
                         </div>
 

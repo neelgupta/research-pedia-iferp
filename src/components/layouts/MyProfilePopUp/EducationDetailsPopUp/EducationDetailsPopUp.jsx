@@ -14,6 +14,8 @@ import { useDispatch } from "react-redux";
 import { getDataFromLocalStorage } from "@/utils/helpers";
 import { Formik } from "formik";
 import { registermodel } from "@/store/globalSlice";
+import MultipleDropdown from "@/components/inputs/MultipleDropdown";
+import axios from "axios";
 
 const EducationDetailsPopUp = ({
   setValCount,
@@ -28,6 +30,46 @@ const EducationDetailsPopUp = ({
 }) => {
   const dispatch = useDispatch();
   const localData = getDataFromLocalStorage();
+
+  const [areaOfInterest, setAreaOfInterest] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(
+          "https://apidashboard.iferp.in/api/research-pedia-topic-list"
+        );
+
+        if (response.status === 200) {
+          const topicsArray = response?.data?.data1?.allTopicList
+            ?.map((item) => item?.topics)
+            ?.flat()
+            ?.filter(Boolean);
+
+          const formattedOptions = topicsArray.map((topic) => ({
+            value: topic.topics,
+            label: topic.topics,
+          }));
+
+          console.log(formattedOptions, "Formatted Options");
+          setAreaOfInterest(formattedOptions);
+        }
+      } catch (err) {
+        console.log(err, "API Error");
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  console.log(areaOfInterest, "areaOfInterest");
+
+  // const [selectedValues, setSelectedValues] = useState([]);
+
+  // const handleChangeinput = (event) => {
+  //   console.log("Selected values:", event.target.value);
+  //   setSelectedValues(event.target.value); // Update state with selected values
+  // };
 
   const [pgCourse, setPgcourse] = useState([]);
   const [phdCourse, setPhdCourse] = useState([]);
@@ -296,11 +338,20 @@ const EducationDetailsPopUp = ({
                 <h6 className="degree-details">Research Interests</h6>
               </div>
               <div className="col-12">
-                <TextInput
+         
+                <MultipleDropdown
                   id="researchDetails.researchIntrest.areaOfIntrest"
-                  onChange={handleChange}
-                  value={values.researchDetails?.researchIntrest?.areaOfIntrest}
-                  className="h-45"
+                  options={areaOfInterest}
+                  value={
+                    values?.researchDetails?.researchIntrest?.areaOfIntrest ||
+                    []
+                  }
+                  onChange={(e) =>
+                    setFieldValue(
+                      "researchDetails.researchIntrest.areaOfIntrest",
+                      e.target.value
+                    )
+                  }
                   placeholder="Area of interest"
                 />
               </div>

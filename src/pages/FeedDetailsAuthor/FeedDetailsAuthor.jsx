@@ -40,25 +40,22 @@ const FeedDetailsAuthor = () => {
   const navigation = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const paperId = queryParams.get("paperId");
-  const abstractId = queryParams.get('abstractId')
+  const abstractId = queryParams.get("abstractId");
 
   const topics = location?.state?.topics;
   console.log(paperId, "PAPERID11");
-  console.log(abstractId, "abstractId")
+  console.log(abstractId, "abstractId");
   const fetchPaper = async () => {
     setsummaryloadder(true);
     // const id = location?.state;
     // const paperId = id.paperId;
     // const abstractId = id.abstractId;
 
-;
-
     const result = await dispatch(
       getRecommendedPapersById(paperId, abstractId)
     );
 
-
-    console.log(result,"result")
+    console.log(result, "result");
 
     setAutherIddetispaper(
       result?.data.response?.researchPapersWithSummary[0]?.authors
@@ -391,7 +388,11 @@ const FeedDetailsAuthor = () => {
                                 paddingBottom: "36px",
                               }}
                               onClick={() => {
-                                dispatch(handleCopy(`https://doi.org/${externalIds?.DOI}`));
+                                dispatch(
+                                  handleCopy(
+                                    `https://doi.org/${externalIds?.DOI}`
+                                  )
+                                );
                               }}
                             >
                               <p className="link-text">
@@ -606,7 +607,7 @@ const FeedDetailsAuthor = () => {
                       <div className="search-btn-box">
                         {summary && (
                           <div
-                            className={`${showActive === "Summary" ? "show-active-b" : "show-text-b"}`}
+                            className={`${showActive === "Summary" ? "show-active-b" : "show-text-b"} pointer`}
                             onClick={handleClickSummary}
                           >
                             Summary
@@ -615,7 +616,7 @@ const FeedDetailsAuthor = () => {
 
                         {(paper_abstract || abstract) && (
                           <div
-                            className={`${showActive === "Abstract" ? "show-active-b" : "show-text-b"}`}
+                            className={`${showActive === "Abstract" ? "show-active-b" : "show-text-b"} pointer`}
                             onClick={handleClickActive}
                           >
                             Abstract
@@ -623,7 +624,7 @@ const FeedDetailsAuthor = () => {
                         )}
 
                         <div
-                          className={`${showActive === "Full-Text" ? "show-active-b" : "show-text-b"}`}
+                          className={`${showActive === "Full-Text" ? "show-active-b" : "show-text-b"} pointer`}
                           onClick={handleClickFullText}
                         >
                           Full-Text
@@ -631,7 +632,7 @@ const FeedDetailsAuthor = () => {
 
                         {similarPapers?.length >= 0 && (
                           <div
-                            className={`${showActive === "Similar Papers" ? "show-active-b" : "show-text-b"}`}
+                            className={`${showActive === "Similar Papers" ? "show-active-b" : "show-text-b"} pointer`}
                             onClick={handleClickSimilarPapers}
                           >
                             Similar Papers
@@ -671,17 +672,16 @@ const FeedDetailsAuthor = () => {
                       </>
                     )}
 
-                    {paper_abstract ||
-                      (abstract && (
-                        <div className="abstract-box">
-                          <h4 className="sub-title-text" id="abstract">
-                            Abstract
-                          </h4>
-                          <p className="abstract-text">
-                            {abstract && abstract}
-                          </p>
-                        </div>
-                      ))}
+                    {(paper_abstract || abstract) && (
+                      <div className="abstract-box">
+                        <h4 className="sub-title-text" id="abstract">
+                          Abstract
+                        </h4>
+                        <p className="abstract-text">
+                          {paper_abstract || abstract}
+                        </p>
+                      </div>
+                    )}
 
                     <div className="ask-box">
                       <div className="d-flex align-items-center gap-2">
@@ -905,122 +905,124 @@ const FeedDetailsAuthor = () => {
                       </div>
                     </div>
 
-                    <div className="similar-box" id="similar-papers">
-                      <h4
-                        style={{
-                          fontSize: "24px",
-                          fontWeight: 500,
-                          paddingTop: "3rem",
-                          marginBottom: "1rem",
-                        }}
-                      >
-                        Similar Papers
-                      </h4>
+                    {similarPapers && similarPapers.length > 0 && (
+                      <div className="similar-box" id="similar-papers">
+                        <h4
+                          style={{
+                            fontSize: "24px",
+                            fontWeight: 500,
+                            paddingTop: "3rem",
+                            marginBottom: "1rem",
+                          }}
+                        >
+                          Similar Papers
+                        </h4>
 
-                      {similarpaperloadder ? (
-                        <div className="loader-container d-flex justify-content-center">
-                          <Spinner animation="border" variant="primary" />
-                        </div>
-                      ) : similarPapers && similarPapers.length > 0 ? (
-                        similarPapers.map((ele, index) => {
-                          return (
-                            <div
-                              className="feed-published-box card-d mt-18"
-                              key={index}
-                            >
-                              <div>
-                                <div className="feed-flex">
-                                  <div className="col-10">
-                                    <div className="w-d">
-                                      <h4 className="post-title">
-                                        {ele?.title || ele?.paper_title}
-                                      </h4>
-                                      <p className="post-pra">
-                                        Journal of Islamic Contemporary
-                                        Accounting and Business | VOL. 1
-                                      </p>
+                        {similarpaperloadder ? (
+                          <div className="loader-container d-flex justify-content-center">
+                            <Spinner animation="border" variant="primary" />
+                          </div>
+                        ) : (
+                          similarPapers &&
+                          similarPapers.length > 0 &&
+                          similarPapers.map((ele, index) => {
+                            return (
+                              <div
+                                className="feed-published-box card-d mt-18"
+                                key={index}
+                              >
+                                <div>
+                                  <div className="feed-flex">
+                                    <div className="col-10">
+                                      <div className="w-d">
+                                        <h4 className="post-title">
+                                          {ele?.title || ele?.paper_title}
+                                        </h4>
+                                        <p className="post-pra">
+                                          Journal of Islamic Contemporary
+                                          Accounting and Business | VOL. 1
+                                        </p>
+                                      </div>
+                                    </div>
+                                    <div className="col-2 d-flex justify-content-end">
+                                      <div className="h-42 w-42">
+                                        <Button
+                                          leftIcon={icons?.activeSaveIcons}
+                                          btnStyle="LB"
+                                          className="h-42 w-42"
+                                          leftIconClass="h-16 w-16"
+                                        />
+                                      </div>
                                     </div>
                                   </div>
-                                  <div className="col-2 d-flex justify-content-end">
-                                    <div className="h-42 w-42">
-                                      <Button
-                                        leftIcon={icons?.activeSaveIcons}
-                                        btnStyle="LB"
-                                        className="h-42 w-42"
-                                        leftIconClass="h-16 w-16"
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
 
-                                <div className="post-details flex-wrap mt-8 gap-2">
-                                  <div className="fa-center gap-1">
-                                    <img
-                                      src={icons?.avatarTwoIcons}
-                                      alt="docs-icons"
-                                      loading="lazy"
-                                      className="h-20 w-20 rounded-circle"
-                                    />
-
-                                    {(ele?.authors || ele.author_name) &&
-                                    ele?.authors?.length > 0 ? (
-                                      <>
-                                        {ele?.authors?.[0]?.name ||
-                                          ele?.author_name}
-                                        {ele?.authors?.length > 1 &&
-                                          ` +${ele?.authors?.length - 1}`}
-                                      </>
-                                    ) : ele?.author_name ? (
-                                      ele?.author_name
-                                    ) : (
-                                      "No Authors"
-                                    )}
-                                  </div>
-                                  <div className="fa-center gap-md-2 gap-2">
+                                  <div className="post-details flex-wrap mt-8 gap-2">
                                     <div className="fa-center gap-1">
                                       <img
-                                        src={icons?.calenderIcons}
+                                        src={icons?.avatarTwoIcons}
                                         alt="docs-icons"
                                         loading="lazy"
-                                        className="h-16 w-16 object-fit-contain"
+                                        className="h-20 w-20 rounded-circle"
                                       />
-                                      <p className="docs-title">
-                                        {ele.abstract_id
-                                          ? moment(ele.created_at).format(
-                                              "MMM DD,YYYY"
-                                            )
-                                          : ele.year}
-                                      </p>
+
+                                      {(ele?.authors || ele.author_name) &&
+                                      ele?.authors?.length > 0 ? (
+                                        <>
+                                          {ele?.authors?.[0]?.name ||
+                                            ele?.author_name}
+                                          {ele?.authors?.length > 1 &&
+                                            ` +${ele?.authors?.length - 1}`}
+                                        </>
+                                      ) : ele?.author_name ? (
+                                        ele?.author_name
+                                      ) : (
+                                        "No Authors"
+                                      )}
                                     </div>
-                                    <img
-                                      src={icons?.dotIcons}
-                                      alt="docs-icons"
-                                      loading="lazy"
-                                      className="h-5 w-5"
-                                    />
-                                    <div className="fa-center gap-1">
+                                    <div className="fa-center gap-md-2 gap-2">
+                                      <div className="fa-center gap-1">
+                                        <img
+                                          src={icons?.calenderIcons}
+                                          alt="docs-icons"
+                                          loading="lazy"
+                                          className="h-16 w-16 object-fit-contain"
+                                        />
+                                        <p className="docs-title">
+                                          {ele.abstract_id
+                                            ? moment(ele.created_at).format(
+                                                "MMM DD,YYYY"
+                                              )
+                                            : ele.year}
+                                        </p>
+                                      </div>
                                       <img
-                                        src={icons?.eyeIcons}
+                                        src={icons?.dotIcons}
                                         alt="docs-icons"
                                         loading="lazy"
-                                        className="h-16 w-16 object-fit-contain"
+                                        className="h-5 w-5"
                                       />
-                                      <p className="docs-title">31 Views</p>
+                                      <div className="fa-center gap-1">
+                                        <img
+                                          src={icons?.eyeIcons}
+                                          alt="docs-icons"
+                                          loading="lazy"
+                                          className="h-16 w-16 object-fit-contain"
+                                        />
+                                        <p className="docs-title">31 Views</p>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                          );
-                        })
-                      ) : (
-                        <p>No similar papers found</p>
-                      )}
+                            );
+                          })
+                        )}
 
-                      <div className="f-center mt-18">
-                        <Button className="h-42" btnText="View more papers" />
+                        <div className="f-center mt-18">
+                          <Button className="h-42" btnText="View more papers" />
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
 
                   <div
@@ -1038,139 +1040,141 @@ const FeedDetailsAuthor = () => {
                           About Author
                         </h4>
                         <div>
-                          {Object.keys(authdatadetails).length !== 0 && (
-                            <div className="About-box">
-                              <div className="">
+                          {Object.keys(authdatadetails).length !== 0 &&
+                            authdatadetails?.data1?.user_details?.[0]?.name && (
+                              <div
+                                className="About-box"
+                                style={{ border: "2px solid red" }}
+                              >
                                 <div className="">
-                                  <div className="about-box-inner">
-                                    <div className="author-details">
-                                      <div
-                                        style={{
-                                          width: "100%",
-                                          display: "flex",
-                                          justifyContent: "center",
-                                        }}
-                                      >
-                                        <div className="user-img">
-                                          <img
-                                            src={icons?.avatarOneIcons}
-                                            alt="docs-icons"
-                                            loading="lazy"
-                                          />
-                                        </div>
-                                      </div>
-                                      <div>
-                                        <h5
-                                          className="about-user-text"
-                                          style={{
-                                            textTransform: "capitalize",
-                                          }}
-                                        >
-                                          {
-                                            authdatadetails.data1
-                                              .user_details?.[0].name
-                                          }
-                                        </h5>
-                                        <p className="text-14-400 color-3333">
-                                          Academy of Special Education named
-                                          after{" "}
-                                          <span
-                                            style={{
-                                              textTransform: "capitalize",
-                                            }}
-                                          >
-                                            {
-                                              authdatadetails.data1
-                                                .user_details?.[0].name
-                                            }
-                                          </span>{" "}
-                                          in Warsaw /
-                                          <span
-                                            style={{
-                                              textTransform: "capitalize",
-                                            }}
-                                          >
-                                            {
-                                              authdatadetails.data1
-                                                .user_details?.[0].name
-                                            }
-                                          </span>{" "}
-                                          University, Institute of Psychology,
-                                          Faculty Member
-                                        </p>
+                                  <div className="">
+                                    <div className="about-box-inner">
+                                      <div className="author-details">
                                         <div
-                                          className="d-flex   mt-12"
                                           style={{
-                                            gap: "14px",
                                             width: "100%",
+                                            display: "flex",
+                                            justifyContent: "center",
                                           }}
                                         >
-                                          <div style={{ width: "48%" }}>
-                                            <Button
-                                              leftIcon={icons?.pulseWIcons}
-                                              btnText="Follow"
-                                              className="text-16-500 color-ffff  h-43"
-                                            />
-                                          </div>
-                                          <div style={{ width: "48%" }}>
-                                            <Button
-                                              leftIcon={icons?.chatBIcons}
-                                              btnText="Message"
-                                              className="text-16-500  h-43"
-                                              btnStyle="BTA"
+                                          <div className="user-img">
+                                            <img
+                                              src={icons?.avatarOneIcons}
+                                              alt="docs-icons"
+                                              loading="lazy"
                                             />
                                           </div>
                                         </div>
-                                        <div className="mt-10">
-                                          <div className="fb-center mb-8">
-                                            <p className="text-16-400 color-3333">
-                                              Followers
-                                            </p>
-                                            <p className="text-16-600 color-3333">
+                                        <div>
+                                          <h5
+                                            className="about-user-text"
+                                            style={{
+                                              textTransform: "capitalize",
+                                            }}
+                                          >
+                                            {authdatadetails?.data1
+                                              ?.user_details?.[0]?.name || "-"}
+                                          </h5>
+                                          <p className="text-14-400 color-3333">
+                                            Academy of Special Education named
+                                            after{" "}
+                                            <span
+                                              style={{
+                                                textTransform: "capitalize",
+                                              }}
+                                            >
                                               {authdatadetails?.data1
-                                                ?.user_details?.[0]?.followers
-                                                ? authdatadetails?.data1
-                                                    ?.user_details?.[0]
-                                                    ?.followers
-                                                : "-"}
-                                            </p>
-                                          </div>
-                                          <div className="fb-center mb-8">
-                                            <p className="text-16-400 color-3333">
-                                              Following
-                                            </p>
-                                            <p className="text-16-600 color-3333">
+                                                ?.user_details?.[0]?.name ||
+                                                "-"}
+                                            </span>{" "}
+                                            in Warsaw /
+                                            <span
+                                              style={{
+                                                textTransform: "capitalize",
+                                              }}
+                                            >
                                               {authdatadetails?.data1
-                                                ?.user_details?.[0]?.followings
-                                                ? authdatadetails?.data1
-                                                    ?.user_details?.[0]
-                                                    ?.followings
-                                                : "-"}
-                                            </p>
+                                                ?.user_details?.[0]?.name ||
+                                                "-"}
+                                            </span>{" "}
+                                            University, Institute of Psychology,
+                                            Faculty Member
+                                          </p>
+                                          <div
+                                            className="d-flex   mt-12"
+                                            style={{
+                                              gap: "14px",
+                                              width: "100%",
+                                            }}
+                                          >
+                                            <div style={{ width: "48%" }}>
+                                              <Button
+                                                leftIcon={icons?.pulseWIcons}
+                                                btnText="Follow"
+                                                className="text-16-500 color-ffff  h-43"
+                                              />
+                                            </div>
+                                            <div style={{ width: "48%" }}>
+                                              <Button
+                                                leftIcon={icons?.chatBIcons}
+                                                btnText="Message"
+                                                className="text-16-500  h-43"
+                                                btnStyle="BTA"
+                                              />
+                                            </div>
                                           </div>
-                                          <div className="fb-center mb-8">
-                                            <p className="text-16-400 color-3333">
-                                              Co-authors
-                                            </p>
-                                            <p className="text-16-600 color-3333">
-                                              {authdatadetails?.data1
-                                                ?.co_authors
-                                                ? authdatadetails?.data1
-                                                    ?.co_authors
-                                                : "-"}
-                                            </p>
-                                          </div>
-                                          <div className="fb-center mb-8">
-                                            <p className="text-16-400 color-3333">
-                                              Public views
-                                            </p>
-                                            <p className="text-16-600 color-3333">
-                                              {console.log(
-                                                authdatadetails,
-                                                "authdatadetails"
-                                              )}
-                                              -
-                                            </p>
+                                          <div className="mt-10">
+                                            <div className="fb-center mb-8">
+                                              <p className="text-16-400 color-3333">
+                                                Followers
+                                              </p>
+                                              <p className="text-16-600 color-3333">
+                                                {authdatadetails?.data1
+                                                  ?.user_details?.[0]?.followers
+                                                  ? authdatadetails?.data1
+                                                      ?.user_details?.[0]
+                                                      ?.followers
+                                                  : "-"}
+                                              </p>
+                                            </div>
+                                            <div className="fb-center mb-8">
+                                              <p className="text-16-400 color-3333">
+                                                Following
+                                              </p>
+                                              <p className="text-16-600 color-3333">
+                                                {authdatadetails?.data1
+                                                  ?.user_details?.[0]
+                                                  ?.followings
+                                                  ? authdatadetails?.data1
+                                                      ?.user_details?.[0]
+                                                      ?.followings
+                                                  : "-"}
+                                              </p>
+                                            </div>
+                                            <div className="fb-center mb-8">
+                                              <p className="text-16-400 color-3333">
+                                                Co-authors
+                                              </p>
+                                              <p className="text-16-600 color-3333">
+                                                {authdatadetails?.data1
+                                                  ?.co_authors
+                                                  ? authdatadetails?.data1
+                                                      ?.co_authors
+                                                  : "-"}
+                                              </p>
+                                            </div>
+                                            <div className="fb-center mb-8">
+                                              <p className="text-16-400 color-3333">
+                                                Public views
+                                              </p>
+                                              <p className="text-16-600 color-3333">
+                                                {console.log(
+                                                  authdatadetails,
+                                                  "authdatadetails"
+                                                )}
+                                                -
+                                              </p>
+                                            </div>
                                           </div>
                                         </div>
                                       </div>
@@ -1178,8 +1182,7 @@ const FeedDetailsAuthor = () => {
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                          )}
+                            )}
 
                           <div
                             className="fb-center"
@@ -1311,20 +1314,16 @@ const FeedDetailsAuthor = () => {
         </div>
       </div>
 
-      {console.log(authors, "AUTHORS")}
-
-      {authors !== undefined && (
-        <div className="mt-40">
-          <PackageDetails
-            isSide={isSide}
-            paperAuthdetails={paperAuthdetails}
-            Seconddetailsloadder={Seconddetailsloadder}
-            authors={authors}
-            isUserSide={isUserSide}  
-            isRightSide={isRightSide} 
-          />
-        </div>
-      )}
+      <div className="mt-40">
+        <PackageDetails
+          isSide={isSide}
+          paperAuthdetails={paperAuthdetails}
+          Seconddetailsloadder={Seconddetailsloadder}
+          authors={authors}
+          isUserSide={isUserSide}
+          isRightSide={isRightSide}
+        />
+      </div>
 
       {isLanguageOpenModal && <SelectedLanguagemodel onHide={onHide} />}
       {isTexttospeechModal && <ListenModelpopup onHide={onHide} />}
