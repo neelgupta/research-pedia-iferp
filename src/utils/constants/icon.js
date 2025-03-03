@@ -204,8 +204,36 @@ import disactivedownthump from "assets/images/icons/disactivedownthump.png";
 import disactiveupthump from "assets/images/icons/disactiveupthump.png";
 import activeupthump from "assets/images/icons/activeupthump.png";
 import disSave from "assets/images/icons/disSave.png";
+
+import linkedin from "assets/images/icons/linkedin.png";
+import facebook from "assets/images/icons/facebook.png";
+import whatsapp from "assets/images/icons/whatsapp.png";
+import emailicon from "assets/images/icons/emailicon.png";
+import url from "assets/images/icons/url.png";
+import X from "assets/images/icons/X.png";
+
+import question from "assets/images/icons/question.png";
+import copyrites from "assets/images/icons/copyrites.png";
+import importanc from "assets/images/icons/importanc.png";
+import personupload from "assets/images/icons/personupload.png";
+
+import question1 from "assets/images/icons/question1.png";
+import copyrites1 from "assets/images/icons/copyrites1.png";
+import importanc1 from "assets/images/icons/importanc1.png";
+import personupload1 from "assets/images/icons/personupload1.png";
 export const icons = {
   // avatar,
+  facebook,
+  whatsapp,
+  emailicon,
+  url,
+  X,
+  importanc1,
+  copyrites1,
+  personupload1,
+  question1,
+
+  linkedin,
   disSave,
   activeupthump,
   disactiveupthump,

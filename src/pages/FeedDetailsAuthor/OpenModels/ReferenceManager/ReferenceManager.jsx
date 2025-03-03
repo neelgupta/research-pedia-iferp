@@ -16,20 +16,34 @@ const ReferenceManager = ({ onHide }) => {
               Research Pedia
             </p>
           </div>
-          <div className="d-flex justify-content-center align-items-center gap-3">
-            <div className="border d-flex justify-content-center align-items-center px-14 py-31">
-              <img
-                src={icons.referenceimg1}
-                alt="referenceimg1"
-                className="img-fluid"
-              />
+          <div className="d-flex justify-content-center align-items-center gap-3 mt-48">
+            <div>
+              <div className="card-img border d-flex justify-content-center align-items-center px-14 py-31">
+                <img
+                  src={icons.referenceimg1}
+                  alt="referenceimg1"
+                  className="img-fluid"
+                />
+              </div>
+              <div>
+                <p className="text-center text-14-400 color-113D mt-8">
+                  Sign In
+                </p>
+              </div>
             </div>
-            <div className="border d-flex justify-content-center align-items-center px-14 py-16">
-              <img
-                src={icons.referenceimg2}
-                alt="referenceimg1"
-                className="img-fluid"
-              />
+            <div>
+              <div className="card-img d-flex justify-content-center align-items-center px-14 py-16">
+                <img
+                  src={icons.referenceimg2}
+                  alt="referenceimg1"
+                  className="img-fluid"
+                />
+              </div>
+              <div>
+                <p className="text-center text-14-400 color-113D mt-8">
+                  Sign In
+                </p>
+              </div>
             </div>
           </div>
         </div>

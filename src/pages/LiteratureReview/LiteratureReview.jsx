@@ -26,6 +26,7 @@ const LiteratureReview = () => {
 
   const [recentSearches, setrecentSearches] = useState([]);
 
+  console.log("searchitem -> 101", searchitem);
   const suggestions = [
     "How does climate change impact biodiversity?",
     "How does social media affect the college selection process?",
@@ -36,31 +37,6 @@ const LiteratureReview = () => {
   const [searchresponse, setSearchresponse] = useState(false);
 
   const [searchresponsedata, setsearchresponsedata] = useState();
-
-  // [
-  // {
-  //   paperId: "c2e1d272ba493fcdba5290b541d040749859c0bc",
-  //   url: "https://www.semanticscholar.org/paper/c2e1d272ba493fcdba5290b541d040749859c0bc",
-  //   title:
-  //     "Searching for the Sources of Excess Extragalactic Dispersion of FRBs",
-  //   abstract:
-  //     "The FLIMFLAM survey is collecting spectroscopic data of field galaxies near fast radio burst (FRB) sight lines to constrain key parameters describing the distribution of matter in the Universe. In this work, we leverage the survey data to determine the source of the excess extragalactic dispersion measure (DM), compared to Macquart relation estimates of four FRBs: FRB20190714A, FRB20200906A, FRB20200430A, and FRB20210117A. By modeling the gas distribution around the foreground galaxy halos and galaxy groups of the sight lines, we estimate DMhalos, their contribution to the FRB DMs. The FRB20190714A sight line shows a clear excess of foreground halos which contribute roughly two-thirds of the observed excess DM, thus implying a sight line that is baryon dense. FRB20200906A shows a smaller but nonnegligible foreground halo contribution, and further analysis of the intergalactic medium is necessary to ascertain the true cosmic contribution to its DM. FRB20200430A and FRB20210117A show negligible foreground contributions, implying a large host galaxy excess and/or progenitor environment excess.",
-
-  //   summary:
-  //     "Title: Searching for the Sources of Excess Extragalactic Dispersion of FRBs\nAbstract: The FLIMFLAM survey is collecting spectroscopic data of field galaxies near fast radio burst (FRB) sight lines to constrain key parameters describing the distribution of matter in the Universe. This work utilizes the survey data to determine the source of the excess extragalactic dispersion measure (DM) for four FRBs. The analysis reveals that the excess DM in FRB20190714A is mainly contributed by baryon-dense foreground halos, while FRB20200906A shows a smaller contribution. FRB20200430A and FRB20210117A exhibit negligible foreground contributions, suggesting large host galaxy or progenitor environment excess.",
-  // },
-  // {
-  //   paperId: "fa8945d48570614528e6f37866ba6bb8fe08ed45",
-  //   url: "https://www.semanticscholar.org/paper/fa8945d48570614528e6f37866ba6bb8fe08ed45",
-  //   title:
-  //     "Collaborative Human Recognition With Lightweight Models in Drone-Based Search and Rescue Operations",
-  //   abstract:
-  //     "Due to the flexibility of drones, it is promising to use them in Search and Rescue (SAR) operations for intelligently searching for lost humans over large areas. However, the limited computing resources of drones pose challenges when deploying deep neural network models. To address this problem, we design a lightweight human recognition model for drones, combining the Ghost Module and the Mobilenetv3 Block. The Ghost Module generates more feature maps with fewer parameters, and the squeeze-and-excitation (SE) attention module in the Mobilenetv3 Block greatly improves recognition accuracy. Furthermore, recognizing that relying solely on the human recognition model offers limited assistance in SAR operations, we propose a collaborative recognition mode between the drone and the rescue command center (RCC). In this collaborative recognition mode, we design an offloading model for deployment on the drone. The offloading model learns from the middle layer perception features of the lightweight recognition model and selectively offloads the vision taken by the drone to the RCC. The recognition results provided by the RCC are used to update the parameters of the offloading model. We introduce a reinforcement learning algorithm, a dual-buffer-based proximal policy optimization algorithm (DBPPO), to train the offloading model with the goal of maximizing accuracy and recall while minimizing the offloading ratio. Specifically, we incorporate an additional data buffer for training the Actor network in the PPO algorithm in a supervised manner, with supervised training interspersed throughout the PPO training process. Eventually, experiments comparing different methods demonstrate the effectiveness of the lightweight recognition model and the collaborative recognition mode in SAR operations.",
-
-  //   summary:
-  //     "Title: Collaborative Human Recognition With Lightweight Models in Drone-Based Search and Rescue Operations\nAbstract: This study proposes a lightweight human recognition model for drones in Search and Rescue (SAR) operations, combining the Ghost Module and Mobilenetv3 Block to address computing resource limitations. A collaborative recognition mode between drones and the rescue command center (RCC) is introduced, utilizing an offloading model to maximize recognition accuracy and recall while minimizing offloading ratio. The study showcases the effectiveness of the lightweight recognition model and collaborative recognition mode in SAR operations through experimental comparisons.",
-  // },
-  // ]
 
   const [showAll, setShowAll] = useState(false);
 
@@ -122,8 +98,34 @@ const LiteratureReview = () => {
     }
   }, [debouncedSearchTerm]);
 
+  const fetchsearchresult = async (title) => {
+    setresponseloader(true);
+    setsearchtitle(title);
+
+    title = searchitem;
+    try {
+      const res = await dispatch(
+        LiteraturesearchResult({ title, selectedPaper })
+      );
+      // setsearchresponsedata(res?.data?.response);
+      setsearchresponsedata(res?.data?.response);
+      setresponseloader(false);
+    } catch (error) {
+      console.error("Error fetching audio:", error);
+    }
+    setresponseloader(false);
+  };
+
+  useEffect(() => {
+    fetchsearchresult();
+  }, []);
+
+  const [Searchtitle, setsearchtitle] = useState("");
+
+  console.log("Searchtitle", Searchtitle);
   const fetchresult = async (title) => {
     setresponseloader(true);
+    setsearchtitle(title);
     try {
       const res = await dispatch(
         LiteraturesearchResult({ title, selectedPaper })
@@ -142,22 +144,22 @@ const LiteratureReview = () => {
     setDropdownOpen(false);
   };
 
-  // const fetchwithlimit = async (limit) => {
-  //   const title = searchTerm;
-  //   const selectedPaper = limit;
-  //   setresponseloader(true);
-  //   try {
-  //     const res = await dispatch(
-  //       LiteraturesearchResult({ title, selectedPaper })
-  //     );
-  //     // setsearchresponsedata(res?.data?.response);
-  //     setsearchresponsedata(res?.data?.response);
-  //     setresponseloader(false);
-  //   } catch (error) {
-  //     console.error("Error fetching audio:", error);
-  //   }
-  //   setresponseloader(false);
-  // };
+  const fetchwithlimit = async (selectedPaper) => {
+    const title = Searchtitle;
+
+    setresponseloader(true);
+    try {
+      const res = await dispatch(
+        LiteraturesearchResult({ title, selectedPaper })
+      );
+      // setsearchresponsedata(res?.data?.response);
+      setsearchresponsedata(res?.data?.response);
+      setresponseloader(false);
+    } catch (error) {
+      console.error("Error fetching audio:", error);
+    }
+    setresponseloader(false);
+  };
 
   const SaveToNotebook = async () => {
     const filteredData = searchresponsedata.map((item) => ({
@@ -173,6 +175,23 @@ const LiteratureReview = () => {
       console.error("Error fetching audio:", error);
     }
   };
+
+  // const fetchsearchresultwithpage = async (limit) => {
+  //   console.log("call");
+  //   setresponseloader(true);
+  //   setsearchtitle(title);
+
+  //   title = searchitem;
+  //   try {
+  //     const res = await dispatch(LiteraturesearchResult({ title, limit }));
+  //     // setsearchresponsedata(res?.data?.response);
+  //     setsearchresponsedata(res?.data?.response);
+  //     setresponseloader(false);
+  //   } catch (error) {
+  //     console.error("Error fetching audio:", error);
+  //   }
+  //   setresponseloader(false);
+  // };
   return (
     <div>
       <div className="search-container d-flex flex-column justify-content-center align-items-center text-center p-4 position-relative">
@@ -298,7 +317,7 @@ const LiteratureReview = () => {
                             className="dropdown-item-p pointer"
                             onClick={() => {
                               handleSelect(5);
-                              // fetchwithlimit();
+                              fetchwithlimit(5);
                             }}
                           >
                             <div className="text-14-400 ">5 paper</div>
@@ -307,7 +326,13 @@ const LiteratureReview = () => {
                             className="dropdown-item-p pointer"
                             onClick={async () => {
                               await handleSelect(10);
-                              // fetchwithlimit(10);
+                              fetchwithlimit(10);
+
+                              // if (searchitem === undefined) {
+                              //   fetchwithlimit(10);
+                              // } else {
+                              //   fetchsearchresultwithpage(10);
+                              // }
                             }}
                           >
                             <div className=" text-14-400">10 paper</div>

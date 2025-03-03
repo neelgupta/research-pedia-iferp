@@ -16,6 +16,8 @@ const App = () => {
 
   const role = localData ? localData.role : "user";
 
+  // const isAuth = true;
+  // const role = "user";
   return (
     <div>
       <Promptalert />

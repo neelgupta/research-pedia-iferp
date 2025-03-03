@@ -90,7 +90,7 @@ export const getAuthorSocialDetails = (id) => async (dispatch) => {
 export const getRecommendedPapersById =
   (paperId, abstractId) => async (dispatch) => {
     dispatch(setLoading());
-
+    console.log("paperid", paperId);
     try {
       let url = "/user/recommendedPapers/recommendedPaperById?";
 
@@ -173,6 +173,58 @@ export const SaveToNote = (payload) => async (dispatch) => {
     console.log("LiteraturesearchResult", res);
     return res;
   } catch (error) {
+    dispatch(handelCatch(error));
+    dispatch(clearLoading());
+  }
+};
+
+export const uploadfile = (formData) => async (dispatch) => {
+  dispatch(setLoading());
+  try {
+    const res = await api.post("/user/chatWithDoc/uploadDoc", formData, {
+      "Content-Type": "multipart/form-data",
+    });
+    console.log("res data", res);
+    return res;
+  } catch (error) {
+    dispatch(handelCatch(error));
+    dispatch(clearLoading());
+  }
+};
+
+export const chatwithdoc = (payload) => async (dispatch) => {
+  const questionpayload = {
+    question: payload,
+  };
+  dispatch(setLoading());
+  try {
+    const res = await api.post("/user/chatWithDoc", questionpayload);
+
+    console.log("Question response", res);
+    return res;
+  } catch (error) {
+    dispatch(handelCatch(error));
+    dispatch(clearLoading());
+  }
+};
+
+export const padfilelink = (payload) => async (dispatch) => {
+  dispatch(setLoading());
+  try {
+    const res = await api.get(
+      `/user/chatWithDoc/extractPdfTextFromUrl?url=${encodeURIComponent(payload)}`
+    );
+
+    console.log("Question response", res);
+
+    dispatch({
+      type: "SET_PDF_TEXT",
+      payload: res.data,
+    });
+
+    return res;
+  } catch (error) {
+    console.error("Error extracting PDF text:", error);
     dispatch(handelCatch(error));
     dispatch(clearLoading());
   }
