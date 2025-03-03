@@ -37,7 +37,6 @@ const PackageDetails = ({
   ];
 
   console.log(Seconddetailsloadder, "Seconddetailsloadder");
-  // className={`${isUserSide || isRightSide ? "active-title-section" : "title-section"}`}
 
   return (
     <div className="package-details-container mt-40">
@@ -45,122 +44,127 @@ const PackageDetails = ({
         <div
           className={`${isUserSide || isRightSide ? "more-from-author-isRight" : "more-from-author"}`}
         >
-          <div className="similar-box">
-            <h4 className="sub-title-text">
-              More From:{" "}
-              {authors?.length > 1
-                ? authors
-                    .slice(0, authors.length - 1)
-                    .map((author, index) => (
-                      <span key={index}>
-                        {author.name || author.author_name},{" "}
-                      </span>
-                    ))
-                : null}
-              {authors?.length > 0 && (
-                <span key={authors.length - 1}>
-                  and
-                  {authors[authors.length - 1].name ||
-                    authors[authors.length - 1].author_name}
-                </span>
-              )}
-            </h4>
+          {authors !== undefined && (
+            <div className="similar-box">
+              <h4 className="sub-title-text">
+                More From:{" "}
+                {authors?.length > 1
+                  ? authors
+                      .slice(0, authors.length - 1)
+                      .map((author, index) => (
+                        <span key={index}>
+                          {author.name || author.author_name},{" "}
+                        </span>
+                      ))
+                  : null}
+                {authors?.length > 0 && (
+                  <span key={authors.length - 1}>
+                    and
+                    {authors[authors.length - 1].name ||
+                      authors[authors.length - 1].author_name}
+                  </span>
+                )}
+              </h4>
 
-            {Seconddetailsloadder ? (
-              <div className="loader-container d-flex justify-content-center">
-                <Spinner animation="border" variant="primary" />
-              </div>
-            ) : (
-              paperAuthdetails?.length > 0 &&
-              paperAuthdetails.map((ele, index) => {
-                return (
-                  <div className="feed-published-box card-d mt-18" key={index}>
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        <h4 className="post-title">
-                          {ele.title || ele.paper_title}
-                        </h4>
-                        {ele?.journal?.name ? (
-                          <p className="post-pra">{ele.journal.name}</p>
-                        ) : null}
-                      </div>
-                      <Button
-                        leftIcon={icons?.activeSaveIcons}
-                        btnStyle="LB"
-                        className="h-42 w-42"
-                        leftIconClass="h-16 w-16"
-                      />
-                    </div>
-
-                    <div className="post-details flex-wrap mt-8 gap-2">
-                      {ele?.authors && (
-                        <div
-                          style={{
-                            display: "flex",
-                            gap: "4px",
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
-                        >
-                          <img
-                            src={icons?.avatarTwoIcons}
-                            alt="Author's Image"
-                            loading="lazy"
-                            className="h-20 w-20 object-fit-contain"
-                          />
-                          {ele?.authors?.slice(0, 1)?.map((author, index) => {
-                            return (
-                              <p key={index}>
-                                {author.name || author.author_name}
-                              </p>
-                            );
-                          })}{" "}
-                          <span> + {ele?.authors?.length - 1}</span>
+              {Seconddetailsloadder ? (
+                <div className="loader-container d-flex justify-content-center">
+                  <Spinner animation="border" variant="primary" />
+                </div>
+              ) : (
+                paperAuthdetails?.length > 0 &&
+                paperAuthdetails.map((ele, index) => {
+                  return (
+                    <div
+                      className="feed-published-box card-d mt-18"
+                      key={index}
+                    >
+                      <div className="d-flex justify-content-between">
+                        <div>
+                          <h4 className="post-title">
+                            {ele.title || ele.paper_title}
+                          </h4>
+                          {ele?.journal?.name ? (
+                            <p className="post-pra">{ele.journal.name}</p>
+                          ) : null}
                         </div>
-                      )}
-
-                      <div className="fa-center gap-md-2 gap-2">
-                        <div className="fa-center gap-1">
-                          <img
-                            src={icons?.calenderIcons}
-                            alt="docs-icons"
-                            loading="lazy"
-                            className="h-16 w-16 object-fit-contain"
-                          />
-                          {ele?.year ? (
-                            <p className="docs-title">{ele.year}</p>
-                          ) : (
-                            <p className="docs-title">
-                              {moment(ele?.created_at).format("DD MMM YYYY")}
-                            </p>
-                          )}
-                        </div>
-                        <img
-                          src={icons?.dotIcons}
-                          alt="docs-icons"
-                          loading="lazy"
-                          className="h-5 w-5"
+                        <Button
+                          leftIcon={icons?.activeSaveIcons}
+                          btnStyle="LB"
+                          className="h-42 w-42"
+                          leftIconClass="h-16 w-16"
                         />
-                        <div className="fa-center gap-1">
+                      </div>
+
+                      <div className="post-details flex-wrap mt-8 gap-2">
+                        {ele?.authors && (
+                          <div
+                            style={{
+                              display: "flex",
+                              gap: "4px",
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                          >
+                            <img
+                              src={icons?.avatarTwoIcons}
+                              alt="Author's Image"
+                              loading="lazy"
+                              className="h-20 w-20 object-fit-contain"
+                            />
+                            {ele?.authors?.slice(0, 1)?.map((author, index) => {
+                              return (
+                                <p key={index}>
+                                  {author.name || author.author_name}
+                                </p>
+                              );
+                            })}{" "}
+                            <span> + {ele?.authors?.length - 1}</span>
+                          </div>
+                        )}
+
+                        <div className="fa-center gap-md-2 gap-2">
+                          <div className="fa-center gap-1">
+                            <img
+                              src={icons?.calenderIcons}
+                              alt="docs-icons"
+                              loading="lazy"
+                              className="h-16 w-16 object-fit-contain"
+                            />
+                            {ele?.year ? (
+                              <p className="docs-title">{ele.year}</p>
+                            ) : (
+                              <p className="docs-title">
+                                {moment(ele?.created_at).format("DD MMM YYYY")}
+                              </p>
+                            )}
+                          </div>
                           <img
-                            src={icons?.eyeIcons}
+                            src={icons?.dotIcons}
                             alt="docs-icons"
                             loading="lazy"
-                            className="h-16 w-16 object-fit-contain"
+                            className="h-5 w-5"
                           />
-                          <p className="docs-title">31 Views</p>
+                          <div className="fa-center gap-1">
+                            <img
+                              src={icons?.eyeIcons}
+                              alt="docs-icons"
+                              loading="lazy"
+                              className="h-16 w-16 object-fit-contain"
+                            />
+                            <p className="docs-title">31 Views</p>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })
-            )}
+                  );
+                })
+              )}
 
-            <div className="f-center mt-18">
-              <Button className="h-42" btnText="View more papers" />
+              <div className="f-center mt-18">
+                <Button className="h-42" btnText="View more papers" />
+              </div>
             </div>
-          </div>
+          )}
 
           {/* HERE */}
           <div className="row mt-48 gy-3">

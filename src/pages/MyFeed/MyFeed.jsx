@@ -14,8 +14,10 @@ import MyFeedmodel from "./MyFeedmodel";
 import { Spinner } from "react-bootstrap";
 
 const MyFeed = () => {
-  const setIsProjectCreate = useSelector((state) => state.global.isProjectCreate);
-  console.log("🚀 ~ MyFeed ~ setIsProjectCreate:", setIsProjectCreate)
+  const setIsProjectCreate = useSelector(
+    (state) => state.global.isProjectCreate
+  );
+  console.log("🚀 ~ MyFeed ~ setIsProjectCreate:", setIsProjectCreate);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isActive, setIsActive] = useState(null);
@@ -36,7 +38,7 @@ const MyFeed = () => {
   };
 
   useEffect(() => {
-    setIsProjectCreate ? navigate("/"):""
+    setIsProjectCreate ? navigate("/") : "";
     fetchAllCategories();
   }, [limitData]);
 
@@ -54,6 +56,22 @@ const MyFeed = () => {
   const onHide = () => {
     setIsOpenModal(false);
   };
+
+
+
+  useEffect(() => {
+    const handleBackButton = (event) => {
+      event.preventDefault();
+      window.history.pushState(null, "", window.location.pathname);
+    };
+
+    window.history.pushState(null, "", window.location.pathname);
+    window.addEventListener("popstate", handleBackButton);
+
+    return () => {
+      window.removeEventListener("popstate", handleBackButton);
+    };
+  }, []);
   return (
     <>
       <div className="my-feed-container">
@@ -65,7 +83,6 @@ const MyFeed = () => {
             Select your research area to help us setup your feed
           </p>
 
-      
           <div className="card-box">
             {feedlodder ? (
               <div className="spinner-container d-flex justify-content-center">
@@ -77,7 +94,7 @@ const MyFeed = () => {
                   height: "550px",
                   overflow: "auto",
                   // overflowX: "none",
-                  overflowX:"hidden"
+                  overflowX: "hidden",
                 }}
                 className="brave-scroll m-10 mb-10"
               >
@@ -117,8 +134,7 @@ const MyFeed = () => {
                 </div>
               </div>
             )}
-{/* 
-            <div className="step-box">
+            {/* <div className="step-box">
               <p
                 className="mb-0 text-14-500 color-113D pointer"
                 onClick={() => navigate("/create-feed")}
@@ -132,7 +148,6 @@ const MyFeed = () => {
               />
             </div> */}
           </div>
-
         </div>
         <FeedFooter />
       </div>

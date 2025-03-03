@@ -90,15 +90,14 @@ export const getAuthorSocialDetails = (id) => async (dispatch) => {
 export const getRecommendedPapersById =
   (paperId, abstractId) => async (dispatch) => {
     dispatch(setLoading());
-    console.log("paperid", paperId);
     try {
       let url = "/user/recommendedPapers/recommendedPaperById?";
 
-      if (paperId !== undefined) {
+      if (paperId !== "undefined") {
         url += `paperId=${paperId}`;
       }
 
-      if (abstractId !== undefined) {
+      if (abstractId !== "undefined") {
         if (paperId) {
           url += `&abstract_id=${abstractId}`;
         } else {
