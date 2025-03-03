@@ -3,9 +3,7 @@ import "./SecondDetails.scss";
 import { Button } from "@/components";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getProjectByTopics,
-} from "@/store/userSlice/projectSlice";
+import { getProjectByTopics } from "@/store/userSlice/projectSlice";
 import moment from "moment";
 import { Spinner } from "react-bootstrap";
 import { Authdata } from "@/store/userSlice/userDetailSlice";
@@ -91,16 +89,26 @@ const SecondDetails = ({
                 </div>
               </div> */}
               {/* similar Papers */}
-          
             </div>
-
-       
           </div>
 
           {/* About Author */}
         </div>
         {isSide && (
-          <div className="side-bar border border-primary">
+          <div
+            className="side-bar "
+            style={{
+              position: "sticky",
+              top: "0",
+              height: "calc(100vh- 20px)",
+              overflowY: "auto",
+              borderLeft: "1px solid #E0E9F4",
+              paddingLeft: "24px",
+              width: "100%",
+
+              // border:"2px solid red"
+            }}
+          >
             <div className="side-box-w">
               <h4 className="sub-title-text">About Author</h4>
 

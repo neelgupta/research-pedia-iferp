@@ -42,7 +42,7 @@ const PackageDetails = ({
     <div className="package-details-container mt-40">
       <div className="sectionThree gy-3">
         <div
-          className={`${isUserSide || isRightSide ? "more-from-author-isRight" : "more-from-author"}`}
+          className={`${isUserSide || isRightSide ? "more-from-author-isRight" : "more-from-author"}  `}
         >
           {authors !== undefined && (
             <div className="similar-box">
@@ -189,9 +189,15 @@ const PackageDetails = ({
         </div>
 
         <div
-          className={`${isUserSide || isRightSide ? "bannerDiv-isRightSide brave-scroll" : "bannerDiv brave-scroll"}`}
+          className={`${isUserSide || isRightSide ? "bannerDiv-isRightSide brave-scroll" : "bannerDiv brave-scroll-gry"}`}
+          style={{
+            position: "sticky",
+            top: "0",
+            height: "calc(100vh- 20px)",
+            overflowY: "auto",
+          }}
         >
-          <div className="side-bar-p">
+          <div className="side-bar-p brave-scroll-gry">
             <div className="head-line">
               <p className="price-text">
                 <span>$89 </span>$72 Annually
