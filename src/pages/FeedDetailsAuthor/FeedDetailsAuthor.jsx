@@ -29,6 +29,11 @@ import Share from "./OpenModels/Share/Share";
 import Report from "./OpenModels/Report/Report";
 import axios from "axios";
 import DOMPurify from "dompurify";
+import { debounce } from "lodash";
+import SaveTolist from "./OpenModels/SaveTolist/SaveTolist";
+import Share from "./OpenModels/Share/Share";
+import Report from "./OpenModels/Report/Report";
+import axios from "axios";
 
 const FeedDetailsAuthor = () => {
   const [isSide, setIsSide] = useState(false);
@@ -57,6 +62,7 @@ const FeedDetailsAuthor = () => {
     // const id = location?.state;
     // const paperId = id.paperId;
     // const abstractId = id.abstractId;
+
 
     const result = await dispatch(
       getRecommendedPapersById(paperId, abstractId)
@@ -323,11 +329,44 @@ const FeedDetailsAuthor = () => {
   }, []);
 
   console.log(isSticky, "isSticky");
+  // const debouncedApiCall = useCallback(
+  //   debounce((searchTerm) => {
+  //     setDebouncedSearchTerm(searchTerm);
+  //   }, 400),
+  //   []
+  // );
+
+  const handleSearch = (e) => {
+    // debouncedApiCall(e.target.value);
+  };
+
+  // // Fetch search results
+  const fetchSearch = async () => {
+    try {
+      const res = await dispatch(Literaturesearch(searchTerm));
+      console.log(
+        "res?.data?.responseres?.data?.response",
+        res?.data?.response
+      );
+      setrecentSearches(res?.data?.response);
+    } catch (error) {
+      console.error("Error fetching audio:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchSearch();
+  }, [searchTerm]);
+  // useEffect(() => {
+  //   if (debouncedSearchTerm) {
+  //     fetchSearch();
+  //   }
+  // }, [debouncedSearchTerm]);
 
   return (
     <div id="feed-details-author-container">
       <div className="row">
-        <div>
+
           {summaryloadder ? (
             <div
               className="loader-container d-flex justify-content-center align-items-center"
@@ -1481,9 +1520,9 @@ const FeedDetailsAuthor = () => {
                 </div>
               </div>
             </div>
-          )}
-        </div>
-      </div>
+           )} 
+          </div>
+
 
       <div className="mt-40">
         <PackageDetails
