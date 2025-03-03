@@ -1026,7 +1026,7 @@ const FeedDetailsAuthor = () => {
                   </div>
 
                   <div
-                    className={`${isUserSide || isRightSide ? "active-sectionTwo-author-details" : "sectionTwo-author-details"}`}
+                    className={`${isUserSide || isRightSide ? "active-sectionTwo-author-details" : "sectionTwo-author-details"} `}
                   >
                     {!isSide && (
                       <>
@@ -1039,13 +1039,20 @@ const FeedDetailsAuthor = () => {
                         >
                           About Author
                         </h4>
-                        <div>
+                        <div
+                          className="brave-scroll-gry"
+                          style={{
+                            position: "sticky",
+                            top: "0",
+                            height: "calc(100vh- 20vh)",
+                            overflowY: "auto",
+                            marginLeft: "8px",
+                            // paddingLeft: "24px",
+                          }}
+                        >
                           {Object.keys(authdatadetails).length !== 0 &&
                             authdatadetails?.data1?.user_details?.[0]?.name && (
-                              <div
-                                className="About-box"
-                                style={{ border: "2px solid red" }}
-                              >
+                              <div className="About-box">
                                 <div className="">
                                   <div className="">
                                     <div className="about-box-inner">
