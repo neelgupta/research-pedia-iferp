@@ -125,6 +125,8 @@ const FeedDetails = ({ popup }) => {
   const [Recommendedloader, setRecommendedloader] = useState(false);
 
   const fetchRecommendedReaserchPapers = async () => {
+
+
     setRecommendedloader(true);
     const query = `topics=${topicList}&limit=${rowsPerPage}&page=${currentPage}`;
     if (topicList.length > 0) {
