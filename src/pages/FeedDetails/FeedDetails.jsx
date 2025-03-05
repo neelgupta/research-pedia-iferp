@@ -26,6 +26,7 @@ import {
 import {
   getInstitutionalMemberDetails,
   getProfessionalMemberDetails,
+  getProfileCompletion,
   getStudentMemberDetails,
 } from "@/store/userSlice/userDetailSlice";
 import MyProfilePopUp from "@/components/layouts/MyProfilePopUp";
@@ -35,6 +36,7 @@ import CreateProject from "./PopupModels/CreateProject";
 import EditProject from "./PopupModels/EditProject";
 import DeleteProject from "./PopupModels/DeleteProject";
 import SearchPaper from "../Searching/SearchPaper";
+import DOMPurify from "dompurify";
 
 const FeedDetails = ({ popup }) => {
   const dropdownRef = useRef(null);
@@ -50,6 +52,7 @@ const FeedDetails = ({ popup }) => {
   const [isStudentUserData, setIsStudentUserData] = useState({});
   const isModalOpen = useSelector((state) => state.global.isModalOpen);
   const isprojectselect = useSelector((state) => state.global.isprojectselect);
+  const [profileCompletion, setProfileCompletion] = useState(0);
 
   const iscreateprojectselect = useSelector(
     (state) => state.global.iscreateprojectselect
@@ -75,10 +78,20 @@ const FeedDetails = ({ popup }) => {
   const [recommendedPapers, setRecommendedPapers] = useState([]);
 
   const localData = getDataFromLocalStorage();
+
+  console.log(localData.id, "Local Data");
   const { name } = localData;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const fetchProfileComplition = async () => {
+    const userId = localData?.id;
+    const result = await dispatch(getProfileCompletion(userId));
+    if (result?.status === 200) {
+      setProfileCompletion(result?.data?.response);
+    }
+  };
 
   const fetchprojectTopics = async () => {
     const myTopics = await dispatch(getProjectByTopics());
@@ -112,17 +125,14 @@ const FeedDetails = ({ popup }) => {
   const [Recommendedloader, setRecommendedloader] = useState(false);
 
   const fetchRecommendedReaserchPapers = async () => {
-
-
     setRecommendedloader(true);
     const query = `topics=${topicList}&limit=${rowsPerPage}&page=${currentPage}`;
     if (topicList.length > 0) {
       const result = await dispatch(getRecommendedPapers(query));
-      console.log(result.data.response,"RESONSA")
+      console.log(result?.data?.response, "RESONSA");
 
       if (result?.status === 200) {
         setRecommendedPapers(result?.data?.response?.papers);
-
 
         setPagination(result?.data?.response?.pagination);
         setRecommendedloader(false);
@@ -142,6 +152,7 @@ const FeedDetails = ({ popup }) => {
 
   useEffect(() => {
     fetchUserInterest();
+    fetchProfileComplition();
 
     if (localData.role === "professional") {
       fetchUserDetails();
@@ -150,7 +161,7 @@ const FeedDetails = ({ popup }) => {
     } else {
       fetchStudentUserDetails();
     }
-  }, []);
+  }, [isModalOpen]);
 
   // useEffect(() => {
   //   fetchRecommendedReaserchPapers();
@@ -165,6 +176,7 @@ const FeedDetails = ({ popup }) => {
     if (topicList.length > 0) {
       const result = await dispatch(getTopPapers(query));
 
+      console.log(result.data.response, "top papers");
       if (result?.status === 200) {
         setRecommendedPapers(result?.data?.response?.papers);
         setPagination(result?.data?.response?.pagination);
@@ -238,7 +250,6 @@ const FeedDetails = ({ popup }) => {
 
         {papers?.length > 0 ? (
           papers?.map((papers, index) => {
-        
             return (
               <div
                 className="feed-published-box card-d mt-18 pointer"
@@ -271,17 +282,24 @@ const FeedDetails = ({ popup }) => {
                   onClick={() => {
                     handleReadPaper({
                       paperId: papers?.paperId,
-                      abstractId: papers?.abstract_id || papers?.abstractId,
+                      // abstractId: papers?.abstract_id || papers?.abstractId,
+                      abstractId: papers?.id,
                     });
                   }}
                 >
                   {papers?.title || papers?.paper_title || "No Title Found"}
                 </h4>
-                <p className="post-pra">
-                  {(papers?.abstract && papers?.abstract) ||
-                    (papers?.paper_abstract && papers?.paper_abstract) ||
-                    "No Abstract Found"}
-                </p>
+
+                <p
+                  className="post-pra"
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(
+                      papers?.abstract ||
+                        papers?.paper_abstract ||
+                        "No Abstract Found"
+                    ),
+                  }}
+                ></p>
 
                 {papers?.url && (
                   <div className="docs-box">
@@ -312,20 +330,19 @@ const FeedDetails = ({ popup }) => {
                     />
 
                     <p className="docs-title">
-                      {console.log(papers, "author DETAILS:")}
-
                       {Array.isArray(papers)
                         ? papers.length > 0
                           ? papers.map((author) => author.name).join(", ")
                           : "No Authors"
-                        : papers?.authors && papers.authors.length > 0
+                        : Array.isArray(papers?.authors) &&
+                            papers.authors.length > 0
                           ? `${papers.authors[0].name}${
                               papers.authors.length > 1
                                 ? ` +${papers.authors.length - 1}`
                                 : ""
                             }`
-                          : papers?.author_name
-                            ? papers.author_name
+                          : papers?.authors
+                            ? papers.authors
                             : "No Authors"}
                     </p>
                   </div>
@@ -345,14 +362,14 @@ const FeedDetails = ({ popup }) => {
                               : papers?.year}
                           </p>
                         </div>
-                        <img
-                          src={icons?.dotIcons}
-                          alt="docs-icons"
-                          loading="lazy"
-                          className="h-5 w-5"
-                        />
                       </>
                     )}
+                    {/* <img
+                      src={icons?.dotIcons}
+                      alt="docs-icons"
+                      loading="lazy"
+                      className="h-5 w-5"
+                    />
 
                     <div className="fa-center gap-1">
                       <img
@@ -362,7 +379,7 @@ const FeedDetails = ({ popup }) => {
                         className="h-16 w-16 object-fit-contain"
                       />
                       <p className="docs-title">31 Views</p>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
                 <div className="fb-center mt-24 gap-3">
@@ -375,7 +392,8 @@ const FeedDetails = ({ popup }) => {
                     onClick={() => {
                       handleReadPaper({
                         paperId: papers.paperId,
-                        abstractId: papers.abstract_id || papers.abstractId,
+                        // abstractId: papers.abstract_id || papers.abstractId,
+                        abstractId: papers.id,
                       });
                     }}
                   />
@@ -514,16 +532,18 @@ const FeedDetails = ({ popup }) => {
             >
               <div className="d-flex align-items-center gap-2">
                 <p className="gap-2 text-14-500 color-3333">
-                  Click here to complete your profile
+                  {profileCompletion !== 100
+                    ? "Click here to complete your profile"
+                    : "Profile Completed"}
                 </p>
                 <img src={icons?.rightIcons} />
               </div>
               <div className="fa-center text-12-500 color-3333 gap-2 mt-8 mb-8">
                 <div className="w-212  ">
-                  <Progress now={40} height="8px" />
+                  <Progress now={profileCompletion} height="8px" />
                 </div>
 
-                <span>40%</span>
+                <span>{profileCompletion}%</span>
               </div>
             </div>
           </div>
@@ -585,9 +605,9 @@ const FeedDetails = ({ popup }) => {
             </div>
           )}
 
-          {console.log(pagination,"pagination")}
+          {console.log(pagination, "pagination")}
 
-          {(pagination.totalCount > 0 ) && (
+          {pagination.totalCount > 0 && (
             <div className="Pagination mt-36">
               <div className="d-flex justify-content-center align-items-center flex-wrap gap-md-3 gap-2">
                 <Button

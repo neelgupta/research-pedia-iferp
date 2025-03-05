@@ -34,7 +34,8 @@ export const UserRoutes = () => {
     professional: [
       {
         path: "/",
-        component: <ProfessionalMemberProfile />,
+        // component: <ProfessionalMemberProfile />,
+        component: <FeedDetails />,
       },
       {
         path: "/feed-details",
@@ -56,7 +57,8 @@ export const UserRoutes = () => {
     student: [
       {
         path: "/",
-        component: <StudentProfile />,
+        // component: <StudentProfile />,
+        component: <FeedDetails />,
       },
       {
         path: "/feed-details",
@@ -70,7 +72,8 @@ export const UserRoutes = () => {
     institutional: [
       {
         path: "/",
-        component: <InstitutionalProfile />,
+        // component: <InstitutionalProfile />,
+        component: <FeedDetails popup={popup} />,
       },
       {
         path: "/feed-details",
@@ -112,7 +115,7 @@ export const UserRoutes = () => {
 
       <Route path="/my-feed" element={<MyFeed />} />
       <Route path="/create-feed" element={<CreateFeed />} />
-      <Route path="*" element={<Navigate to="/" />} />
+      <Route path="*" element={<Navigate to="/feed-details" />} />
     </Routes>
     // </Suspense>
   );

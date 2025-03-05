@@ -10,10 +10,15 @@ const UserNavbar = () => {
   const token = true;
   const navigate = useNavigate();
 
-  const localData = getDataFromLocalStorage();
+  const [isuserData, setIsUserData] = useState();
   const initialValues = {
     search: "",
   };
+
+  useEffect(() => {
+    const localData = getDataFromLocalStorage();
+    setIsUserData(localData);
+  }, []);
 
   const handleSubmit = (values) => {};
   const location = useLocation();
@@ -122,14 +127,14 @@ const UserNavbar = () => {
 
             <div className="post-b-a">
               <div
-                className="profile-inner-box"
+                className="profile-inner-box pointer"
                 onClick={() => {
                   setDropdownOpen(!dropdownOpen);
                 }}
               >
                 <div className="profile-img">
                   <img
-                    src={localData?.profilePicture || icons.profileimg}
+                    src={isuserData?.profilePicture || icons.profileimg}
                     alt="Profile"
                   />
                   <div className="prime-i">
@@ -138,7 +143,7 @@ const UserNavbar = () => {
                 </div>
                 <div className="ms-3">
                   <h5 className="user-name">
-                    {localData.name}
+                    {isuserData?.name}
                     {/* Test */}
                   </h5>
 
@@ -155,7 +160,7 @@ const UserNavbar = () => {
               </div>
 
               {dropdownOpen && (
-                <div className="dropdown-menus" ref={dropdownRef}>
+                <div className="dropdown-menus">
                   <div className="dropdown-item-f">
                     <img
                       src={icons.profileIcons}
@@ -163,7 +168,7 @@ const UserNavbar = () => {
                       className="h-22 w-22 object-fit-contain"
                     />
                     <p className="notification-name">
-                      {localData.name}
+                      {isuserData?.name}
                       {/* Test */}
                     </p>
                   </div>
@@ -285,10 +290,10 @@ const UserNavbar = () => {
                   setDropdownOpen(!dropdownOpen);
                 }}
               >
-                <div className="profile-inner-box">
+                <div className="profile-inner-box pointer">
                   <div className="profile-img">
                     <img
-                      src={localData?.profilePicture || icons.profileimg}
+                      src={isuserData?.profilePicture || icons.profileimg}
                       alt="Profile"
                     />
                     <div className="prime-i">
@@ -297,7 +302,7 @@ const UserNavbar = () => {
                   </div>
                   <div className="ms-3">
                     <h5 className="user-name">
-                      {localData.name}
+                      {isuserData?.name}
                       {/* Test... */}
                     </h5>
                     <p className="user-id">ID - 18346441</p>
@@ -312,7 +317,7 @@ const UserNavbar = () => {
                   </div>
                 </div>
                 {dropdownOpen && (
-                  <div className="dropdown-menus" ref={dropdownRef}>
+                  <div className="dropdown-menus pointer" ref={dropdownRef}>
                     <div className="dropdown-item-f">
                       <img
                         src={icons.profileIcons}
@@ -320,7 +325,7 @@ const UserNavbar = () => {
                         className="h-22 w-22 object-fit-contain"
                       />
                       <p className="notification-name">
-                        {localData.name}
+                        {isuserData?.name}
                         {/* Test */}
                       </p>
                     </div>

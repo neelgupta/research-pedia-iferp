@@ -18,6 +18,13 @@
     max-width: 317px;
   }
 
+  .search-div-box {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 1000;
+  }
+
   .full-box {
     width: 100%;
     display: flex;
@@ -397,7 +404,6 @@
 
   .active-title-section {
     width: 70%;
-
   }
 
   .sectionTwo-details {
@@ -424,10 +430,9 @@
     width: 30%;
   }
 
-
   .search-histroy-conatiner {
-    border: 1px solid #E0E9F4;
-    box-shadow: 0px 4px 28px 0px #0000000A;
+    border: 1px solid #e0e9f4;
+    box-shadow: 0px 4px 28px 0px #0000000a;
     border-radius: 8px;
     background-color: #ffffff;
 

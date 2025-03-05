@@ -6,7 +6,7 @@ import CheckBox from "@/components/inputs/CheckBox";
 import Button from "@/components/inputs/Button";
 import { useNavigate } from "react-router-dom";
 
-const SelectPlan = ({ setValCount }) => {
+const SelectPlan = ({ setValCount, onHide }) => {
   const [isSelect, setIsSelect] = useState();
   const navigate = useNavigate();
   const planDetails = [
@@ -120,14 +120,14 @@ const SelectPlan = ({ setValCount }) => {
           btnStyle="LBA"
           className="h-49 w-114"
           onClick={() => {
-            onHide()
+            onHide();
           }}
         />
         <Button
           btnText="Continue to Payment"
           className="h-49 w-213"
           onClick={() => {
-            onHide()
+            onHide();
           }}
         />
       </div>
