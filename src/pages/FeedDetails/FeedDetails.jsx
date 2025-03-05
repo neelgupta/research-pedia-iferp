@@ -125,8 +125,6 @@ const FeedDetails = ({ popup }) => {
   const [Recommendedloader, setRecommendedloader] = useState(false);
 
   const fetchRecommendedReaserchPapers = async () => {
-
-
     setRecommendedloader(true);
     const query = `topics=${topicList}&limit=${rowsPerPage}&page=${currentPage}`;
     if (topicList.length > 0) {
@@ -178,6 +176,7 @@ const FeedDetails = ({ popup }) => {
     if (topicList.length > 0) {
       const result = await dispatch(getTopPapers(query));
 
+      console.log(result.data.response, "top papers");
       if (result?.status === 200) {
         setRecommendedPapers(result?.data?.response?.papers);
         setPagination(result?.data?.response?.pagination);

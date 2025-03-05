@@ -68,8 +68,6 @@ const FeedDetailsAuthor = () => {
       getRecommendedPapersById(paperId, abstractId)
     );
 
-    console.log(result, "result");
-
     setAutherIddetispaper(
       result?.data.response?.researchPapersWithSummary[0]?.authors
         ? result?.data.response?.researchPapersWithSummary[0]?.authors?.[0]
