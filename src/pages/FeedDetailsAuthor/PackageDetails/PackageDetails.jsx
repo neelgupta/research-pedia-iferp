@@ -138,7 +138,7 @@ const PackageDetails = ({
                               </p>
                             )}
                           </div>
-                          <img
+                          {/* <img
                             src={icons?.dotIcons}
                             alt="docs-icons"
                             loading="lazy"
@@ -152,7 +152,7 @@ const PackageDetails = ({
                               className="h-16 w-16 object-fit-contain"
                             />
                             <p className="docs-title">31 Views</p>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>
@@ -168,7 +168,7 @@ const PackageDetails = ({
 
           {/* HERE */}
           <div className="row mt-48 gy-3">
-            <div classname="desclaimer-section">
+            <div className="desclaimer-section">
               <div className="disclaimer-box">
                 <h4 className="disclaimer-title">Disclaimer</h4>
                 <p className="disclaimer-pra">

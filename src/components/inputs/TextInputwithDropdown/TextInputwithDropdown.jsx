@@ -25,12 +25,12 @@ const TextInputwithDropdown = ({
   onDropdownChange,
   isphone,
   isname,
-  values
+  values,
+  alternateval,
 }) => {
-
-  console.log(values,"valuesCountrycode")
+  console.log(values, "valuesCountrycode");
   const [showPassword, setShowPassword] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("+91");
+  const [selectedOption, setSelectedOption] = useState(alternateval || "+91");
 
   const handleDropdownChange = (event) => {
     setSelectedOption(event.target.value);
@@ -52,12 +52,10 @@ const TextInputwithDropdown = ({
           <select
             className="dropdown-select"
             onChange={handleDropdownChange}
-            value={selectedOption}
+            value={selectedOption || alternateval}
             disabled={values?.countryCode}
           >
-            <option value="" disabled>
-      
-            </option>
+            <option value="" disabled></option>
             {dropdownOptions.map((option, index) => (
               <option key={index} value={option.value}>
                 {option.label}
@@ -92,7 +90,6 @@ const TextInputwithDropdown = ({
             pattern={numeric ? "[0-9]*" : undefined}
             maxLength={maxLength}
           />
-
         </div>
         {error && <div className="input-error">{error}</div>}
       </div>

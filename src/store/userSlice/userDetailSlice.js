@@ -264,7 +264,7 @@ export const updateInstitutionalMemberDetails =
       dispatch(clearLoading());
       return res;
     } catch (error) {
-      dispatch(handelCatch(error));
+      dispatch(handelCatch(error.msg));
       dispatch(clearLoading());
     }
   };
@@ -285,6 +285,19 @@ export const getAuthorsPapers = (id) => async (dispatch) => {
   dispatch(setLoading());
   try {
     const res = await api.get(`/user/authorsPaper?authorId=${id}`, {});
+    dispatch(clearLoading());
+    return res;
+  } catch (error) {
+    dispatch(handelCatch(error));
+    dispatch(clearLoading());
+  }
+};
+
+
+export const getProfileCompletion = (id) => async (dispatch) => {
+  dispatch(setLoading());
+  try {
+    const res = await api.get(`/user/userProfile/profile-completion?id=${id}`, {});
     dispatch(clearLoading());
     return res;
   } catch (error) {

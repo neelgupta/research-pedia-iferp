@@ -23,23 +23,30 @@ const EducationDetailsPopUp = ({
   const dispatch = useDispatch();
   const localData = getDataFromLocalStorage();
   const userId = localData.roleId;
-  const [phonedropdown, setphonedropdown] = useState("+91");
+
+  const [phonedropdown, setphonedropdown] = useState(
+    values.aleternateCountryCode || "+91"
+  );
+
+  console.log(phonedropdown, "phonedropdown");
+
   const handleNext = async () => {
     delete values.role;
+
+    values.aleternateCountryCode = phonedropdown;
+    console.log(values, "VALUES 124");
     const result = await dispatch(
       updateInstitutionalMemberDetails(userId, values)
     );
     if (result?.status === 200) {
-
       setValCount(2);
       fetchUserDetails();
-
     }
   };
 
   return (
     <div className="education-details-container">
-      <div className="row row-gap-3" >
+      <div className="row row-gap-3">
         <div className="col-12">
           <TextInput
             className="h-45"
@@ -58,7 +65,6 @@ const EducationDetailsPopUp = ({
             value={values.email}
             id="email"
             disabled="true"
-
           />
         </div>
         <div className="col-lg-6 col-12">
@@ -68,6 +74,8 @@ const EducationDetailsPopUp = ({
             onChange={handleChange}
             value={values.alternateEmail}
             id="alternateEmail"
+            type="email"
+            error={errors.alternateEmail}
           />
         </div>
         <div className="col-lg-6">
@@ -81,7 +89,7 @@ const EducationDetailsPopUp = ({
             id="phoneNumber"
             dropdownOptions={dialCode.map((item) => ({
               value: "+91" || item.dial_code,
-              // label: `${item.dial_code}`,
+
               label: `${values.countryCode ? values.countryCode : item.dial_code} `,
             }))}
             onDropdownChange={(selected) => setphonedropdown(selected)}
@@ -89,17 +97,23 @@ const EducationDetailsPopUp = ({
         </div>
         <div className="col-md-6">
           <TextInputwithDropdown
+            isphone
+            id="alternatePhoneNumber"
+            name="alternatePhoneNumber"
             className="h-45"
             placeholder="Alternate contact number"
-            onChange={handleChange}
+            onChange={(e) =>
+              setFieldValue("alternatePhoneNumber", e.target.value)
+            }
             value={values.alternatePhoneNumber}
-            id="alternatePhoneNumber"
             dropdownOptions={dialCode.map((item) => ({
-              value: "+91" || item.dial_code,
-              label: `${item.dial_code}`,
+              value: item.dial_code,
+              label: `${item.dial_code} `,
             }))}
-            
             onDropdownChange={(selected) => setphonedropdown(selected)}
+            maxLength={15}
+            type="text"
+            alternateval={phonedropdown}
           />
         </div>
         <div className="">
@@ -107,7 +121,6 @@ const EducationDetailsPopUp = ({
             <div className="d-flex justify-content-end mt-10 gap-3">
               <Button
                 btnText="Previous"
-                // btnStyle="Lb"
                 className="h-49 w-114"
                 onClick={() => {
                   setValCount(0);
@@ -117,9 +130,6 @@ const EducationDetailsPopUp = ({
                 btnText="Continue"
                 className="h-49 w-114"
                 onClick={handleNext}
-                // onClick={() => {
-                //   setValCount(2);
-                // }}
               />
             </div>
           </div>
