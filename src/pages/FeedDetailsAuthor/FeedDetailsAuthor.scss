@@ -41,6 +41,13 @@
 
 
 
+  .search-div-box {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 1000;
+  }
+
   .full-box {
     width: 100%;
     display: flex;

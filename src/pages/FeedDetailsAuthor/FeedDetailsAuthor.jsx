@@ -34,6 +34,7 @@ import SaveTolist from "./OpenModels/SaveTolist/SaveTolist";
 import Share from "./OpenModels/Share/Share";
 import Report from "./OpenModels/Report/Report";
 import axios from "axios";
+import DOMPurify from "dompurify";
 
 const FeedDetailsAuthor = () => {
   const [isSide, setIsSide] = useState(false);
@@ -65,8 +66,6 @@ const FeedDetailsAuthor = () => {
     const result = await dispatch(
       getRecommendedPapersById(paperId, abstractId)
     );
-
-    console.log(result, "result");
 
     setAutherIddetispaper(
       result?.data.response?.researchPapersWithSummary[0]?.authors
@@ -219,6 +218,7 @@ const FeedDetailsAuthor = () => {
   
       abstractElement.scrollIntoView({ behavior: "smooth", block: "start" });
     }
+
   };
   
   const handleClickFullText = () => {
