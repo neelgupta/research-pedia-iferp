@@ -16,22 +16,27 @@ const Security = () => {
   const dispatch = useDispatch();
   const [openQr, setOpenQr] = useState(false);
   const [qrText, setQrText] = useState("");
+  const [secretCode, setSecretCode] = useState("");
 
   const openQrcode = async () => {
     const result = await dispatch(handleGenerateCode());
-    if (result?.status === 201) {
+
+    if (result?.status === 200) {
       setOpenQr(true);
-      const twoFaCode = result?.data?.response?.authCode;
-      setQrText(twoFaCode);
+      setQrText(result.data.qrCode);
+      setSecretCode(result.data.secret);
     }
   };
 
   const fetchGeneratedCode = async () => {
     const result = await dispatch(getGeneratedCode());
-    setQrText(result.data.response.twoFACode);
+    console.log(result.data.response.twoFACode,"sec 33")
+    setQrText(result.data.response.twoFaUrl);
+    setSecretCode(result.data.response.twoFACode);
     setOpenQr(result.data.response.isGenerated);
   };
 
+  console.log(secretCode, "secretCode");
   useEffect(() => {
     fetchGeneratedCode();
   }, []);
@@ -92,7 +97,13 @@ const Security = () => {
               {openQr ? (
                 <>
                   <div className="qr-code-container">
-                    {qrText && <ReactQR value={qrText} className="ps-26" />}
+                    {qrText && qrText !== undefined && (
+                      <img
+                        src={qrText}
+                        alt="Scan this QR Code"
+                        className="ps-26"
+                      />
+                    )}
                   </div>
                   <div className="ps-26 d-flex gap-4">
                     <TextInput
@@ -100,14 +111,14 @@ const Security = () => {
                       name="qrcodetext"
                       placeholder="QR Code Text"
                       type="text"
-                      value={qrText}
+                      value={secretCode && secretCode}
                       className="w-200 bg-EBEC ps-26"
                       disabled={true}
                     />
                     <div
                       className="fa-center gap-2 pointer"
                       onClick={() => {
-                        dispatch(handleCopy(qrText));
+                        dispatch(handleCopy(secretCode));
                       }}
                     >
                       <img src={icons?.copyIcons} alt="copy-icons" />

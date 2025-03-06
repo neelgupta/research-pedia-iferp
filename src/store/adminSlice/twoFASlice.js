@@ -9,7 +9,7 @@ import {
 export const handleGenerateCode = (payload) => async (dispatch) => {
   dispatch(setLoading());
   try {
-    const res = await api.post(`/admin/multifactorAuth`, payload, {});
+    const res = await api.post(`/admin/2fa`, payload, {});
     if (res?.status === 200) {
       dispatch(showSuccess(res?.data?.message));
     }
@@ -67,7 +67,7 @@ export const handleDownLoadExcelSheet = (payload) => async (dispatch) => {
 export const loginWithTwoFacorAuth = (payload) => async (dispatch) => {
   dispatch(setLoading());
   try {
-    const res = await api.post(`/admin/auth/logInWith2FaCode`, payload, {});
+    const res = await api.post(`/admin/verifyOtp`, payload, {});
     if (res?.status === 200) {
       dispatch(showSuccess(res?.data?.message));
     }
