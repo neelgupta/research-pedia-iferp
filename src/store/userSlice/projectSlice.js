@@ -146,6 +146,23 @@ export const Literaturesearch = (payload) => async (dispatch) => {
   }
 };
 
+
+
+export const existingDocUrl = (payload) => async (dispatch) => {
+  dispatch(setLoading());
+  try {
+    const res = await api.get(
+      `/user/chatWithDoc/extractPdfTextFromUrl?url=${payload}`,
+      {}
+    );
+
+    return res;
+  } catch (error) {
+    dispatch(handelCatch(error));
+    dispatch(clearLoading());
+  }
+};
+
 export const LiteraturesearchResult = (payload) => async (dispatch) => {
   const { title, selectedPaper } = payload;
 
@@ -198,7 +215,6 @@ export const chatwithdoc = (payload) => async (dispatch) => {
   dispatch(setLoading());
   try {
     const res = await api.post("/user/chatWithDoc", questionpayload);
-
     console.log("Question response", res);
     return res;
   } catch (error) {

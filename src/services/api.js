@@ -13,6 +13,7 @@ export const api = {
       axios
         .get(baseURL + url, {
           headers,
+          withCredentials: true,
         })
         .then((res) => {
           let customResponse = {
@@ -33,6 +34,7 @@ export const api = {
       axios
         .post(baseURL + url, data, {
           headers,
+          withCredentials: true,
         })
         .then((res) => {
           let customResponse = {

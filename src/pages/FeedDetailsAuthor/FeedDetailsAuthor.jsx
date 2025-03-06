@@ -9,6 +9,7 @@ import PackageDetails from "./PackageDetails";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  existingDocUrl,
   getAuthorSocialDetails,
   getProjectByTopics,
   getRecommendedPapers,
@@ -54,6 +55,9 @@ const FeedDetailsAuthor = () => {
   const dispatch = useDispatch();
 
   console.log("paperDetails", paperDetails);
+
+  const pdfUrl = paperDetails?.openAccessPdf?.url;
+
   const navigation = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const paperId = queryParams.get("paperId");
@@ -66,7 +70,6 @@ const FeedDetailsAuthor = () => {
     // const id = location?.state;
     // const paperId = id.paperId;
     // const abstractId = id.abstractId;
-
 
     const result = await dispatch(
       getRecommendedPapersById(paperId, abstractId)
@@ -204,7 +207,6 @@ const FeedDetailsAuthor = () => {
     if (summaryElement) {
       summaryElement.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-    // summaryElement.style.marginTop = "100px";
   };
 
   const handleClickActive = () => {
@@ -223,7 +225,6 @@ const FeedDetailsAuthor = () => {
   
       abstractElement.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-
   };
   
   const handleClickFullText = () => {
@@ -320,10 +321,9 @@ const FeedDetailsAuthor = () => {
     setisreport(false);
   };
 
-  const [isSticky, setIsSticky] = useState(false);
 
-  useEffect(() => {
-    console.log("Component Mounted!");
+  // useEffect(() => {
+  //   console.log("Component Mounted!");
 
   //   const handleScroll = () => {
   //     console.log("window.scrollY:", window.scrollY);
@@ -417,6 +417,18 @@ const FeedDetailsAuthor = () => {
       console.error("Error fetching audio:", error);
     }
   };
+  
+
+  const newPdf = "https://www.aeee.in/wp-content/uploads/2020/08/Sample-pdf.pdf"
+  const handleChatWithExistingDoc = async () => {
+
+    const res = await dispatch(existingDocUrl(newPdf));
+    if (res.status === 200) {
+      setisAskPaper(true);
+    }
+
+    console.log(res, "res from exisyting doc");
+  };
 
   useEffect(() => {
     fetchSearch();
@@ -430,42 +442,42 @@ const FeedDetailsAuthor = () => {
   return (
     <div id="feed-details-author-container">
       <div className="row">
-          {summaryloadder ? (
-            <div
-              className="loader-container d-flex justify-content-center align-items-center"
-              style={{ width: "100%", height: "100%" }}
-            >
-              <Spinner animation="border" variant="primary" />
-            </div>
-          ) : (
-            <div className="main-div ">
-              <div className={`${isSide ? "left-w-o" : "left-w"}`}>
-                <Breadcrumb
-                  list={[
-                    { title: "Home", link: "/feed-details" },
-                    {
-                      title: title ? title : paper_title ? paper_title : "",
-                    },
-                  ]}
-                  className="text-16-400"
-                  isGreen
-                />
+        {summaryloadder ? (
+          <div
+            className="loader-container d-flex justify-content-center align-items-center"
+            style={{ width: "100%", height: "100%" }}
+          >
+            <Spinner animation="border" variant="primary" />
+          </div>
+        ) : (
+          <div className="main-div ">
+            <div className={`${isSide ? "left-w-o" : "left-w"}`}>
+              <Breadcrumb
+                list={[
+                  { title: "Home", link: "/feed-details" },
+                  {
+                    title: title ? title : paper_title ? paper_title : "",
+                  },
+                ]}
+                className="text-16-400"
+                isGreen
+              />
 
-                <div>
-                  <section className="sectionOne">
-                    <div
-                      className={`${isUserSide || isRightSide ? "active-title-section" : "title-section"}`}
-                    >
-                      {(title || paper_title) && (
-                        <h1 className="title-text mt-24">
-                          {title ? title : paper_title ? paper_title : ""}
-                        </h1>
-                      )}
+              <div>
+                <section className="sectionOne">
+                  <div
+                    className={`${isUserSide || isRightSide ? "active-title-section" : "title-section"}`}
+                  >
+                    {(title || paper_title) && (
+                      <h1 className="title-text mt-24">
+                        {title ? title : paper_title ? paper_title : ""}
+                      </h1>
+                    )}
 
-                      <div className="mt-26">
-                        <div className="row gy-3">
-                          <div className="col-12">
-                            {/* <div
+                    <div className="mt-26">
+                      <div className="row gy-3">
+                        <div className="col-12">
+                          {/* <div
                             style={{
                               display: "flex",
                               alignItems: "center",
@@ -528,20 +540,32 @@ const FeedDetailsAuthor = () => {
                               )}
                             </div>
                           </div> */}
-                            <div
-                              className={`pra-text ${isSide ? "pra-sm" : "pra-m"}`}
-                            >
-                              {authors && authors.length > 0 ? (
-                                <>
-                                  <div
-                                    style={{
-                                      display: "flex",
-                                      gap: "6px",
-                                      alignItems: "center",
-                                      flexWrap: "wrap",
-                                    }}
-                                  >
-                                    {authors?.slice(0, 2).map((item) => (
+                          <div
+                            className={`pra-text ${isSide ? "pra-sm" : "pra-m"}`}
+                          >
+                            {authors && authors.length > 0 ? (
+                              <>
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    gap: "6px",
+                                    alignItems: "center",
+                                    flexWrap: "wrap",
+                                  }}
+                                >
+                                  {authors?.slice(0, 2).map((item) => (
+                                    <React.Fragment key={item.id}>
+                                      <img
+                                        src={icons?.avatarTwoIcons}
+                                        className="h-32 w-32 rounded-circle me-5"
+                                        alt="author-avatar"
+                                      />
+                                      <span>{item.name}</span>
+                                    </React.Fragment>
+                                  ))}
+
+                                  {showAllAuthors &&
+                                    authors?.slice(2).map((item) => (
                                       <React.Fragment key={item.id}>
                                         <img
                                           src={icons?.avatarTwoIcons}
@@ -552,256 +576,137 @@ const FeedDetailsAuthor = () => {
                                       </React.Fragment>
                                     ))}
 
-                                    {showAllAuthors &&
-                                      authors?.slice(2).map((item) => (
-                                        <React.Fragment key={item.id}>
-                                          <img
-                                            src={icons?.avatarTwoIcons}
-                                            className="h-32 w-32 rounded-circle me-5"
-                                            alt="author-avatar"
-                                          />
-                                          <span>{item.name}</span>
-                                        </React.Fragment>
-                                      ))}
-
-                                    {authors.length > 2 && (
-                                      <button
-                                        onClick={() =>
-                                          setShowAllAuthors(!showAllAuthors)
-                                        }
-                                        style={{
-                                          background: "none",
-                                          border: "none",
-                                          color: "blue",
-                                          cursor: "pointer",
-                                          marginLeft: "8px",
-                                          fontSize: "14px",
-                                        }}
-                                      >
-                                        {!showAllAuthors
-                                          ? `+ Show ${authors.length - 2} more`
-                                          : "Show Less"}
-                                      </button>
-                                    )}
-                                  </div>
-                                </>
-                              ) : (
-                                ""
-                              )}
-                            </div>
-
-                            {externalIds?.DOI && (
-                              <div
-                                className="fa-center gap-2 pointer"
-                                style={{
-                                  paddingBottom: "36px",
-                                }}
-                                onClick={() => {
-                                  dispatch(
-                                    handleCopy(
-                                      `https://doi.org/${externalIds?.DOI}`
-                                    )
-                                  );
-                                }}
-                              >
-                                <p className="link-text">
-                                  {`https://doi.org/${externalIds?.DOI}` || ""}
-                                </p>
-                                <img src={icons?.copyIcons} alt="copy-icons" />
-                                <span className="copy-text">Copy DOI</span>
-                              </div>
+                                  {authors.length > 2 && (
+                                    <button
+                                      onClick={() =>
+                                        setShowAllAuthors(!showAllAuthors)
+                                      }
+                                      style={{
+                                        background: "none",
+                                        border: "none",
+                                        color: "blue",
+                                        cursor: "pointer",
+                                        marginLeft: "8px",
+                                        fontSize: "14px",
+                                      }}
+                                    >
+                                      {!showAllAuthors
+                                        ? `+ Show ${authors.length - 2} more`
+                                        : "Show Less"}
+                                    </button>
+                                  )}
+                                </div>
+                              </>
+                            ) : (
+                              ""
                             )}
+                          </div>
 
-                            {(journal?.name || publicationDate || year) && (
-                              <div className="journal-details">
-                                {journal?.name && (
-                                  <div className="d-flex gap-3 align-items-center">
-                                    <img src={icons.noteBIcons} alt="" />
+                          {externalIds?.DOI && (
+                            <div
+                              className="fa-center gap-2 pointer"
+                              style={{
+                                paddingBottom: "36px",
+                              }}
+                              onClick={() => {
+                                dispatch(
+                                  handleCopy(
+                                    `https://doi.org/${externalIds?.DOI}`
+                                  )
+                                );
+                              }}
+                            >
+                              <p className="link-text">
+                                {`https://doi.org/${externalIds?.DOI}` || ""}
+                              </p>
+                              <img src={icons?.copyIcons} alt="copy-icons" />
+                              <span className="copy-text">Copy DOI</span>
+                            </div>
+                          )}
+
+                          {(journal?.name || publicationDate || year) && (
+                            <div className="journal-details">
+                              {journal?.name && (
+                                <div className="d-flex gap-3 align-items-center">
+                                  <img src={icons.noteBIcons} alt="" />
+                                  <span>
+                                    Journal:{" "}
+                                    <span
+                                      style={{
+                                        textDecoration: "underline",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      {journal?.name}
+                                    </span>
+                                  </span>
+                                </div>
+                              )}
+
+                              <div className="d-flex flex-column flex-sm-row gap-3 align-items-sm-center flex-wrap">
+                                {(publicationDate || year) && (
+                                  <div className="d-flex align-items-center gap-3">
+                                    <img src={icons.calenderAIcons} alt="" />
                                     <span>
-                                      Journal:{" "}
-                                      <span
-                                        style={{
-                                          textDecoration: "underline",
-                                          cursor: "pointer",
-                                        }}
-                                      >
-                                        {journal?.name}
-                                      </span>
+                                      Publication Date:{" "}
+                                      {publicationDate || year}
                                     </span>
                                   </div>
                                 )}
 
-                                <div className="d-flex flex-column flex-sm-row gap-3 align-items-sm-center flex-wrap">
-                                  {(publicationDate || year) && (
-                                    <div className="d-flex align-items-center gap-3">
-                                      <img src={icons.calenderAIcons} alt="" />
-                                      <span>
-                                        Publication Date:{" "}
-                                        {publicationDate || year}
-                                      </span>
-                                    </div>
-                                  )}
-
-                                  {/* <span className="d-flex align-items-center gap-2">
+                                {/* <span className="d-flex align-items-center gap-2">
         <img src={icons.eyeIcons} alt="" />
         <span>31 Views </span>
       </span> */}
-                                </div>
-                              </div>
-                            )}
-
-                            <div className="">
-                              <div
-                                className="brave-scroll"
-                                style={{
-                                  maxHeight: "300px",
-                                  overflowY: "auto",
-                                  marginTop: "10px",
-                                  display: "flex",
-                                }}
-                              >
-                                <div className="d-flex flex-wrap gap-3">
-                                  {authdatadetails?.data1?.topics !== "" &&
-                                    authdatadetails?.data1?.topics
-                                      ?.slice(0, visibleCount)
-                                      ?.map((topic, index) => (
-                                        <div
-                                          key={index}
-                                          className="p-12"
-                                          style={{
-                                            border: "1px solid #333333",
-                                            borderRadius: "12px",
-                                          }}
-                                        >
-                                          <span>{topic}</span>
-                                        </div>
-                                      ))}
-                                </div>
-                                {console.log(authdatadetails, "auth data")}
-                                {authdatadetails.hasOwnProperty("data1") &&
-                                  authdatadetails?.data1?.topics !== "" && (
-                                    <div
-                                      onClick={handleToggle}
-                                      className="text-14-500 color-113D"
-                                      style={{
-                                        cursor: "pointer",
-                                        display: "flex",
-                                        alignItems: "center",
-                                      }}
-                                    >
-                                      {showMore
-                                        ? "- Show Less"
-                                        : `+ Show ${authdatadetails?.data1?.topics?.length - visibleCount} more`}
-                                    </div>
-                                  )}
                               </div>
                             </div>
-                          </div>
-                        </div>
-                      </div>
-                      {/* review */}
-                      <div className="review-box">
-                        <div className="fa-center gap-1">
-                          <Button
-                            btnText="New"
-                            className="h-29 pt-6 pb-6 br-8 w-51"
-                          />
-                          <h4 className="review-text">
-                            Get your research rolling with a Literature Review
-                          </h4>
-                        </div>
-                        <p className="review-pra">
-                          Skip hour sifting through countless paper. Academia
-                          can simplify the process with a comprehensive overview
-                          of new and popular works for your research topic.
-                        </p>
-                        <p className="review-pra">
-                          Request your preferred subject area for your
-                          Literature Review
-                        </p>
-                        <div className="search-box">
-                          <div className="btn-search">
-                            <div>
-                              <TextInput
-                                placeholder="Social Psychology"
-                                className="h-51 black-b"
-                                value={searchTerm}
-                                onChange={(e) => {
-                                  setsearch(true);
-                                  setSearchTerm(e.target.value);
-                                }}
-                              />
-                            </div>
+                          )}
 
-                            {search && searchTerm && (
-                              <div className="search-histroy-conatiner d-flex   justify-content-start  mt-10">
-                                <div className="search-dropdown brave-scroll-gry ">
-                                  <div className="recent-searches">
-                                    <span className="text-14-500 color-0303">
-                                      {" "}
-                                      Recent searches
-                                    </span>
-                                    {recentSearches.map((item, index) => (
+                          <div className="">
+                            <div
+                              className="brave-scroll"
+                              style={{
+                                maxHeight: "300px",
+                                overflowY: "auto",
+                                marginTop: "10px",
+                                display: "flex",
+                              }}
+                            >
+                              <div className="d-flex flex-wrap gap-3">
+                                {authdatadetails?.data1?.topics !== "" &&
+                                  authdatadetails?.data1?.topics
+                                    ?.slice(0, visibleCount)
+                                    ?.map((topic, index) => (
                                       <div
                                         key={index}
-                                        className="search-item mt-2"
-                                        onClick={() => {
-                                          setsearch(false);
-
-                                          setSearchTerm(item);
+                                        className="p-12"
+                                        style={{
+                                          border: "1px solid #333333",
+                                          borderRadius: "12px",
                                         }}
                                       >
-                                        <img
-                                          src={icons.Recantsimg}
-                                          className="img-fluid"
-                                          alt="img"
-                                        />{" "}
-                                        <span className="text-14-400 ">
-                                          {item}
-                                        </span>
+                                        <span>{topic}</span>
                                       </div>
                                     ))}
-                                  </div>
-                                  <div className="suggestions">
-                                    <span className="text-14-500 color-0303">
-                                      Try asking or searching for:
-                                    </span>
-                                    {suggestions.map((item, index) => (
-                                      <div
-                                        key={index}
-                                        className="search-item mt-2"
-                                      >
-                                        <img
-                                          src={icons.searchingimg}
-                                          className="img-fluid"
-                                          alt="img"
-                                        />{" "}
-                                        <span className="text-14-400 ">
-                                          {item}
-                                        </span>
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
                               </div>
-                            )}
-                          </div>
-
-                          <div className="btn-c">
-                            <Button
-                              btnText="Get your literature review"
-                              rightIcon={icons?.rightLIcons}
-                              rightIconClass="h-14 w-14 object-fit-contain"
-                              btnStyle="BBA BBA-hover"
-                              className="h-51"
-                              onClick={() =>
-                                navigation("/literature-review", {
-                                  state: {
-                                    searchitem: searchTerm,
-                                  },
-                                })
-                              }
-                            />
+                              {console.log(authdatadetails, "auth data")}
+                              {authdatadetails.hasOwnProperty("data1") &&
+                                authdatadetails?.data1?.topics !== "" && (
+                                  <div
+                                    onClick={handleToggle}
+                                    className="text-14-500 color-113D"
+                                    style={{
+                                      cursor: "pointer",
+                                      display: "flex",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    {showMore
+                                      ? "- Show Less"
+                                      : `+ Show ${authdatadetails?.data1?.topics?.length - visibleCount} more`}
+                                  </div>
+                                )}
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -820,32 +725,135 @@ const FeedDetailsAuthor = () => {
                             </div>
                           )}
 
-                          {(paper_abstract || abstract) && (
-                            <div
-                              className={`${showActive === "Abstract" ? "show-active-b" : "show-text-b"} pointer`}
-                              onClick={handleClickActive}
-                            >
-                              Abstract
+                          {search && searchTerm && (
+                            <div className="search-histroy-conatiner d-flex   justify-content-start  mt-10">
+                              <div className="search-dropdown brave-scroll-gry ">
+                                <div className="recent-searches">
+                                  <span className="text-14-500 color-0303">
+                                    {" "}
+                                    Recent searches
+                                  </span>
+                                  {recentSearches.map((item, index) => (
+                                    <div
+                                      key={index}
+                                      className="search-item mt-2"
+                                      onClick={() => {
+                                        setsearch(false);
+
+                                        setSearchTerm(item);
+                                      }}
+                                    >
+                                      <img
+                                        src={icons.Recantsimg}
+                                        className="img-fluid"
+                                        alt="img"
+                                      />{" "}
+                                      <span className="text-14-400 ">
+                                        {item}
+                                      </span>
+                                    </div>
+                                  ))}
+                                </div>
+                                <div className="suggestions">
+                                  <span className="text-14-500 color-0303">
+                                    Try asking or searching for:
+                                  </span>
+                                  {suggestions.map((item, index) => (
+                                    <div
+                                      key={index}
+                                      className="search-item mt-2"
+                                    >
+                                      <img
+                                        src={icons.searchingimg}
+                                        className="img-fluid"
+                                        alt="img"
+                                      />{" "}
+                                      <span className="text-14-400 ">
+                                        {item}
+                                      </span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
                             </div>
                           )}
+                        </div>
 
+                        <div className="btn-c">
+                          <Button
+                            btnText="Get your literature review"
+                            rightIcon={icons?.rightLIcons}
+                            rightIconClass="h-14 w-14 object-fit-contain"
+                            btnStyle="BBA BBA-hover"
+                            className="h-51"
+                            onClick={() =>
+                              navigation("/literature-review", {
+                                state: {
+                                  searchitem: searchTerm,
+                                },
+                              })
+                            }
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    {/* SEARCH  */}
+                    <div
+                      // className="search-div-box"
+                      // style={{
+                      //   position: "sticky",
+                      //   top: "0",
+                      //   zIndex: 10,
+                      //   borderRadius: "8px",
+                      //   border:"3px solid red"
+                      // }}
+                      className={`search-div-box ${isSticky ? "sticky-class" : ""}`}
+                      // style={{
+                      //   position: isSticky ? "fixed" : "relative",
+                      //   top: isSticky ? "0" : "auto",
+                      //   zIndex: 10,
+                      //   borderRadius: "8px",
+                      //   border: "3px solid red",
+                      //   background: "white",
+                      //   width: "100%",
+                      // }}
+                    >
+                      <div className="search-btn-box">
+                        {summary && (
                           <div
-                            className={`${showActive === "Full-Text" ? "show-active-b" : "show-text-b"} pointer`}
-                            onClick={handleClickFullText}
+                            className={`${showActive === "Summary" ? "show-active-b" : "show-text-b"} pointer`}
+                            onClick={handleClickSummary}
                           >
-                            Full-Text
+                            Summary
                           </div>
+                        )}
 
-                          {similarPapers?.length >= 0 && (
-                            <div
-                              className={`${showActive === "Similar Papers" ? "show-active-b" : "show-text-b"} pointer`}
-                              onClick={handleClickSimilarPapers}
-                            >
-                              Similar Papers
-                            </div>
-                          )}
+                        {(paper_abstract || abstract) && (
+                          <div
+                            className={`${showActive === "Abstract" ? "show-active-b" : "show-text-b"} pointer`}
+                            onClick={handleClickActive}
+                          >
+                            Abstract
+                          </div>
+                        )}
 
-                          {/* <div
+                        <div
+                          className={`${showActive === "Full-Text" ? "show-active-b" : "show-text-b"} pointer`}
+                          onClick={handleClickFullText}
+                        >
+                          Full-Text
+                        </div>
+
+                        {similarPapers?.length >= 0 && (
+                          <div
+                            className={`${showActive === "Similar Papers" ? "show-active-b" : "show-text-b"} pointer`}
+                            onClick={handleClickSimilarPapers}
+                          >
+                            Similar Papers
+                          </div>
+                        )}
+
+                        {/* <div
                             className="fb-center"
                             style={{ padding: "1.5rem" }}
                           >
@@ -866,7 +874,7 @@ const FeedDetailsAuthor = () => {
                               )}
                           </div> */}
 
-                          {/* <div
+                        {/* <div
                             style={{
                               height: "100%",
                               display: "flex",
@@ -961,210 +969,205 @@ const FeedDetailsAuthor = () => {
                               </div>
                             )}
                           </div> */}
-                        </div>
                       </div>
+                    </div>
 
-                      {summary && (
-                        <>
-                          {/* Summary */}
-                          <h4 className="sub-title-text" id="summary">
-                            Summary
-                          </h4>
-                          <div
-                            className="d-flex gap-3 justify-content-between mt-28 mb-28 p-28"
-                            style={{
-                              background: "#F9F8F8",
-                              borderRadius: "8px",
-                            }}
-                          >
-                            <div className="d-flex gap-2">
-                              <img
-                                src={icons?.activeStarIcons}
-                                alt="active-star"
-                                loading="lazy"
-                                className="h-24 w-24"
-                              />
-                              <p className="summer-text ">
-                                {summary && summary}
-                              </p>
-                            </div>
+                    {summary && (
+                      <>
+                        {/* Summary */}
+                        <h4 className="sub-title-text" id="summary">
+                          Summary
+                        </h4>
+                        <div
+                          className="d-flex gap-3 justify-content-between mt-28 mb-28 p-28"
+                          style={{
+                            background: "#F9F8F8",
+                            borderRadius: "8px",
+                          }}
+                        >
+                          <div className="d-flex gap-2">
                             <img
-                              src={icons?.lightCIcons}
-                              alt="copy"
-                              className="h-24 w-24 pointer"
-                              onClick={() => {
-                                dispatch(handleCopy(summary));
-                              }}
+                              src={icons?.activeStarIcons}
+                              alt="active-star"
+                              loading="lazy"
+                              className="h-24 w-24"
                             />
+                            <p className="summer-text ">{summary && summary}</p>
                           </div>
-                        </>
-                      )}
+                          <img
+                            src={icons?.lightCIcons}
+                            alt="copy"
+                            className="h-24 w-24 pointer"
+                            onClick={() => {
+                              dispatch(handleCopy(summary));
+                            }}
+                          />
+                        </div>
+                      </>
+                    )}
 
-                      {(paper_abstract || abstract) && (
-                        <div className="abstract-box">
-                          <h4 className="sub-title-text" id="abstract">
-                            Abstract
-                          </h4>
-                          {/* <p className="abstract-text">
+                    {(paper_abstract || abstract) && (
+                      <div className="abstract-box">
+                        <h4 className="sub-title-text" id="abstract">
+                          Abstract
+                        </h4>
+                        {/* <p className="abstract-text">
                           {paper_abstract || abstract}
                         </p> */}
-                          <p
-                            className="abstract-text"
-                            dangerouslySetInnerHTML={{
-                              __html: DOMPurify.sanitize(
-                                paper_abstract || abstract
-                              ),
-                            }}
-                          ></p>
-                        </div>
-                      )}
+                        <p
+                          className="abstract-text"
+                          dangerouslySetInnerHTML={{
+                            __html: DOMPurify.sanitize(
+                              paper_abstract || abstract
+                            ),
+                          }}
+                        ></p>
+                      </div>
+                    )}
 
-                      <div className="ask-box">
-                        <div className="d-flex align-items-center gap-2">
-                          <img
-                            src={icons?.docSearchIcons}
-                            className="h-48 w-48"
-                          />
-                          <p className="text-18-500 color-0303">
-                            {" "}
-                            Ask this paper
-                          </p>
-                        </div>
-                        <div className="fa-center">
-                          <img
-                            src={icons?.rightSAIcons}
-                            className="h-24 w-24 object-fit-contain pointer"
-                          />
-                        </div>
+                    <div className="ask-box">
+                      <div className="d-flex align-items-center gap-2">
+                        <img
+                          src={icons?.docSearchIcons}
+                          className="h-48 w-48"
+                        />
+                        <p className="text-18-500 color-0303">
+                          {" "}
+                          Ask this paper
+                        </p>
+                      </div>
+                      <div className="fa-center">
+                        <img
+                          src={icons?.rightSAIcons}
+                          className="h-24 w-24 object-fit-contain pointer"
+                        />
                       </div>
                     </div>
                     <div
-                      className={`${isUserSide || isRightSide ? "active-sectionOne-tool-bar" : "sectionOne-tool-bar"}`}
+                      className="auth-side brave-scroll"
+                      style={{
+                        position: "sticky",
+                        top: "0",
+                        height: "calc(100vh- 20px)",
+                        overflowY: "auto",
+                        borderLeft: "1px solid #E0E9F4",
+                        paddingLeft: "24px",
+                        width: "100%",
+                      }}
                     >
                       <div
-                        className="auth-side brave-scroll"
-                        style={{
-                          position: "sticky",
-                          top: "0",
-                          height: "calc(100vh- 20px)",
-                          overflowY: "auto",
-                          borderLeft: "1px solid #E0E9F4",
-                          paddingLeft: "24px",
-                          width: "100%",
-                        }}
+                        className="d-flex align-items-center gap-2 mt-10 pr-right-side-text"
+                        onClick={() => setIsLanguageOpenModal(true)}
                       >
-                        <div
-                          className="d-flex align-items-center gap-2 mt-10 pr-right-side-text"
-                          onClick={() => setIsLanguageOpenModal(true)}
-                        >
-                          <div>
-                            <img
-                              src={icons.authorsideicon1}
-                              alt="authorsideicon1"
-                              className="img-fluid w-48 h-48"
-                            />
-                          </div>
-                          <div className="">
-                            <h1 className="right-side-text">
-                              Translate this paper in your preferred language
-                            </h1>
-                          </div>
+                        <div>
+                          <img
+                            src={icons.authorsideicon1}
+                            alt="authorsideicon1"
+                            className="img-fluid w-48 h-48"
+                          />
                         </div>
-                        <div
-                          className="d-flex  align-items-center gap-2 mt-10 pr-right-side-text"
-                          onClick={() => setIsTexttospeechModal(true)}
-                        >
-                          <div>
-                            <img
-                              src={icons.authorsideicon2}
-                              alt="authorsideicon1"
-                              className="img-fluid w-48 h-48"
-                            />
-                          </div>
-                          <div>
-                            <h1 className="right-side-text">
-                              Listen to the abstract of this paper
-                            </h1>
-                          </div>
-                        </div>
-                        <div
-                          className="d-flex  align-items-center gap-2 mt-10 pr-right-side-text"
-                          onClick={() => setisAskPaper(true)}
-                        >
-                          <div>
-                            <img
-                              src={icons.authorsideicon3}
-                              alt="authorsideicon1"
-                              className="img-fluid w-48 h-48"
-                            />
-                          </div>
-                          <div>
-                            <h1 className="right-side-text">Ask Paper</h1>
-                          </div>
-                        </div>
-                        <div className="d-flex  align-items-center gap-2 mt-10 pr-right-side-text">
-                          <div>
-                            <img
-                              src={icons.authorsideicon4}
-                              alt="authorsideicon1"
-                              className="img-fluid w-48 h-48"
-                            />
-                          </div>
-                          <div>
-                            <h1 className="right-side-text">
-                              Export to reference manager
-                            </h1>
-                          </div>
-                        </div>
-                        <div className="d-flex  align-items-center gap-2 mt-10 pr-right-side-text">
-                          <div>
-                            <img
-                              src={icons.authorsideicon5}
-                              alt="authorsideicon1"
-                              className="img-fluid w-48 h-48"
-                            />
-                          </div>
-                          <div>
-                            <h1 className="right-side-text">Bookmark</h1>
-                          </div>
-                        </div>
-                        <div className="d-flex  align-items-center gap-2 mt-10 pr-right-side-text">
-                          <div>
-                            <img
-                              src={icons.authorsideicon6}
-                              alt="authorsideicon1"
-                              className="img-fluid w-48 h-48"
-                            />
-                          </div>
-                          <div>
-                            <h1 className="right-side-text">Save to drive</h1>
-                          </div>
-                        </div>
-                        <div className="d-flex  align-items-center gap-2 mt-10 pr-right-side-text">
-                          <div>
-                            <img
-                              src={icons.authorsideicon7}
-                              alt="authorsideicon1"
-                              className="img-fluid w-48 h-48"
-                            />
-                          </div>
-                          <div>
-                            <h1 className="right-side-text">Share</h1>
-                          </div>
-                        </div>
-                        <div className="d-flex  align-items-center gap-2 mt-10 pr-right-side-text">
-                          <div>
-                            <img
-                              src={icons.authorsideicon8}
-                              alt="authorsideicon1"
-                              className="img-fluid w-48 h-48"
-                            />
-                          </div>
-                          <div>
-                            <h1 className="right-side-text">Report</h1>
-                          </div>
+                        <div className="">
+                          <h1 className="right-side-text">
+                            Translate this paper in your preferred language
+                          </h1>
                         </div>
                       </div>
+                      <div
+                        className="d-flex  align-items-center gap-2 mt-10 pr-right-side-text"
+                        onClick={() => setIsTexttospeechModal(true)}
+                      >
+                        <div>
+                          <img
+                            src={icons.authorsideicon2}
+                            alt="authorsideicon1"
+                            className="img-fluid w-48 h-48"
+                          />
+                        </div>
+                        <div>
+                          <h1 className="right-side-text">
+                            Listen to the abstract of this paper
+                          </h1>
+                        </div>
+                      </div>
+                      <div
+                        className="d-flex  align-items-center gap-2 mt-10 pr-right-side-text"
+                        // onClick={() => setisAskPaper(true)}
+                        onClick={handleChatWithExistingDoc}
+                      >
+                        <div>
+                          <img
+                            src={icons.authorsideicon3}
+                            alt="authorsideicon1"
+                            className="img-fluid w-48 h-48"
+                          />
+                        </div>
+                        <div>
+                          <h1 className="right-side-text">Ask Paper</h1>
+                        </div>
+                      </div>
+                      <div className="d-flex  align-items-center gap-2 mt-10 pr-right-side-text">
+                        <div>
+                          <img
+                            src={icons.authorsideicon4}
+                            alt="authorsideicon1"
+                            className="img-fluid w-48 h-48"
+                          />
+                        </div>
+                        <div>
+                          <h1 className="right-side-text">
+                            Export to reference manager
+                          </h1>
+                        </div>
+                      </div>
+                      <div className="d-flex  align-items-center gap-2 mt-10 pr-right-side-text">
+                        <div>
+                          <img
+                            src={icons.authorsideicon5}
+                            alt="authorsideicon1"
+                            className="img-fluid w-48 h-48"
+                          />
+                        </div>
+                        <div>
+                          <h1 className="right-side-text">Bookmark</h1>
+                        </div>
+                      </div>
+                      <div className="d-flex  align-items-center gap-2 mt-10 pr-right-side-text">
+                        <div>
+                          <img
+                            src={icons.authorsideicon6}
+                            alt="authorsideicon1"
+                            className="img-fluid w-48 h-48"
+                          />
+                        </div>
+                        <div>
+                          <h1 className="right-side-text">Save to drive</h1>
+                        </div>
+                      </div>
+                      <div className="d-flex  align-items-center gap-2 mt-10 pr-right-side-text">
+                        <div>
+                          <img
+                            src={icons.authorsideicon7}
+                            alt="authorsideicon1"
+                            className="img-fluid w-48 h-48"
+                          />
+                        </div>
+                        <div>
+                          <h1 className="right-side-text">Share</h1>
+                        </div>
+                      </div>
+                      <div className="d-flex  align-items-center gap-2 mt-10 pr-right-side-text">
+                        <div>
+                          <img
+                            src={icons.authorsideicon8}
+                            alt="authorsideicon1"
+                            className="img-fluid w-48 h-48"
+                          />
+                        </div>
+                        <div>
+                          <h1 className="right-side-text">Report</h1>
+                        </div>
+                      </div>
+                    </div>
                     </div>
                   </section>
                   {/* Section 2 */}
@@ -1182,158 +1185,156 @@ const FeedDetailsAuthor = () => {
                             Full Text
                           </h4>
 
-                          <div className="full-box">
-                            <div className="d-flex align-items-center gap-2">
-                              <img
-                                src={icons?.docsBlueIcons}
-                                className="h-48 w-48"
-                              />
-                              <div>
-                                <p className="text-18-500 color-0303 mb-4">
-                                  Published version
-                                </p>
-                                <p className="text-14-400 color-3333">
-                                  Download
-                                </p>
-                              </div>
-                            </div>
-                            <div className="fa-center">
-                              <img
-                                src={icons?.downloadImgIcons}
-                                className="h-48 w-48 object-fit-contain"
-                              />
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="talk-us">
+                        <div className="full-box">
                           <div className="d-flex align-items-center gap-2">
                             <img
-                              src={talkToUs}
-                              style={{ width: "130px", height: "120px" }}
+                              src={icons?.docsBlueIcons}
+                              className="h-48 w-48"
+                            />
+                            <div>
+                              <p className="text-18-500 color-0303 mb-4">
+                                Published version
+                              </p>
+                              <p className="text-14-400 color-3333">Download</p>
+                            </div>
+                          </div>
+                          <div className="fa-center">
+                            <img
+                              src={icons?.downloadImgIcons}
+                              className="h-48 w-48 object-fit-contain"
                             />
                           </div>
+                        </div>
+                      </div>
 
-                          <div
-                            style={{
-                              width: "100%",
-                              display: "flex",
-                              gap: "4px",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                            }}
-                          >
-                            <div
-                              style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                gap: "4px",
-                              }}
-                            >
-                              <h4 className="text-18-500 color-0303 mb-4">
-                                Talk to us
-                              </h4>
-                              <p className="text-14-400 color-3333">
-                                Join us for a 30 min session where you can share
-                                your feedback and ask us any queries you have
-                              </p>
-                            </div>
-
-                            <button className="talkUsBtn">Talk to us</button>
-                          </div>
+                      <div className="talk-us">
+                        <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={talkToUs}
+                            style={{ width: "130px", height: "120px" }}
+                          />
                         </div>
 
-                        {similarPapers && similarPapers.length > 0 && (
-                          <div className="similar-box" id="similar-papers">
-                            <h4
-                              style={{
-                                fontSize: "24px",
-                                fontWeight: 500,
-                                paddingTop: "3rem",
-                                marginBottom: "1rem",
-                              }}
-                            >
-                              Similar Papers
+                        <div
+                          style={{
+                            width: "100%",
+                            display: "flex",
+                            gap: "4px",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                          }}
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              gap: "4px",
+                            }}
+                          >
+                            <h4 className="text-18-500 color-0303 mb-4">
+                              Talk to us
                             </h4>
+                            <p className="text-14-400 color-3333">
+                              Join us for a 30 min session where you can share
+                              your feedback and ask us any queries you have
+                            </p>
+                          </div>
 
-                            {similarpaperloadder ? (
-                              <div className="loader-container d-flex justify-content-center">
-                                <Spinner animation="border" variant="primary" />
-                              </div>
-                            ) : (
-                              similarPapers &&
-                              similarPapers.length > 0 &&
-                              similarPapers.map((ele, index) => {
-                                return (
-                                  <div
-                                    className="feed-published-box card-d mt-18"
-                                    key={index}
-                                  >
-                                    <div>
-                                      <div className="feed-flex">
-                                        <div className="col-10">
-                                          <div className="w-d">
-                                            <h4 className="post-title">
-                                              {ele?.title || ele?.paper_title}
-                                            </h4>
-                                            <p className="post-pra">
-                                              Journal of Islamic Contemporary
-                                              Accounting and Business | VOL. 1
-                                            </p>
-                                          </div>
-                                        </div>
-                                        <div className="col-2 d-flex justify-content-end">
-                                          <div className="h-42 w-42">
-                                            <Button
-                                              leftIcon={icons?.activeSaveIcons}
-                                              btnStyle="LB"
-                                              className="h-42 w-42"
-                                              leftIconClass="h-16 w-16"
-                                            />
-                                          </div>
+                          <button className="talkUsBtn">Talk to us</button>
+                        </div>
+                      </div>
+
+                      {similarPapers && similarPapers.length > 0 && (
+                        <div className="similar-box" id="similar-papers">
+                          <h4
+                            style={{
+                              fontSize: "24px",
+                              fontWeight: 500,
+                              paddingTop: "3rem",
+                              marginBottom: "1rem",
+                            }}
+                          >
+                            Similar Papers
+                          </h4>
+
+                          {similarpaperloadder ? (
+                            <div className="loader-container d-flex justify-content-center">
+                              <Spinner animation="border" variant="primary" />
+                            </div>
+                          ) : (
+                            similarPapers &&
+                            similarPapers.length > 0 &&
+                            similarPapers.map((ele, index) => {
+                              return (
+                                <div
+                                  className="feed-published-box card-d mt-18"
+                                  key={index}
+                                >
+                                  <div>
+                                    <div className="feed-flex">
+                                      <div className="col-10">
+                                        <div className="w-d">
+                                          <h4 className="post-title">
+                                            {ele?.title || ele?.paper_title}
+                                          </h4>
+                                          <p className="post-pra">
+                                            Journal of Islamic Contemporary
+                                            Accounting and Business | VOL. 1
+                                          </p>
                                         </div>
                                       </div>
+                                      <div className="col-2 d-flex justify-content-end">
+                                        <div className="h-42 w-42">
+                                          <Button
+                                            leftIcon={icons?.activeSaveIcons}
+                                            btnStyle="LB"
+                                            className="h-42 w-42"
+                                            leftIconClass="h-16 w-16"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
 
-                                      <div className="post-details flex-wrap mt-8 gap-2">
+                                    <div className="post-details flex-wrap mt-8 gap-2">
+                                      <div className="fa-center gap-1">
+                                        <img
+                                          src={icons?.avatarTwoIcons}
+                                          alt="docs-icons"
+                                          loading="lazy"
+                                          className="h-20 w-20 rounded-circle"
+                                        />
+
+                                        {(ele?.authors || ele.author_name) &&
+                                        ele?.authors?.length > 0 ? (
+                                          <>
+                                            {ele?.authors?.[0]?.name ||
+                                              ele?.author_name}
+                                            {ele?.authors?.length > 1 &&
+                                              ` +${ele?.authors?.length - 1}`}
+                                          </>
+                                        ) : ele?.author_name ? (
+                                          ele?.author_name
+                                        ) : (
+                                          "No Authors"
+                                        )}
+                                      </div>
+                                      <div className="fa-center gap-md-2 gap-2">
                                         <div className="fa-center gap-1">
                                           <img
-                                            src={icons?.avatarTwoIcons}
+                                            src={icons?.calenderIcons}
                                             alt="docs-icons"
                                             loading="lazy"
-                                            className="h-20 w-20 rounded-circle"
+                                            className="h-16 w-16 object-fit-contain"
                                           />
-
-                                          {(ele?.authors || ele.author_name) &&
-                                          ele?.authors?.length > 0 ? (
-                                            <>
-                                              {ele?.authors?.[0]?.name ||
-                                                ele?.author_name}
-                                              {ele?.authors?.length > 1 &&
-                                                ` +${ele?.authors?.length - 1}`}
-                                            </>
-                                          ) : ele?.author_name ? (
-                                            ele?.author_name
-                                          ) : (
-                                            "No Authors"
-                                          )}
+                                          <p className="docs-title">
+                                            {ele.abstract_id
+                                              ? moment(ele.created_at).format(
+                                                  "MMM DD,YYYY"
+                                                )
+                                              : ele.year}
+                                          </p>
                                         </div>
-                                        <div className="fa-center gap-md-2 gap-2">
-                                          <div className="fa-center gap-1">
-                                            <img
-                                              src={icons?.calenderIcons}
-                                              alt="docs-icons"
-                                              loading="lazy"
-                                              className="h-16 w-16 object-fit-contain"
-                                            />
-                                            <p className="docs-title">
-                                              {ele.abstract_id
-                                                ? moment(ele.created_at).format(
-                                                    "MMM DD,YYYY"
-                                                  )
-                                                : ele.year}
-                                            </p>
-                                          </div>
-                                          {/* <img
+                                        {/* <img
                                         src={icons?.dotIcons}
                                         alt="docs-icons"
                                         loading="lazy"
@@ -1348,75 +1349,87 @@ const FeedDetailsAuthor = () => {
                                         />
                                         <p className="docs-title">31 Views</p>
                                       </div> */}
-                                        </div>
                                       </div>
                                     </div>
                                   </div>
-                                );
-                              })
-                            )}
+                                </div>
+                              );
+                            })
+                          )}
 
-                            <div className="f-center mt-18">
-                              <Button
-                                className="h-42"
-                                btnText="View more papers"
-                              />
-                            </div>
+                          <div className="f-center mt-18">
+                            <Button
+                              className="h-42"
+                              btnText="View more papers"
+                            />
                           </div>
-                        )}
-                      </div>
+                        </div>
+                      )}
+                    </div>
 
-                      <div
-                        className={`${isUserSide || isRightSide ? "active-sectionTwo-author-details" : "sectionTwo-author-details"} `}
-                      >
-                        {!isSide && (
-                          <>
-                            <h4
-                              className="mt-0"
-                              id="about-authors"
-                              style={{
-                                paddingTop: "3rem",
-                              }}
-                            >
-                              About Author
-                            </h4>
-                            <div
-                              className="brave-scroll-gry"
-                              style={{
-                                position: "sticky",
-                                top: "0",
-                                height: "calc(100vh- 20vh)",
-                                overflowY: "auto",
-                                marginLeft: "8px",
-                                // paddingLeft: "24px",
-                              }}
-                            >
-                              {Object.keys(authdatadetails).length !== 0 &&
-                                authdatadetails?.data1?.user_details?.[0]
-                                  ?.name && (
-                                  <div className="About-box">
+                    <div
+                      className={`${isUserSide || isRightSide ? "active-sectionTwo-author-details" : "sectionTwo-author-details"} `}
+                    >
+                      {!isSide && (
+                        <>
+                          <h4
+                            className="mt-0"
+                            id="about-authors"
+                            style={{
+                              paddingTop: "3rem",
+                            }}
+                          >
+                            About Author
+                          </h4>
+                          <div
+                            className="brave-scroll-gry"
+                            style={{
+                              position: "sticky",
+                              top: "0",
+                              height: "calc(100vh- 20vh)",
+                              overflowY: "auto",
+                              marginLeft: "8px",
+                              // paddingLeft: "24px",
+                            }}
+                          >
+                            {Object.keys(authdatadetails).length !== 0 &&
+                              authdatadetails?.data1?.user_details?.[0]
+                                ?.name && (
+                                <div className="About-box">
+                                  <div className="">
                                     <div className="">
-                                      <div className="">
-                                        <div className="about-box-inner">
-                                          <div className="author-details">
-                                            <div
+                                      <div className="about-box-inner">
+                                        <div className="author-details">
+                                          <div
+                                            style={{
+                                              width: "100%",
+                                              display: "flex",
+                                              justifyContent: "center",
+                                            }}
+                                          >
+                                            <div className="user-img">
+                                              <img
+                                                src={icons?.avatarOneIcons}
+                                                alt="docs-icons"
+                                                loading="lazy"
+                                              />
+                                            </div>
+                                          </div>
+                                          <div>
+                                            <h5
+                                              className="about-user-text"
                                               style={{
-                                                width: "100%",
-                                                display: "flex",
-                                                justifyContent: "center",
+                                                textTransform: "capitalize",
                                               }}
                                             >
-                                              <div className="user-img">
-                                                <img
-                                                  src={icons?.avatarOneIcons}
-                                                  alt="docs-icons"
-                                                  loading="lazy"
-                                                />
-                                              </div>
-                                            </div>
-                                            <div>
-                                              <h5
-                                                className="about-user-text"
+                                              {authdatadetails?.data1
+                                                ?.user_details?.[0]?.name ||
+                                                "-"}
+                                            </h5>
+                                            <p className="text-14-400 color-3333">
+                                              Academy of Special Education named
+                                              after{" "}
+                                              <span
                                                 style={{
                                                   textTransform: "capitalize",
                                                 }}
@@ -1424,110 +1437,95 @@ const FeedDetailsAuthor = () => {
                                                 {authdatadetails?.data1
                                                   ?.user_details?.[0]?.name ||
                                                   "-"}
-                                              </h5>
-                                              <p className="text-14-400 color-3333">
-                                                Academy of Special Education
-                                                named after{" "}
-                                                <span
-                                                  style={{
-                                                    textTransform: "capitalize",
-                                                  }}
-                                                >
-                                                  {authdatadetails?.data1
-                                                    ?.user_details?.[0]?.name ||
-                                                    "-"}
-                                                </span>{" "}
-                                                in Warsaw /
-                                                <span
-                                                  style={{
-                                                    textTransform: "capitalize",
-                                                  }}
-                                                >
-                                                  {authdatadetails?.data1
-                                                    ?.user_details?.[0]?.name ||
-                                                    "-"}
-                                                </span>{" "}
-                                                University, Institute of
-                                                Psychology, Faculty Member
-                                              </p>
-                                              <div
-                                                className="d-flex   mt-12"
+                                              </span>{" "}
+                                              in Warsaw /
+                                              <span
                                                 style={{
-                                                  gap: "14px",
-                                                  width: "100%",
+                                                  textTransform: "capitalize",
                                                 }}
                                               >
-                                                <div style={{ width: "48%" }}>
-                                                  <Button
-                                                    leftIcon={
-                                                      icons?.pulseWIcons
-                                                    }
-                                                    btnText="Follow"
-                                                    className="text-16-500 color-ffff  h-43"
-                                                  />
-                                                </div>
-                                                <div style={{ width: "48%" }}>
-                                                  <Button
-                                                    leftIcon={icons?.chatBIcons}
-                                                    btnText="Message"
-                                                    className="text-16-500  h-43"
-                                                    btnStyle="BTA"
-                                                  />
-                                                </div>
+                                                {authdatadetails?.data1
+                                                  ?.user_details?.[0]?.name ||
+                                                  "-"}
+                                              </span>{" "}
+                                              University, Institute of
+                                              Psychology, Faculty Member
+                                            </p>
+                                            <div
+                                              className="d-flex   mt-12"
+                                              style={{
+                                                gap: "14px",
+                                                width: "100%",
+                                              }}
+                                            >
+                                              <div style={{ width: "48%" }}>
+                                                <Button
+                                                  leftIcon={icons?.pulseWIcons}
+                                                  btnText="Follow"
+                                                  className="text-16-500 color-ffff  h-43"
+                                                />
                                               </div>
-                                              <div className="mt-10">
-                                                <div className="fb-center mb-8">
-                                                  <p className="text-16-400 color-3333">
-                                                    Followers
-                                                  </p>
-                                                  <p className="text-16-600 color-3333">
-                                                    {authdatadetails?.data1
-                                                      ?.user_details?.[0]
-                                                      ?.followers
-                                                      ? authdatadetails?.data1
-                                                          ?.user_details?.[0]
-                                                          ?.followers
-                                                      : "-"}
-                                                  </p>
-                                                </div>
-                                                <div className="fb-center mb-8">
-                                                  <p className="text-16-400 color-3333">
-                                                    Following
-                                                  </p>
-                                                  <p className="text-16-600 color-3333">
-                                                    {authdatadetails?.data1
-                                                      ?.user_details?.[0]
-                                                      ?.followings
-                                                      ? authdatadetails?.data1
-                                                          ?.user_details?.[0]
-                                                          ?.followings
-                                                      : "-"}
-                                                  </p>
-                                                </div>
-                                                <div className="fb-center mb-8">
-                                                  <p className="text-16-400 color-3333">
-                                                    Co-authors
-                                                  </p>
-                                                  <p className="text-16-600 color-3333">
-                                                    {authdatadetails?.data1
-                                                      ?.co_authors
-                                                      ? authdatadetails?.data1
-                                                          ?.co_authors
-                                                      : "-"}
-                                                  </p>
-                                                </div>
-                                                <div className="fb-center mb-8">
-                                                  <p className="text-16-400 color-3333">
-                                                    Public views
-                                                  </p>
-                                                  <p className="text-16-600 color-3333">
-                                                    {console.log(
-                                                      authdatadetails,
-                                                      "authdatadetails"
-                                                    )}
-                                                    -
-                                                  </p>
-                                                </div>
+                                              <div style={{ width: "48%" }}>
+                                                <Button
+                                                  leftIcon={icons?.chatBIcons}
+                                                  btnText="Message"
+                                                  className="text-16-500  h-43"
+                                                  btnStyle="BTA"
+                                                />
+                                              </div>
+                                            </div>
+                                            <div className="mt-10">
+                                              <div className="fb-center mb-8">
+                                                <p className="text-16-400 color-3333">
+                                                  Followers
+                                                </p>
+                                                <p className="text-16-600 color-3333">
+                                                  {authdatadetails?.data1
+                                                    ?.user_details?.[0]
+                                                    ?.followers
+                                                    ? authdatadetails?.data1
+                                                        ?.user_details?.[0]
+                                                        ?.followers
+                                                    : "-"}
+                                                </p>
+                                              </div>
+                                              <div className="fb-center mb-8">
+                                                <p className="text-16-400 color-3333">
+                                                  Following
+                                                </p>
+                                                <p className="text-16-600 color-3333">
+                                                  {authdatadetails?.data1
+                                                    ?.user_details?.[0]
+                                                    ?.followings
+                                                    ? authdatadetails?.data1
+                                                        ?.user_details?.[0]
+                                                        ?.followings
+                                                    : "-"}
+                                                </p>
+                                              </div>
+                                              <div className="fb-center mb-8">
+                                                <p className="text-16-400 color-3333">
+                                                  Co-authors
+                                                </p>
+                                                <p className="text-16-600 color-3333">
+                                                  {authdatadetails?.data1
+                                                    ?.co_authors
+                                                    ? authdatadetails?.data1
+                                                        ?.co_authors
+                                                    : "-"}
+                                                </p>
+                                              </div>
+                                              <div className="fb-center mb-8">
+                                                <p className="text-16-400 color-3333">
+                                                  Public views
+                                                </p>
+                                                <p className="text-16-600 color-3333">
+                                                  {console.log(
+                                                    authdatadetails,
+                                                    "authdatadetails"
+                                                  )}
+                                                  -
+                                                </p>
                                               </div>
                                             </div>
                                           </div>
@@ -1535,129 +1533,129 @@ const FeedDetailsAuthor = () => {
                                       </div>
                                     </div>
                                   </div>
-                                )}
+                                </div>
+                              )}
 
-                              <div
-                                className="fb-center"
-                                style={{ padding: "1.5rem" }}
-                              >
-                                {paperAuthdetails &&
-                                  paperAuthdetails?.length > 2 && (
-                                    <>
-                                      <p className="text-18-500 color-0303 mb-0">
-                                        More {paperAuthdetails?.length - 2}{" "}
-                                        papers from author
+                            <div
+                              className="fb-center"
+                              style={{ padding: "1.5rem" }}
+                            >
+                              {paperAuthdetails &&
+                                paperAuthdetails?.length > 2 && (
+                                  <>
+                                    <p className="text-18-500 color-0303 mb-0">
+                                      More {paperAuthdetails?.length - 2} papers
+                                      from author
+                                    </p>
+
+                                    <div className="fa-center gap-2 pointer">
+                                      <p className="text-18-500  color-113D">
+                                        View all
                                       </p>
+                                      <img src={icons?.rightArrowIcons} />
+                                    </div>
+                                  </>
+                                )}
+                            </div>
 
-                                      <div className="fa-center gap-2 pointer">
-                                        <p className="text-18-500  color-113D">
-                                          View all
-                                        </p>
-                                        <img src={icons?.rightArrowIcons} />
-                                      </div>
-                                    </>
-                                  )}
-                              </div>
-
-                              <div
-                                style={{
-                                  height: "100%",
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  gap: "22px",
-                                }}
-                              >
-                                {Seconddetailsloadder ? (
-                                  <div className="loader-container d-flex justify-content-center">
-                                    <Spinner
-                                      animation="border"
-                                      variant="primary"
-                                    />
-                                  </div>
-                                ) : paperAuthdetails?.length > 0 ? (
-                                  paperAuthdetails
-                                    .slice(0, 2)
-                                    .map((ele, index) => {
-                                      return (
-                                        <div
-                                          className="feed-published-box card-d "
-                                          key={index}
-                                        >
-                                          <div>
-                                            <div className="row">
-                                              <div className="col-12">
-                                                <div>
-                                                  <h4 className="post-title">
-                                                    {ele.title ||
-                                                      ele.paper_title}
-                                                  </h4>
-                                                  {ele?.journal?.name ? (
-                                                    <p className="post-pra">
-                                                      {ele.journal.name}
-                                                    </p>
-                                                  ) : null}
-                                                </div>
+                            <div
+                              style={{
+                                height: "100%",
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: "22px",
+                              }}
+                            >
+                              {Seconddetailsloadder ? (
+                                <div className="loader-container d-flex justify-content-center">
+                                  <Spinner
+                                    animation="border"
+                                    variant="primary"
+                                  />
+                                </div>
+                              ) : paperAuthdetails?.length > 0 ? (
+                                paperAuthdetails
+                                  .slice(0, 2)
+                                  .map((ele, index) => {
+                                    return (
+                                      <div
+                                        className="feed-published-box card-d "
+                                        key={index}
+                                      >
+                                        <div>
+                                          <div className="row">
+                                            <div className="col-12">
+                                              <div>
+                                                <h4 className="post-title">
+                                                  {ele.title || ele.paper_title}
+                                                </h4>
+                                                {ele?.journal?.name ? (
+                                                  <p className="post-pra">
+                                                    {ele.journal.name}
+                                                  </p>
+                                                ) : null}
                                               </div>
                                             </div>
                                           </div>
+                                        </div>
 
-                                          <div
-                                            className="gap-md-2"
+                                        <div
+                                          className="gap-md-2"
+                                          style={{
+                                            width: "100%",
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            gap: "6px",
+                                          }}
+                                        >
+                                          <span
+                                            className="d-flex"
                                             style={{
-                                              width: "100%",
-                                              display: "flex",
-                                              flexDirection: "column",
-                                              gap: "6px",
+                                              alignItems: "center",
+                                              gap: "10px",
                                             }}
                                           >
-                                            <span
-                                              className="d-flex"
-                                              style={{
-                                                alignItems: "center",
-                                                gap: "10px",
-                                              }}
-                                            >
-                                              <img
-                                                src={icons?.calenderIcons}
-                                                alt="docs-icons"
-                                                loading="lazy"
-                                                className="h-16 w-16 object-fit-contain"
-                                              />
-                                              {ele?.year ? (
+                                            <img
+                                              src={icons?.calenderIcons}
+                                              alt="docs-icons"
+                                              loading="lazy"
+                                              className="h-16 w-16 object-fit-contain"
+                                            />
+                                            {ele?.year ? (
+                                              <p className="docs-title">
+                                                {ele.year}
+                                              </p>
+                                            ) : (
+                                              <p className="docs-title">
+                                                {moment(ele.created_at).format(
+                                                  "DD MMM YYYY"
+                                                )}
+                                              </p>
+                                            )}
+                                          </span>
+
+                                          {ele?.author_name ||
+                                            (ele?.authors?.[0].name && (
+                                              <span
+                                                className="d-flex "
+                                                style={{
+                                                  alignItems: "center",
+                                                  gap: "8px",
+                                                }}
+                                              >
+                                                <img
+                                                  src={icons?.avatarTwoIcons}
+                                                  className="w-20 h-20 rounded-circle "
+                                                />
+
                                                 <p className="docs-title">
-                                                  {ele.year}
+                                                  {ele?.author_name ||
+                                                    ele?.authors?.[0].name}
                                                 </p>
-                                              ) : (
-                                                <p className="docs-title">
-                                                  {moment(
-                                                    ele.created_at
-                                                  ).format("DD MMM YYYY")}
-                                                </p>
-                                              )}
-                                            </span>
+                                              </span>
+                                            ))}
 
-                                            {ele?.author_name ||
-                                              (ele?.authors?.[0].name && (
-                                                <span
-                                                  className="d-flex "
-                                                  style={{
-                                                    alignItems: "center",
-                                                    gap: "8px",
-                                                  }}
-                                                >
-                                                  <img
-                                                    src={icons?.avatarTwoIcons}
-                                                    className="w-20 h-20 rounded-circle "
-                                                  />
-
-                                                  <p className="docs-title">
-                                                    {ele?.author_name ||
-                                                      ele?.authors?.[0].name}
-                                                  </p>
-                                                </span>
-                                              ))}
-
-                                            {/* <span className="fa-center gap-1">
+                                          {/* <span className="fa-center gap-1">
                                         <img
                                           src={icons?.eyeIcons}
                                           alt="docs-icons"
@@ -1666,28 +1664,27 @@ const FeedDetailsAuthor = () => {
                                         />
                                         <p className="docs-title">31 Views</p>
                                       </span> */}
-                                          </div>
                                         </div>
-                                      );
-                                    })
-                                ) : (
-                                  <div className="no-papers">
-                                    <p>Paper not found</p>
-                                  </div>
-                                )}
-                              </div>
+                                      </div>
+                                    );
+                                  })
+                              ) : (
+                                <div className="no-papers">
+                                  <p>Paper not found</p>
+                                </div>
+                              )}
                             </div>
-                          </>
-                        )}
-                      </div>
-                    </>
-                  </section>
-                </div>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </>
+                </section>
               </div>
             </div>
-           )} 
           </div>
-
+        )}
+      </div>
 
       <div className="mt-40">
         <PackageDetails
@@ -1704,7 +1701,7 @@ const FeedDetailsAuthor = () => {
         <ListenModelpopup onHide={onHide} abstract={abstract} />
       )}
       {isReference && <ReferenceManager onHide={onHide} />}
-      {isAskPaper && <AskPaper onHide={onHide} />}
+      {isAskPaper && <AskPaper onHide={onHide} pdfUrl={newPdf} />}
       {issavelist && <SaveTolist onHide={onHide} />}
       {isshare && <Share onHide={onHide} />}
       {isreport && <Report onHide={onHide} />}

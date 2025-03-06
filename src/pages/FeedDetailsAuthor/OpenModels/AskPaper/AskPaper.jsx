@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./AskPaper.scss";
 import { Modal } from "@/components";
 import { icons } from "@/utils/constants";
-
 import "@react-pdf-viewer/core/lib/styles/index.css";
-import pdf from "../../../../assets/pdf.pdf";
 import { Formik, Field, Form } from "formik";
 import { Spinner } from "react-bootstrap";
 import { chatwithdoc, padfilelink } from "@/store/userSlice/projectSlice";
 import { useDispatch } from "react-redux";
-import axios from "axios";
 
 const AskPaper = ({ onHide, pdfUrl }) => {
+
+  console.log(pdfUrl,"in ask paper")
   const Askpaper = [
     {
       title: "Summarize the paper in a few sentences ",
@@ -28,16 +27,28 @@ const AskPaper = ({ onHide, pdfUrl }) => {
   const [onchangeQuestion, setonchangeQuestion] = useState("");
   const [question, setQuestion] = useState("");
 
+  const [conversation, setConversation] = useState([]);
+
+  const [loadingQuestion, setLoadingQuestion] = useState(null);
+
   const dispatch = useDispatch();
   const fetchrespos = async (Question) => {
     try {
+      setLoadingQuestion(Question);
       const res = await dispatch(chatwithdoc(Question));
-      console.log("101 res", res?.data?.response);
+      if (res?.status === 200) {
+        console.log(res.data.chatHistory, "RESSSS");
+        setConversation(res.data.chatHistory);
+        setLoader(false);
+      }
       // setrecentSearches(res?.data?.response);
     } catch (error) {
+      setLoadingQuestion(null);
       console.error("Error fetching audio:", error);
     }
   };
+
+  console.log(conversation, "convconversationerstayty");
 
   return (
     <Modal onHide={onHide} size="md" fullscreen paddingnone borderRadiusnone>
@@ -55,7 +66,7 @@ const AskPaper = ({ onHide, pdfUrl }) => {
               ) : (
                 <iframe
                   // src="https://doc.rero.ch/record/294716/files/86-6-485.pdf"
-                  src={pdfUrl}
+                  src={pdfUrl && pdfUrl}
                   width="100%"
                   height="100%"
                   style={{ border: "none" }}
@@ -119,13 +130,32 @@ const AskPaper = ({ onHide, pdfUrl }) => {
                     })}
                 </div>
 
-                {/* <div className="response d-flex justify-content-start">
-                  <p className="text">response data</p>
-                </div> */}
+                {conversation &&
+                  conversation.length > 0 &&
+                  conversation.map((conv, index) => (
+                    <div key={index}>
+                      <div className="response d-flex justify-content-end">
+                        <p className="text">{question}</p>
+                      </div>
 
-                <div className="response d-flex justify-content-end">
-                  <p className="text">{question}</p>
-                </div>
+                      <div className="response d-flex justify-content-start">
+                        {loadingQuestion === conv.question ? (
+                          <div style={{ width: "100%" }}>
+                            <div className="d-flex align-items-center">
+                              <span className="typing-text"></span>
+                              <div className="typing-dots">
+                                <span>.</span>
+                                <span>.</span>
+                                <span>.</span>
+                              </div>
+                            </div>
+                          </div>
+                        ) : (
+                          <p className="text">{conv.answer}</p>
+                        )}
+                      </div>
+                    </div>
+                  ))}
 
                 <div className="">
                   <Formik
@@ -148,6 +178,7 @@ const AskPaper = ({ onHide, pdfUrl }) => {
                             setonchangeQuestion(e.target.value);
                           }}
                           value={values.question}
+                          autoComplete="off"
                         />
                         <button type="submit" className="custom-button">
                           <img

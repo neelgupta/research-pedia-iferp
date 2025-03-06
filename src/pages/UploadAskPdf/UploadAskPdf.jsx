@@ -11,7 +11,6 @@ const UploadAskPdf = () => {
   const [pdfUrl, setPdfUrl] = useState(null);
   const dispatch = useDispatch();
 
-  console.log(pdfUrl, "pdfUrl");
 
   const uploadPdf = async (file) => {
     setLoading(true);
@@ -20,7 +19,6 @@ const UploadAskPdf = () => {
 
     try {
       const res = await dispatch(uploadfile(formData));
-      console.log(res, "response");
       if (res?.data) {
         const url = URL.createObjectURL(file);
         setPdfUrl(url);
