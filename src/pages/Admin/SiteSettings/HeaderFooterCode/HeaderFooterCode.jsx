@@ -36,7 +36,6 @@ const HeaderFooterCode = () => {
     }
   };
 
-  console.log(isHfCode, "isHfCode");
   const handleSubmit = async (values) => {
     console.log(values, "VALS");
     setloading(true);
@@ -64,7 +63,7 @@ const HeaderFooterCode = () => {
         </div>
         <Formik
           enableReinitialize
-          initialValues={isHfCode.length > 0 ? isHfCode : initialValues}
+          initialValues={ isHfCode || initialValues}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >

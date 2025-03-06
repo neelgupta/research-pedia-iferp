@@ -368,7 +368,7 @@ const UserSignup = () => {
                         </div>
 
                         {/* Continue with Google Button */}
-                        <div className="mt-20">
+                        {/* <div className="mt-20">
                           <Button
                             btnText="Continue with Google"
                             className="wp-100 h-45 br-12 text-18-500"
@@ -377,7 +377,7 @@ const UserSignup = () => {
                             btnStyle="WBB"
                             leftIcon={icons.Google}
                           />
-                        </div>
+                        </div> */}
                       </form>
                     );
                   }}
