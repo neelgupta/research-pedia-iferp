@@ -42,7 +42,6 @@ const FeedDetailsAuthor = () => {
   const [AutherIddetispaper, setAutherIddetispaper] = useState("");
   const [summaryloadder, setsummaryloadder] = useState(false);
   const [similarPapers, setSimilarPapers] = useState([]);
-
   const [authdatadetails, setauthdata] = useState({});
   const [iferpAuthorId, setIferpAuthorId] = useState();
   const location = useLocation();
@@ -53,7 +52,6 @@ const FeedDetailsAuthor = () => {
   const queryParams = new URLSearchParams(location.search);
   const paperId = queryParams.get("paperId");
   const abstractId = queryParams.get("abstractId");
-
   const topics = location?.state?.topics;
   console.log(paperId, "PAPERID11");
   console.log(abstractId, "abstractId");
@@ -83,6 +81,9 @@ const FeedDetailsAuthor = () => {
     }
     setsummaryloadder(false);
   };
+  const [isSticky, setIsSticky] = useState(true);
+  const navbarRef = useRef(null);
+  const section2Ref = useRef(null);
 
   const fetchIferpAuthorSData = async () => {
     if (iferpAuthorId !== undefined) {
@@ -197,38 +198,63 @@ const FeedDetailsAuthor = () => {
     if (summaryElement) {
       summaryElement.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-
-
-
+    // summaryElement.style.marginTop = "100px";
   };
 
   const handleClickActive = () => {
     setShowActive("Abstract");
     const abstractElement = document.getElementById("abstract");
+    const summaryElement = document.getElementById("summary");
+    const fullTextElement = document.getElementById("full-text");
+    const similarPaperElement = document.getElementById("similar-papers");
+  
     if (abstractElement) {
+      if (summaryElement) summaryElement.style.scrollMarginTop = "0px";
+      if (fullTextElement) fullTextElement.style.scrollMarginTop = "0px";
+      if (similarPaperElement) similarPaperElement.style.scrollMarginTop = "0px";
+      abstractElement.style.scrollMarginTop = "180px";
+   
+  
       abstractElement.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-
   };
-
+  
   const handleClickFullText = () => {
     setShowActive("Full-Text");
+    const abstractElement = document.getElementById("abstract");
+    const summaryElement = document.getElementById("summary");
     const fullTextElement = document.getElementById("full-text");
+    const similarPaperElement = document.getElementById("similar-papers");
+  
     if (fullTextElement) {
+        if (abstractElement) abstractElement.style.scrollMarginTop = "0px";
+      if (summaryElement) summaryElement.style.scrollMarginTop = "0px";
+      if (similarPaperElement) similarPaperElement.style.scrollMarginTop = "0px";
+      fullTextElement.style.scrollMarginTop = "100px";
+    
+  
       fullTextElement.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
-
+  
   const handleClickSimilarPapers = () => {
     setShowActive("Similar Papers");
+    const abstractElement = document.getElementById("abstract");
+    const summaryElement = document.getElementById("summary");
+    const fullTextElement = document.getElementById("full-text");
     const similarPaperElement = document.getElementById("similar-papers");
+  
     if (similarPaperElement) {
-      similarPaperElement.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
+      if (abstractElement) abstractElement.style.scrollMarginTop = "0px";
+      if (summaryElement) summaryElement.style.scrollMarginTop = "0px";
+      if (fullTextElement) fullTextElement.style.scrollMarginTop = "0px";
+      similarPaperElement.style.scrollMarginTop = "150px";
+  
+  
+      similarPaperElement.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
+  
 
   const reduxData = useSelector((state) => state.global);
   const { isUserSide, isRightSide } = reduxData || {};
@@ -292,39 +318,70 @@ const FeedDetailsAuthor = () => {
   useEffect(() => {
     console.log("Component Mounted!");
 
-    const handleScroll = () => {
-      console.log("window.scrollY:", window.scrollY);
-      setIsSticky(window.scrollY > 100);
-    };
+  //   const handleScroll = () => {
+  //     console.log("window.scrollY:", window.scrollY);
+  //     setIsSticky(window.scrollY > 100);
+  //   };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
+  //   window.addEventListener("scroll", handleScroll, { passive: true });
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, []);
+
+  // useEffect(() => {
+  //   const scrollContainer = document.getElementById(
+  //     "feed-details-author-container"
+  //   );
+
+  //   if (!scrollContainer) {
+  //     console.log("No scrollable container found!");
+  //     return;
+  //   }
+
+  //   console.log("Found scroll container!", scrollContainer);
+
+  //   const handleScroll = () => {
+  //     console.log("scrollContainer.scrollTop:", scrollContainer.scrollTop);
+  //     setIsSticky(scrollContainer.scrollTop > 100);
+  //   };
+
+  //   scrollContainer.addEventListener("scroll", handleScroll);
+
+  //   return () => {
+  //     scrollContainer.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, []);
+
+  // ... existing code ...
+
+  setInterval(() => {
+    console.log("jhkdbjhwe");
+    setcount(count + 1);
+  }, 1000);
 
   useEffect(() => {
-    const scrollContainer = document.getElementById(
-      "feed-details-author-container"
-    );
-
-    if (!scrollContainer) {
-      console.log("No scrollable container found!");
-      return;
-    }
-
-    console.log("Found scroll container!", scrollContainer);
-
     const handleScroll = () => {
-      console.log("scrollContainer.scrollTop:", scrollContainer.scrollTop);
-      setIsSticky(scrollContainer.scrollTop > 100);
+      if (!navbarRef.current || !section2Ref.current) return;
+
+      const section2Rect = section2Ref.current.getBoundingClientRect();
+      const navbarRect = navbarRef.current.getBoundingClientRect();
+      const isSection2Visible =
+        section2Rect.top < window.innerHeight && section2Rect.bottom > 0;
+
+      if (isSection2Visible) {
+        setIsSticky(true);
+        console.log("Section 2 is visible, setting sticky"); // Debug log
+      } else {
+        setIsSticky(false);
+        console.log("Section 2 is not visible, removing sticky"); // Debug log
+      }
     };
-
-    scrollContainer.addEventListener("scroll", handleScroll);
-
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
-      scrollContainer.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -743,24 +800,8 @@ const FeedDetailsAuthor = () => {
                       </div>
                       {/* SEARCH  */}
                       <div
-                        // className="search-div-box"
-                        // style={{
-                        //   position: "sticky",
-                        //   top: "0",
-                        //   zIndex: 10,
-                        //   borderRadius: "8px",
-                        //   border:"3px solid red"
-                        // }}
-                        className={`search-div-box ${isSticky ? "sticky-class" : ""}`}
-                        // style={{
-                        //   position: isSticky ? "fixed" : "relative",
-                        //   top: isSticky ? "0" : "auto",
-                        //   zIndex: 10,
-                        //   borderRadius: "8px",
-                        //   border: "3px solid red",
-                        //   background: "white",
-                        //   width: "100%",
-                        // }}
+                        ref={navbarRef}
+                        className={`search-div-box ${!isSticky ? "sticky-class" : "fixed-class"}`}
                       >
                         <div className="search-btn-box">
                           {summary && (
@@ -990,7 +1031,6 @@ const FeedDetailsAuthor = () => {
                         </div>
                       </div>
                     </div>
-
                     <div
                       className={`${isUserSide || isRightSide ? "active-sectionOne-tool-bar" : "sectionOne-tool-bar"}`}
                     >
@@ -1120,10 +1160,12 @@ const FeedDetailsAuthor = () => {
                       </div>
                     </div>
                   </section>
-
                   {/* Section 2 */}
-
-                  <section className="sectionTwo">
+                  <section
+                    className="sectionTwo"
+                    id="section2"
+                    ref={section2Ref}
+                  >
                     <>
                       <div
                         className={`${isUserSide || isRightSide ? "active-sectionTwo-details" : "sectionTwo-details"}`}
@@ -1650,7 +1692,6 @@ const FeedDetailsAuthor = () => {
           isRightSide={isRightSide}
         />
       </div>
-
       {isLanguageOpenModal && <SelectedLanguagemodel onHide={onHide} />}
       {isTexttospeechModal && (
         <ListenModelpopup onHide={onHide} abstract={abstract} />

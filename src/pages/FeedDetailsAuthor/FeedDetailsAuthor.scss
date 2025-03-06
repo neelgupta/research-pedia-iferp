@@ -1,4 +1,5 @@
 #feed-details-author-container {
+  
   padding: 48px;
 
   .left-w-o {
@@ -17,13 +18,28 @@
   .side-bar {
     max-width: 317px;
   }
+  #summary {
+    scroll-margin-top: 100px; // This creates space above the element when scrolling to it
+  }
 
   .search-div-box {
-    position: sticky;
-    top: 0;
-    background: white;
-    z-index: 1000;
+    
+    &.sticky-class{
+      position: sticky;
+      top: 0;
+      background: white;
+      z-index: 1000;
+    }
+    &.fixed-class{
+      position: fixed;
+      top: 13%;
+      width:947px;
+      background: white;
+      z-index: 1000;
+    }
   }
+
+
 
   .full-box {
     width: 100%;

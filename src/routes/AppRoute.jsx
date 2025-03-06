@@ -19,10 +19,10 @@ export const AppRoutes = () => {
       path: "/admin/setting/category-topic",
       component: <CategoryTopic />,
     },
-    {
-      path: "/admin/setting/security",
-      component: <Security />,
-    },
+    // {
+    //   path: "/admin/setting/security",
+    //   component: <Security />,
+    // },
     {
       path: "/admin/setting/smtp-replay",
       component: <SmtpReplay />,
