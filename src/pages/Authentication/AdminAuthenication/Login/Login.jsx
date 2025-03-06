@@ -27,8 +27,17 @@ const Login = () => {
     stloading(true);
     const res = await dispatch(handleLogin(values));
     if (res.status === 200) {
-      if (res.data?.response?.role == "admin") {
-        navigate("/admin/setting/category-topic");
+
+      if (res.data?.response?.role === "admin") {
+        if (res.data.response?.isGenerated === true) {
+          navigate("/admin/authentication-code", {
+            state: {
+             id: res.data.response.id,
+             securityCode:res.data.response.TwoFaCode,
+             loginToken : res.data.response.token
+            }
+          });
+        }
       }
       stloading(false);
     }

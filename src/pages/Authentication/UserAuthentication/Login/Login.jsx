@@ -208,8 +208,8 @@ const UserLogin = () => {
                               leftIcon={icons.Google}
                             />
                           </div> */}
-{/* 
-                          <GoogleOAuthProvider clientId="1036353088707-g4e7a8ud0a9lsjp8a5uubup23hvloap0.apps.googleusercontent.com">
+
+                          {/* <GoogleOAuthProvider clientId="1036353088707-g4e7a8ud0a9lsjp8a5uubup23hvloap0.apps.googleusercontent.com">
                             <div className="mt-20">
                               <GoogleLogin
                                 onSuccess={handleGoogleLoginSuccess}

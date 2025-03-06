@@ -96,16 +96,21 @@ export const handleLogin = (payload) => async (dispatch) => {
     const res = await api.post("/admin/auth/login", payload, {});
 
     if (res?.status === 200) {
-      storeLocalStorageData({
-        ...res?.data.response,
-        token: res?.data?.response?.token,
-      });
-      dispatch(
-        setAuthData(
-          encrypt({ ...res?.data.response, token: res?.data?.response.token })
-        )
-      );
-      dispatch(showSuccess(res?.data?.message));
+      const isGenerated = res.data.response.isGenerated || false;
+      if (isGenerated) {
+        return res
+      } else {
+        storeLocalStorageData({
+          ...res?.data.response,
+          token: res?.data?.response?.token,
+        });
+        dispatch(
+          setAuthData(
+            encrypt({ ...res?.data.response, token: res?.data?.response.token })
+          )
+        );
+        dispatch(showSuccess(res?.data?.message));
+      }
     }
 
     return res;
@@ -286,7 +291,7 @@ export const {
   setIsProjectselectOpen,
   setSelectedProject,
   setisSearchActive,
-  setIsProjectCreate
+  setIsProjectCreate,
 } = globalSlice.actions;
 
 export default globalSlice.reducer;

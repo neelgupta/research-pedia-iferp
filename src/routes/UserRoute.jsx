@@ -68,6 +68,14 @@ export const UserRoutes = () => {
         path: "/feed-details-author",
         component: <FeedDetailsAuthor />,
       },
+      {
+        path: "/uploadpdf",
+        component: <UploadAskPdf />,
+      },
+      {
+        path: "/literature-review",
+        component: <LiteratureReview />,
+      },
     ],
     institutional: [
       {
@@ -82,6 +90,14 @@ export const UserRoutes = () => {
       {
         path: "/feed-details-author",
         component: <FeedDetailsAuthor />,
+      },
+      {
+        path: "/uploadpdf",
+        component: <UploadAskPdf />,
+      },
+      {
+        path: "/literature-review",
+        component: <LiteratureReview />,
       },
     ],
   };

@@ -6,27 +6,37 @@ import { icons } from "@/utils/constants";
 import { useDispatch } from "react-redux";
 import { loginWithTwoFacorAuth } from "@/store/adminSlice/twoFASlice";
 import { storeLocalStorageData } from "@/utils/helpers";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const AuthenticationCode = () => {
+  const location = useLocation();
+
   const initialValues = {
     twoFactorCode: "",
   };
+
   const dispatch = useDispatch();
   const [loading, stloading] = useState(false);
 
   const validationSchema = Yup.object({
-    twoFactorCode: Yup.string().required("Code is required"),
+    twoFactorCode: Yup.number().required("Code is required"),
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
     stloading(true);
-    const result = await dispatch(loginWithTwoFacorAuth(values));
-    if (result?.status === 200) {
+    const payload = {
+      userId: location?.state.id,
+      token: values.twoFactorCode,
+    };
+    const result = await dispatch(loginWithTwoFacorAuth(payload));
+
+    if (result?.data?.verified === true) {
       storeLocalStorageData({
-        ...result?.data.response,
-        token: result.data.response.token,
+        ...result?.data,
+        token: location.state.loginToken,
+        role:"admin"
       });
       stloading(false);
     }

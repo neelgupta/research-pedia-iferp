@@ -41,7 +41,7 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
       activeIcons: icons.settingacive,
       childoption: [
         { title: "Category & Topics", url: "/admin/setting/category-topic" },
-        // { title: "Security", url: "/admin/setting/security" },
+        { title: "Security", url: "/admin/setting/security" },
         { title: "SMTP Relay", url: "/admin/setting/smtp-replay" },
         { title: "Header/Footer Code", url: "/admin/setting/header-footer" },
       ],
