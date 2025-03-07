@@ -46,7 +46,6 @@ export const api = {
         });
     });
   },
-
   delete: (url, data, header = {}) => {
     let headers = api.header();
     headers = { ...headers, ...header };

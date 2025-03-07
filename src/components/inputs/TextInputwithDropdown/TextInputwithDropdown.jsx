@@ -27,6 +27,7 @@ const TextInputwithDropdown = ({
   isname,
   values,
   alternateval,
+  
 }) => {
   console.log(values, "valuesCountrycode");
   const [showPassword, setShowPassword] = useState(false);
@@ -84,7 +85,8 @@ const TextInputwithDropdown = ({
                 },
               });
             }}
-            disabled={disabled}
+            // disabled={!!values.phoneNumber}
+            disabled={disabled} 
             placeholder={placeholder}
             inputMode={numeric ? "numeric" : undefined}
             pattern={numeric ? "[0-9]*" : undefined}

@@ -47,9 +47,22 @@ const PersonalDetailsPopUp = ({
   setUgcourse,
   loading,
   setloading,
+  isSubmitting,
+  phonedropdown,
+  setphonedropdown,
 }) => {
   const dispatch = useDispatch();
-  const [phonedropdown, setphonedropdown] = useState("+91");
+
+  const [phoneNumberAlreadySet, setPhoneNumberAlreadySet] = useState(false);
+
+  useEffect(() => {
+    if (values.phoneNumber) {
+      setPhoneNumberAlreadySet(true); 
+    }
+  }, []);
+
+
+  console.log(phoneNumberAlreadySet,"phoneNumberAlreadySet")
 
   const fetchCountry = async () => {
     const result = await dispatch(getCountry());
@@ -101,63 +114,6 @@ const PersonalDetailsPopUp = ({
     value: city.city,
   }));
 
-  console.log(values, "hey vals");
-
-  // const [loading, setloading] = useState(false);
-
-  // const handleSubmit = async () => {
-  //   setloading(true);
-  //   values.country = {
-  //     id: isCountryId,
-  //     countryName:
-  //       isCountry.find((country) => country.id === isCountryId)?.country ||
-  //       values.country?.countryName,
-  //   };
-
-  //   values.state = {
-  //     id: isStateId,
-  //     stateName:
-  //       isState.find((state) => state.id === isStateId)?.state ||
-  //       values?.state?.stateName,
-  //   };
-
-  //   delete values.role;
-
-  //   const updateAction = isStudent
-  //     ? updateStudentMemberDetails(localData.roleId, values)
-  //     : updateProfessionalMemberDetails(localData.roleId, values);
-
-  //   const result = await dispatch(updateAction);
-
-  //   if (result?.status === 200) {
-  //     setValCount(1);
-  //     fetchData();
-  //     getDataFromLocalStorage();
-  //   }
-  //   setloading(false);
-  // };
-
-  // const handleSubmit = async () => {
-  //   setloading(true);
-  //   values.country = {
-  //     id: isCountryId,
-  //     countryName:
-  //       isCountry.find((country) => country.id === isCountryId)?.country ||
-  //       values.country?.countryName,
-  //   };
-
-  //   values.state = {
-  //     id: isStateId,
-  //     stateName:
-  //       isState.find((state) => state.id === isStateId)?.state ||
-  //       values?.state?.stateName,
-  //   };
-
-  //   setValCount(1);
-
-  //   setloading(false);
-  // };
-
   useEffect(() => {
     fetchCountry();
     fetchState();
@@ -192,14 +148,17 @@ const PersonalDetailsPopUp = ({
             value={values.phoneNumber}
             className="h-45"
             id="phoneNumber"
-            disabled
+            onChange={handleChange}
+            // disabled={isSubmitting || !!values.phoneNumber}
+            disabled={phoneNumberAlreadySet}
             values={values}
             error={errors.phoneNumber}
             onDropdownChange={(selected) => setphonedropdown(selected)}
             dropdownOptions={dialCode.map((item) => ({
-              value: "+91" || item.dial_code,
+              value: item.dial_code,
               label: `${values.countryCode ? values.countryCode : item.dial_code} `,
             }))}
+            alternateval={phonedropdown}
           />
         </div>
         <div className="col-lg-6">

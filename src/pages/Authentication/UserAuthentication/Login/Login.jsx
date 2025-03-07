@@ -22,10 +22,15 @@ import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { useState } from "react";
 // import { setIsModalOpen } from "@/store/globalSlice";
 import { getProjectByTopics } from "../../../../store/userSlice/projectSlice";
+import RoleSelectionModal from "./RoleSelectionModal";
 const UserLogin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading, setlodding] = useState(false);
+
+  const [isRoleModalOpen, setIsRoleModalOpen] = useState(false);
+  const [googleUserData, setGoogleUserData] = useState(null);
+
   const initialValues = {
     email: "",
     password: "",
@@ -57,6 +62,8 @@ const UserLogin = () => {
         ...result?.data.response,
         token: result.data.response.token,
       });
+      setGoogleUserData(result.data.response);
+      setIsRoleModalOpen(true); // Open the modal
 
       const isProjectAvailable = await fetchProject();
 
@@ -78,15 +85,25 @@ const UserLogin = () => {
   };
 
   const handleGoogleLoginSuccess = async (response) => {
-    const { credential } = response;
-    try {
-      const result = await dispatch(handleGoogleLogin());
+    const credential = response.credential;
 
+    try {
+      const result = await dispatch(
+        handleGoogleLogin({ credential: credential })
+      );
       if (result?.status === 200) {
         storeLocalStorageData({
           ...result?.data.response,
           token: result.data.response.token,
         });
+
+        const isProjectAvailable = await fetchProject();
+
+        if (isProjectAvailable) {
+          navigate("/feed-details");
+        } else if (!isProjectAvailable) {
+          navigate("/my-feed");
+        }
       }
     } catch (error) {
       console.error("Login failed:", error);
@@ -209,7 +226,9 @@ const UserLogin = () => {
                             />
                           </div> */}
 
-                          {/* <GoogleOAuthProvider clientId="1036353088707-g4e7a8ud0a9lsjp8a5uubup23hvloap0.apps.googleusercontent.com">
+                          <GoogleOAuthProvider
+                            clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
+                          >
                             <div className="mt-20">
                               <GoogleLogin
                                 onSuccess={handleGoogleLoginSuccess}
@@ -222,7 +241,7 @@ const UserLogin = () => {
                                 cookiePolicy={"single_host_origin"}
                               />
                             </div>
-                          </GoogleOAuthProvider> */}
+                          </GoogleOAuthProvider>
                         </form>
                       );
                     }}

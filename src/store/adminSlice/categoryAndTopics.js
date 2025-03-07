@@ -22,6 +22,18 @@ export const handleGetTopics =
     }
   };
 
+export const handleGetMe = () => async (dispatch) => {
+  dispatch(setLoading());
+  try {
+    const res = await api.get(`/user/userProfile/getMe`, {});
+    dispatch(clearLoading());
+    return res;
+  } catch (error) {
+    dispatch(handelCatch(error));
+    dispatch(clearLoading());
+  }
+};
+
 export const updateTopicsPriority = (id, payload) => async (dispatch) => {
   dispatch(setLoading());
   try {

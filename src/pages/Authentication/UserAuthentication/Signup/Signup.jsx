@@ -9,9 +9,13 @@ import { dialCode, icons } from "@/utils/constants";
 import * as Yup from "yup"; // Import Yup for validation
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { handleUserSignUp } from "@/store/userSlice/authSlice";
+import {
+  handleGoogleLogin,
+  handleUserSignUp,
+} from "@/store/userSlice/authSlice";
 import { storeLocalStorageData } from "@/utils/helpers";
 import { getProjectByTopics } from "@/store/userSlice/projectSlice";
+import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 
 // Define the validation schema
 const validationSchema = Yup.object({
@@ -25,10 +29,10 @@ const validationSchema = Yup.object({
   name: Yup.string().required("Name is required"),
   // phoneNumber: Yup.number().required("Phone number is required"),
   phoneNumber: Yup.string()
-  .matches(/^\d+$/, "Phone number should be in numbers only")
-  .min(10, "Phone number must be at least 10 digits")
-  .max(15, "Phone number can't be more than 15 digits")
-  .required("Phone number is required"),
+    .matches(/^\d+$/, "Phone number should be in numbers only")
+    .min(10, "Phone number must be at least 10 digits")
+    .max(15, "Phone number can't be more than 15 digits")
+    .required("Phone number is required"),
   role: Yup.string().required("Please select a membership type"),
 });
 
@@ -83,25 +87,8 @@ const UserSignup = () => {
       countryCode: phonedropdown,
       role: values.role,
     };
-
-    // const result = await dispatch(handleUserSignUp(finalvalue));
-
-    // if (result?.status === 200) {
-    //   // navigate("/login");
-    //   console.log("🚀 ~ handleSubmit ~ result?.data.response:", result?.data.response)
-    //    storeLocalStorageData({
-    //           ...result?.data.response,
-    //           token: result.data.response.token,
-    //         });
-    //   setlodding(false);
-    //   navigate("/my-feed");
-
-    // }
-    // setlodding(false);
     try {
-
-
-      console.log(finalvalue,"final values")
+      console.log(finalvalue, "final values");
       const result = await dispatch(handleUserSignUp(finalvalue));
       console.log("Signup Response:", result);
 
@@ -124,6 +111,36 @@ const UserSignup = () => {
     } finally {
       setlodding(false);
     }
+  };
+
+  const handleGoogleLoginSuccess = async (response) => {
+    const credential = response.credential;
+
+    try {
+      const result = await dispatch(
+        handleGoogleLogin({ credential: credential })
+      );
+      if (result?.status === 200) {
+        storeLocalStorageData({
+          ...result?.data.response,
+          token: result.data.response.token,
+        });
+
+        const isProjectAvailable = await fetchProject();
+
+        if (isProjectAvailable) {
+          navigate("/feed-details");
+        } else if (!isProjectAvailable) {
+          navigate("/my-feed");
+        }
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
+  };
+
+  const handleGoogleLoginFailure = (error) => {
+    console.error("Google Login Failed", error);
   };
 
   return (
@@ -366,6 +383,22 @@ const UserSignup = () => {
                             </span>
                           </p>
                         </div>
+                        <GoogleOAuthProvider
+                          clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
+                        >
+                          <div className="mt-20">
+                            <GoogleLogin
+                              onSuccess={handleGoogleLoginSuccess}
+                              onError={handleGoogleLoginFailure}
+                              useOneTap
+                              width="100%"
+                              theme="outline"
+                              shape="circle"
+                              text="continue_with"
+                              cookiePolicy={"single_host_origin"}
+                            />
+                          </div>
+                        </GoogleOAuthProvider>
 
                         {/* Continue with Google Button */}
                         {/* <div className="mt-20">

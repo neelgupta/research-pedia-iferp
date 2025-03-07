@@ -35,6 +35,7 @@ const MyProfilePopUp = ({
   const [isInstitute, setIsInstitute] = useState([]);
   const [isCountry, setIsCountry] = useState([]);
   const [isCountryId, setIdCountryId] = useState(isUserData?.country?.id || "");
+  const [phonedropdown, setphonedropdown] = useState("+91");
 
   const [isStateId, setIsStateId] = useState(isUserData?.state?.id || "");
 
@@ -58,6 +59,7 @@ const MyProfilePopUp = ({
     gender: "",
     memberShipid: "",
     phoneNumber: "",
+    countryCode:"",
     profilePicture: "",
     state: {
       id: "",
@@ -108,7 +110,11 @@ const MyProfilePopUp = ({
       .email("Invalid email address")
       .required("Email is required"),
 
-    phoneNumber: Yup.string().required("Phone number is required"),
+    phoneNumber: Yup.string()
+      .matches(/^\d+$/, "Phone number should be in numbers only")
+      .min(10, "Phone number must be at least 10 digits")
+      .max(15, "Phone number can't be more than 15 digits")
+      .required("Phone number is required"),
 
     dateOfbirth: Yup.date().required("Date of birth is required"),
 
@@ -222,7 +228,11 @@ const MyProfilePopUp = ({
     fetchInstitution();
   }, []);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleSubmit = async (values) => {
+
+
     setloading(true);
     values.country = {
       id: isCountryId,
@@ -238,6 +248,8 @@ const MyProfilePopUp = ({
         values?.state?.stateName,
     };
 
+    values.countryCode = phonedropdown
+
     delete values.role;
 
     const updateAction = isStudent
@@ -245,9 +257,11 @@ const MyProfilePopUp = ({
       : updateProfessionalMemberDetails(localData.roleId, values);
 
     const result = await dispatch(updateAction);
-    // console.log("🚀 ~ handleSubmit ~ updateAction:", result?.data?.response)
+
 
     if (result?.status === 200) {
+      setIsSubmitting(true)
+
       setValCount(1);
       fetchData();
       getDataFromLocalStorage();
@@ -359,6 +373,9 @@ const MyProfilePopUp = ({
                     setUgcourse={setUgcourse}
                     loading={loading}
                     setloading={setloading}
+                    isSubmitting={isSubmitting}
+                    phonedropdown={phonedropdown}
+                    setphonedropdown={setphonedropdown}
                   />
                 )}
                 {valCount === 1 && (

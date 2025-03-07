@@ -8,22 +8,25 @@ import { getDataFromLocalStorage } from "@/utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
 import {
   handleGetCategories,
+  handleGetMe,
   handleGetTopics,
 } from "@/store/adminSlice/categoryAndTopics";
 import MyFeedmodel from "./MyFeedmodel";
 import { Spinner } from "react-bootstrap";
+import RoleSelectionModal from "../Authentication/UserAuthentication/Login/RoleSelectionModal";
 
 const MyFeed = () => {
   const setIsProjectCreate = useSelector(
     (state) => state.global.isProjectCreate
   );
-  console.log("🚀 ~ MyFeed ~ setIsProjectCreate:", setIsProjectCreate);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isActive, setIsActive] = useState(null);
   const [limitData, setLimitData] = useState(10);
   const [categories, setCategories] = useState([]);
   const [feedlodder, setfeedlodder] = useState(false);
+  const [isgoogleLoggedIn, setIsGoogleLoggedIn] = useState(false);
+  const [userData, setUserData] = useState();
 
   const fetchAllCategories = async () => {
     setfeedlodder(true);
@@ -37,12 +40,30 @@ const MyFeed = () => {
     setfeedlodder(false);
   };
 
+  const getMe = async () => {
+    const result = await dispatch(handleGetMe());
+    if (result.status === 200) {
+      setUserData(result.data.response);
+      setIsGoogleLoggedIn(
+        !result.data.response.role || !result.data.response.phoneNumber
+      );
+    }
+  };
+
+  const onProfileModalHide = ()=>{
+    getMe()
+  } 
+
+
   useEffect(() => {
     setIsProjectCreate ? navigate("/") : "";
     fetchAllCategories();
+    getMe();
   }, [limitData]);
 
   const localData = getDataFromLocalStorage();
+
+  console.log(localData, "localData");
   const { name, isFirstLogin } = localData;
 
   const feedList = categories?.map((item) => ({
@@ -56,8 +77,6 @@ const MyFeed = () => {
   const onHide = () => {
     setIsOpenModal(false);
   };
-
-
 
   useEffect(() => {
     const handleBackButton = (event) => {
@@ -134,7 +153,7 @@ const MyFeed = () => {
                 </div>
               </div>
             )}
-{/* 
+            {/* 
              <div className="step-box">
               <p
                 className="mb-0 text-14-500 color-113D pointer"
@@ -148,17 +167,18 @@ const MyFeed = () => {
                 loading="lazy"
               />
             </div>  */}
-
-
-
-
-
           </div>
         </div>
         <FeedFooter />
       </div>
 
-      {isOpenModal && <MyFeedmodel onHide={onHide} />}
+      {isgoogleLoggedIn && (
+        <RoleSelectionModal userData={userData} isOpen={true}
+        onProfileModalHide={onProfileModalHide}
+        />
+      )}
+
+      {/* {isOpenModal && <MyFeedmodel onHide={onHide} />} */}
     </>
   );
 };

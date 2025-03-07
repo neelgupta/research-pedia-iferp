@@ -28,7 +28,6 @@ const EducationDetailsPopUp = ({
     values.aleternateCountryCode || "+91"
   );
 
-  console.log(phonedropdown, "phonedropdown");
 
   const handleNext = async () => {
     delete values.role;
@@ -140,3 +139,6 @@ const EducationDetailsPopUp = ({
 };
 
 export default EducationDetailsPopUp;
+
+
+
