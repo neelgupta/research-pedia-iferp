@@ -26,9 +26,13 @@ const AudioControls = ({
   setVolume,
   volume,
   updatevolumn,
+  setSelectedLanguage,
+  selectedLanguage,
+  changaudiolangauafe,
 }) => {
   const currentPercentage = duration ? (progress / duration) * 100 : 0;
 
+  console.log("selectedLanguage in audio", selectedLanguage);
   const speedOptions = [
     { value: 0.5, label: "0.5x" },
     { value: 0.75, label: "0.75x" },
@@ -39,13 +43,11 @@ const AudioControls = ({
   ];
 
   const LanguageOption = [
-    { value: "eng-uk", label: "Anna-UK-EN" },
-    { value: "eng-us", label: "Anna-US-EN" },
-    { value: "esp", label: "Carlos-ES" },
+    { value: "en-US-Standard-C", label: "en-US-Standard-C" },
+    { value: "en-GB-Standard-B", label: "en-GB-Standard-B" },
   ];
 
   const [speed, setSpeed] = useState(1.0);
-  const [Language, setLanguage] = useState(LanguageOption[0].value);
 
   const handleSpeedChange = (e) => {
     setPlaybackSpeed(e.target.value);
@@ -241,8 +243,12 @@ const AudioControls = ({
         <div className="language-control d-flex align-items-center ">
           <span>Voice:</span>
           <select
-            value={Language}
-            onChange={(e) => setLanguage(e.target.value)}
+            value={selectedLanguage}
+            onChange={(e) => {
+              setSelectedLanguage(e.target.value);
+
+              changaudiolangauafe();
+            }}
             className="dropdown-select"
           >
             {LanguageOption.map((option) => (

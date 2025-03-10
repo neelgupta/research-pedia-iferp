@@ -20,6 +20,8 @@ const initialState = {
   selectedProject: null,
   isSearchActive: false,
   isProjectCreate: false,
+  abstarctTranslate: false,
+  abstarctTranslateText: "",
 };
 
 const globalSlice = createSlice({
@@ -88,6 +90,12 @@ const globalSlice = createSlice({
     setIsProjectCreate: (state, action) => {
       state.isProjectCreate = action.payload;
     },
+    setAbstarctTranslate: (state, action) => {
+      state.abstarctTranslate = action.payload;
+    },
+    setAbstarctTranslateText: (state, action) => {
+      state.abstarctTranslateText = action.payload;
+    },
   },
 });
 
@@ -98,7 +106,7 @@ export const handleLogin = (payload) => async (dispatch) => {
     if (res?.status === 200) {
       const isGenerated = res.data.response.isGenerated || false;
       if (isGenerated) {
-        return res
+        return res;
       } else {
         storeLocalStorageData({
           ...res?.data.response,
@@ -292,6 +300,8 @@ export const {
   setSelectedProject,
   setisSearchActive,
   setIsProjectCreate,
+  setAbstarctTranslate,
+  setAbstarctTranslateText,
 } = globalSlice.actions;
 
 export default globalSlice.reducer;

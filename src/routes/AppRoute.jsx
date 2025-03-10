@@ -1,3 +1,4 @@
+import APIKeys from "@/pages/Admin/APIKeys";
 import FeedbackDashboard from "@/pages/Admin/Feedback/FeedbackDashboard";
 import ListUser from "@/pages/Admin/ManageUsers/ListUser/ListUser";
 import UserDetails from "@/pages/Admin/ManageUsers/UserDetails";
@@ -63,6 +64,7 @@ export const AppRoutes = () => {
       path: "/admin/feedback",
       component: <FeedbackDashboard />,
     },
+    { path: "/admin/apikey", component: <APIKeys /> },
   ];
 
   return (

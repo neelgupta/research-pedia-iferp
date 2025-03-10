@@ -64,12 +64,12 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
     //   icon: icons.plan,
     //   activeIcons: icons.plainactive,
     // },
-    // {
-    //   title: "API Keys",
-    //   url: "/admin/apikey",
-    //   icon: icons.api,
-    //   activeIcons: icons.apiactive,
-    // },
+    {
+      title: "API Keys",
+      url: "/admin/apikey",
+      icon: icons.api,
+      activeIcons: icons.apiactive,
+    },
     // {
     //   title: "Reports",
     //   url: "/admin/report",
@@ -80,7 +80,6 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
 
   const handleTabClick = (index) => {
     setActiveTab(activeTab === index ? null : index);
-   
   };
 
   const handleChildClick = (url, index) => {
@@ -102,13 +101,12 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
     }
   }, [location.pathname]);
 
-
   // useEffect(() => {
   //   const activeIndex = admin.findIndex((item) =>
   //     location.pathname.startsWith(item.url)
   //   );
   //   setActiveTab(activeIndex);
-  
+
   //   if (activeIndex !== -1 && admin[activeIndex].childoption) {
   //     const activeChildIndex = admin[activeIndex].childoption.findIndex((child) =>
   //       child?.url?.some((url) => location.pathname.startsWith(url))
@@ -116,7 +114,6 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
   //     setActiveChild(activeChildIndex);
   //   }
   // }, [location.pathname]);
-  
 
   return (
     <>
@@ -175,8 +172,11 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
                       }`}
                       onClick={() => handleTabClick(index)}
                     >
-                      <div className="d-flex justify-content-between align-items-center" style={{cursor : "pointer"}}>
-                        <div className="d-flex align-items-center" >
+                      <div
+                        className="d-flex justify-content-between align-items-center"
+                        style={{ cursor: "pointer" }}
+                      >
+                        <div className="d-flex align-items-center">
                           <div className="tab-icon">
                             <img
                               src={
@@ -214,7 +214,7 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
 
                     {/* Conditionally render child-tabs */}
                     {activeTab === index && item.childoption && (
-                      <div className="child-tab"  style={{cursor : "pointer"}}>
+                      <div className="child-tab" style={{ cursor: "pointer" }}>
                         {item.childoption.map((child, childIndex) => (
                           <div
                             key={childIndex}
@@ -259,15 +259,3 @@ const Sidebar = ({ isResponsive, show, setShow }) => {
 };
 
 export default Sidebar;
-//           <Offcanvas.Body className="p-0 rearchPedia-scroll overflow-auto">
-//             <div className="slide-container  ">
-//               <div className="d-flex d-flex justify-content-between">
-//                 <img
-//                   src={icons.loginicon}
-//                   alt="icons"
-//                   className="img-fluid mt-24 ms-24 mb-24"
-//                 />
-//                 <IoMdClose
-//                   size={20}
-//                   className=" mt-24 ms-24 mb-24 d-block d-lg-none"
-//                   onClick={() => dispatch(toggleSidebar(!reduxdata))}

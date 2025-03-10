@@ -1,38 +1,82 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import SearchInput from "@/components/inputs/SearchInput";
 import "./SelectedLanguagemodel.scss";
 import Button from "@/components/inputs/Button";
 import { Modal } from "@/components";
 import { Spinner } from "react-bootstrap";
-const SelectedLanguagemodel = ({ onHide }) => {
-  const [languagelist, setlanguagelist] = useState([
-    { name: "Hindi" },
-    { name: "English" },
-    { name: "Spanish" },
-    { name: "French" },
-    { name: "German" },
-    { name: "Mandarin" },
-    { name: "Japanese" },
-    { name: "Portuguese" },
-    { name: "Russian" },
-    { name: "Italian" },
-    { name: "Arabic" },
-    { name: "Korean" },
-    { name: "Bengali" },
-    { name: "Urdu" },
-    { name: "Turkish" },
-    { name: "Dutch" },
-    { name: "Greek" },
-    { name: "Hebrew" },
-    { name: "Thai" },
-    { name: "Vietnamese" },
-  ]);
+import {
+  getTranslaterabstarct,
+  googlelanguageTranslater,
+} from "@/store/userSlice/projectSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { LuAngry } from "react-icons/lu";
+import {
+  setAbstarctTranslate,
+  setAbstarctTranslateText,
+} from "@/store/globalSlice";
+const SelectedLanguagemodel = ({ onHide, abstract }) => {
+  const [languagelist, setlanguagelist] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState(null);
+  const [languageselete, setlanguageselete] = useState(null);
+  const [searchValue, setSearchValue] = useState("");
+  const [Translateloader, setTranslateloader] = useState(false);
+  const Translate = useSelector((state) => state.global.abstarctTranslate);
 
   const handleSelectLanguage = (lang) => {
     setSelectedLanguage(lang);
+    setlanguageselete(lang.language);
+  };
+
+  const dispatch = useDispatch();
+  const fetchlanguageTranslater = async () => {
+    setIsLoading(true);
+    try {
+      const res = await dispatch(googlelanguageTranslater(searchValue));
+
+      if (res?.status === 201) {
+        setlanguagelist(res?.data?.response);
+        setIsLoading(false);
+      }
+    } catch (error) {
+      // setIsLoading(false)
+      console.error("Error fetching audio:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchlanguageTranslater();
+  }, [searchValue]);
+
+  const handleTranslate = async () => {
+    setTranslateloader(true);
+    try {
+      const res = await dispatch(
+        getTranslaterabstarct({
+          abstract: abstract,
+          language: languageselete,
+        })
+      );
+
+      if (res.status === 201) {
+        // Handle successful response
+        dispatch(setAbstarctTranslate(true));
+        dispatch(setAbstarctTranslateText(res.data.response));
+      }
+    } catch (error) {
+      // Handle error
+      console.error("Error fetching translation:", error);
+    } finally {
+      // Ensure loader is hidden and onHide is called once translation is done
+      setTranslateloader(false);
+      onHide();
+    }
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchValue(e.target.value);
+    console.log("Search Value: ", e.target.value);
   };
 
   return (
@@ -44,7 +88,11 @@ const SelectedLanguagemodel = ({ onHide }) => {
           </div>
           <div>
             <div className="search-box mb-18">
-              <SearchInput placeholder="Search language" />
+              <SearchInput
+                placeholder="Search language"
+                value={searchValue} // Bind the value here
+                onChange={handleSearchChange}
+              />
             </div>
             {isLoading ? (
               <div
@@ -70,7 +118,14 @@ const SelectedLanguagemodel = ({ onHide }) => {
             )}
 
             <div className="d-flex justify-content-end mt-32">
-              <Button btnText="Translate" className="w-128 h-49" />
+              <Button
+                btnText="Translate"
+                className="w-128 h-49"
+                onClick={() => {
+                  handleTranslate();
+                }}
+                loading={Translateloader}
+              />
             </div>
           </div>
         </div>

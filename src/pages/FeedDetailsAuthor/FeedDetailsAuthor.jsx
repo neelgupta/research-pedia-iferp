@@ -40,6 +40,14 @@ const FeedDetailsAuthor = () => {
   const paperId = queryParams.get("paperId");
   const abstractId = queryParams.get("abstractId");
   const topics = location?.state?.topics;
+
+  const Translatestatus = useSelector(
+    (state) => state.global.abstarctTranslate
+  );
+  const Translatestatusabstarctdata = useSelector(
+    (state) => state.global.abstarctTranslateText
+  );
+
   console.log(paperId, "PAPERID11");
   console.log(abstractId, "abstractId");
   const fetchPaper = async () => {
@@ -192,54 +200,55 @@ const FeedDetailsAuthor = () => {
     const summaryElement = document.getElementById("summary");
     const fullTextElement = document.getElementById("full-text");
     const similarPaperElement = document.getElementById("similar-papers");
-  
+
     if (abstractElement) {
       if (summaryElement) summaryElement.style.scrollMarginTop = "0px";
       if (fullTextElement) fullTextElement.style.scrollMarginTop = "0px";
-      if (similarPaperElement) similarPaperElement.style.scrollMarginTop = "0px";
+      if (similarPaperElement)
+        similarPaperElement.style.scrollMarginTop = "0px";
       abstractElement.style.scrollMarginTop = "180px";
-   
-  
+
       abstractElement.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
-  
+
   const handleClickFullText = () => {
     setShowActive("Full-Text");
     const abstractElement = document.getElementById("abstract");
     const summaryElement = document.getElementById("summary");
     const fullTextElement = document.getElementById("full-text");
     const similarPaperElement = document.getElementById("similar-papers");
-  
+
     if (fullTextElement) {
-        if (abstractElement) abstractElement.style.scrollMarginTop = "0px";
+      if (abstractElement) abstractElement.style.scrollMarginTop = "0px";
       if (summaryElement) summaryElement.style.scrollMarginTop = "0px";
-      if (similarPaperElement) similarPaperElement.style.scrollMarginTop = "0px";
+      if (similarPaperElement)
+        similarPaperElement.style.scrollMarginTop = "0px";
       fullTextElement.style.scrollMarginTop = "100px";
-    
-  
+
       fullTextElement.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
-  
+
   const handleClickSimilarPapers = () => {
     setShowActive("Similar Papers");
     const abstractElement = document.getElementById("abstract");
     const summaryElement = document.getElementById("summary");
     const fullTextElement = document.getElementById("full-text");
     const similarPaperElement = document.getElementById("similar-papers");
-  
+
     if (similarPaperElement) {
       if (abstractElement) abstractElement.style.scrollMarginTop = "0px";
       if (summaryElement) summaryElement.style.scrollMarginTop = "0px";
       if (fullTextElement) fullTextElement.style.scrollMarginTop = "0px";
       similarPaperElement.style.scrollMarginTop = "150px";
-  
-  
-      similarPaperElement.scrollIntoView({ behavior: "smooth", block: "start" });
+
+      similarPaperElement.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     }
   };
-  
 
   const reduxData = useSelector((state) => state.global);
   const { isUserSide, isRightSide } = reduxData || {};
@@ -825,14 +834,20 @@ const FeedDetailsAuthor = () => {
                           {/* <p className="abstract-text">
                           {paper_abstract || abstract}
                         </p> */}
-                          <p
-                            className="abstract-text"
-                            dangerouslySetInnerHTML={{
-                              __html: DOMPurify.sanitize(
-                                paper_abstract || abstract
-                              ),
-                            }}
-                          ></p>
+                          {Translatestatus ? (
+                            <p className="abstract-text">
+                              {Translatestatusabstarctdata}
+                            </p>
+                          ) : (
+                            <p
+                              className="abstract-text"
+                              dangerouslySetInnerHTML={{
+                                __html: DOMPurify.sanitize(
+                                  paper_abstract || abstract
+                                ),
+                              }}
+                            ></p>
+                          )}
                         </div>
                       )}
 
@@ -1515,8 +1530,12 @@ const FeedDetailsAuthor = () => {
           isRightSide={isRightSide}
         />
       </div>
-      {isLanguageOpenModal && <SelectedLanguagemodel onHide={onHide} />}
-      {isTexttospeechModal && <ListenModelpopup onHide={onHide} />}
+      {isLanguageOpenModal && (
+        <SelectedLanguagemodel onHide={onHide} abstract={abstract} />
+      )}
+      {isTexttospeechModal && (
+        <ListenModelpopup onHide={onHide} abstract={abstract} Title={title} />
+      )}
       {isReference && <ReferenceManager onHide={onHide} />}
       {isAskPaper && <AskPaper onHide={onHide} />}
     </div>

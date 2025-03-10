@@ -1,43 +1,175 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./ListenModelpopup.scss";
-import { icons } from "@/utils/constants";
 import { Modal } from "@/components";
 import AudioControls from "@/components/inputs/AudioControls";
-import cali from "../../../../assets/song.mp3";
-import fifty from "../../../../assets/song.mp3";
-import iwonder from "../../../../assets/song.mp3";
 import { Spinner } from "react-bootstrap";
-const ListenModelpopup = ({ onHide }) => {
+import { TextTospeech } from "@/store/userSlice/projectSlice";
+import { useDispatch } from "react-redux";
+
+const ListenModelpopup = ({ onHide, abstract, Title }) => {
   const [trackIndex, setTrackIndex] = useState(0);
   const [trackProgress, setTrackProgress] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(1.0);
-  const [playbackSpeed, setPlaybackSpeed] = useState(2.0);
-  const [selectedLanguage, setSelectedLanguage] = useState("eng-uk");
+  const [playbackSpeed, setPlaybackSpeed] = useState(1.0);
+  const [selectedLanguage, setSelectedLanguage] = useState("en-US-Standard-C");
   const [isLoading, setIsLoading] = useState(false);
+  const [audioplayloader, setaudioplayloader] = useState(false);
+  const dispatch = useDispatch();
 
-  const tracks = [
-    { audioSrc: cali, title: "Cali" },
-    { audioSrc: fifty, title: "Fifty" },
-    { audioSrc: iwonder, title: "I Wonder" },
-  ];
-
-  const { audioSrc } = tracks[trackIndex];
-
-  const audioRef = useRef(new Audio(audioSrc));
+  const [tracks, setTracks] = useState([{ audioSrc: null }]);
+  const audioRef = useRef(null);
   const intervalRef = useRef();
   const isReady = useRef(false);
-  const { duration } = audioRef.current;
+  const previousTime = useRef(0);
+
+  console.log("selectedLanguage", selectedLanguage);
+
+  const fetchaudio = async () => {
+    setaudioplayloader(true);
+    try {
+      const res = await dispatch(
+        TextTospeech({
+          abstract: abstract,
+          voice: selectedLanguage,
+        })
+      );
+      setTracks([{ audioSrc: res.data.response }]);
+      setaudioplayloader(false);
+    } catch (error) {
+      console.error("Error fetching audio:", error);
+    }
+  };
+
+  useEffect(() => {
+    console.log("hello1");
+    fetchaudio();
+  }, []);
+
+  // const fetchlanguagewithaudio = async () => {
+  //   setaudioplayloader(true);
+  //   try {
+  //     const res = await dispatch(
+  //       TextTospeech({
+  //         abstract: abstract,
+  //         voice: selectedLanguage,
+  //       })
+  //     );
+  //     setTracks([{ audioSrc: res.data.response }]);
+  //     setaudioplayloader(false);
+  //   } catch (error) {
+  //     console.error("Error fetching audio:", error);
+  //   }
+  // };
+
+  const changaudiolangauage = () => {
+    console.log("hello2");
+    if (selectedLanguage) {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+        setTracks([]);
+        setTrackProgress(0);
+      }
+
+      fetchaudio();
+    }
+  };
+  // useEffect(() => {
+  //   changaudiolangauafe();
+  // }, [selectedLanguage]);
+
+  // useEffect(() => {
+  //   if (tracks.length > 0 && tracks[trackIndex]?.audioSrc) {
+  //     if (!audioRef.current) {
+  //       audioRef.current = new Audio(tracks[trackIndex]?.audioSrc);
+  //       audioRef.current.volume = volume;
+  //       audioRef.current.playbackRate = playbackSpeed;
+  //       audioRef.current.currentTime = previousTime.current;
+
+  //       audioRef.current.addEventListener("loadedmetadata", () => {
+  //         setTrackProgress(audioRef.current.currentTime);
+  //       });
+  //     }
+
+  //     if (isReady.current && isPlaying) {
+  //       audioRef.current.play();
+  //       startTimer();
+  //     } else {
+  //       isReady.current = true;
+  //     }
+  //   }
+  // }, [trackIndex, tracks, volume, playbackSpeed]);
+
+  const [audiolength, setaudiolength] = useState("");
+  useEffect(() => {
+    if (tracks.length > 0 && tracks[trackIndex]?.audioSrc) {
+      if (!audioRef.current) {
+        audioRef.current = new Audio(tracks[trackIndex]?.audioSrc);
+        audioRef.current.volume = volume;
+        audioRef.current.playbackRate = playbackSpeed;
+        audioRef.current.currentTime = previousTime.current;
+
+        audioRef.current.addEventListener("loadedmetadata", () => {
+          setTrackProgress(audioRef.current.currentTime);
+
+          const audioLength = audioRef.current.duration;
+          console.log("Audio length:", audioLength);
+          setaudiolength(audioLength);
+        });
+      }
+
+      if (isReady.current && isPlaying) {
+        audioRef.current.play();
+        startTimer();
+      } else {
+        isReady.current = true;
+      }
+    }
+  }, [trackIndex, tracks, volume, playbackSpeed]);
+
+  useEffect(() => {
+    if (isPlaying && audioRef.current) {
+      audioRef.current.play();
+      startTimer();
+    } else {
+      audioRef.current?.pause();
+    }
+  }, [isPlaying]);
 
   const startTimer = () => {
     clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
-      if (audioRef.current.ended) {
+      if (audioRef.current?.ended) {
         toNextTrack();
       } else {
         setTrackProgress(audioRef.current.currentTime);
       }
     }, 1000);
+  };
+
+  const toPrevTrack = () => {
+    setTrackIndex(
+      (prevIndex) => (prevIndex - 1 + tracks.length) % tracks.length
+    );
+  };
+
+  const toNextTrack = () => {
+    setTrackIndex((prevIndex) => (prevIndex + 1) % tracks.length);
+  };
+
+  const updateVolume = (volume) => {
+    setVolume(volume);
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  };
+
+  const updatePlaybackSpeed = (newSpeed) => {
+    setPlaybackSpeed(newSpeed);
+    if (audioRef.current) {
+      audioRef.current.playbackRate = newSpeed;
+    }
   };
 
   const onScrub = (value) => {
@@ -52,81 +184,6 @@ const ListenModelpopup = ({ onHide }) => {
     }
     startTimer();
   };
-
-  const toPrevTrack = () => {
-    setTrackIndex(
-      (prevIndex) => (prevIndex - 1 + tracks.length) % tracks.length
-    );
-  };
-
-  const toNextTrack = () => {
-    setTrackIndex((prevIndex) => (prevIndex + 1) % tracks.length);
-  };
-
-  useEffect(() => {
-    if (isPlaying) {
-      audioRef.current.play();
-      startTimer();
-    } else {
-      audioRef.current.pause();
-    }
-  }, [isPlaying]);
-
-  //   useEffect(() => {
-  //     audioRef.current.pause();
-  //     audioRef.current = new Audio(audioSrc);
-  //     setTrackProgress(audioRef.current.currentTime);
-  //     audioRef.current.volume = volume;
-  //     audioRef.current.playbackRate = playbackSpeed;
-
-  //     if (isReady.current) {
-  //       audioRef.current.play();
-  //       setIsPlaying(true);
-  //       startTimer();
-  //     } else {
-  //       isReady.current = true;
-  //     }
-  //   }, [trackIndex, volume, playbackSpeed]);
-
-  useEffect(() => {
-    audioRef.current.pause();
-    audioRef.current = new Audio(audioSrc);
-    setTrackProgress(audioRef.current.currentTime);
-
-    audioRef.current.volume = volume;
-    audioRef.current.playbackRate = playbackSpeed;
-
-    const currentTime = audioRef.current.currentTime;
-    audioRef.current.currentTime = currentTime;
-
-    if (isReady.current) {
-      audioRef.current.play();
-      setIsPlaying(true);
-      startTimer();
-    } else {
-      isReady.current = true;
-    }
-  }, [trackIndex]);
-
-  const updatePlaybackSpeed = (newSpeed) => {
-    setPlaybackSpeed(newSpeed);
-    audioRef.current.playbackRate = newSpeed;
-  };
-
-  const updatevolumn = (volume) => {
-    setVolume(volume);
-
-    if (audioRef.current) {
-      audioRef.current.volume = volume;
-    }
-  };
-
-  useEffect(() => {
-    return () => {
-      audioRef.current.pause();
-      clearInterval(intervalRef.current);
-    };
-  }, []);
 
   const onRewind10 = () => {
     const newTime = audioRef.current.currentTime - 10;
@@ -143,44 +200,23 @@ const ListenModelpopup = ({ onHide }) => {
     setTrackProgress(updatedTime);
   };
 
+  useEffect(() => {
+    return () => {
+      previousTime.current = audioRef?.current?.currentTime || 0;
+      audioRef?.current?.pause();
+      clearInterval(intervalRef.current);
+    };
+  }, []);
+
   return (
     <div>
       <Modal onHide={onHide} fullscreen>
         <div id="SelectedLanguagemodel">
           <div className="mb-32">
-            <h1 className="text-16-500 color-0303">
-              Al-Siyāsah al-Shar‘iyyah’s consideration and its approach among
-              the governors in Islamic financial institutions: a Malaysian’s
-              experience
-            </h1>
+            <h1 className="text-16-500 color-0303">{Title}</h1>
           </div>
           <div className="summary-section">
             <div className="row">
-              {/* <div className="col-2">
-                <div>
-                  <h1 className="text-16-500 color-0303">Section</h1>
-                </div>
-                <div className="start-stop-section">
-                  {card.map((item, index) => (
-                    <div
-                      key={index}
-                      className={`start-stop-card d-flex justify-content-between align-items-center gap-2 ${clickedIndex === index ? "active-start-stop-card" : ""}`}
-                      onClick={() => handleCardClick(index)}
-                    >
-                      <div>
-                        <h1 className="text-16-400 color-3333">{item.Title}</h1>
-                      </div>
-                      <div>
-                        <img
-                          src={icons.stopplay}
-                          alt="icon"
-                          className="img-fluid"
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div> */}
               <div className="col-12 mb-200">
                 <div className="Abstract-model p-32 brave-scroll-gry ">
                   <div className="mb-26">
@@ -195,79 +231,42 @@ const ListenModelpopup = ({ onHide }) => {
                     </div>
                   ) : (
                     <div className="mb-20">
-                      <p className="text-20-400 color-3333 mb-20">
-                        Purpose Islamic financial institutions (IFIs) in
-                        Malaysia continue to promote Shari‘ah-compliant business
-                        and transactions. As a result, the governors have a lot
-                        to think about before issuing any fatwa or ordinance,
-                        which impacts the majority of Malaysians. Nevertheless,
-                        the point of views from the governors have not been
-                        highlighted much. This research seeks to investigate the
-                        extent to which the conception of al-Siyasah
-                        al-Shar‘iyyah is embraced by Shari‘ah committees’
-                        leadership roles within IFIs. The importance of
-                        al-Siyasah al-Shar‘iyyah in decision-making makes
-                        abandoning the Shari‘ah principle untenable and its
-                        significant role for IFIs in Malaysia cannot be
-                        overstated. It serves as a crucial tool for
-                        decision-making by authorities and governors.
-                        Design/methodology/approach The objectives of this
-                        research are attained by examining diverse sources
-                        obtained through library research, encompassing books,
-                        journals, newspapers, websites and reports. In addition,
-                        to use an analytical method to assess the role of
-                        al-Siyasah al-Shar‘iyyah in IFIs pratical, the authors
-                        collect information through interviews with five
-                        participants actively engaged in Shari‘ah committees
-                        within financial institutions, both directly and
-                        indirectly. Findings The research paper concludes that
-                        al-Siyasah al-Shar‘iyyah holds significance for Shari‘ah
-                        committees in IFIs when providing legal opinions. In
-                        situations where existing madhhab-based laws prove
-                        insufficient for addressing a particular issue, the
-                        Shari‘ah committees will autonomously engage in new
-                        ijtihad to ensure effective resolution of the matter.
-                        Research limitations/implications The implication that
-                        could have been resulted from this study is to indicate
-                        how Shari‘ah committees in IFIs structuring a set of
-                        rules and regulations embedded by al-Siyasah
-                        al-Shar‘iyyah elements to produce maṣlaḥaḥ for the
-                        ummah. This perspective is barely discussed in depth as
-                        Malaysia has unanimous scholars who work in this area.
-                        Thus, the authors attempt to bring the discussion
-                        academically and express the point of view from
-                        governors’ perspective. Originality/value In the
-                        Malaysian context, where Islamic banks and financial
-                        institutions are overseen by Shari‘ah committee members
-                        and the Central Bank of Malaysia, this study delves into
-                        the practical experiences of governors in carrying out
-                        the responsibilities of al-Siyasah al-Shar‘iyyah within
-                        the decision-making process. The objective is to
-                        investigate the perspectives
-                      </p>
+                      <p className="text-20-400 color-3333 mb-21">{abstract}</p>
                     </div>
                   )}
                 </div>
                 <div>
-                  <div className="track-info fixed-bottom  mb-28 ps-24 pe-24 mt-28">
-                    <AudioControls
-                      isPlaying={isPlaying}
-                      onPlayPauseClick={setIsPlaying}
-                      onPrevClick={toPrevTrack}
-                      onNextClick={toNextTrack}
-                      progress={trackProgress}
-                      duration={duration}
-                      onScrub={onScrub}
-                      onScrubEnd={onScrubEnd}
-                      volume={volume}
-                      setVolume={updatevolumn}
-                      playbackSpeed={playbackSpeed}
-                      setPlaybackSpeed={updatePlaybackSpeed}
-                      selectedLanguage={selectedLanguage}
-                      setSelectedLanguage={setSelectedLanguage}
-                      onRewind10={onRewind10}
-                      onForward10={onForward10}
-                    />
+                  <div>
+                    <div className="track-info fixed-bottom  mb-28 ps-24 pe-24 mt-28">
+                      {audioplayloader ? (
+                        <div
+                          className="loader-container d-flex justify-content-center align-items-center"
+                          style={{ height: "100%" }}
+                        >
+                          <Spinner animation="border" variant="primary" />
+                        </div>
+                      ) : (
+                        <AudioControls
+                          isPlaying={isPlaying}
+                          onPlayPauseClick={setIsPlaying}
+                          onPrevClick={toPrevTrack}
+                          onNextClick={toNextTrack}
+                          progress={trackProgress}
+                          duration={audioRef.current?.duration || audiolength}
+                          onScrub={onScrub}
+                          onScrubEnd={onScrubEnd}
+                          volume={volume}
+                          setVolume={updateVolume}
+                          playbackSpeed={playbackSpeed}
+                          setPlaybackSpeed={updatePlaybackSpeed}
+                          selectedLanguage={selectedLanguage}
+                          setSelectedLanguage={setSelectedLanguage}
+                          onRewind10={onRewind10}
+                          onForward10={onForward10}
+                          changaudiolangauafe={changaudiolangauage}
+                        />
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>

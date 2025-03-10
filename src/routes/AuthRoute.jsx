@@ -32,8 +32,6 @@ const AuthRoute = () => {
         />
 
         <Route path="*" element={<Navigate to={"/login"} />} />
-
-       
       </>
     </Routes>
   );
