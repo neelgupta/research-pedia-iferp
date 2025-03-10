@@ -341,7 +341,6 @@ const FeedDetailsAuthor = () => {
   // ... existing code ...
 
   setInterval(() => {
-    console.log("jhkdbjhwe");
     setcount(count + 1);
   }, 1000);
 
@@ -367,7 +366,7 @@ const FeedDetailsAuthor = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [count]);
+  }, []);
 
   return (
     <div id="feed-details-author-container">
@@ -870,6 +869,8 @@ const FeedDetailsAuthor = () => {
                         </div>
                       </div>
                     </div>
+
+
                     <div
                       className={`${isUserSide || isRightSide ? "active-sectionOne-tool-bar" : "sectionOne-tool-bar"}`}
                     >
